@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+    <p>메인화면</p>
 </template>
 <script setup>
 

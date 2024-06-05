@@ -1,13 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosInstance = axios.create({
-    // 기본 URL 설정
-    // baseURL: 'http://112.222.157.156:6006',
-
     // 기본 헤더 설정
     headers: {
-        'Content-Type' : 'application/json'
-    }
+        'X-CSRF-TOKEN' : document.querySelector('menta[name="csrf-token"]').getAttribute('content'),
+    },
+    // axios로 API요청 할때, 세션쿠키가 포함되도록 하는 설정
+    withCredentials: true,
 });
-
-export default axiosInstance;
