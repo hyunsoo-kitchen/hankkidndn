@@ -17,23 +17,22 @@
           </div>
         </div>
       </div>
+      <div class="header-nav-content">
+        <div>HOME</div>
+        <div>RECIP</div>
+        <div>BOARD</div>
+      </div>
     </div>
   </header>
-
     <!-- Main -->
     <main>
         <router-view></router-view>
-
     </main>
-
     <!-- Footer -->
     <footer>
-
-
     </footer>
 </template>
 <script setup>
-
 </script>
 <style>
     @import url('../css/common.css');
