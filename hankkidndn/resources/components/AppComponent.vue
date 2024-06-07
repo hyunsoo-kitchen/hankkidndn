@@ -9,11 +9,16 @@
         </div>
         <div class="btn-group">
           <div v-if="!$store.state.authFlg">
-            <button @click="$router.push('/login')" class="">로그인</button>
-            <button @click="$router.push('/registration')" class="">가입하기</button>
+            <div>
+              <button @click="$router.push('/login')" class="header-btn">로그인</button>
+            </div>
+            <div>
+              <button @click="$router.push('/registration')" class="header-btn">가입하기</button>
+            </div>
           </div>
           <div v-else>
-            <button @click="$store.dispatch('logout')" class="btn btn-header btn-bg-black">로그아웃</button>
+            <button @click="$store.dispatch('logout')" class="header-btn myInfo"></button>
+            <button @click="$store.dispatch('logout')" class="header-btn">로그아웃</button>
           </div>
         </div>
       </div>
