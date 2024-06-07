@@ -12,7 +12,6 @@ createApp({
         JoinComponent
     }
 })
-
 .use(router)
 .use(store)
 .mount('#app');
