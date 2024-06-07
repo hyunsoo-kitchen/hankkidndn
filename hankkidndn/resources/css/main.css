@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 10px 10px;
+    margin: auto;
+    -ms-overflow-style: none;
+}
+
+@media screen and (min-width: 1045px) {
+    .nav-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+    }
+    nav {
+        gap: 20px;
+    }
+    nav ul {
+        list-style-type: none;
+        margin-right: 4rem;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    nav ul li {
+        margin: 0 15px;
+        position: relative;
+    }
+    
+    nav ul li a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+    
+    nav ul li .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        min-width: 160px;
+    }
+    
+    nav ul li .dropdown-content li {
+        margin: 0;
+    }
+    
+    nav ul li .dropdown-content li a {
+        padding: 12px 16px;
+        display: block;
+        color: black;
+        text-decoration: none;
+    }
+    
+    nav ul li .dropdown-content li a:hover {
+        background-color: #f1f1f1;
+    }
+    
+    nav ul li:hover .dropdown-content {
+        display: block;
+    }
+    .hambuger-nav-list {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 1044px) {
+    #nav-list {
+        display: none;
+    }
+    .nav-container {
+        padding: 10px 5px;
+    }
+    #hambuger{
+        width: 40px;
+        height: 40px;
+        background-image: url('/hambuger.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+    #close-hambuger {
+        width: 40px;
+        height: 40px;
+        background-image: url('/cancleblack.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        display: none;
+    }
+    .hambuger-nav-list ul {
+        list-style-type: none;
+    }
+}
