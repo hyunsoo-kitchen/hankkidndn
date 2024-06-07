@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    width: 100%;
+}
+h2 {
+    margin: 50px;
+}
+input[type="text"] {
+    width: 300px;
+    height: 30px;
+}
+.join-box {
+    padding: 10px;
+}
+label {
+    display: inline-block;
+    width: 100px;
+    border: 1px solid black;
+    padding: 6px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 설정 */
+}
