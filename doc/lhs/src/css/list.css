@@ -202,7 +202,7 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
-
+    
 @media (max-width: 480px) {
     .search-input {
         width: 70vw;
