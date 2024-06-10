@@ -8,3 +8,5 @@ const axiosInstance = axios.create({
     // axios로 API요청 할때, 세션쿠키가 포함되도록 하는 설정
     withCredentials: true,
 });
+
+export default axiosInstance;
