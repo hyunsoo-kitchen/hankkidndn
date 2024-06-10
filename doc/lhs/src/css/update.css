@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    display: grid;
+    place-items: center; 
+}       
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.sub-content{
+    padding-top: 50px;
+}
+
+.main-container{
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+}
+
+h3{
+    padding: 10px 0;
+}
+
+.sub-title-main{
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 0.3fr;
+}
+

@@ -1,0 +1,93 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    display: grid;
+    place-items: center; 
+}   
+
+.container {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.id, .pass {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 10px 0;
+}
+
+.username, .userpass {
+    margin-right: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.user-name, .user-pass {
+    border: none;
+    padding: 10px;
+}
+.id input:focus {outline:none;} 
+.pass input:focus {outline:none;}
+
+.button {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px 0;
+}
+
+.login {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+}
+.register{
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.find{
+    display: grid;
+    justify-content: center;
+    color:black;
+}
+
+.kakao-btn{
+    padding: 10px 0;
+}
+
+.kakao{
+    width: 300px;
+    height: 45px;
+    border: none;
+}
+
+.kakao:hover {
+    cursor: pointer;
+}
