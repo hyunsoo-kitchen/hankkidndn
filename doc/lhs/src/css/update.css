@@ -167,6 +167,8 @@ button.complete {
 }
 
 
+
+
 @media (max-width: 480px) {
     .sub-title h2 {
         font-size: 1rem;
@@ -200,4 +202,12 @@ button.complete {
         padding: 8px 10px;
         font-size: 0.9rem;
     }
+
+    input[type="text"],
+    input[type="password"],
+    select,
+    button {
+        padding: 8px; /* 작은 화면에서는 패딩을 줄입니다. */
+    }
+
 }
