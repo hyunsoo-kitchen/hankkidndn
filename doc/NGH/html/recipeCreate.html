@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레시피 등록</title>
+    <link rel="stylesheet" href="../css/rc.css">
+</head>
+<body>
+    <div class="container">
+        <h1>레시피 등록</h1>
+        
+        <form id="recipeForm">
+            <div class="section">
+                <label for="title">레시피 제목</label>
+                <input type="text" id="title" name="title" placeholder="예) 소고기 스테이크 굽기">
+            </div>
+            
+            <div class="section">
+                <label for="summary">요리소개</label>
+                <textarea id="summary" name="summary" placeholder="예) 레스토랑에서 먹어봤던 스테이크..."></textarea>
+            </div>
+            
+            <div class="section">
+                <label for="video">동영상</label>
+                <input type="url" id="video" name="video" placeholder="예) https://youtu.be/abcd1234">
+                <button type="button" id="uploadVideo">동영상 업로드</button>
+            </div>
+            
+            <div class="section">
+                <h2>재료 정보</h2>
+                <div id="ingredients">
+                    <div class="ingredient-row">
+                        <input type="text" name="ingredient[]" placeholder="재료명">
+                        <input type="text" name="quantity[]" placeholder="양">
+                        <button type="button" class="remove-ingredient">제거</button>
+                    </div>
+                </div>
+                <button type="button" id="addIngredient">추가</button>
+            </div>
+            
+            <div class="section">
+                <h2>요리순서</h2>
+                <div id="steps">
+                    <div class="step">
+                        <h3>Step 1</h3>
+                        <textarea name="stepDescription[]" placeholder="예) 소고기를 기름을 두른 팬에..."></textarea>
+                        <div class="step-images">
+                            <input type="file" name="stepImage[]">
+                        </div>
+                        <button type="button" class="remove-step">순서 제거</button>
+                    </div>
+                </div>
+                <button type="button" id="addStep">순서 추가</button>
+            </div>
+            
+            <div class="section">
+                <label for="tips">요리팁</label>
+                <textarea id="tips" name="tips" placeholder="예) 고기가 타지 않도록..."></textarea>
+            </div>
+            
+            <div class="actions">
+                <button type="submit">저장</button>
+                <button type="button" id="saveAndShare">저장 후 공개하기</button>
+                <button type="button" id="cancel">취소</button>
+            </div>
+        </form>
+    </div>
+    
+    <script src="../JavaScript/re.js"></script>
+</body>
+</html>
