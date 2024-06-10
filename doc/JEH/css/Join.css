@@ -1,0 +1,135 @@
+body {
+<<<<<<< HEAD
+    text-align: center;
+    width: 100%;
+}
+h2 {
+    margin: 50px;
+}
+input[type="text"] {
+    width: 300px;
+    height: 30px;
+}
+.join-box {
+    padding: 10px;
+}
+label {
+    display: inline-block;
+    width: 100px;
+    border: 1px solid black;
+    padding: 6px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 설정 */
+}
+=======
+
+}
+h3 {
+    margin: 50px;
+}
+.join-box {
+    margin:  20px;
+}
+label {
+    display: inline-block;
+    width: 130px;
+    border: 1px solid rgb(196, 194, 194);
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+.common-property {
+    display: inline-block;
+    padding: 11px;
+    width: 400px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    margin-left: 30px;
+    border: none;
+}
+.unique-property1 {
+    display: inline-block;
+    padding: 11px;
+    width: 300px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    margin-left: 30px;
+    border: none;
+}
+.unique-property2 {
+    display: inline-block;
+    padding: 11px;
+    width: 60px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    margin-left: 30px;
+    border: none; 
+}
+.unique-property3 {
+    display: inline-block;
+    padding: 11px;
+    width: 130px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    margin-left: 30px;
+    border: none; 
+}
+input:focus {
+    border-color: #007BFF; /* 포커스 시 테두리 색상 변경 */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6); /* 포커스 시 그림자 효과 추가 */
+    outline: none; /* 기본 포커스 스타일 제거 */
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 1열로 정렬 */
+    gap: 10px; /* 그리드 아이템 간의 간격 */
+    margin: 10px;
+    margin-left: 156px;
+}
+main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;       /* 최대 너비를 설정하여 화면에 꽉 차지 않도록 함 */
+    padding: 20px;
+    box-sizing: border-box;
+}
+button {
+    width: 100px;
+    height: 35px;
+    background-color: white;
+    border:1.2px solid gray;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 전환 효과 */
+    font-weight: 600;
+    font-size: 12px;
+}
+button:hover {
+    background-color: #006cdf;
+    transform: scale(1.05);
+    color:white;
+}
+.submit-button {
+    background-color: #282828;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #009320;
+    transform: scale(1.05);
+}
+.cancel-button {
+    background-color: #fcfcfc;
+    color: rgb(86, 86, 86);
+}
+
+.cancel-button:hover {
+    background-color: #f81f35;
+    transform: scale(1.05);
+}
+.foot {
+    text-align: center;
+}
+>>>>>>> c02665db0c64fd07abe82cb67dbe3927f70ba6f5

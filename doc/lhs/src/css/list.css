@@ -176,3 +176,50 @@ body {
     justify-self: end;
     color: gray;
 }
+
+@media (max-width: 768px) {
+    .header .ul-list ul {
+        grid-template-columns: repeat(2, auto);
+        width: 70%;
+    }
+
+    .main-list-title {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .main-list-title h3 {
+        grid-column: 1 / 2;
+    }
+
+    .main-list-title a,
+    .main-list-title button {
+        grid-column: 1 / 2;
+        margin: 10px 0;
+    }
+
+    .main-list-content {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+    
+@media (max-width: 480px) {
+    .search-input {
+        width: 70vw;
+    }
+
+    .header .ul-list ul {
+        grid-template-columns: repeat(1, auto);
+        width: 90%;
+    }
+
+    .main-list-title {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .main-list-content {
+        grid-template-columns: 1fr;
+    }
+}
+

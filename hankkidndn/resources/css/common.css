@@ -41,6 +41,7 @@ background-color: transparent;
         display: flex;
         justify-content: space-between;
         padding: 0 20px;
+        margin-bottom: 20px;
     }
     .header-nav-content {
         display: flex;
@@ -69,10 +70,12 @@ background-color: transparent;
     .header-content {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 20px;
     }
     .header-nav-content {
         display: flex;
         justify-content: space-between;
+        
     }
     .btn-group {
         display: flex;
