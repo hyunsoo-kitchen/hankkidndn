@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.column_1to2 {
+    grid-column: 1 / 2;
+}
+.column_2to3 {
+    grid-column: 2/3;
+}
+.column_3to4 {
+    grid-column: 3/4;
+}
+.column_4to5 {
+    grid-column: 4/5;
+}
+.column_5to6 {
+    grid-column: 5/6;
+}
+
+
+@media screen and (min-width: 1045px) {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        border: 1px solid;
+    }
+    h1 {
+        margin-top: 1rem;
+        margin-bottom: 20px;
+        margin-left: 3rem;
+    }
+    textarea {
+        resize: none;
+    }
+    .grid_box {
+        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: 0.6fr 2fr 1fr;
+    }
+    .first_box {
+        display: grid;
+		grid-template-rows: 1fr 1fr 1fr;
+    }
+    .title_font {
+        font-size: 18px;
+        font-weight: 600;
+        width: 60%;
+        margin: 0 auto;
+    }
+    hr {
+        width: 80%;
+        margin: 1.5rem auto;
+        
+    }
+    h2 {
+        margin-top: 1rem;
+        margin-bottom: 20px;
+        margin-left: 3rem;
+    }
+    .add_btn {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 3rem;
+    }
+    .ingredient_box {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+        margin: 0 3vw;
+    }
+    .ingredient_content {
+        width: 95%;
+        text-align: center;
+    }
+}
