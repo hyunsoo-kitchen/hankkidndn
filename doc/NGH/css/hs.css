@@ -4,15 +4,227 @@
     box-sizing: border-box;
 }
 
-body, html {
-    display: grid;
-    height: 100%;
-    font-family: Arial, sans-serif;
-}
-
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+}
+
+.main_h2 {
+    text-align: center;
+}
+
+.section {
+    display: grid;
+    padding: 15px 0;
+}
+
+.column_1to2 {
+    padding: 5px 0;
+}
+
+.column_2to3to {
+    padding: 10px;
+    margin: 0px;
+    border: 1px solid black;
+    border-radius: 7px;
+    resize: none;
+}
+
+.column_2to3 {
+    padding: 10px;
+    margin: 0px;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+.ingredient_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
+}
+
+.note_input {
+    margin: 0 5px;
+    padding: 5px 0;
+}
+
+.note_input1 {
+    margin: 0 5px 0 0;
+}
+
+.add_btn {
+    margin: 5px 0;
+    justify-self: center;
+    padding: 5px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+h3 {
+    padding: 5px 0;
+}
+
+.cook-btn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.cook_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.content_list {
+    display: grid;
+    grid-template-columns: 0.1fr 0.8fr 0.2fr;
+}
+
+.content_list > p {
+    align-self: center;
+    justify-self: center;
+    padding: 0 20px;
+}
+
+.content_list > input {
+    padding: 0 10px;
+    align-self: center;
+}
+
+.list-input {
+    padding: 10px;
+    justify-self: center;
+}
+
+.text-list {
+    resize: none;
+}
+
+.end {
+    justify-self: end;
+}
+
+.cooktip {
+    display: grid;
+    padding: 10px 0;
+}
+
+.cooktip > textarea {
+    padding: 10px;
+    resize: none;
+}
+
+.actions {
+    text-align: center;
+}
+
+.actions button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.actions button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#saveAndShare {
+    background-color: #FFA500;
+    color: white;
+}
+
+#cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.remove_btn {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+}
+
+.list-btn-remove {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.list-btn-start {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+}
+
+
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .ingredient_row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .content_list {
+        grid-template-columns: 1fr;
+    }
+
+    .cook-btn {
+        grid-template-columns: 1fr;
+    }
+
+    .actions button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .add_btn, .remove_btn {
+        width: 100%;
+        padding: 10px 0; 
+    }
+}
+
+@media (min-width: 1025px) {
+    .container {
+        padding: 20px;
+    }
+
+    .ingredient_row {
+        grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
+    }
+
+    .content_list {
+        grid-template-columns: 0.1fr 0.8fr 0.2fr;
+    }
+
+    .cook-btn {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .actions button {
+        width: auto;
+        margin: 10px;
+    }
+
+    .add_btn, .remove_btn {
+        width: auto;
+        padding: 5px 25px; 
+    }
 }
