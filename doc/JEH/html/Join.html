@@ -7,8 +7,28 @@
     <link rel="stylesheet" href="../css/Join.css">
 </head>
 <body>
-    <div>
-        <h3>개인정보 입력</h3>
+<header>
+    <div class="header-container">
+      <div class="header-content">
+        <img class="img-logo" alt="logo" src="../img/logo.png">
+        <div>
+          <router-link to="/main"><h1>한끼든든</h1></router-link>
+        </div>
+        <!-- <div class="btn-group"> -->
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/login')" class="header-btn">로그인</button>
+            </div>
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/registration')" class="header-btn">가입하기</button>
+            </div>
+        <!-- </div> -->
+      </div>
+    </div>
+</header>
+
+    <div class="main-join">
+     <h3>개인정보 입력</h3>
+      <form action="join-2.html" method="get">
         <div class="main">
             <div class="join-box">
                 <label for="" class="custom-label">이름</label>
@@ -60,7 +80,9 @@
             <button type="reset" class="cancel-button">취소</button>
             <button type="submit" class="submit-button">다음단계</button>
         </div>
+      </form>
     </div>
+
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
         // 휴대전화 국가 코드 선택란
