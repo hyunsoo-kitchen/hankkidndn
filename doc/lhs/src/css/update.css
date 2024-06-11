@@ -4,12 +4,6 @@
         box-sizing: border-box;
     }
 
-    body, html {
-        display: grid;
-        place-items: center;
-        height: 100%;
-        font-family: Arial, sans-serif;
-    }
 
     .container {
         width: 100%;
