@@ -15,9 +15,11 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 20px;
         background-color: white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 5px auto 0;
+        padding: 20px;
+        width: 98%;
         
     }
     nav {
@@ -85,19 +87,21 @@ body {
     #hambuger{
         width: 40px;
         height: 40px;
-        background-image: url('/hambuger.png');
+        background-image: url('/menu-buger.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
+        margin: 5px 0px 0px 10px;
     }
     #close-hambuger {
         width: 40px;
         height: 40px;
-        background-image: url('/cancelblack.png');
+        background-image: url('/cross.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         display: none;
+        margin: 5px 0px 0px 10px;
     }
     .hambuger-nav-list ul {
         list-style-type: none;
