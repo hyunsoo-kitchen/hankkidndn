@@ -27,7 +27,6 @@ body {
     }
     nav ul {
         list-style-type: none;
-        margin-right: 4rem;
         padding: 0;
         display: flex;
         align-items: center;
@@ -91,7 +90,7 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        margin: 5px 0px 0px 10px;
+        margin: 7px 0px 0px 15px;
     }
     #close-hambuger {
         width: 40px;
@@ -101,7 +100,7 @@ body {
         background-size: cover;
         background-position: center;
         display: none;
-        margin: 5px 0px 0px 10px;
+        margin: 7px 0px 0px 15px;
     }
     .hambuger-nav-list ul {
         list-style-type: none;

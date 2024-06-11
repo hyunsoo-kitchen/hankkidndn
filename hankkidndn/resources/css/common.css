@@ -72,4 +72,20 @@ background-color: transparent;
     .btn-group {
         min-width: 10px;
     }
+    /* #login {
+        width: 32px;
+        height: 32px;
+        background-image: url('/login.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    #regist {
+        width: 32px;
+        height: 32px;
+        background-image: url('/regist.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    } */
 }
