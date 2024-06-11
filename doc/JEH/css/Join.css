@@ -103,7 +103,7 @@ h3 {
     margin-right: 380px;
 }
 .join-box {
-   
+ 
     flex-direction: row;
     align-items: center;
     margin-bottom: 20px;
@@ -381,7 +381,8 @@ main {
 }
 .page-btn {
     text-align: center;
-    margin-top: 70px;
+    margin-top: 40px;
+    padding-bottom: 30px;
 }
 .cancel-button {
     margin-right: 30px;
@@ -439,12 +440,17 @@ main {
 @media (min-width: 601px) {
     .common-property
     {
-        width: 450px; /* 너비를 원하는 값으로 설정 */
+        width: 430px; /* 너비를 원하는 값으로 설정 */
         height: 23px;
     }
     .unique-property1 {
         width: 320px;
         height: 23px;
     }
+     /* 입력 필드와 버튼이 함께 수평 정렬을 유지하도록 함 */
+     .join-box input,
+     .join-box button {
+         flex-shrink: 0;
+     }
 }
 

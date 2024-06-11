@@ -115,13 +115,15 @@ body, html {
 }
 
 
-.main_conatiner {
-    align-items: center;
+.main_container {
+    margin-top: 400px;
+    /* align-items: center; */
     display: flex;
     flex-direction: column;
-    max-width: 600px;
-    padding: 20px;
+    min-width: 300px;
+    padding: 10px;
     box-sizing: border-box;
+    max-width: 720px; /* 최대 너비 설정 */
 }
 
 .h3 {
@@ -159,9 +161,7 @@ body, html {
     padding: 0 20px; /* 좌우 여백 설정 */
 }
 
-.main_container {
-    max-width: 720px; /* 최대 너비 설정 */
-}
+
 
 .grid-container {
     display: grid;
@@ -192,7 +192,7 @@ textarea.custom-textarea {
 .page-btn {
     display: flex;
     justify-content: center;
-    margin-top: 10px; /* 페이지 버튼 위 여백 설정 */
+    margin-bottom: 3px; /* 페이지 버튼 위 여백 설정 */
 }
 
 .cancel-button,
