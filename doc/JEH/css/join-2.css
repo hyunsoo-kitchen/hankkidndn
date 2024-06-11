@@ -1,0 +1,260 @@
+.header-container {
+    position: fixed;
+    /* 추가 */
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+.header-content {
+    display: grid;
+    /* grid-template-columns: 4fr 12fr 3fr 3fr; */
+    /* 추가 */
+    grid-template-columns: 2fr 6fr 1fr 1fr;
+    width: 100%;
+    
+    justify-items: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.header-btn{
+    border: 0;
+    background-color: transparent;
+}
+@media screen and (min-width: 1045px) {
+    .img-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .header-container {
+        width: 98%;
+        margin: 5px auto 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-content {
+        display: grid;
+        /* 추가 */
+        grid-template-columns: 2fr 6fr 1fr 1fr;
+        /* grid-template-columns: 0.4fr 2fr 0.2fr 0.2fr; */
+
+        justify-items: center;
+        align-items: center;
+    }
+    .header-nav-content {
+        display: flex;
+        justify-content: space-between;
+    }
+    @media screen and (max-width: 1044px) {
+        .img-logo {
+            width: 50px;
+            height: 50px;
+        }
+        .header-container {
+            width: 98%;
+            margin: 5px auto 0;
+            padding: 10px 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header-content {
+            display: grid;
+            /* 추가 */
+            grid-template-columns: 2fr 6fr 1fr 1fr;
+            /* grid-template-columns: 0.6fr 2fr 0.3fr 0.3fr; */
+    
+            justify-items: center;
+            align-items: center;
+        }
+        .header-nav-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-group {
+            min-width: 10px;
+        }
+    }
+}   
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* container-box를 중앙에 배치하는 스타일 */
+.join-2_conatiner {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;     /* 수직 중앙 정렬 */
+    height: 100vh;           /* 화면 전체 높이 사용 */
+}
+
+.container-box {
+    display: flex;
+    flex-direction: column;  /* 수직 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    max-width: 800px;        /* 최대 너비 설정 */
+    width: 100%;             /* 너비 100% 설정 */
+    padding: 20px;           /* 여백 설정 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    background-color: #fff;  /* 배경색 설정 */
+    border-radius: 8px;      /* 모서리 둥글게 설정 */
+}
+
+.head_container {
+    padding: 18px;
+    margin-left: 60px;
+}
+
+
+.main_conatiner {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.h3 {
+    margin-top: 20px;
+}
+
+.custom-textarea {
+    width: 500px; /* 임의의 너비 설정 */
+    height: 250px; /* 텍스트 영역의 높이 설정 */
+    resize: none; /* 사용자가 크기를 조절할 수 없도록 설정 */
+    padding: 10px; /* 내부 여백 설정 */
+    border: 1px solid #a0a0a0; /* 테두리 설정 */
+    border-radius: 2px; /* 모서리를 둥글게 만듦 */
+    font-size: 14px; /* 글자 크기 설정 */
+    font-family: Arial, sans-serif; /* 글꼴 설정 */
+}
+
+
+.box-2 {
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 나열하도록 설정 */
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 나열하도록 설정 */
+    margin-left: 50px;
+}
+
+
+.join-2_conatiner {
+    justify-content: center; /* 화면 가로 중앙 정렬 */
+    align-items: center; /* 화면 세로 중앙 정렬 */
+    height: 100vh; /* 화면 세로 가득 채우기 */
+    padding: 0 20px; /* 좌우 여백 설정 */
+}
+
+.main_container {
+    max-width: 720px; /* 최대 너비 설정 */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 그리드 열 설정 */
+    gap: 20px; /* 그리드 간격 설정 */
+}
+
+.box-2 {
+    padding: 10px;
+}
+
+textarea.custom-textarea {
+    width: 100%;
+    resize: vertical;
+    margin-bottom: 15px; /* 텍스트 영역 아래 여백 설정 */
+}
+
+.option-btn {
+    display: flex;
+    gap: 10px; /* 버튼 사이 간격 설정 */
+}
+
+.option-btn label {
+    display: flex;
+    align-items: center; /* 버튼을 세로 중앙 정렬 */
+}
+
+.page-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* 페이지 버튼 위 여백 설정 */
+}
+
+.cancel-button,
+.submit-button {
+    margin: 0 10px; /* 버튼 좌우 여백 설정 */
+}
+
+/* 취소, 다음단계 버튼 */
+
+.cancel-button,
+.submit-button {
+    padding: 3px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+.cancel-button,
+.submit-button {
+    border: 1px solid black;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    background-color: black;
+    color: white;
+}
+.submit-button:hover {
+    width: 100px;
+    height: 25px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    background-color: #007BFF;
+    color: white;
+    border: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.cancel-button:hover {
+    width: 90px;
+    height: 25px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    background-color: #fd5781;
+    color: white;
+    border: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.cancel-button:active,
+.submit-button:active {
+    transform: translateY(0);
+}
+.cancel-button {
+    margin-right: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.page-btn {
+    text-align: center;
+    margin-top: 70px;
+}

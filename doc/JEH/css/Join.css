@@ -1,3 +1,86 @@
+.header-container {
+    position: fixed;
+    /* 추가 */
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+.header-content {
+    display: grid;
+    /* grid-template-columns: 4fr 12fr 3fr 3fr; */
+    /* 추가 */
+    grid-template-columns: 2fr 6fr 1fr 1fr;
+    width: 100%;
+    
+    justify-items: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.header-btn{
+    border: 0;
+    background-color: transparent;
+    }
+@media screen and (min-width: 1045px) {
+    .img-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .header-container {
+        width: 98%;
+        margin: 5px auto 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-content {
+        display: grid;
+        /* 추가 */
+        grid-template-columns: 2fr 6fr 1fr 1fr;
+        /* grid-template-columns: 0.4fr 2fr 0.2fr 0.2fr; */
+
+        justify-items: center;
+        align-items: center;
+    }
+    .header-nav-content {
+        display: flex;
+        justify-content: space-between;
+    }
+@media screen and (max-width: 1044px) {
+    .img-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .header-container {
+        width: 98%;
+        margin: 5px auto 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-content {
+        display: grid;
+        /* 추가 */
+        grid-template-columns: 2fr 6fr 1fr 1fr;
+        /* grid-template-columns: 0.6fr 2fr 0.3fr 0.3fr; */
+
+        justify-items: center;
+        align-items: center;
+    }
+    .header-nav-content {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn-group {
+        min-width: 10px;
+    }
+}
+}
 body, html {
     margin: 0;
     padding: 0;
@@ -7,9 +90,14 @@ body, html {
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     }
-        
+.main-join {
+    margin: 120px auto 0;
+    width: 800px;
+    
+
+}
 h3 {
     margin: 50px;
     margin-right: 380px;
@@ -94,8 +182,7 @@ input[type="text"],
 .unique-property3
 {
     padding-top: 14px;
-    width: 120px;
-    margin-left: 32px;
+    width: 130px;
 }
 /* 주소 검색 */
 /* 모달 스타일 */
@@ -176,12 +263,47 @@ input[type="text"],
 }
 
 
-.cancel-button:hover,
-.submit-button:hover,
+
 .address-btn:hover,
 .double-chk:hover {
     transform: translateY(-2px);
+    width: 100px;
+    height: 34px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    background-color: #007BFF;
+    color: white;
+    border: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.submit-button:hover {
+    width: 100px;
+    height: 25px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    background-color: #007BFF;
+    color: white;
+    border: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.cancel-button:hover {
+    width: 90px;
+    height: 25px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    background-color: #fd5781;
+    color: white;
+    border: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 
 .cancel-button:active,
 .submit-button:active,
