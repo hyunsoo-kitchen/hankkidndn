@@ -1,0 +1,185 @@
+.header-container {
+    position: fixed;
+    /* 추가 */
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+.header-content {
+    display: grid;
+    /* grid-template-columns: 4fr 12fr 3fr 3fr; */
+    /* 추가 */
+    grid-template-columns: 2fr 6fr 1fr 1fr;
+    width: 100%;
+    
+    justify-items: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.header-btn{
+    border: 0;
+    background-color: transparent;
+    }
+@media screen and (min-width: 1045px) {
+    .img-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .header-container {
+        width: 98%;
+        margin: 5px auto 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-content {
+        display: grid;
+        /* 추가 */
+        grid-template-columns: 2fr 6fr 1fr 1fr;
+        /* grid-template-columns: 0.4fr 2fr 0.2fr 0.2fr; */
+
+        justify-items: center;
+        align-items: center;
+    }
+    .header-nav-content {
+        display: flex;
+        justify-content: space-between;
+    }
+@media screen and (max-width: 1044px) {
+    .img-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .header-container {
+        width: 98%;
+        margin: 5px auto 0;
+        padding: 10px 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-content {
+        display: grid;
+        /* 추가 */
+        grid-template-columns: 2fr 6fr 1fr 1fr;
+        /* grid-template-columns: 0.6fr 2fr 0.3fr 0.3fr; */
+
+        justify-items: center;
+        align-items: center;
+    }
+    .header-nav-content {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn-group {
+        min-width: 10px;
+    }
+}
+}
+
+body {
+    max-width: 1200px;
+    align-items: center;
+    text-align: center;
+}
+
+/* 부모 컨테이너에 대해 반응형 크기 설정 */
+.mainpage-img {
+    width: 100%;
+    height: auto; /* 부모 컨테이너의 너비에 맞추어 이미지 높이를 자동으로 조절 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분을 숨김 */
+}
+
+/* 이미지에 반응형 크기 설정 */
+.mainpage-img img {
+    width: 100%;
+    height: auto; /* 이미지 비율을 유지하며 너비에 맞춰 조절 */
+    display: block; /* 이미지 하단의 공백 제거 */
+}
+.food-box {
+    display: flex;
+    flex-direction: column; /* 세로로 아이템을 정렬합니다. */
+    align-items: center; /* 아이템들을 수직 방향 가운데 정렬합니다. */
+    text-align: center; /* 텍스트를 수평 가운데 정렬합니다. */
+}
+.grid-container {
+    display: flex;
+}
+.grid-container1 {
+    display: flex;
+    flex-wrap: wrap; /* 요소들이 넘칠 경우 자동으로 다음 줄에 배치됩니다. */
+}
+.Korean-img,
+.Chinese-img,
+.Japanese-img,
+.Western-img,
+.bakery-img {
+    max-width: 100%; /* 이미지가 부모 요소의 너비를 초과하지 않도록 최대 너비를 지정합니다. */
+    height: auto; /* 가로 크기에 비례하여 세로 크기가 자동 조절됩니다. */
+}
+
+s
+.food-box {
+    width: 200px; /* 각 요소의 고정 너비를 설정합니다. */
+    margin: 10px; /* 각 요소 사이의 간격을 조절합니다. */
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
+}
+.food-box img,
+.food-box a,
+.food-box span {
+    width: 100%; /* 부모 요소의 너비에 맞추어 아이템의 너비를 설정합니다. */
+    margin-bottom: 5px; /* 각 아이템 사이의 간격을 조절합니다. */
+}
+
+.hello-write {
+    margin: 50px;
+    color:rgb(75, 75, 75);
+    text-align: center;
+}
+
+.mini-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 요소들을 수직 가운데 정렬합니다. */
+}
+
+.mini-logo img {
+    width: 40px; /* 이미지의 너비를 조정합니다. */
+    height: auto; /* 이미지의 높이를 자동으로 설정합니다. */
+}
+
+.mini-logo span {
+    margin-top: 5px; /* span 태그의 위쪽 여백을 설정합니다. */
+}
+.hamburger-green {
+    display: grid; /* 그리드 레이아웃을 사용합니다. */
+    grid-template-columns: repeat(2, 1fr); /* 두 개의 열을 가진 그리드를 만듭니다. */
+    gap: 20px; /* 그리드 아이템 간의 간격을 설정합니다. */
+}
+
+/* 각 이미지 요소의 너비를 조정합니다. */
+.hamburger-green .r-img-1 img,
+.hamburger-green .r-img-2 img,
+.hamburger-green .r-img-3 img,
+.hamburger-green .r-img-4 img {
+    width: 100%; /* 이미지가 부모 요소의 너비를 가득 채우도록 합니다. */
+    height: auto; /* 이미지의 세로 비율을 유지합니다. */
+}
+.mini-logo {
+    display: flex;
+    align-items: center; /* 이미지와 텍스트를 수직 정렬합니다. */
+}
+
+/* 각 이미지 요소의 너비를 조정합니다. */
+.b-img-1 img,
+.b-img-2 img,
+.b-img-3 img {
+    max-width: 100%; /* 이미지가 부모 요소의 너비를 넘지 않도록 합니다. */
+    height: auto; /* 이미지의 세로 비율을 유지합니다. */
+}
+
