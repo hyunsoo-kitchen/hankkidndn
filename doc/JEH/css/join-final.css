@@ -1,32 +1,24 @@
-.header-container {
-    position: fixed;
-    /* 추가 */
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    z-index: 1000;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.header-content {
+
+body {
+    /* padding: 10px 10px; */
+    /* margin: auto; */
+    -ms-overflow-style: none;
+    /* height: 100%;
     display: grid;
-    /* grid-template-columns: 4fr 12fr 3fr 3fr; */
-    /* 추가 */
-    grid-template-columns: 2fr 6fr 1fr 1fr;
-    width: 100%;
-    
-    justify-items: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 20px;
-}
+    place-items: center; */
+} 
 
 .header-btn{
     border: 0;
     background-color: transparent;
     }
 @media screen and (min-width: 1045px) {
+    /* Header */
     .img-logo {
         width: 50px;
         height: 50px;
@@ -40,10 +32,7 @@
     }
     .header-content {
         display: grid;
-        /* 추가 */
-        grid-template-columns: 2fr 6fr 1fr 1fr;
-        /* grid-template-columns: 0.4fr 2fr 0.2fr 0.2fr; */
-
+        grid-template-columns: 0.4fr 2fr 0.2fr 0.2fr;
         justify-items: center;
         align-items: center;
     }
@@ -51,7 +40,9 @@
         display: flex;
         justify-content: space-between;
     }
+}
 @media screen and (max-width: 1044px) {
+    /* Header */
     .img-logo {
         width: 50px;
         height: 50px;
@@ -65,10 +56,7 @@
     }
     .header-content {
         display: grid;
-        /* 추가 */
-        grid-template-columns: 2fr 6fr 1fr 1fr;
-        /* grid-template-columns: 0.6fr 2fr 0.3fr 0.3fr; */
-
+        grid-template-columns: 0.6fr 2fr 0.3fr 0.3fr;
         justify-items: center;
         align-items: center;
     }
@@ -80,22 +68,17 @@
         min-width: 10px;
     }
 }
-}
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    }
-    
-body {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    }
-.main-join {
-    margin: 120px auto 0;
-    width: 800px;
-    
+
+
+
+.join_final_main_container {
+    margin: 38px auto 0;
+    padding-top: 10px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
 
 }
 h3 {
@@ -182,7 +165,7 @@ input[type="text"],
 .unique-property3
 {
     padding-top: 14px;
-    width: 130px;
+    width: 150px;
 }
 /* 주소 검색 */
 /* 모달 스타일 */
@@ -228,7 +211,7 @@ input[type="text"],
 .unique-property2-2,
 .unique-property2-3 {
     padding: 7px;
-    width: 50px;
+    width: 74px;
     margin-left: 15px;
 }
 .unique-property2-1 {
@@ -371,7 +354,7 @@ input:focus {
     margin: 10px;
     margin-left: 156px;
 }
-main {
+.join_final_textarea_box {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -441,11 +424,11 @@ main {
     .common-property
     {
         width: 430px; /* 너비를 원하는 값으로 설정 */
-        height: 23px;
+        height: 45px;
     }
     .unique-property1 {
         width: 320px;
-        height: 23px;
+        height: 45px;
     }
      /* 입력 필드와 버튼이 함께 수평 정렬을 유지하도록 함 */
      .join-box input,

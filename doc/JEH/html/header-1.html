@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>header</title>
+    <link rel="stylesheet" href="../css/header-1.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+          <div class="header-content">
+            <img class="img-logo" alt="logo" src="../img/logo.png">
+            <div>
+              <router-link to="/main"><h1>한끼든든</h1></router-link>
+            </div>
+            <!-- <div class="btn-group"> -->
+                <div class="btn-group" v-if="!$store.state.authFlg">
+                  <button @click="$router.push('/login')" class="header-btn">로그인</button>
+                </div>
+                <div class="btn-group" v-if="!$store.state.authFlg">
+                  <button @click="$router.push('/registration')" class="header-btn">가입하기</button>
+                </div>
+            <!-- </div> -->
+          </div>
+        </div>
+    </header>
+</body>
+</html>
