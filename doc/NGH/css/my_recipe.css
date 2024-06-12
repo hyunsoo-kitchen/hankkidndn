@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.title_select {
+    font-weight: 700;
+}
+.title_none_select {
+    color: gray;
+}
+/* 화면 클때 css */
+@media screen and (min-width: 850px) {
+    /* 메인컨테이너 */
+
+}
+/* 화면 중간 사이즈일 때  */
+@media screen and (max-width: 849px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
+/* 화면 제일 작은 사이즈일 때  */
+@media screen and (max-width: 600px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
