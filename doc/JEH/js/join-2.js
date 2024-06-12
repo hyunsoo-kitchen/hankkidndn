@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const agree1Yes = document.getElementById('agree_1_yes');
-    const agree1No = document.getElementById('agree_1_no');
-    const agree2Yes = document.getElementById('agree_2_yes');
-    const agree2No = document.getElementById('agree_2_no');
-    const nextButton = document.getElementById('next_button');
+    const agree1Yes = document.querySelector('#agree_1_yes');
+    const agree1No = document.querySelector('#agree_1_no');
+    const agree2Yes = document.querySelector('#agree_2_yes');
+    const agree2No = document.querySelector('#agree_2_no');
+    const nextButton = document.querySelector('next_button');
 
     function checkAgreement() {
         if (agree1Yes.checked && agree2Yes.checked) {
@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     nextButton.addEventListener('click', function(event) {
         if (!agree1Yes.checked || !agree2Yes.checked) {
-            event.preventDefault(); // prevent form submission if conditions are not met
+            event.preventDefault();
         } else {
-            // Redirect to the join-final page
             window.location.href = 'join-final.html';
         }
     });
