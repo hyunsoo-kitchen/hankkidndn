@@ -143,9 +143,9 @@
         color: white;
     }
 }
-/* 화면 작을 때*/
+/* 화면 중간 사이즈일 때*/
 @media screen and (max-width: 849px) {
-    .main-container {
+    .main_container {
         grid-template-columns: 1fr;
     }
     .sub_title_content {
@@ -252,8 +252,9 @@
         color: white;
     }
 }
+/* 화면 제일 작을 때 */
 @media screen and (max-width: 600px) {
-    .main-container {
+    .main_container {
         grid-template-columns: 1fr;
     }
     .sub_title_content {
