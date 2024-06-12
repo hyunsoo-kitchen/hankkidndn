@@ -2,8 +2,8 @@
     <!-- Header -->
     <header>
         <div class="nav-container">
-            <div @click="openModal" id="hambuger"></div>
-            <div @click="closeModal" id="close-hambuger"></div>
+            <div @click="openModal" id="hambuger" :style="hambuger"></div>
+            <div @click="closeModal" id="close-hambuger" :style="closeHambuger"></div>
             <nav v-if="!isMobileView" id="nav-list">
                 <ul>
                     <li><a href="#">추천</a></li>
@@ -52,23 +52,25 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const isModalOpen = ref(false);
+const hambuger = ref('');
+const closeHambuger = ref('');
 const isMobileView = ref(window.innerWidth <= 1044);
 
 function openModal() {
-	const hambuger = document.querySelector('#hambuger');
 	const closeHambuger = document.querySelector('#close-hambuger');
 	isModalOpen.value = true;
-	hambuger.style.display = 'none';
-	closeHambuger.style.display = 'block';
+	hambuger.value = 'none';
+	closeHambuger.value = 'block';
 }
 
 function closeModal() {
 	const hambuger = document.querySelector('#hambuger');
 	const closeHambuger = document.querySelector('#close-hambuger');
 	isModalOpen.value = false;
-	hambuger.style.display = 'block';
-	closeHambuger.style.display = 'none';
+	hambuger.value = 'block';
+	closeHambuger.value = 'none';
 }
+
 
 function handleResize() {
   isMobileView.value = window.innerWidth <= 1044;
