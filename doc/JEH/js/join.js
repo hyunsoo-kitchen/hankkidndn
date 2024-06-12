@@ -63,5 +63,9 @@
             document.getElementById("UserAdd2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
         }
     }).open();
+    document.getElementById('phone2').addEventListener('input', function (e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
 }
  

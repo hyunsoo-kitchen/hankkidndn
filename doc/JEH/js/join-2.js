@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!agree1Yes.checked || !agree2Yes.checked) {
             event.preventDefault(); // prevent form submission if conditions are not met
         } else {
-            // Redirect to the board page
-            window.location.href = 'board.html';
+            // Redirect to the join-final page
+            window.location.href = 'join-final.html';
         }
     });
 });

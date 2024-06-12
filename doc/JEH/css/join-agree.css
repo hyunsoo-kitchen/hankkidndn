@@ -80,8 +80,7 @@ body {
 .join_agree_main {
     display: flex;
     justify-content: center; 
-    align-items: center;     
-    height: 100vh;          
+    align-items: center;           
 }
 
 .join_agree_main_container {
@@ -89,7 +88,8 @@ body {
     width: 100%;            
     padding: 20px;          
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
-    border-radius: 8px;    
+    border-radius: 8px;
+    margin-top: 40px;    
 }
 /* title부분 */
 .join_agree_title {
