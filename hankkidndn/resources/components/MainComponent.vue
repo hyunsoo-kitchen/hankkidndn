@@ -10,7 +10,7 @@
                     <li class="dropdown">
                         <a href="#">레시피</a>
                         <ul class="dropdown-content">
-                            <li><a href="#">한식</a></li>
+                            <li><a @click="$router.push('/recipelist')">한식</a></li>
                             <li><a href="#">중식</a></li>
                             <li><a href="#">양식</a></li>
                             <li><a href="#">일식</a></li>
@@ -33,7 +33,7 @@
             <ul class="dropdown-content">
                 <li class="dropdown-content-li"><a href="#">추천</a></li>
                 <hr>
-                <li class="dropdown-content-li"><a href="#">한식</a></li>
+                <li @click="$router.push('/recipelist')" class="dropdown-content-li">한식</li>
                 <li class="dropdown-content-li"><a href="#">중식</a></li>
                 <li class="dropdown-content-li"><a href="#">양식</a></li>
                 <li class="dropdown-content-li"><a href="#">일식</a></li>
