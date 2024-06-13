@@ -33,8 +33,7 @@ return new class extends Migration
             $table->foreign('board_id')->references('id')->on('boards');
         });
 
-        Schema::table('images', function(Blueprint $table) {
-            $table->foreign('recipe_board_id')->references('id')->on('recipe_boards');
+        Schema::table('board_images', function(Blueprint $table) {
             $table->foreign('board_id')->references('id')->on('boards');
         });
 
@@ -49,7 +48,11 @@ return new class extends Migration
             $table->foreign('comment_id')->references('id')->on('comments');
         });
 
-        Schema::table('recipe_details', function(Blueprint $table) {
+        Schema::table('recipe_stuffs', function(Blueprint $table) {
+            $table->foreign('recipe_board_id')->references('id')->on('recipe_boards');
+        });
+
+        Schema::table('recipe_programs', function(Blueprint $table) {
             $table->foreign('recipe_board_id')->references('id')->on('recipe_boards');
         });
     }
@@ -62,8 +65,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('recipe_boards', function(Blueprint $table) {
-            $table->dropforeign(['user_id']);
-            $table->dropforeign(['board_type_id']);
+            // $table->dropforeign(['user_id']);
+            $table->dropforeign(['boards_type_id']);
         });
         
         Schema::table('recipe_likes', function(Blueprint $table) {
@@ -81,8 +84,7 @@ return new class extends Migration
             $table->dropforeign(['board_id']);
         });
 
-        Schema::table('images', function(Blueprint $table) {
-            $table->dropforeign(['recipe_board_id']);
+        Schema::table('board_images', function(Blueprint $table) {
             $table->dropforeign(['board_id']);
         });
 
@@ -97,7 +99,11 @@ return new class extends Migration
             $table->dropforeign(['comment_id']);
         });
 
-        Schema::table('recipe_details', function(Blueprint $table) {
+        Schema::table('recipe_stuffs', function(Blueprint $table) {
+            $table->dropforeign(['recipe_board_id']);
+        });
+
+        Schema::table('recipe_programs', function(Blueprint $table) {
             $table->dropforeign(['recipe_board_id']);
         });
     }

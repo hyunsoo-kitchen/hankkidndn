@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('recipe_stuffs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('board_id')->unsigned();
-            $table->string('img_path', 100);
+            $table->bigInteger('recipe_board_id')->unsigned();
+            $table->string('stuff', 15);
+            $table->string('stuff_gram', 15);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('recipe_stuffs');
     }
 };

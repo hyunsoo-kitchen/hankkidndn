@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Recipe_boards extends Model
+class recipe_stuffs extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,12 +16,9 @@ class Recipe_boards extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'boards_type_id',
-        'likes_num',
-        'title',
-        'content',
-        'video_link',
+        'recipe_board_id',
+        'stuff',
+        'stuff_gram',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
