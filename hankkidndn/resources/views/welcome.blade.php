@@ -7,11 +7,11 @@
     {{-- 헤더안에 csrf 토큰생성 --}}
     <meta name="csrf-token" content="{{ csrf_token() }}"> 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-        <title>Hankkidndn</title>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <title>Hankkidndn</title>
 </head>
 <body>
     <div id = "app">
