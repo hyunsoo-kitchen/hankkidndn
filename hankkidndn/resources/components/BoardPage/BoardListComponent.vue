@@ -1,7 +1,7 @@
 <template>
 <div class="container">
         <div class="header">
-            <img class="main-img" src="/doc/lhs/src/img/Rectangle 112.png">
+            <img class="main-img" src="../../../public/img/Rectangle 112.png">
             <div class="ul-list">
                 <ul>
                     <li class="line">자유게시판</li>
@@ -20,7 +20,7 @@
                             <option value="nickname">닉네임</option>
                         </select>
                         <input type="text">
-                        <button type="submit"><img src="/doc/lhs/src/img/free-icon-search-interface-symbol-54481 3.png"></button>
+                        <button type="submit"><img src="../../../public/img/search.png"></button>
                     </div>
                 </form>
             </div>
@@ -81,7 +81,7 @@
             <div class="number">3</div>
             <div class="number">4</div>
             <div class="number">5</div>
-            <img src="/doc/lhs/src/img/Polygon 1.png">
+            <img src="../../../public/img/next.png">
         </div>
         </div>
     </div>

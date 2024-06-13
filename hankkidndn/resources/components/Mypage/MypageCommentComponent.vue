@@ -1,7 +1,7 @@
 <template>
 <div class="container">
             <!-- 헤드 이미지 -->
-            <img class="main-img" src="/doc/lhs/src/img/Rectangle 136.png">
+            <img class="main-img" src="../../../public/img/Rectangle 136.png">
             <h2 class="page_title">마이페이지</h2>
             <div class="main_container">
                 <div class="sub_title">
@@ -12,7 +12,7 @@
                 <div class="main_content">
                     <!-- 내 레시피 -->
                 <div class="main_my_page">
-                    <img src="/doc/lhs/src/img/112312313.png">
+                    <img src="../../../public/img/otterface.png">
                     <h2>이현수님 안녕하세요.</h2>
                     <div class="main_comment">
                         <p>내가 쓴 글 34건</p>
