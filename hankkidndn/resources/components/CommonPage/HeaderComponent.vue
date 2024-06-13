@@ -68,5 +68,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-    @import url('../css/common.css');
+    @import url('/hankkidndn/resources/css/header.css');
 </style>
