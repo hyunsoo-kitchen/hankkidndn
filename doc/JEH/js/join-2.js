@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const agree1No = document.querySelector('#agree_1_no');
     const agree2Yes = document.querySelector('#agree_2_yes');
     const agree2No = document.querySelector('#agree_2_no');
-    const nextButton = document.querySelector('next_button');
+    const nextButton = document.querySelector('#next_button');
 
     function checkAgreement() {
         if (agree1Yes.checked && agree2Yes.checked) {
@@ -26,3 +26,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+

@@ -5,10 +5,9 @@
     box-sizing: border-box;
 }
 footer{
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 98%;
+    margin: 5px auto 0;
+    padding: 10px 20px;
     border: 1px solid;
 }
 .footer_container {

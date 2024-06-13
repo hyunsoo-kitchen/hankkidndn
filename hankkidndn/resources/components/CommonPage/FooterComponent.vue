@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>footer</title>
-    <link rel="stylesheet" href="../css/footer.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-    </style>
-</head>
-<body>
+<template>
     <footer>
         <div class="footer_container">
             <div class="img_box">
                 <div>
-                    <img src="../img/logo.png" alt="">
+                    <img src="/logo.png" alt="">
                 </div>
                 <div class="logo_name">
                     한끼든든
@@ -34,8 +23,12 @@
             <div class="copyright">
                 Copyright 2024 Hankkidndn all rights reserved
             </div>
-
         </div>
     </footer>
-</body>
-</html>
+</template>
+<script upset>
+
+</script>
+<style scoped src="../../css/footer.css">
+    
+</style>

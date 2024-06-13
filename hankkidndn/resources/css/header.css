@@ -24,10 +24,10 @@ background-color: transparent;
 @media screen and (min-width: 1045px) {
     /* Header */
     /* Header */
-    .img-logo {
+    /* .img-logo {
         width: 50px;
         height: 50px;
-    }
+    } */
     .header-container {
         width: 98%;
         margin: 5px auto 0;

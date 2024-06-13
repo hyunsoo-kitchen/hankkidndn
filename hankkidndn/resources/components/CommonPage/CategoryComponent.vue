@@ -10,6 +10,7 @@
                         <li class="dropdown">
                             <button>레시피</button>
                             <ul class="dropdown-content">
+                                <li><button @click="$router.push('/recipelist')">전체</button></li>
                                 <li><button @click="$router.push('/recipelist')">한식</button></li>
                                 <li><button @click="$router.push('/recipelist')">중식</button></li>
                                 <li><button @click="$router.push('/recipelist')">양식</button></li>

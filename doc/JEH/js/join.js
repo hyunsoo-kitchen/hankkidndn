@@ -27,6 +27,22 @@
                  break;
          }
  });
+//비밀번호 체크
+function validatePasswords() {
+    var password = document. querySelector('#password').value;
+    var confirmPassword = document.querySelector('#confirm_password').value;
+    var errorMessage = document.querySelector('#errorMessage');
+
+    if (password !== confirmPassword) {
+        errorMessage.style.display = 'block';
+        return false;  // 폼 제출을 막음
+    }
+
+    errorMessage.style.display = 'none';
+    return true;  // 폼 제출을 허용
+}
+
+
  function execDaumPostcode() {
     // 새로운 Daum 우편번호 찾기 객체를 생성하고, 완료 시 호출될 콜백 함수를 설정합니다.
     new daum.Postcode({
@@ -80,4 +96,42 @@
     });
     
 }
+// form제출
+function validateForm(e) {
+    var password = document.querySelector('#password').value;
+    var confirmPassword = document.querySelector('#confirm_password').value;
+    var errorMessage = document.querySelector('#error_message');
+
+    if (password !== confirmPassword) {
+        errorMessage.style.display = 'block'; // 비밀번호가 일치하지 않을 때 에러 메시지 표시
+        return false; // 폼 제출을 막음
+    }
+
+    errorMessage.style.display = 'none'; // 비밀번호가 일치할 때 에러 메시지 숨김
+    return true; // 폼 제출을 허용
+}
+
+document.querySelector('#password').addEventListener('input', validatePasswords);
+    document.querySelector('#confirm_password').addEventListener('input', validatePasswords);
+
+    function validatePasswords() {
+        var password = document.querySelector('#password').value;
+        var confirmPassword = document.querySelector('#confirm_password').value;
+        var errorMessage = document.querySelector('#error_message');
+
+        if (password !== confirmPassword) {
+            errorMessage.style.display = 'block'; // 비밀번호가 일치하지 않을 때 에러 메시지 표시
+        } else {
+            errorMessage.style.display = 'none'; // 비밀번호가 일치할 때 에러 메시지 숨김
+        }
+    }
+
+// 기본주소 막기
+// JavaScript 예시
+const addressInput = document.querySelector('#UserAdd1');
+
+function setAddressValue(newAddress) {
+    addressInput.value = newAddress;
+}
+
  
