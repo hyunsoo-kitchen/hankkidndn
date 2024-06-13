@@ -1,0 +1,31 @@
+* {
+    font-family: "Jua", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+footer{
+    width: 98%;
+    margin: 5px auto 0;
+    padding: 10px 20px;
+    border: 1px solid;
+}
+.footer_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.img_box {
+    margin: 0 auto;
+}
+.logo_name {
+    text-align: center;
+}
+.address {
+    display: flex;
+}
+.footer_content {
+    margin: auto;
+}
+.copyright {
+    margin: auto;
+}
