@@ -165,29 +165,9 @@ textarea.custom-textarea {
     color: white;
 }
 /* 취소,다음버튼 hover적용 */
-.cancel-button:hover {
-    width: 90px;
-    height: 25px;
-    font-size: 15px;
-    border: 0;
-    border-radius: 2px;
-    outline: none;
-    background-color: #fd5781;
-    color: white;
-    border: 700;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
+.cancel-button:hover,
 .submit-button:hover {
-    width: 100px;
-    height: 25px;
-    font-size: 15px;
-    border: 0;
-    border-radius: 2px;
-    outline: none;
-    background-color: #007BFF;
-    color: white;
-    border: 700;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
 }
 .cancel-button:active,
 .submit-button:active {
