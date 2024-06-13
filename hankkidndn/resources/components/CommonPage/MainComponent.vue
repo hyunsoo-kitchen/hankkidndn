@@ -60,6 +60,6 @@
 
 </script>
 
-<style>
-    @import url('/hankkidndn/resources/css/main.css');
+<style scoped src="../../css/main.css">
+    
 </style>

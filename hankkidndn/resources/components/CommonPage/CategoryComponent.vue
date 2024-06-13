@@ -89,6 +89,6 @@ onBeforeUnmount(() => {
 });
 
 </script>
-<style>
-    @import url('/hankkidndn/resources/css/category.css');
+<style scoped src="../../css/category.css">
+    
 </style>

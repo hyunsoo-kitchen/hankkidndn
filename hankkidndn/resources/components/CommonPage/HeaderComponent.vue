@@ -67,6 +67,6 @@ onBeforeUnmount(() => {
 
 </script>
 
-<style>
-    @import url('/hankkidndn/resources/css/header.css');
+<style scoped src="../../css/header.css">
+    
 </style>

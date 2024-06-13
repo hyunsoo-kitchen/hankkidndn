@@ -128,6 +128,6 @@
 <script setup>
 
 </script>
-<style>
-    @import url('/hankkidndn/resources/css/recipedetail.css');
+<style scoped src="../../css/recipedetail.css">
+    
 </style>

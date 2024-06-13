@@ -32,6 +32,6 @@
 
 </script>
 
-<style>
-    @import url('/hankkidndn/resources/css/login.css');
+<style scoped src="../../css/login.css">
+
 </style>

@@ -196,6 +196,6 @@
 
 </script>
 
-<style>
-    @import url('../css/foodlist.css');
+<style scoped src="../../css/recipelist.css">
+    
 </style>
