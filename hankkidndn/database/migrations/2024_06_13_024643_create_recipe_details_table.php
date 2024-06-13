@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('recipe_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('recipe_board_id');
+            $table->bigInteger('recipe_board_id')->unsigned();
             $table->string('stuff', 15);
             $table->string('stuff_gram', 15);
             $table->string('img_path', 100);

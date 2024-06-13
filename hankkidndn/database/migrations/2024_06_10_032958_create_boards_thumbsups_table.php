@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('boards_likes', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('board_id');
-            $table->char('like_chk', 1)->default(0);
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('board_id')->unsigned();
+            $table->char('like_chk', 1)->default(1);
             $table->timestamps();
         });
     }

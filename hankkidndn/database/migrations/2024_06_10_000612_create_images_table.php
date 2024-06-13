@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->integer('recipe_board_id');
-            $table->integer('board_id');
+            $table->bigInteger('board_id')->unsigned();
             $table->string('img_path', 100);
             $table->timestamps();
             $table->softDeletes();

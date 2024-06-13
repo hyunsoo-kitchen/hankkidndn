@@ -129,5 +129,5 @@
 
 </script>
 <style scoped src="../../css/recipedetail.css">
-    
+    @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>
