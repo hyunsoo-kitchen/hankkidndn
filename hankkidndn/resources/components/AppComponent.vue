@@ -10,7 +10,7 @@
     </footer>
 </template>
 <script setup>
-import HeaderComponent from './CommonPage/HeaderComponent.vue';
+    import HeaderComponent from './CommonPage/HeaderComponent.vue';
 </script>
 <style>
     
