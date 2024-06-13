@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+footer{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid;
+}
+.footer_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.footer_content {
+    display: flex;
+    flex-direction: column;
+}
+.address {
+    display: flex;
+    
+}
