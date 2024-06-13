@@ -67,6 +67,102 @@ if (password !== confirmPassword) {
     errorMessage.style.display = 'none'; // 비밀번호가 일치할 때 에러 메시지 숨김
 }
 }
+// 아이디 입력 필드 제한, 중복확인 버튼
+// 비밀번호 입력 필드 제한
+document.addEventListener('DOMContentLoaded', function() {
+    const userIdInput = document.querySelector('#user_id');
+    const idErrorMessage = document.querySelector('#id-error-message');
+    const passwordInput = document.getElementById('password');
+    const passwordErrorMessage = document.getElementById('password-error-message');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const confirmPasswordErrorMessage = document.getElementById('confirm-password-error-message');
+
+    // 아이디 입력 제한
+    userIdInput.addEventListener('input', function() {
+        const regex = /^[a-zA-Z0-9]{4,12}$/;
+        if (!regex.test(userIdInput.value)) {
+            idErrorMessage.style.display = 'block';
+            idErrorMessage.textContent = '4-12자의 영문 대소문자와 숫자만 입력 가능합니다.';
+        } else {
+            idErrorMessage.style.display = 'none';
+        }
+    });
+    // 비밀번호 입력 제한
+    passwordInput.addEventListener('input', function() {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(passwordInput.value)) {
+            passwordErrorMessage.style.display = 'block';
+        } else {
+            passwordErrorMessage.style.display = 'none';
+        }
+    });
+
+    // 비밀번호 입력 시 항상 에러 메시지 표시
+    passwordInput.addEventListener('focus', function() {
+        passwordErrorMessage.style.display = 'block';
+    });
+
+    passwordInput.addEventListener('blur', function() {
+        if (passwordInput.value === '') {
+            passwordErrorMessage.style.display = 'none';
+        }
+    });
+
+
+     // 비밀번호 입력 시 항상 에러 메시지 표시
+    //  passwordInput.addEventListener('input', function() {
+    //     passwordErrorMessage.style.display = 'block';
+    //     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    //     if (!regex.test(passwordInput.value)) {
+    //         passwordErrorMessage.textContent = '최소 8자, 하나 이상의 대문자, 소문자, 숫자, 특수 문자를 포함해야 합니다.';
+    //     } else {
+    //         passwordErrorMessage.textContent = '사용 가능한 비밀번호입니다.';
+    //         passwordErrorMessage.style.color = 'green';
+    //     }
+    // });
+    // 비밀번호 확인 입력 제한
+    confirmPasswordInput.addEventListener('input', function() {
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordErrorMessage.style.display = 'block';
+        } else {
+            confirmPasswordErrorMessage.style.display = 'none';
+        }
+    });
+});
+
+// function checkDuplicateId() {
+//     const userId = document.getElementById('user_id').value;
+//     const idErrorMessage = document.getElementById('id-error-message');
+
+//     // 예시 중복 확인 로직. 실제 구현 시 서버와 통신 필요.
+//     const existingIds = ['testuser', 'sampleuser']; // 예시 데이터
+//     if (existingIds.includes(userId)) {
+//         idErrorMessage.style.display = 'block';
+//         idErrorMessage.textContent = '이미 사용 중인 아이디입니다.';
+//     } else {
+//         idErrorMessage.style.display = 'block';
+//         idErrorMessage.textContent = '사용 가능한 아이디입니다.';
+//         idErrorMessage.style.color = 'green';
+//     }
+// }
+
+function checkDuplicateNickname() {
+    
+    const nickname = document.getElementById('nickname').value;
+    const nicknameErrorMessage = document.getElementById('nickname-error-message');
+
+    // 예시 중복 확인 로직. 실제 구현 시 서버와 통신 필요.
+    const existingNicknames = ['nickname1', 'nickname2']; // 예시 데이터
+    if (existingNicknames.includes(nickname)) {
+        nicknameErrorMessage.style.display = 'block';
+        nicknameErrorMessage.textContent = '이미 사용 중인 닉네임입니다.';
+    } else {
+        nicknameErrorMessage.style.display = 'block';
+        nicknameErrorMessage.textContent = '사용 가능한 닉네임입니다.';
+        nicknameErrorMessage.style.color = 'green';
+    }
+}
+
 
 
  
