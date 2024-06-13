@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BoardController;
+use App\Http\Controllers\RecipeBoardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function() {
     return view('welcome');
 })->where('any', '^(?!api).*$');
+
+Route::get('/api/recipe/list={num}', [RecipeBoardController::class, 'getList']);
+Route::get('/api/board/list/{num}', [BoardController::class, 'getList']);

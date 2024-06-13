@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import MainComponent from '../components/CommonPage/MainComponent.vue';
 import LoginComponent from '../components/UserPage/LoginComponent.vue';
-import FoodlistComponent from '../components/RecipePage/RecipeListComponent.vue';
+import RecipeListComponent from '../components/RecipePage/RecipeListComponent.vue';
 import RecipeDetailComponent from '../components/RecipePage/RecipeDetailComponent.vue';
 import RecipeInsertComponent from '../components/RecipePage/RecipeInsertComponent.vue';
 import RecipeUpdateComponent from '../components/RecipePage/RecipeUpdateComponent.vue';
@@ -42,8 +42,8 @@ const routes = [
         component: RegistCompliteComponent,
     },
     {
-        path: '/recipe/list',
-        component: FoodlistComponent,
+        path: '/recipe=:num',
+        component: RecipeListComponent,
     },
     {
         path: '/recipe/insert',
@@ -58,7 +58,7 @@ const routes = [
         component: RecipeDetailComponent,
     },
     {
-        path: '/board/list',
+        path: '/board=:num',
         component: BoardListComponent,
     },
     {

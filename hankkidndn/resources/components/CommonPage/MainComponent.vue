@@ -6,6 +6,7 @@
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
     <div class="body-container">
         <div class="category">
+            <!-- 카테고리 돌릴거 -->
             <div>
                 <img class="category-img" src="" alt="">
                 <p class="text-gray text-thick">한식</p>
@@ -17,6 +18,7 @@
         <img class="logo" src="" alt="">
         <h2 class="text-center text-gray">최신 레시피</h2>
         <div class="new-recipe">
+            <!-- 새로운 레시피 돌릴거 -->
             <div class="new-recipe-card">
                 <img class="new-recipe-img" src="" alt="">
                 <div class="new-recipe-header">
@@ -36,6 +38,7 @@
         <img class="logo" src="" alt="">
         <h2 class="text-center text-gray">베스트 레시피</h2>
         <div class="best-recipe">
+            <!-- 베스트 레시피 돌릴거 -->
             <div class="best-recipe-card">
                 <img class="best-recipe-img" src="" alt="">
                 <div class="best-recipe-info" >
