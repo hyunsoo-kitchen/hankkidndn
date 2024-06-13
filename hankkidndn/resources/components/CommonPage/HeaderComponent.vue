@@ -10,7 +10,7 @@
                   <button @click="$router.push('/login')" class="header-btn" id="login">로그인</button>
                 </div>
                 <div class="btn-group" v-if="!$store.state.authFlg">
-                  <button @click="$router.push('/registration')" class="header-btn" id="regist">가입하기</button>
+                  <button @click="$router.push('/regist/agree')" class="header-btn" id="regist">가입하기</button>
                 </div>
                 <div class="btn-group" v-else>
                   <button @click="$store.dispatch('logout')" class="header-btn myInfo"></button>
