@@ -1,0 +1,77 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    font-family: "Jua", sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title_name{
+    padding: 20px 10px;
+}
+
+h2{
+    font-weight: 500;
+}
+
+.main_title{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5vw;
+}
+
+.buttons{
+    padding: 20px 10px;
+    justify-self: end;
+}
+
+button.update, button.delete {
+    padding: 10px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.update {
+    background-color: #ccc;
+    margin: 0 5px;
+}
+
+button.delete {
+    background-color: #333;
+    color: white;
+    margin: 0 5px;
+}
+
+.main_title_content_title{
+    padding: 5px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.main_title_content > h2{
+    padding: 10px;  
+}
+
+.name{
+    justify-self: end;
+}
+
+.main_content{
+    padding: 10px;
+    min-height: 800px;
+}
+
+p{
+    font-size: 1.1rem;
+    font-weight: 500;
+}

@@ -1,9 +1,80 @@
 <template>
-
+<div class="container">
+            <!-- 헤드 이미지 -->
+            <img class="main-img" src="/doc/lhs/src/img/Rectangle 136.png">
+            <h2 class="page_title">마이페이지</h2>
+            <div class="main_container">
+                <div class="sub_title">
+                    <div class="sub_title_content title_select">개인정보수정</div>
+                    <div class="sub_title_content title_none_select">내 레시피</div>
+                    <div class="sub_title_content title_none_select">내 댓글</div>
+                </div>
+                <div class="main_content">
+                    <!-- 개인정보수정 -->
+                    <div class="main-box">
+                        <div class="title">이름</div>
+                        <div class="sub-title-main">
+                            <input type="text">
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">아이디</div>
+                        <div class="sub-title-main">
+                            <input type="text">
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">비밀번호</div>
+                        <div class="sub-title-main">
+                            <input type="password">
+                            <button class="change">비밀번호변경</button>
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">주소</div>
+                        <div class="sub-title-street">
+                            <input class="input3" type="text">
+                            <input class="input1" type="text">
+                            <input class="input2" type="text">
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">휴대전화</div>
+                        <div class="sub-title-number">
+                            <div class="phone-number">
+                                <select name="phone-num" id="phone-num">
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                    <option value="016">016</option>
+                                    <option value="02">02</option>
+                                    <option value="053">053</option>
+                                </select>
+                                <input class="phone" type="text">
+                                <input class="phone" type="text">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-box">
+                        <div class="title">닉네임</div>
+                        <div class="sub-title-main">
+                            <input type="text">
+                            <button class="change">닉네임변경</button>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="cancel">취소</button>
+                        <button class="complete">완료</button>
+                    </div>
+                </div>
+            </div>
+    </div>
 </template>
 <script upset>
 
 </script>
-<style>
-    
+<style scoped src="../../css/my_update.css">
+     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>
