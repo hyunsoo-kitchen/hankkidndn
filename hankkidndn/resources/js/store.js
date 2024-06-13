@@ -47,3 +47,19 @@ const store = createStore({
 });
 
 export default store;
+
+// 회원가입 처리 action
+// registration(context) {
+//     const url = '/api/registration';
+//     const data = new FormData(document.querySelector('#registForm'));
+
+//     axios.post(url, data)
+//     .then(response => {
+//         console.log(response.data) //TODO
+//         router.replace('/login');
+//     })
+//     .catch(error => {
+//         console.log(error.response.data); //TODO
+//         alert('회원가입에 실패했습니다 (' + error.response.data.code + ')');
+//     });
+// }
