@@ -12,15 +12,21 @@ footer{
     border: 1px solid;
 }
 .footer_container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
-.footer_content {
-    display: flex;
-    flex-direction: column;
+.img_box {
+    margin: 0 auto;
+}
+.logo_name {
+    text-align: center;
 }
 .address {
     display: flex;
-    
+}
+.footer_content {
+    margin: auto;
+}
+.copyright {
+    margin: auto;
 }
