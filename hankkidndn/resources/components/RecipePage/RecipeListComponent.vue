@@ -2,7 +2,7 @@
    <div class="container">
         <div class="header">
             <div class="main-img">
-                <img class="img-main" src="/doc/lhs/src/img/Rectangle 57.png">
+                <img class="img-main" src="../../../public/img/Rectangle 57.png">
             </div>
             <div class="input-btn">
                 <div>
@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     <button class="search" type="submit">
-                        <img src="/doc/lhs/src/img/free-icon-search-interface-symbol-54481 3.png" alt="">
+                        <img src="../../../public/img/search.png">
                     </button>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             </div>
         <div class="main-list-content">
             <div class="card">
-                <img src="/doc/lhs/src/img/Rectangle 66.png">
+                <img>
                 <div class="card-title">빵빵빵빵빵빵빵</div>
                 <div class="card-name">이현수달</div>
                 <div class="star-view">
@@ -184,7 +184,7 @@
             <div class="number">3</div>
             <div class="number">4</div>
             <div class="number">5</div>
-            <img src="/doc/lhs/src/img/Polygon 1.png">
+            <img src="../../../public/img/next.png">
         </div>
     </div>
     </div>
