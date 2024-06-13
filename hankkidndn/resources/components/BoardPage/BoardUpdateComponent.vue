@@ -1,7 +1,7 @@
 <template>
 <div class="container">
         <div class="header">
-            <img class="main_img" src="../src/img/Rectangle 112.png">
+            <img class="main_img" src="">
         </div>
         <div class="main_list">
             <h2>글 작성</h2>

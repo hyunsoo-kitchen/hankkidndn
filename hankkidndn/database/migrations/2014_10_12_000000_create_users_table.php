@@ -21,12 +21,12 @@ return new class extends Migration
             $table->string('u_nickname', 50);
             $table->string('gender', 1 )->comment('0: 남자, 1: 여자');
             $table->string('u_email', 100)->unique();
-            $table->integer('u_phone_num', 11 );
-            $table->integer('u_post', 5);
+            $table->string('u_phone_num', 15 );
+            $table->integer('u_post');
             $table->string('u_address', 50);
             $table->string('u_detail_address', 50);
             $table->date('birth_at');
-            $table->timestamp('nickname_update_at')->default('');
+            $table->timestamp('nickname_update_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

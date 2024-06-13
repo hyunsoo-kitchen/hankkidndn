@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('recipe_boards', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('boards_type_id', 1);
+            $table->integer('boards_type_id');
             $table->integer('likes_num')->default(0);
             $table->string('title', 100);
             $table->string('content', 1000);

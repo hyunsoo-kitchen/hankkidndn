@@ -5,7 +5,16 @@ import FoodlistComponent from '../components/RecipePage/RecipeListComponent.vue'
 import RecipeDetailComponent from '../components/RecipePage/RecipeDetailComponent.vue';
 import RecipeInsertComponent from '../components/RecipePage/RecipeInsertComponent.vue';
 import RecipeUpdateComponent from '../components/RecipePage/RecipeUpdateComponent.vue';
-
+import BoardListComponent from '../components/BoardPage/BoardListComponent.vue';
+import BoardInsertComponent from '../components/BoardPage/BoardInsertComponent.vue';
+import BoardUpdateComponent from '../components/BoardPage/BoardUpdateComponent.vue';
+import BoardDetailComponent from '../components/BoardPage/BoardDetailComponent.vue';
+import RegistComponent from '../components/UserPage/RegistComponent.vue';
+import RegistAgreeComponent from '../components/UserPage/RegistAgreeComponent.vue';
+import RegistCompliteComponent from '../components/UserPage/RegistCompliteComponent.vue';
+import MypageComponent from '../components/Mypage/MypageComponent.vue';
+import MypageCommentComponent from '../components/Mypage/MypageCommentComponent.vue';
+import MypageRecipeComponent from '../components/Mypage/MypageRecipeComponent.vue';
 
 const routes = [
     {
@@ -21,20 +30,60 @@ const routes = [
         component: LoginComponent,
     },
     {
-        path: '/recipelist',
+        path: '/regist',
+        component: RegistComponent,
+    },
+    {
+        path: '/regist/agree',
+        component: RegistAgreeComponent,
+    },
+    {
+        path: '/regist/comp',
+        component: RegistCompliteComponent,
+    },
+    {
+        path: '/recipe/list',
         component: FoodlistComponent,
     },
     {
-        path: '/recipeinsert',
+        path: '/recipe/insert',
         component: RecipeInsertComponent,
     },
     {
-        path: '/recipeupdate',
+        path: '/recipe/update',
         component: RecipeUpdateComponent,
     },
     {
-        path: '/recipedetail',
+        path: '/recipe/detail',
         component: RecipeDetailComponent,
+    },
+    {
+        path: '/board/list',
+        component: BoardListComponent,
+    },
+    {
+        path: '/board/insert',
+        component: BoardInsertComponent,
+    },
+    {
+        path: '/board/update',
+        component: BoardUpdateComponent,
+    },
+    {
+        path: '/board/detail',
+        component: BoardDetailComponent,
+    },
+    {
+        path: '/mypage',
+        component: MypageComponent,
+    },
+    {
+        path: '/mypage/comment',
+        component: MypageCommentComponent,
+    },
+    {
+        path: '/mypage/recipe',
+        component: MypageRecipeComponent,
     },
 ];
 

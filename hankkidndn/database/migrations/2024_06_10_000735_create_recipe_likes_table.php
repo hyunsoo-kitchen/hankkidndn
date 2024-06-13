@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('recipe_board_id');
-            $table->integer('like_chk', 1)->default(0);
+            $table->char('like_chk', 1)->default(0);
             $table->timestamps();
         });
     }

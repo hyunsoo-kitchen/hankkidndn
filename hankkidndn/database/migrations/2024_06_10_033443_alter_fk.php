@@ -48,6 +48,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('comment_id')->references('id')->on('comments');
         });
+
+        Schema::table('recipe_details', function(Blueprint $table) {
+            $table->foreign('recipe_board_id')->references('id')->on('recipe_boards');
+        });
     }
 
     /**
@@ -91,6 +95,10 @@ return new class extends Migration
         Schema::table('comments_likes', function(Blueprint $table) {
             $table->dropforeign(['user_id']);
             $table->dropforeign(['comment_id']);
+        });
+
+        Schema::table('recipe_details', function(Blueprint $table) {
+            $table->dropforeign(['recipe_board_id']);
         });
     }
 };

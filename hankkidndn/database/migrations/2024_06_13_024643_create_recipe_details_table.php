@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('boards_likes', function (Blueprint $table) {
+        Schema::create('recipe_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('board_id');
-            $table->char('like_chk', 1)->default(0);
+            $table->integer('recipe_board_id');
+            $table->string('stuff', 15);
+            $table->string('stuff_gram', 15);
+            $table->string('img_path', 100);
+            $table->string('program_content', 100);
+            $table->string('video_link', 100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boards_likes');
+        Schema::dropIfExists('recipe_details');
     }
 };
