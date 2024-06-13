@@ -1,4 +1,8 @@
 <template>
+    <CategoryComponent/>
+    <div class="header">
+        <img class="header-img" src="" alt="">
+    </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
     <div class="body-container">
         <div class="category">
@@ -57,6 +61,7 @@
 </template>
 
 <script setup>
+import CategoryComponent from './CategoryComponent.vue';
 
 </script>
 
