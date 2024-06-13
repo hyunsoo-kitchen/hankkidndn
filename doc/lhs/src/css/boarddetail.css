@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+
+body{
+    font-family: "Jua", sans-serif;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -11,7 +16,11 @@
 }
 
 .title_name{
-    padding: 20px 10px
+    padding: 20px 10px;
+}
+
+h2{
+    font-weight: 500;
 }
 
 .main_title{
