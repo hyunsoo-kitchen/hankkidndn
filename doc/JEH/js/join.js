@@ -69,14 +69,16 @@ if (password !== confirmPassword) {
 }
 // 아이디 입력 필드 제한, 중복확인 버튼
 // 비밀번호 입력 필드 제한
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {             
     const userIdInput = document.querySelector('#user_id');
     const idErrorMessage = document.querySelector('#id-error-message');
     const passwordInput = document.getElementById('password');
     const passwordErrorMessage = document.getElementById('password-error-message');
     const confirmPasswordInput = document.getElementById('confirm_password');
     const confirmPasswordErrorMessage = document.getElementById('confirm-password-error-message');
-
+    const nicknameInput = document.querySelector('#nickname');
+    const nicknameError = document.querySelector('#nickname-error');
+    const nextButton = document.querySelector('#next_button');
     // 아이디 입력 제한
     userIdInput.addEventListener('input', function() {
         const regex = /^[a-zA-Z0-9]{4,12}$/;
@@ -107,7 +109,27 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordErrorMessage.style.display = 'none';
         }
     });
-
+ // 닉네임 입력란의 입력이 변경될 때마다 유효성을 검사합니다.
+ nicknameInput.addEventListener('input', function() {
+    if (nicknameInput.validity.patternMismatch) {
+        nicknameError.style.display = 'block';
+    } else {
+        nicknameError.style.display = 'none';
+    }
+    checkAgreement();
+});
+// 다음 단계 버튼 클릭 시 실행될 함수를 정의합니다.
+nextButton.addEventListener('click', function(event) {
+    // 하나라도 동의하지 않은 체크박스가 있으면
+    if (!agree1Yes.checked || !agree2Yes.checked || nicknameInput.validity.patternMismatch) {
+        // 기본 동작(페이지 전환)을 막고 경고창을 띄웁니다.
+        event.preventDefault();
+        alert('모든 약관에 동의하고 올바른 닉네임을 입력해야 합니다.');
+    } else {
+        // 모든 약관에 동의했으면 다음 페이지로 이동합니다.
+        window.location.href = 'join-final.html';
+    }
+});
 
      // 비밀번호 입력 시 항상 에러 메시지 표시
     //  passwordInput.addEventListener('input', function() {
@@ -146,10 +168,11 @@ document.addEventListener('DOMContentLoaded', function() {
 //     }
 // }
 
+// 보류
 function checkDuplicateNickname() {
     
-    const nickname = document.getElementById('nickname').value;
-    const nicknameErrorMessage = document.getElementById('nickname-error-message');
+    const nickname = document.querySelector('#nickname').value;
+    const nicknameErrorMessage = document.querySelector('#nickname-error-message');
 
     // 예시 중복 확인 로직. 실제 구현 시 서버와 통신 필요.
     const existingNicknames = ['nickname1', 'nickname2']; // 예시 데이터

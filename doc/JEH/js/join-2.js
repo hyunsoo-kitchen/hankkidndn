@@ -11,7 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const agree2No = document.querySelector('#agree_2_no');
     const nextButton = document.querySelector('#next_button');
 
-  
+  // 이용약관 체크박스를 기본적으로 비동의 상태로 설정합니다.
+  agree1Yes.checked = false;
+  agree1No.checked = true;
+  agree2Yes.checked = false;
+  agree2No.checked = true;
+  nextButton.disabled = true;  // 다음 버튼도 초기에는 비활성화 상태로 설정합니다.
+
     function checkAgreement() {
         if (agree1Yes.checked && agree2Yes.checked) {
             nextButton.disabled = false;
