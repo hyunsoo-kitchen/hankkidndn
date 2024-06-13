@@ -61,5 +61,5 @@
 </script>
 
 <style>
-    @import url('../css/board.css');
+    @import url('/hankkidndn/resources/css/main.css');
 </style>

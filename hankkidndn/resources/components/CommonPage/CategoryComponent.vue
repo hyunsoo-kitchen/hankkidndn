@@ -90,5 +90,5 @@ onBeforeUnmount(() => {
 
 </script>
 <style>
-    @import url('../css/main.css');
+    @import url('/hankkidndn/resources/css/category.css');
 </style>

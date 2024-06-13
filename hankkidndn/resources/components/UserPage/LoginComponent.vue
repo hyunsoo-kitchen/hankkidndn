@@ -33,5 +33,5 @@
 </script>
 
 <style>
-    @import url('../css/login.css');
+    @import url('/hankkidndn/resources/css/login.css');
 </style>
