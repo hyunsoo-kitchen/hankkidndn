@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\RecipeBoardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,6 @@ Route::get('/{any}', function() {
 
 Route::get('/api/recipe/list={num}', [RecipeBoardController::class, 'getList']);
 Route::get('/api/board/list/{num}', [BoardController::class, 'getList']);
+
+// 회원가입
+Route::post('/api/registration', [UserController::class, 'registration']);

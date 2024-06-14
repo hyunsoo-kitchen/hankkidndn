@@ -15,39 +15,40 @@ class UserController extends Controller
     public function registration(Request $request) {
         //리퀘스트 데이터 획득
         $requestData = $request->all();
-
+        Log::debug($requestData);
         //유효성 검사
-        //유효성 검사는 수정 할 수도 있음 TODO
-        $validator = Validator::make(
-            $requestData
-            ,[
-                'account' => ['required', 'min:4', 'max:20', 'unique:users', 'regex:/^[a-zA-Z0-9]+$/' ]
-                ,'password' => ['required', 'min:4', 'max:20', 'regex:/^[a-zA-Z0-9!@#$%^]+$/u' ]
-                ,'password_chk' => ['same:password']
-                ,'name' => ['required', 'min:2', 'max:20', 'regex:/^[가-힣]+$/u']
-                ,'gender' => ['required', 'regex:/^[0-1]{1}$/']
-                ,'profile' => ['required', 'image']
-            ] 
-        );
+        // $validator = Validator::make(
+        //     $requestData
+        //     ,[
+        //         'u_name' => ['required', 'min:2', 'max:20']
+        //         ,'birth_at' => ['required']
+        //         ,'u_id' => ['required', 'min:4', 'max:20', 'unique:users']
+        //         ,'u_password' => ['required', 'min:4', 'max:20']
+        //         ,'password_chk' => ['same:u_password']
+        //         ,'u_post' => ['required']
+        //         ,'u_address' => ['required']
+        //         ,'u_address_detail' => ['required']
+        //         ,'u_phone_num' =>['required']
+        //         ,'u_nickname' =>['required']
+        //         ,'gender' => ['required']
+        //     ] 
+        // );
 
-        // 유효성 검사 실패 체크
-        if($validator->fails()) {
-            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
-            throw new MyValidateException('E01');
-        }
-
+        // Log::debug('2');
+        // // 유효성 검사 실패 체크
+        // if($validator->fails()) {
+        //     Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+        //     throw new MyValidateException('E01');
+        //     }
+            
+        //     Log::debug('3');
         // 작성 데이터 생성
         $insertData = $request->all();
-
-        // 파일 저장
-        $insertData['profile'] = $request->file('profile')->store('profile');
-
         // 비밀번호 설정
-        $insertData['password'] = Hash::make($request->password);
-
+        $insertData['u_password'] = Hash::make($request->password);
         // 인서트 처리
         $userInfo = Users::create($insertData);
-
+        Log::debug('4');
         $responseData = [
             'code' => '0'
             ,'msg' => '로그아웃 완료'
@@ -55,6 +56,8 @@ class UserController extends Controller
         ];
 
         return response()->json($responseData, 200);
+
+
     }
 }
 
