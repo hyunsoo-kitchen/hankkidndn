@@ -98,6 +98,7 @@ h2 {
 .new-recipe-img {
     opacity: 0.5;
     width: 100%;
+    height: 100%;
 }
 
 .new-recipe-header {
@@ -148,7 +149,7 @@ h2 {
 }
 
 .best-recipe-profile {
-    width: 100%;
+    width: 80%;
     border-radius: 50%;
     margin: 10px;
 }

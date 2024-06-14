@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RecipeStuffs;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class RecipeStuffsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        RecipeStuffs::factory()->count(50)->create();
     }
 }

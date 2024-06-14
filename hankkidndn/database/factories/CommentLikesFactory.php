@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Boards_thumbsup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comments_thumsup>
  */
-class BoardsLikesFactory extends Factory
+class CommentsLikeFactory extends Factory
 {
     /**
      * Define the model's default state.

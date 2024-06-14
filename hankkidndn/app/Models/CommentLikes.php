@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Boards_likes extends Model
+class CommentLikes extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class Boards_likes extends Model
      */
     protected $fillable = [
         'user_id',
-        'board_id',
+        'comment_id',
         'like_chk',
     ];
 

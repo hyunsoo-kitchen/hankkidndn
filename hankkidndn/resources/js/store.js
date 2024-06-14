@@ -10,12 +10,24 @@ const store = createStore({
             userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
             recipeListData: [],
             BoardListData:[],
+            MainNewData:[],
+            MainBestData:[],
         }
     },
     mutations: {
+        // 메인 최근레시피 출력
+        setMainBoardData(state, data) {
+            state.MainNewData = data;
+        },
+        setMainBestData(state, data) {
+            console.log(data);
+            state.MainBestData = data
+        },
+        // 레시피 리스트 저장
         setRecipeBoardData(state, data) {
             state.recipeListData = data;
         },
+        // 질문,자유 게시판 등 리스트 저장
         setBoardData(state, data) {
             state.BoardListData = data;
         }
@@ -30,9 +42,21 @@ const store = createStore({
         },
     },
     actions: {
-        // 보드 페이지 이동
+        getMainNewList(context) {
+            const url = '/api/main'
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data.bestData)
+                context.commit('setMainBoardData', response.data.newData)
+                context.commit('setMainBestData', response.data.bestData)
+            })
+            .catch();
+        },
+
+        // 레시피 페이지 이동 후 해당 게시글 획득
         getRecipeList(context, num) {
-            const url = '/recipe=' + num;
+            const url = '/api/recipe=' + num;
 
             axios.get(url)
             .then(response => {
@@ -44,8 +68,9 @@ const store = createStore({
             .catch()
         },
 
+        // 보드 페이지 이동 후 해당 게시글 획득
         getBoardList(context, num) {
-            const url = '/board=' + num;
+            const url = '/api/board=' + num;
 
             axios.get(url)
             .then(response => {

@@ -4,21 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class recipe_stuffs extends Model
+class RecipeLikes extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'recipe_board_id',
-        'stuff',
-        'stuff_gram',
+        'like_chk',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
