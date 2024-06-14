@@ -12,14 +12,16 @@
                 <div class="main_content">
                     <!-- 내 레시피 -->
                     <div class="main_my_page">
-                        <img src="../../../public/img/otterface.png">
-                        <h2>이현수님 안녕하세요.</h2>
+                        <img :src="$store.state.userInfo.profile">
+                        <h2>{{ $store.state.userInfo.nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
                             <p>내가 쓴 글 34건</p>
                             <p>내가 쓴 댓글 40건</p>
                         </div>
                     </div>
-                    <div class="coment_list"></div>
+                    <div class="coment_list">
+                        
+                    </div>
                 </div>
             </div>
     </div>

@@ -28,7 +28,7 @@
         <div class="main-list">
             <div class="main-list-title">
                 <h3>총 몇 개의 레시피가 있습니다.</h3>
-                <a href="">레시피 작성하기</a>
+                <button href="">레시피 작성하기</button>
                 <button>별점순</button>
                 <button>최신순</button>
             </div>
