@@ -114,10 +114,14 @@
 
 .text-btn {
     grid-column: 2 / 3;
-    width: 100px;
-    border-radius: 30px;
-    background-color: white;
-    height: 30px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
 }
 
 .number-container {

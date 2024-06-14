@@ -20,6 +20,10 @@ border: 0;
 background-color: transparent;
 }
 
+button{
+    cursor: pointer;;
+}
+
 
 @media screen and (min-width: 1045px) {
     /* Header */
