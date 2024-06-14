@@ -1,48 +1,4 @@
-     // 휴대전화 국가 코드
-     const phoneCodeSelect = document.querySelector("#phone-code");
-
-     // 휴대전화 국가 코드 선택 시 이벤트 핸들러
-     phoneCodeSelect.addEventListener("change", function() {
-         // 선택한 국가 코드 값
-         const selectedCode = phoneCodeSelect.value;
-         
-         // 국가 코드에 따라 휴대전화 입력란의 placeholder 변경
-         const phone2Input = document.querySelector("#phone2");
-         const phone3Input = document.querySelector("#phone3");
-         
-         switch(selectedCode) {
-             case "010":
-                 phone2Input.placeholder = "1234";
-                 phone3Input.placeholder = "5678";
-                 break;
-             case "011":
-                 phone2Input.placeholder = "9876";
-                 phone3Input.placeholder = "5432";
-                 break;
-             case "012":
-                 phone2Input.placeholder = "4567";
-                 phone3Input.placeholder = "8901";
-                 break;
-             default:
-                 break;
-         }
- });
-//비밀번호 체크
-function validatePasswords() {
-    var password = document. querySelector('#password').value;
-    var confirmPassword = document.querySelector('#confirm_password').value;
-    var errorMessage = document.querySelector('#errorMessage');
-
-    if (password !== confirmPassword) {
-        errorMessage.style.display = 'block';
-        return false;  // 폼 제출을 막음
-    }
-
-    errorMessage.style.display = 'none';
-    return true;  // 폼 제출을 허용
-}
-
-
+// 우편번호 주소찾기
  function execDaumPostcode() {
     // 새로운 Daum 우편번호 찾기 객체를 생성하고, 완료 시 호출될 콜백 함수를 설정합니다.
     new daum.Postcode({
@@ -86,52 +42,150 @@ function validatePasswords() {
         }
     // 우편번호 찾기 창을 엽니다.
     }).open();
-
-    // 휴대폰번호 숫자만
-    document.querySelector('#phone2').addEventListener('input', function (e) {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-    document.querySelector('#phone3').addEventListener('input', function (e) {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-    
 }
-// form제출
-function validateForm(e) {
+
+// 휴대폰번호 숫자만 입력되게.
+document.querySelector('#phone2').addEventListener('input', function (e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+document.querySelector('#phone3').addEventListener('input', function (e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// 비밀번호 위아래 일치
+document.querySelector('#password').addEventListener('input', validatePasswords);
+document.querySelector('#confirm_password').addEventListener('input', validatePasswords);
+
+function validatePasswords() {
     var password = document.querySelector('#password').value;
     var confirmPassword = document.querySelector('#confirm_password').value;
     var errorMessage = document.querySelector('#error_message');
 
-    if (password !== confirmPassword) {
-        errorMessage.style.display = 'block'; // 비밀번호가 일치하지 않을 때 에러 메시지 표시
-        return false; // 폼 제출을 막음
-    }
-
+if (password !== confirmPassword) {
+    errorMessage.style.display = 'block'; // 비밀번호가 일치하지 않을 때 에러 메시지 표시
+} else {
     errorMessage.style.display = 'none'; // 비밀번호가 일치할 때 에러 메시지 숨김
-    return true; // 폼 제출을 허용
 }
-
-document.querySelector('#password').addEventListener('input', validatePasswords);
-    document.querySelector('#confirm_password').addEventListener('input', validatePasswords);
-
-    function validatePasswords() {
-        var password = document.querySelector('#password').value;
-        var confirmPassword = document.querySelector('#confirm_password').value;
-        var errorMessage = document.querySelector('#error_message');
-
-        if (password !== confirmPassword) {
-            errorMessage.style.display = 'block'; // 비밀번호가 일치하지 않을 때 에러 메시지 표시
+}
+// 아이디 입력 필드 제한, 중복확인 버튼
+// 비밀번호 입력 필드 제한
+document.addEventListener('DOMContentLoaded', function() {             
+    const userIdInput = document.querySelector('#user_id');
+    const idErrorMessage = document.querySelector('#id-error-message');
+    const passwordInput = document.getElementById('password');
+    const passwordErrorMessage = document.getElementById('password-error-message');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const confirmPasswordErrorMessage = document.getElementById('confirm-password-error-message');
+    const nicknameInput = document.querySelector('#nickname');
+    const nicknameError = document.querySelector('#nickname-error');
+    const nextButton = document.querySelector('#next_button');
+    // 아이디 입력 제한
+    userIdInput.addEventListener('input', function() {
+        const regex = /^[a-zA-Z0-9]{4,12}$/;
+        if (!regex.test(userIdInput.value)) {
+            idErrorMessage.style.display = 'block';
+            idErrorMessage.textContent = '4-12자의 영문 대소문자와 숫자만 입력 가능합니다.';
         } else {
-            errorMessage.style.display = 'none'; // 비밀번호가 일치할 때 에러 메시지 숨김
+            idErrorMessage.style.display = 'none';
         }
+    });
+    // 비밀번호 입력 제한
+    passwordInput.addEventListener('input', function() {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(passwordInput.value)) {
+            passwordErrorMessage.style.display = 'block';
+        } else {
+            passwordErrorMessage.style.display = 'none';
+        }
+    });
+
+    // 비밀번호 입력 시 항상 에러 메시지 표시
+    passwordInput.addEventListener('focus', function() {
+        passwordErrorMessage.style.display = 'block';
+    });
+
+    passwordInput.addEventListener('blur', function() {
+        if (passwordInput.value === '') {
+            passwordErrorMessage.style.display = 'none';
+        }
+    });
+ // 닉네임 입력란의 입력이 변경될 때마다 유효성을 검사합니다.
+ nicknameInput.addEventListener('input', function() {
+    if (nicknameInput.validity.patternMismatch) {
+        nicknameError.style.display = 'block';
+    } else {
+        nicknameError.style.display = 'none';
     }
+    checkAgreement();
+});
+// 다음 단계 버튼 클릭 시 실행될 함수를 정의합니다.
+nextButton.addEventListener('click', function(event) {
+    // 하나라도 동의하지 않은 체크박스가 있으면
+    if (!agree1Yes.checked || !agree2Yes.checked || nicknameInput.validity.patternMismatch) {
+        // 기본 동작(페이지 전환)을 막고 경고창을 띄웁니다.
+        event.preventDefault();
+        alert('모든 약관에 동의하고 올바른 닉네임을 입력해야 합니다.');
+    } else {
+        // 모든 약관에 동의했으면 다음 페이지로 이동합니다.
+        window.location.href = 'join-final.html';
+    }
+});
 
-// 기본주소 막기
-// JavaScript 예시
-const addressInput = document.querySelector('#UserAdd1');
+     // 비밀번호 입력 시 항상 에러 메시지 표시
+    //  passwordInput.addEventListener('input', function() {
+    //     passwordErrorMessage.style.display = 'block';
+    //     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    //     if (!regex.test(passwordInput.value)) {
+    //         passwordErrorMessage.textContent = '최소 8자, 하나 이상의 대문자, 소문자, 숫자, 특수 문자를 포함해야 합니다.';
+    //     } else {
+    //         passwordErrorMessage.textContent = '사용 가능한 비밀번호입니다.';
+    //         passwordErrorMessage.style.color = 'green';
+    //     }
+    // });
+    // 비밀번호 확인 입력 제한
+    confirmPasswordInput.addEventListener('input', function() {
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordErrorMessage.style.display = 'block';
+        } else {
+            confirmPasswordErrorMessage.style.display = 'none';
+        }
+    });
+});
 
-function setAddressValue(newAddress) {
-    addressInput.value = newAddress;
+// function checkDuplicateId() {
+//     const userId = document.getElementById('user_id').value;
+//     const idErrorMessage = document.getElementById('id-error-message');
+
+//     // 예시 중복 확인 로직. 실제 구현 시 서버와 통신 필요.
+//     const existingIds = ['testuser', 'sampleuser']; // 예시 데이터
+//     if (existingIds.includes(userId)) {
+//         idErrorMessage.style.display = 'block';
+//         idErrorMessage.textContent = '이미 사용 중인 아이디입니다.';
+//     } else {
+//         idErrorMessage.style.display = 'block';
+//         idErrorMessage.textContent = '사용 가능한 아이디입니다.';
+//         idErrorMessage.style.color = 'green';
+//     }
+// }
+
+// 보류
+function checkDuplicateNickname() {
+    
+    const nickname = document.querySelector('#nickname').value;
+    const nicknameErrorMessage = document.querySelector('#nickname-error-message');
+
+    // 예시 중복 확인 로직. 실제 구현 시 서버와 통신 필요.
+    const existingNicknames = ['nickname1', 'nickname2']; // 예시 데이터
+    if (existingNicknames.includes(nickname)) {
+        nicknameErrorMessage.style.display = 'block';
+        nicknameErrorMessage.textContent = '이미 사용 중인 닉네임입니다.';
+    } else {
+        nicknameErrorMessage.style.display = 'block';
+        nicknameErrorMessage.textContent = '사용 가능한 닉네임입니다.';
+        nicknameErrorMessage.style.color = 'green';
+    }
 }
+
+
 
  

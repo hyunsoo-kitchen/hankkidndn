@@ -131,12 +131,18 @@ input[type="text"],
     border: none;
 }
 
+/* .join-box 아이디 */
+.error-message {
+    color: red;
+    display: none;
+}
 
 /* join-box 비밀번호 */
 .error {
     display: none;
     color: red;
 }
+
 
 
 /* join-box 인풋 영역 - 휴대전화 */

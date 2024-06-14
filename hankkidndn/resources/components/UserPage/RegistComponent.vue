@@ -1,86 +1,102 @@
 <template>
-    <div class="ccontainer">
-    <div class="container">
-        <h2>개인정보입력</h2>
-        <div class="main_title">
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">이름 <span>*</span></div>
+    <!-- <form action="" id="registrationForm"> -->
+        <!-- 폼박스 넣으니까 오류나는데 이것도 고쳐야함 -->
+        <div class="ccontainer">
+            <div class="container">
+                <h2>개인정보입력</h2>
+                <div class="main_title">
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">이름 <span>*</span></div>
+                        </div>
+                        <div class="content">
+                        <input type="text">
+                        <div></div>
+                    </div>
+                    </div>
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">아이디 <span>*</span></div>
+                        </div>
+                        <div class="content">
+                        <input type="text">
+                        <button class="check" type="button">중복확인</button>
+                    </div>
+                    </div>
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">비밀번호 <span>*</span></div>
+                        </div>
+                        <div class="content">
+                        <input type="text">
+                        <div></div>
+                    </div>
+                    </div>
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">비밀번호 확인 <span>*</span></div>
+                        </div>
+                        <div class="content">
+                        <input type="text">
+                        <div></div>
+                    </div>
+                    </div>
+                    <!-- 
+                        <div class="radio-box">
+                            <div>
+                                <label for="male">남자</label>
+                                <input type="radio" name="gender" id="male" value="0">
+                            </div>
+                            <div>
+                                <label for="female">여자</label>
+                                <input type="radio" name="gender" id="female" value="1">
+                            </div>
+                        </div>
+                    -->
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">주소 <span>*</span></div>
+                        </div>
+                        <div class="content_address">
+                        <input type="text" readonly v-model="postcode" class="input1">
+                        <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
+                        <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
+                        <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress">
+                    </div>
+                    </div>
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">전화번호 <span>*</span></div>
+                        </div>
+                        <div class="pon_content">
+                            <div class="phone_content">
+                            <select name="phone-num" id="phone-num">
+                                <option value="010">010</option>
+                                <option value="011">011</option>
+                            </select>
+                            <input class="phone" type="text">
+                            <input class="phone" type="text">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">닉네임 <span>*</span></div>
+                        </div>
+                        <div class="content">
+                        <input type="text">
+                        <button class="check" type="button">중복확인</button>
+                    </div>
+                    </div>
+                    <div class="buttons">
+                        <!-- 뷰스타그램에서 type="button" 줘서 일단 줬는데 분석해보고 필요없으면 뺄예정 0613 21:26 노경호 -->
+                        <button class="cancel"  type="button" @click="$router.back()">취소</button>
+                        <button class="complete"  type="button" @click="$store.dispatch('registration')" >다음단계</button>
+                    </div>
                 </div>
-                <div class="content">
-                <input type="text">
-                <div></div>
-            </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">아이디 <span>*</span></div>
-                </div>
-                <div class="content">
-                <input type="text">
-                <button class="check" type="button">중복확인</button>
-            </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">비밀번호 <span>*</span></div>
-                </div>
-                <div class="content">
-                <input type="text">
-                <div></div>
-            </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">비밀번호 확인 <span>*</span></div>
-                </div>
-                <div class="content">
-                <input type="text">
-                <div></div>
-            </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">주소 <span>*</span></div>
-                </div>
-                <div class="content_address">
-                <input type="text" readonly v-model="postcode" class="input1">
-                <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
-                <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
-                <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress">
-            </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">전화번호 <span>*</span></div>
-                </div>
-                <div class="pon_content">
-                    <div class="phone_content">
-                    <select name="phone-num" id="phone-num">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                    </select>
-                    <input class="phone" type="text">
-                    <input class="phone" type="text">
-                </div>
-                </div>
-            </div>
-            <div class="title_content">
-                <div class="title">
-                    <div class="title_main">닉네임 <span>*</span></div>
-                </div>
-                <div class="content">
-                <input type="text">
-                <button class="check" type="button">중복확인</button>
-            </div>
-            </div>
-            <div class="buttons">
-                <button class="cancel">취소</button>
-                <button class="complete">다음단계</button>
             </div>
         </div>
-    </div>
-</div>
+    <!-- </form> -->
 </template>
 <script setup>
 import { ref } from 'vue';
