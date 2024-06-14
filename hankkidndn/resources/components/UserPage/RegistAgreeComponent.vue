@@ -12,11 +12,11 @@
                         </textarea>
                         <div class="option-btn">
                             <label class="option1">
-                                <input type="radio" name="agree_1" id="agree_1_yes" value="agree">
+                                <input type="radio" name="agree_1" id="agreement_1" value="agree">
                             동의함
                             </label>
                             <label class="option2">
-                                <input type="radio" name="agree_1" id="agree_1_no" value="disagree" checked>
+                                <input type="radio" name="agree_1" id="not_agreement_1" value="disagree" checked>
                             동의하지 않음
                             </label>
                         </div>
@@ -29,11 +29,11 @@
                         </textarea>
                     <div class="option-btn">
                         <label class="option3">
-                            <input type="radio" name="agree_2" id="agree_2_yes" value="agree">
+                            <input type="radio" name="agree_2" id="agreement_2" value="agree">
                         동의함
                         </label>
                         <label class="option4">
-                            <input type="radio" name="agree_2" id="agree_2_no"  value="disagree" checked>
+                            <input type="radio" name="agree_2" id="not_agreement_2"  value="disagree" checked>
                         동의하지 않음
                         </label>
                     </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="page-btn">
                     <button type="reset" class="cancel-button">취소</button>
-                    <button  type="submit" id="next_button" class="submit-button" disabled>다음단계</button>
+                    <button type="submit" id="next_button" class="submit-button" disabled>다음단계</button>
                 </div>     
             </div>
         </div>
@@ -49,21 +49,29 @@
 </template>
 <script upset>
 document.addEventListener('DOMContentLoaded', function() {
-    const agree1Yes = document.querySelector('#agree_1_yes');
+    const agree1 = document.querySelector('#agreement_1');
+    const agree2 = document.querySelector('#agreement_2');
+    const notAgree1 = document.querySelector('#not_agreement_1');
+    const notAgree2 = document.querySelector('#not_agreement_2');
     const nextButton = document.querySelector('#next_button');
 
     function checkAgreement() {
-        if (agree1Yes.checked) {
-            nextButton.disabled = false;
+        if (agree1.checked && agree2.checked) {
+            // nextButton.disabled = false;
+            nextButton.removeAttribute('disabled');
         } else {
-            nextButton.disabled = true;
+            // nextButton.disabled = true;
+            nextButton.setAttribute('disabled', true);
         }
     }
 
-    agree1Yes.addEventListener('change', checkAgreement);
+    agree1.addEventListener('change', checkAgreement);
+    agree2.addEventListener('change', checkAgreement);
+    notAgree1.addEventListener('change', checkAgreement);
+    notAgree2.addEventListener('change', checkAgreement);
 
     nextButton.addEventListener('click', function(event) {
-        if (!agree1Yes.checked) {
+        if (!agree1.checked && !agree2.checked) {
             event.preventDefault();
         } else {
             window.location.href = '/regist';

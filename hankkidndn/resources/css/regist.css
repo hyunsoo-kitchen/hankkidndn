@@ -47,10 +47,16 @@ h2 {
 
 .content {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 150px;
     gap: 10px;
 }
-
+.radio-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.select_gender {
+    margin: 0 auto;
+}
 .content_address{
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;

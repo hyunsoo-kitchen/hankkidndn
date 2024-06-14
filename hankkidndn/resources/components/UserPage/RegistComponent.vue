@@ -1,99 +1,116 @@
 <template>
+    <!-- 0614 노경호. 
+        TODO: 필수입력처리. 미입력시 js로 안적엇다고 출력
+        ,정규표현식 처리 -->
     <!-- <form action="" id="registrationForm"> -->
-        <!-- 폼박스 넣으니까 오류나는데 이것도 고쳐야함 -->
+        <!-- 폼박스 넣으니까 오류나는데 이것도 고쳐야함 : 해결완료-노경호 -->
         <div class="ccontainer">
             <div class="container">
                 <h2>개인정보입력</h2>
-                <div class="main_title">
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">이름 <span>*</span></div>
-                        </div>
-                        <div class="content">
-                        <input type="text">
-                        <div></div>
-                    </div>
-                    </div>
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">아이디 <span>*</span></div>
-                        </div>
-                        <div class="content">
-                        <input type="text">
-                        <button class="check" type="button">중복확인</button>
-                    </div>
-                    </div>
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">비밀번호 <span>*</span></div>
-                        </div>
-                        <div class="content">
-                        <input type="text">
-                        <div></div>
-                    </div>
-                    </div>
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">비밀번호 확인 <span>*</span></div>
-                        </div>
-                        <div class="content">
-                        <input type="text">
-                        <div></div>
-                    </div>
-                    </div>
-                    <!-- 
-                        <div class="radio-box">
-                            <div>
-                                <label for="male">남자</label>
-                                <input type="radio" name="gender" id="male" value="0">
+                <form action="" id="registrationForm">
+                    <div class="main_title">
+                        <!-- 이름 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">이름 <span>*</span></div>
                             </div>
-                            <div>
-                                <label for="female">여자</label>
-                                <input type="radio" name="gender" id="female" value="1">
+                            <div class="content">
+                            <input type="text" autoComplete="off">
+                            <div></div>
+                        </div>
+                        </div>
+                        <!-- 아이디 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">아이디 <span>*</span></div>
+                            </div>
+                            <div class="content">
+                            <input type="text" autoComplete="off">
+                            <button class="check" type="button">중복확인</button>
+                        </div>
+                        </div>
+                        <!-- 비밀번호 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">비밀번호 <span>*</span></div>
+                            </div>
+                            <div class="content">
+                            <input type="password" autoComplete="off">
+                            <div></div>
+                        </div>
+                        </div>
+                        <!-- 비밀번호 확인 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">비밀번호 확인 <span>*</span></div>
+                            </div>
+                            <div class="content">
+                            <input type="password" autoComplete="off">
+                            <div></div>
+                        </div>
+                        </div>
+                        <!-- 주소 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">주소 <span>*</span></div>
+                            </div>
+                            <div class="content_address">
+                            <input type="text" readonly v-model="postcode" class="input1" placeholder="우편번호">
+                            <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
+                            <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
+                            <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress" autoComplete="off">
+                        </div>
+                        </div>
+                        <!-- 전화번호 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">전화번호 <span>*</span></div>
+                            </div>
+                            <div class="pon_content">
+                                <div class="phone_content">
+                                <select name="phone-num" id="phone-num">
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                </select>
+                                <input class="phone" type="text" autoComplete="off">
+                                <input class="phone" type="text" autoComplete="off">
+                            </div>
                             </div>
                         </div>
-                    -->
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">주소 <span>*</span></div>
+                        <!-- 닉네임 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">닉네임 <span>*</span></div>
+                            </div>
+                            <div class="content">
+                                <input type="text" autoComplete="off">
+                                <button class="check" type="button">중복확인</button>
+                            </div>
                         </div>
-                        <div class="content_address">
-                        <input type="text" readonly v-model="postcode" class="input1">
-                        <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
-                        <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
-                        <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress">
-                    </div>
-                    </div>
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">전화번호 <span>*</span></div>
+                        <!-- 성별 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">성별 <span>*</span></div>
+                            </div>
+                            <div class="radio-box">
+                                <div class="select_gender">
+                                    <label for="male">남자</label>
+                                    <input type="radio" name="gender" id="male" value="0">
+                                </div>
+                                <div>
+                                    <label for="female">여자</label>
+                                    <input type="radio" name="gender" id="female" value="1">
+                                </div>
+                            </div>
                         </div>
-                        <div class="pon_content">
-                            <div class="phone_content">
-                            <select name="phone-num" id="phone-num">
-                                <option value="010">010</option>
-                                <option value="011">011</option>
-                            </select>
-                            <input class="phone" type="text">
-                            <input class="phone" type="text">
-                        </div>
+                    
+                        <div class="buttons">
+                            <!-- 뷰스타그램에서 type="button" 줘서 일단 줬는데 분석해보고 필요없으면 뺄예정 0613 21:26 노경호 -->
+                            <button class="cancel"  type="button" @click="$router.back()">취소</button>
+                            <button class="complete"  type="button" @click="$store.dispatch('registration')" >다음단계</button>
                         </div>
                     </div>
-                    <div class="title_content">
-                        <div class="title">
-                            <div class="title_main">닉네임 <span>*</span></div>
-                        </div>
-                        <div class="content">
-                        <input type="text">
-                        <button class="check" type="button">중복확인</button>
-                    </div>
-                    </div>
-                    <div class="buttons">
-                        <!-- 뷰스타그램에서 type="button" 줘서 일단 줬는데 분석해보고 필요없으면 뺄예정 0613 21:26 노경호 -->
-                        <button class="cancel"  type="button" @click="$router.back()">취소</button>
-                        <button class="complete"  type="button" @click="$store.dispatch('registration')" >다음단계</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     <!-- </form> -->
