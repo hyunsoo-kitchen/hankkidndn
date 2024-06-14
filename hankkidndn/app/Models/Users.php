@@ -26,6 +26,7 @@ class Users extends Authenticatable
         'gender',
         'u_email',
         'birth_at',
+        'u_post',
     ];
 
     /**
