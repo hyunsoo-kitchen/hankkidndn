@@ -6,19 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class board_images extends Model
+class RecipeBoards extends Model
 {
     use HasFactory, SoftDeletes;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'recipe_board_id',
-        'board_id',
-        'img_path',
+        'user_id',
+        'boards_type_id',
+        'likes_num',
+        'title',
+        'content',
+        'video_link',
+        'thumbnail',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)

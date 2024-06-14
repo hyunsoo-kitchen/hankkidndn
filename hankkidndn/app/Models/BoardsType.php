@@ -5,23 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comments_likes extends Model
+class BoardsType extends Model
 {
     use HasFactory;
 
-            /**
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'comment_id',
-        'like_chk',
+        'board_name',
     ];
-
-    protected function serializeDate(\DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

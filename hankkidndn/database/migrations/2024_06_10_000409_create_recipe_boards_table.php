@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->string('content', 1000);
             $table->string('video_link', 100);
+            $table->string('thumbnail', 100);
             $table->timestamps();
             $table->softDeletes();
         });

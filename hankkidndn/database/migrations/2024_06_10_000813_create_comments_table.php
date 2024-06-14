@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('recipe_board_id')->unsigned();
-            $table->bigInteger('board_id')->unsigned();
+            $table->bigInteger('recipe_board_id')->unsigned()->nullable();
+            $table->bigInteger('board_id')->unsigned()->nullable();
             $table->integer('cocoment');
             $table->string('content', 500 );
             $table->integer('likes_num')->default(0);

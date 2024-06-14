@@ -17,20 +17,20 @@
         <div class="line media-display"></div>
         <img class="logo" src="../../../public/img/logo.png" alt="">
         <h2 class="text-center text-gray">최신 레시피</h2>
-        <div class="new-recipe">
+        <div class="new-recipe" >
             <!-- 새로운 레시피 돌릴거 -->
-            <div class="new-recipe-card">
-                <img class="new-recipe-img" src="" alt="">
+            <div class="new-recipe-card" v-for="(item, key) in $store.state.MainNewData" :key="key">
+                <img class="new-recipe-img" :src="item.thumbnail">
                 <div class="new-recipe-header">
-                    <p class="text-white">사용자</p>
-                    <p class="text-white">날짜</p>
+                    <p class="text-white">{{ item.u_nickname }}</p>
+                    <p class="text-white">{{ item.created_at }}</p>
                 </div>
                 <div class="new-recipe-body">
-                    <p class="new-recipe-title text-white">어쩌고저쩌고 제목</p>
+                    <p class="new-recipe-title text-white">{{ item.title }}</p>
                     <div class=""></div>
                     <p class="text-left text-white">조회수</p>
-                    <p class="text-left text-white">뷰 댓글</p>
-                    <p class="text-right text-white">좋아요</p>
+                    <p class="text-left text-white">{{ item.cnt }}</p>
+                    <p class="text-right text-white">{{ item.like_chk }}</p>
                 </div>
             </div>
         </div>
@@ -39,24 +39,24 @@
         <h2 class="text-center text-gray">베스트 레시피</h2>
         <div class="best-recipe">
             <!-- 베스트 레시피 돌릴거 -->
-            <div class="best-recipe-card">
-                <img class="best-recipe-img" src="" alt="">
-                <div class="best-recipe-info" >
-                    <img class="best-recipe-profile" src="" alt="">
+            <div class="best-recipe-card" v-for="(item, key) in $store.state.MainBestData" :key="key">
+                <img class="best-recipe-img" :src="item.thumbnail">
+                <div class="best-recipe-info">
+                    <img class="best-recipe-profile" :src="item.profile" alt="">
                     <div class="best-recipe-title">
-                        <p class="text-gray">사용자</p>
-                        <p class="text-gray">날짜</p>
+                        <p class="text-gray">{{ item.u_nickname }}</p>
+                        <p class="text-gray">{{ item.created_at }}</p>
                     </div>
                 </div>
                 <div class="best-recipe-content" >
-                    <p class="text-thick font-big">어쩌고저쩌고 제목</p>
-                    <p class="text-gray">설명</p>
+                    <p class="text-thick font-big">{{ item.title }}</p>
+                    <p class="text-gray">{{ item.content }}</p>
                     <div class="line"></div>
                 </div>
                 <div class="best-recipe-footer">
-                    <p>댓글</p>
+                    <p>{{ item.cnt }}</p>
                     <p>조회수</p>
-                    <p>좋아요</p>
+                    <p>{{ item.like_chk }}</p>
                 </div>
             </div>
         </div>
@@ -64,7 +64,15 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
 import CategoryComponent from './CategoryComponent.vue';
+
+const store = useStore();
+
+onBeforeMount(() => {
+    store.dispatch('getMainNewList');
+});
 
 </script>
 
