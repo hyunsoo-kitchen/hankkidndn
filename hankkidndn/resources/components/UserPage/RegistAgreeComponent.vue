@@ -41,7 +41,7 @@
                 </div>
                 <div class="page-btn">
                     <button type="reset" class="cancel-button">취소</button>
-                    <button  type="submit" id="next_button" class="submit-button" disabled>다음단계</button>
+                    <button type="submit" id="next_button" class="submit-button" disabled>다음단계</button>
                 </div>     
             </div>
         </div>

@@ -58,7 +58,7 @@
                             <div class="title_main">주소 <span>*</span></div>
                         </div>
                         <div class="content_address">
-                        <input type="text" readonly v-model="postcode" class="input1">
+                        <input type="text" readonly v-model="postcode" class="input1" placeholder="우편번호">
                         <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
                         <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
                         <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress">
