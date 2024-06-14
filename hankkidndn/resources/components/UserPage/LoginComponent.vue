@@ -16,7 +16,7 @@
                 </div>
                 <div class="kakao-btn">
                     <button class="kakao" type="submit">
-                        <img class="btn-img" src="/kakao_login_medium_wide.png">
+                        <img class="btn-img" src="../../../public/img/kakao_login_medium_wide.png">
                     </button>
                 </div>
             </div>

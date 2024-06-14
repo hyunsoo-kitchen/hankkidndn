@@ -2,7 +2,7 @@
    <div class="container">
         <div class="header">
             <div class="main-img">
-                <img class="img-main" src="../../../public/img/Rectangle 57.png">
+                <img class="img-main" src="../../../public/img/recipe.png">
             </div>
             <div class="input-btn">
                 <div>

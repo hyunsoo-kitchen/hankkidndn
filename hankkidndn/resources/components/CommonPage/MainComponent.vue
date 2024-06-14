@@ -1,7 +1,7 @@
 <template>
     <CategoryComponent/>
     <div class="header">
-        <img class="header-img" src="" alt="">
+        <img class="header-img" src="../../../public/img/main.png" alt="">
     </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
     <div class="body-container">
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="line media-display"></div>
-        <img class="logo" src="" alt="">
+        <img class="logo" src="../../../public/img/logo.png" alt="">
         <h2 class="text-center text-gray">최신 레시피</h2>
         <div class="new-recipe">
             <!-- 새로운 레시피 돌릴거 -->

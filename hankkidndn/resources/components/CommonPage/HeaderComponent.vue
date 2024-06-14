@@ -2,7 +2,7 @@
     <header>
         <div class="header-container">
           <div class="header-content">
-            <img class="img-logo" alt="logo" src="/logo.png">
+            <img class="img-logo" alt="logo" src="../../../public/img/logo.png">
             <div>
               <router-link to="/main"><h1>한끼든든</h1></router-link>
             </div>

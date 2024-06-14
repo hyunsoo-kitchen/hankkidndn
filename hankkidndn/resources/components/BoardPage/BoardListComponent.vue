@@ -1,7 +1,7 @@
 <template>
 <div class="container">
         <div class="header">
-            <img class="main-img" src="../../../public/img/Rectangle 112.png">
+            <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
                     <li class="line">자유게시판</li>

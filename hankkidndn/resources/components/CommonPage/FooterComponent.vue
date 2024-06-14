@@ -3,7 +3,7 @@
         <div class="footer_container">
             <div class="img_box">
                 <div>
-                    <img src="/logo.png" alt="">
+                    <img src="../../../public/img/logo.png" alt="">
                 </div>
                 <div class="logo_name">
                     한끼든든

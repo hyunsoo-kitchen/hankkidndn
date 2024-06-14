@@ -1,7 +1,7 @@
 <template>
 <div class="container">
             <!-- 헤드 이미지 -->
-            <img class="main-img" src="/img/Rectangle 136.png">
+            <img class="main-img" src="../../../public/img/my_page.png">
             <h2 class="page_title">마이페이지</h2>
             <div class="main_container">
                 <div class="sub_title">
