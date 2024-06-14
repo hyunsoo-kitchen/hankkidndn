@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\RecipeBoardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +26,7 @@ Route::get('/api/main', [CommonController::class, 'getList']);
 
 // 각 게시판 정보 획득
 Route::get('/api/recipe/list={num}', [RecipeBoardController::class, 'getList']);
-Route::get('/api/board/list={num}', [BoardController::class, 'getList']);
+Route::get('/api/board/list/{num}', [BoardController::class, 'getList']);
+
+// 회원가입
+Route::post('/api/registration', [UserController::class, 'registration']);

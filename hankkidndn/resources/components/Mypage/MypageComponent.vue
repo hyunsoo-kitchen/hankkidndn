@@ -14,45 +14,45 @@
             <div class="main-box">
                 <div class="title">이름</div>
                 <div class="sub-title-main">
-                    <input type="text" readonly :value="$store.state.userInfo.u_name">
+                    <input type="text" name="u_name" readonly :value="$store.state.userInfo.u_name">
                     <div></div>
                 </div>
             </div>
             <div class="main-box">
                 <div class="title">아이디</div>
                 <div class="sub-title-main">
-                    <input type="text" readonly :value="$store.state.userInfo.u_id">
+                    <input type="text" name="u_id" readonly :value="$store.state.userInfo.u_id">
                     <div></div>
                 </div>
             </div>
             <div class="main-box">
                 <div class="title">비밀번호</div>
                 <div class="sub-title-main">
-                    <input type="password">
+                    <input name="u_password" type="password">
                     <button type="button" class="change">비밀번호변경</button>
                 </div>
             </div>
             <div class="main-box">
                 <div class="title">주소</div>
                 <div class="sub-title-street">
-                    <input class="input3" type="text" readonly :value="$store.state.userInfo.u_post">
-                    <input class="input1" type="text" readonly :value="$store.state.userInfo.u_address">
-                    <input class="input2" type="text" readonly :value="$store.state.userInfo.u_detail_address">
+                    <input class="input3" type="text" name="u_post" readonly :value="$store.state.userInfo.u_post">
+                    <input class="input1" type="text" name="u_address" readonly :value="$store.state.userInfo.u_address">
+                    <input class="input2" type="text" name="u_detail_address" readonly :value="$store.state.userInfo.u_detail_address">
                 </div>
             </div>
             <div class="main-box">
                 <div class="title">휴대전화</div>
                 <div class="sub-title-number">
                     <div class="phone-number">
-                        <select name="phone-num" id="phone-num">
+                        <select name="first_num" id="phone-num">
                             <option value="010" :selected="$store.state.userInfo.phone.split('-')[0] == '010'">010</option>
                             <option value="011" :selected="$store.state.userInfo.phone.split('-')[0] == '011'">011</option>
                             <option value="016" :selected="$store.state.userInfo.phone.split('-')[0] == '016'">016</option>
                             <option value="02" :selected="$store.state.userInfo.phone.split('-')[0] == '02'">02</option>
                             <option value="053" :selected="$store.state.userInfo.phone.split('-')[0] == '053'">053</option>
                         </select>
-                        <input class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[1]">
-                        <input class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[2]">
+                        <input name="middle_num" class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[1]">
+                        <input name="last_num" class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[2]">
                         <div></div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <div class="main-box">
                 <div class="title">닉네임</div>
                 <div class="sub-title-main">
-                    <input type="text" :value="$store.userInfo.u_nickname">
+                    <input name="u_nickname" type="text" :value="$store.userInfo.u_nickname">
                     <button type="button" class="change">닉네임변경</button>
                 </div>
             </div>

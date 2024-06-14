@@ -84,7 +84,10 @@ const store = createStore({
         //회원가입 처리 action
         registration(context) {
             const url = '/api/registration';
-            const data = new FormData(document.querySelector('#registrationForm'));
+            const form = document.querySelector('#registrationForm');
+            const data = new FormData(form);
+            // const data = new FormData(document.querySelector('#registrationForm'));
+            console.log(data);
 
             axios.post(url, data)
             .then(response => {
@@ -95,7 +98,27 @@ const store = createStore({
                 console.log(error.response.data); //TODO
                 alert('회원가입에 실패했습니다 (' + error.response.data.code + ')');
             });
-        }
+        },
+
+        //로그인 처리
+        login(context) {
+            const url = '/login';
+            const form = document.querySelector('#loginForm');
+            const data = new FormData(form);
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data); //TODO
+                localStorage.setItem('userInfo', JSON.stringify(response.data.data));
+                context.commit('setUserInfo', response.data.data);
+                context.commit('setAuthFlg', true);
+
+                router.replace('/main');
+            })
+            .catch(error => {
+                console.log(error.response); //TODO
+                alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
+            });
+        },
     }
 });
 

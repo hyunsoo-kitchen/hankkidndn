@@ -15,9 +15,18 @@
                                 <div class="title_main">이름 <span>*</span></div>
                             </div>
                             <div class="content">
-                            <input type="text" autoComplete="off">
+                            <input type="text" name="u_name" autoComplete="off">
                             <div></div>
                         </div>
+                        </div>
+                        <!-- 생년월일 -->
+                        <div class="title_content">
+                            <div class="title">
+                                <div class="title_main">생년월일 <span>*</span></div>
+                            </div>
+                            <div class="content">
+                                <input type="date" name="birth_at" id="birth_at" laceholder="2000-01-01" @input="chkBirth">
+                            </div>
                         </div>
                         <!-- 아이디 -->
                         <div class="title_content">
@@ -25,7 +34,7 @@
                                 <div class="title_main">아이디 <span>*</span></div>
                             </div>
                             <div class="content">
-                            <input type="text" autoComplete="off">
+                            <input type="text" name="u_id" autoComplete="off">
                             <button class="check" type="button">중복확인</button>
                         </div>
                         </div>
@@ -35,7 +44,7 @@
                                 <div class="title_main">비밀번호 <span>*</span></div>
                             </div>
                             <div class="content">
-                            <input type="password" autoComplete="off">
+                            <input type="password" name="u_password" autoComplete="off">
                             <div></div>
                         </div>
                         </div>
@@ -45,7 +54,7 @@
                                 <div class="title_main">비밀번호 확인 <span>*</span></div>
                             </div>
                             <div class="content">
-                            <input type="password" autoComplete="off">
+                            <input type="password" name="password_chk" autoComplete="off">
                             <div></div>
                         </div>
                         </div>
@@ -55,10 +64,10 @@
                                 <div class="title_main">주소 <span>*</span></div>
                             </div>
                             <div class="content_address">
-                            <input type="text" readonly v-model="postcode" class="input1" placeholder="우편번호">
-                            <button type="button" class="address_btn" @click="kakaoPostcode" id="postcode">주소검색</button>
-                            <input type="text" name="address" id="address" class="input2" v-model="address" readonly @click="kakaoPostcode">
-                            <input type="text" class="input3" name="address_detail" id="address_detail" v-model="detailAddress" autoComplete="off">
+                            <input type="text" id="u_post" name="u_post" readonly v-model="postcode" class="input1" placeholder="우편번호">
+                            <button type="button" class="address_btn" @click="kakaoPostcode" id="u_post">주소검색</button>
+                            <input type="text" name="u_address" id="u_address" class="input2" v-model="address" readonly @click="kakaoPostcode">
+                            <input type="text" class="input3" name="u_detail_address" id="u_detail_address" v-model="detailAddress" autoComplete="off">
                         </div>
                         </div>
                         <!-- 전화번호 -->
@@ -67,14 +76,15 @@
                                 <div class="title_main">전화번호 <span>*</span></div>
                             </div>
                             <div class="pon_content">
-                                <div class="phone_content">
-                                <select name="phone-num" id="phone-num">
+                                <!-- <div class="phone_content">
+                                <select name="phone-num" id="first_num">
                                     <option value="010">010</option>
                                     <option value="011">011</option>
                                 </select>
-                                <input class="phone" type="text" autoComplete="off">
-                                <input class="phone" type="text" autoComplete="off">
-                            </div>
+                                <input class="phone" id="middle_num" type="int" autoComplete="off">
+                                <input class="phone" id="last_num" type="int" autoComplete="off">
+                                </div> -->
+                                <input type="text" class="input1" name="u_phone_num" id="u_phone_num" placeholder="010-1234-5678" autoComplete="off">
                             </div>
                         </div>
                         <!-- 닉네임 -->
@@ -83,7 +93,7 @@
                                 <div class="title_main">닉네임 <span>*</span></div>
                             </div>
                             <div class="content">
-                                <input type="text" autoComplete="off">
+                                <input type="text" autoComplete="off" id="u_nickname" name="u_nickname">
                                 <button class="check" type="button">중복확인</button>
                             </div>
                         </div>
@@ -166,6 +176,42 @@ function kakaoPostcode() {
         }
     }).open();
 }
+
+// 전화번호 합쳐서 데이터 전송
+function updatePhoneNumber() {
+            // 선택한 번호 가져오기
+            var selectedPrefix = document.getElementById("first_num").value;
+
+            // 입력한 번호 가져오기
+            var middleNumber = document.getElementById("middle_num").value;
+            var lastNumber = document.getElementById("last_num").value;
+
+            // 양식 조합
+            var formattedPhoneNumber = selectedPrefix + "-" + middleNumber + "-" + lastNumber;
+
+            // 결과를 입력 필드에 넣기
+            document.getElementById("phone_num").value = formattedPhoneNumber;
+        }
+
+        // 입력 필드의 변경을 감지하여 자동으로 전화번호를 업데이트
+        var inputs = document.querySelectorAll('.phone');
+        inputs.forEach(input => {
+            input.addEventListener('input', updatePhoneNumber);
+        });
+
+
+// 입력한 전화번호를 합치는 함수
+function submitPhone() {
+    var prefix = document.getElementById('first_num').value;
+    var num1 = document.getElementById('middle_num').value;
+    var num2 = document.getElementById('last_num').value;
+    var phoneNumber = prefix + num1 + num2;
+
+    document.getElementById('phone_num').value = phoneNumber;
+}
+
+
+
 </script>
 <style scoped src="../../css/regist.css">
     
