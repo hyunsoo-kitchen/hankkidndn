@@ -79,8 +79,21 @@ const store = createStore({
                 router.push('/board='+ num);
             })
             .catch()
+
+            
+
         },
         
+        userInfoUpdate(context) {
+            const url = '/api/user'
+            const data = new FormData(document.querySelector('#myPageForm'));
+            
+            axios.put(url, data)
+            .then(response => {
+                router.replace('/mypage');
+            })
+            .catch()
+        },
         //회원가입 처리 action
         registration(context) {
             const url = '/api/registration';

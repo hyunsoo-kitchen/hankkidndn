@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\MypageController;
 use App\Http\Controllers\RecipeBoardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,6 @@ Route::get('/api/board/list/{num}', [BoardController::class, 'getList']);
 
 // 회원가입
 Route::post('/api/registration', [UserController::class, 'registration']);
+
+// 마이페이지
+Route::put('/api/user', [MypageController::class, 'update']);
