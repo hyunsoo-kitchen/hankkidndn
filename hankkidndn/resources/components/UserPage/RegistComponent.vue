@@ -65,7 +65,7 @@
                             </div>
                             <div class="content_address">
                             <input type="text" id="u_post" name="u_post" readonly v-model="postcode" class="input1" placeholder="우편번호">
-                            <button type="button" class="address_btn" @click="kakaoPostcode" id="u_post">주소검색</button>
+                            <button type="button" class="address_btn" @click="kakaoPostcode" id="post_search">주소검색</button>
                             <input type="text" name="u_address" id="u_address" class="input2" v-model="address" readonly @click="kakaoPostcode">
                             <input type="text" class="input3" name="u_detail_address" id="u_detail_address" v-model="detailAddress" autoComplete="off">
                         </div>
@@ -172,7 +172,7 @@ function kakaoPostcode() {
             // 주소 필드에 삽입
             address.value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.querySelector('#address_detail').focus();
+            document.querySelector('#u_detail_address').focus();
         }
     }).open();
 }
@@ -198,19 +198,6 @@ function updatePhoneNumber() {
         inputs.forEach(input => {
             input.addEventListener('input', updatePhoneNumber);
         });
-
-
-// 입력한 전화번호를 합치는 함수
-function submitPhone() {
-    var prefix = document.getElementById('first_num').value;
-    var num1 = document.getElementById('middle_num').value;
-    var num2 = document.getElementById('last_num').value;
-    var phoneNumber = prefix + num1 + num2;
-
-    document.getElementById('phone_num').value = phoneNumber;
-}
-
-
 
 </script>
 <style scoped src="../../css/regist.css">

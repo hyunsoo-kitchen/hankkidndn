@@ -13,12 +13,12 @@
                         <div class="option-btn">
                             <label class="option1">
                                 <input type="radio" name="agree_1" id="agreement_1" value="agree">
-                            동의함
-                            </label>
+                                동의함
+                                </label>
                             <label class="option2">
                                 <input type="radio" name="agree_1" id="not_agreement_1" value="disagree" checked>
-                            동의하지 않음
-                            </label>
+                                동의하지 않음
+                                </label>
                         </div>
                     </div>
                 </div>
@@ -30,12 +30,12 @@
                     <div class="option-btn">
                         <label class="option3">
                             <input type="radio" name="agree_2" id="agreement_2" value="agree">
-                        동의함
-                        </label>
+                            동의함
+                            </label>
                         <label class="option4">
                             <input type="radio" name="agree_2" id="not_agreement_2"  value="disagree" checked>
-                        동의하지 않음
-                        </label>
+                            동의하지 않음
+                            </label>
                     </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
         </div>
     </div>
 </template>
-<script upset>
+<script setup>
 document.addEventListener('DOMContentLoaded', function() {
     const agree1 = document.querySelector('#agreement_1');
     const agree2 = document.querySelector('#agreement_2');

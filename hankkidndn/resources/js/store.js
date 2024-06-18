@@ -101,8 +101,9 @@ const store = createStore({
             const data = new FormData(form);
             // const data = new FormData(document.querySelector('#registrationForm'));
             console.log(data);
-
-            axios.post(url, data)
+            
+           // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
+            axios.post(url, data, config)
             .then(response => {
                 console.log(response.data) //TODO
                 router.replace('/login');
@@ -115,9 +116,11 @@ const store = createStore({
 
         //로그인 처리
         login(context) {
-            const url = '/login';
+            const url = '/api/login';
             const form = document.querySelector('#loginForm');
             const data = new FormData(form);
+
+            // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
             axios.post(url, data)
             .then(response => {
                 console.log(response.data); //TODO
@@ -130,6 +133,29 @@ const store = createStore({
             .catch(error => {
                 console.log(error.response); //TODO
                 alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
+            });
+        },
+
+        //로그아웃 처리
+        logout(context) {
+            const url = '/api/logout';
+
+            axios.post(url)
+            .then(response => {
+                console.log(response.data); // TODO
+            })
+            .catch(error => {
+                console.log(error.response); // TODO
+                // alert('문제가 발생해 강제 로그아웃 합니다.(' + error.response.data.code + ')');
+            })
+            .finally(() => {
+                localStorage.clear();
+
+                context.commit('setAuthFlg', false);
+                context.commit('setUserInfo', null);
+                alert('로그아웃 되었습니다.');
+
+                router.replace('/main');
             });
         },
     }
