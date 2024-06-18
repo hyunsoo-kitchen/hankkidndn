@@ -23,6 +23,7 @@ class RecipeBoards extends Model
         'content',
         'video_link',
         'thumbnail',
+        'views',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)

@@ -9,16 +9,46 @@ use Illuminate\Support\Facades\Auth;
 class BoardController extends Controller
 {
     public function getList($num) {
-        $recipeData = Boards::where('boards_type_id', '=', $num)
-                            ->paginate(16);
+        $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
+                            ->select('boards.*', 'users.u_nickname')
+                            ->where('boards_type_id', '=', $num)
+                            ->orderBy('boards.created_at', 'DESC')
+                            ->paginate(10);
         
         $responseData = [
             'code' => '0'
-            ,'msg' => '추가게시글 획득 완료'
-            ,'data' => $recipeData->toArray()
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $boardData->toArray()
         ];
 
         return response()->json($responseData, 200);
+    }
+
+    public function getDetail($id) {
+        $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
+                            ->select('boards.*', 'users.u_nickname')
+                            ->where('boards.id', '=', $id)
+                            ->first();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $boardData
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    public function delete($id) {
+        Boards::destroy($id);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '글 삭제 완료'
+            ,'data' => $id
+        ];
+
+        return response()->json($responseData);
     }
 
     public function boardIndex(Request $request) {

@@ -21,6 +21,7 @@ class Boards extends Model
         'likes_num',
         'title',
         'content',
+        'views',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)

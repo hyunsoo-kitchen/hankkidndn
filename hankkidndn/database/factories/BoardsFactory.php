@@ -25,6 +25,7 @@ class BoardsFactory extends Factory
             'likes_num' => $this->faker->numberBetween(0, 100),
             'title' => $this->faker->realText(rand(10, 15)),
             'content' => $this->faker->realText(rand(10, 100)),
+            'views' => $this->faker->numberBetween(0, 1000),
             'created_at' => $date,
             'updated_at' => $date,
         ];

@@ -14,7 +14,7 @@ class RecipeBoardController extends Controller
         if($num == 100) {
             $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
                                 ->select('recipe_boards.*', 'users.u_nickname')
-                                ->orderBy('recipe_boards.id', 'DESC')
+                                ->orderBy('recipe_boards.created_at', 'DESC')
                                 ->paginate(16);
 
         } else if($num == 99 ) {
@@ -27,13 +27,14 @@ class RecipeBoardController extends Controller
             $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
                                 ->select('recipe_boards.*', 'users.u_nickname')
                                 ->where('boards_type_id', '=', $num)
+                                
                                 ->paginate(16);                       
 
         }
         
         $responseData = [
             'code' => '0'
-            ,'msg' => '추가게시글 획득 완료'
+            ,'msg' => '게시글 획득 완료'
             ,'data' => $recipeData->toArray()
         ];
 

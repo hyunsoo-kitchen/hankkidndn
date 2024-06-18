@@ -58,7 +58,7 @@ const routes = [
         component: RecipeDetailComponent,
     },
     {
-        path: '/board',
+        path: '/board/:id',
         component: BoardListComponent,
     },
     {
@@ -70,7 +70,7 @@ const routes = [
         component: BoardUpdateComponent,
     },
     {
-        path: '/board/detail',
+        path: '/board/detail/:id',
         component: BoardDetailComponent,
     },
     {

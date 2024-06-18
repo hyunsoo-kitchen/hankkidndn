@@ -22,12 +22,19 @@ Route::get('/{any}', function() {
     return view('welcome');
 })->where('any', '^(?!api).*$');
 
-// 메인 리스트 게시글 획득
+// 메인 리스트 게시글 획득 - 권현수
 Route::get('/api/main', [CommonController::class, 'getList']);
 
-// 각 게시판 정보 획득
+// 각 게시판 정보 획득 - 권현수
 Route::get('/api/recipe/{num}', [RecipeBoardController::class, 'getList']);
 Route::get('/api/board/{num}', [BoardController::class, 'getList']);
+
+// 디테일 게시글 획득 - 권현수
+Route::get('/api/recipe/detail/{num}', [RecipeBoardController::class, 'getDetail']);
+Route::get('/api/board/detail/{num}', [BoardController::class, 'getDetail']);
+
+// 보드 게시글 삭제 처리 - 권현수
+Route::delete('/api/board/delete/{num}', [BoardController::class, 'delete']);
 
 // 회원가입 - 노경호
 Route::post('/api/registration', [UserController::class, 'registration']);
@@ -43,6 +50,3 @@ Route::put('/api/user', [MypageController::class, 'update']);
 //보드 
 Route::middleware('auth')->get('/api/board{id}', [BoardController::class, 'boardDeatil']);
 Route::middleware('auth')->post('api/boardinsert', [BoardController::class, 'boardInsert']);
-
-// 디테일 게시글 획득
-Route::get('/api/detail/{num}', [RecipeBoardController::class, 'getDtail']);

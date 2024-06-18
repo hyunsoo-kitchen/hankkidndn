@@ -19,7 +19,7 @@
         <h2 class="text-center text-gray">최신 레시피</h2>
         <div class="new-recipe" >
             <!-- 새로운 레시피 돌릴거 -->
-            <div class="new-recipe-card" v-for="(item, key) in $store.state.MainNewData" :key="key">
+            <div class="new-recipe-card" v-for="(item, key) in $store.state.mainNewData" :key="key">
                 <img class="new-recipe-img" :src="item.thumbnail">
                 <div class="new-recipe-header">
                     <p class="text-white">{{ item.u_nickname }}</p>
@@ -39,7 +39,7 @@
         <h2 class="text-center text-gray">베스트 레시피</h2>
         <div class="best-recipe">
             <!-- 베스트 레시피 돌릴거 -->
-            <div class="best-recipe-card" v-for="(item, key) in $store.state.MainBestData" :key="key">
+            <div class="best-recipe-card" v-for="(item, key) in $store.state.mainBestData" :key="key">
                 <img class="best-recipe-img" :src="item.thumbnail">
                 <div class="best-recipe-info">
                     <img class="best-recipe-profile" :src="item.profile" alt="">

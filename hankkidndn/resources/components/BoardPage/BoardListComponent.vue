@@ -1,12 +1,13 @@
 <template>
-<div class="container">
+    <div class="container">
         <div class="header">
             <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
-                    <li class="line">자유게시판</li>
-                    <li class="line">질문게시판</li>
-                    <li>문의게시판</li>
+                    <li @click="boardTypeMove(6)" class="line">공지게시판</li>
+                    <li @click="boardTypeMove(7)" class="line">자유게시판</li>
+                    <li @click="boardTypeMove(8)" class="line">질문게시판</li>
+                    <li @click="boardTypeMove(9)" class="line">문의게시판</li>
                 </ul>
             </div>
         </div>
@@ -24,87 +25,92 @@
                     </div>
                 </form>
             </div>
-        <div class="text-box-head">
-            <div class="list-number"></div>
-            <div class="list-title">제목</div>
-            <div class="list-ninkname">닉네임</div>
-            <div class="list-day">등록일</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="text-box">
-            <div class="list-number">1</div>
-            <div class="list-title">이현수</div>
-            <div class="list-ninkname">이현수달</div>
-            <div class="list-day">2024-06-07</div>
-        </div>
-        <div class="btn-box">
-            <button class="text-btn" type="submit">글쓰기</button>
-        </div>
-        <div class="number-container">
-            <div class="number">1</div>
-            <div class="number">2</div>
-            <div class="number">3</div>
-            <div class="number">4</div>
-            <div class="number">5</div>
-            <img src="../../../public/img/next.png">
-        </div>
+            <div class="text-box-head">
+                <div class="list-number"></div>
+                <div class="list-title">제목</div>
+                <div class="list-ninkname">닉네임</div>
+                <div class="list-day">등록일</div>
+            </div>
+            <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
+            <div @click="$router.push('/board/detail/' + item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
+                <!-- 게시글 출력 -->
+                <div class="list-number">1</div>
+                <div class="list-title">{{ item.title }}</div>
+                <div class="list-ninkname">{{ item.u_nickname }}</div>
+                <div class="list-day">{{ item.created_at }}</div>
+            </div>
+            <div class="btn-box">
+                <!-- 클릭시 글쓰기 페이지로 이동 -->
+                <button @click="$router.push('/board/insert')" class="text-btn" type="submit">글쓰기</button>
+            </div>
+            <div class="btn-container">
+                <!-- 페이지 네이션 처리 -->
+                <button class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <div v-for="page_num in page" :key="page_num">
+                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                </div>
+                <button class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-    
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-
-
+import { useRoute } from 'vue-router';
+    
 const store = useStore();
+const route = useRoute();
+let page = ref([]);
+const data = {
+    board_type: '',
+    page: '',
+};
 
-onBeforeMount(() => {
-    // 현재 주소 값 획득
-    const url = new URL(window.location.href)
-    // console.log(url);
-    const urlParams = url.searchParams
-
-    // 주소값에서 list의 파라미터 획득
-    const num = urlParams.get('list')
-    store.dispatch('getBoardList', num)
+// watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
+watch(() => route.query.page, (newPage) => {
+    data.page = newPage;
+    pagination(newPage);
+    store.dispatch('getBoardList', data);
 });
+
+// 페이지네이션
+function pagination(nowPage) {
+    const last_page = store.state.pagination.last_page;
+    const start_page = (Math.ceil(nowPage / 5)) * 5 - 4;
+    const max_page = Math.min(start_page + 4, last_page)
+    page.value = [];
+    for (let i = start_page; i <= max_page; i++) {
+        page.value.push(i);
+    }
+}
+
+
+// 최초~추가 게시글 획득
+onBeforeMount(() => {
+    pagination(route.query.page);
+    data.board_type = route.params.id;
+    data.page = route.query.page;
+    store.dispatch('getBoardList', data);
+});
+
+// page 이동 버튼
+function pageMove(page) {
+    if(page >= 1 && page <= store.state.pagination.last_page) {
+        data.page = page;
+        store.dispatch('getBoardList', data)
+        pagination(route.query.page)
+        }
+}
+
+// 레시피 타입 이동
+function boardTypeMove(type) {
+    data.board_type = type
+    data.page = 1
+    store.dispatch('getBoardList', data)
+}
 </script>
+
 <style scoped src="../../css/boardlist.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>

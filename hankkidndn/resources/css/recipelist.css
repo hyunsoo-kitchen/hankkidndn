@@ -163,16 +163,6 @@
     margin: 20px 0;
 }
 
-.number-container .number {
-    padding: 10px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.number-container img {
-    cursor: pointer;
-}
-
 .star-view{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -182,6 +172,10 @@
 .card-view{
     justify-self: end;
     color: gray;
+}
+
+.btn-container {
+    display: flex;
 }
 
 @media (max-width: 768px) {
