@@ -1,5 +1,6 @@
 <template>
-<div class="container">
+<form id="boardInsertForm">
+    <div class="container">
         <div class="header">
             <img class="main_img" src="../../../public/img/recipe_order.png">
         </div>
@@ -7,21 +8,22 @@
             <h2>글 작성</h2>
             <hr>
             <div class="select_why">
-                <select name="board" id="board">
-                    <option value="freeboard">자유게시판</option>
-                    <option value="questionboard">질문게시판</option>
-                    <option value="qanda">문의게시판</option>
+                <select name="board" id="board" >
+                    <option value="7">자유게시판</option>
+                    <option value="8">질문게시판</option>
+                    <option value="9">문의게시판</option>
                 </select>
                 <div></div>
             </div>
             <input type="text" placeholder="제목">
             <textarea name="content" id="content" rows="30" placeholder="내용을 입력해주세요"></textarea>
             <div class="buttons">
-                <button class="complete">작성하기</button>
-                <button class="cancel ">취소</button>
+                <button @click="store.dispatch('boardInsert')" class="complete">작성하기</button>
+                <button @click="$router.back()" class="cancel ">취소</button>
             </div>
         </div>
     </div>
+</form>
 </template>
 <script upset>
 

@@ -25,7 +25,7 @@
                 </form>
             </div>
         <div class="text-box-head">
-            <div class="list-number">번호</div>
+            <div class="list-number"></div>
             <div class="list-title">제목</div>
             <div class="list-ninkname">닉네임</div>
             <div class="list-day">등록일</div>

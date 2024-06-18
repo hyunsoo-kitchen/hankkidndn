@@ -34,3 +34,7 @@ Route::post('/api/registration', [UserController::class, 'registration']);
 
 // 마이페이지
 Route::put('/api/user', [MypageController::class, 'update']);
+
+//보드 
+Route::middleware('auth')->get('/api/board{id}', [BoardController::class, 'boardDeatil']);
+Route::middleware('auth')->post('api/boardinsert', [BoardController::class, 'boardInsert']);

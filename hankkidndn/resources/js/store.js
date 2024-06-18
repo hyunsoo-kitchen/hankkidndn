@@ -12,6 +12,9 @@ const store = createStore({
             BoardListData:[],
             MainNewData:[],
             MainBestData:[],
+            // 이현수
+            boardList: [], 
+            boardDetail: null 
         }
     },
     mutations: {
@@ -40,6 +43,18 @@ const store = createStore({
         setUserInfo(state, data) {
             state.boardData = data;
         },
+        // 이현수
+        // 게시글을 가장 처음에 넣기
+        setUnshiftBoardData(state, data) {
+            state.boardData.unshift(data);
+        },
+        setAddUserBoardsCount(state){
+            state.userInfo.boards_count++;
+            localStorage.setItem('userInfo', state.userInfo);
+        },
+        setBoardDetail(state, boardDetail) {
+            state.boardDetail = boardDetail; 
+        }
     },
     actions: {
         getMainNewList(context) {
@@ -132,6 +147,40 @@ const store = createStore({
                 alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
             });
         },
+
+        boardInsert(context) {
+            const url= '/api/boardinsert';
+            const data = new FormData(document.querySelector('#boardInsertForm'));
+
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data);
+
+                context.commit('setUnshiftBoardData', response.data.data);
+                context.commit('setAddUserBoardsCount');
+                router.replace('/boardinsert');
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+            });
+        },
+
+        boardDetail(context, boardId) {
+            const url = `/api/board/${boardId}`;
+
+            axios.get(url)
+                .then(response => {
+                    console.log(response.data);
+
+                    context.commit('setBoardDetail', response.data.data);
+                    router.push(`/board/${boardId}`);
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('게시글 조회에 실패했습니다. (' + error.response.data.code + ')');
+                });
+        }
     }
 });
 
