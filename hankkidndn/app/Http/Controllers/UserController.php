@@ -95,9 +95,11 @@ class UserController extends Controller
         
     }
 
-    //로그아웃 - 노경호
+    // 로그아웃
     public function logout() {
-        Auth::logout(Auth::user());
+        Log::debug(Auth::check());
+        Log::debug(Auth::id(), Auth::user());
+        Auth::logout();
         Session::invalidate(); // 기본 세션 파기하고 새로운 세션 생성
         Session::regenerateToken(); // CSRF 토큰 재발급
 
