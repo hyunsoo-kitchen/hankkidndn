@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>write</title>
+  <link rel="stylesheet" href="../css/main_page.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="header-content">
+        <img class="img-logo" alt="logo" src="../img/logo.png">
+        <div>
+          <router-link to="/main"><h1>한끼든든</h1></router-link>
+        </div>
+        <!-- <div class="btn-group"> -->
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/login')" class="header-btn">로그인</button>
+            </div>
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/registration')" class="header-btn">가입하기</button>
+            </div>
+        <!-- </div> -->
+      </div>
+    </div>
+</header>
+   <div class="board_container">
+    <div class="board_header_img">
+      <img class="head_img" src="../img/main.png" alt="">
+    </div>
+    <div class="board_main">
+        <div class="parent2">
+            <div class="free_board_name item4">
+            <span>한끼든든에 오신 여러분을 환영합니다.</span>
+            </div>
+            </div>
+        </div>
+        <div class="main_title_category">
+           <div class="item1">
+            <img src="../img/bakery.jpg" alt="">
+             <span class="title_img"><a href="#">한식</a></span>
+             <span class="write">모든 한식 레시피</span>
+           </div> 
+           <div class="item2">
+            <img src="../img/bakery.jpg" alt="">
+             <span class="title_img"><a href="#">중식</a></span>
+             <span class="write">모든 중식 레시피</span>
+           </div> 
+           <div class="item3">
+            <img src="../img/bakery.jpg" alt="">
+             <span class="title_img"><a href="#">일식</a></span>
+             <span class="write">모든 일식 레시피</span>
+           </div> 
+           <div class="item4">
+            <img src="../img/bakery.jpg" alt="">
+             <span class="title_img"><a href="#">양식</a></span>
+             <span class="write">모든 양식 레시피</span>
+           </div> 
+           <div class="item5">
+            <img src="../img/bakery.jpg" alt="">
+             <span class="title_img"><a href="#">베이커리</a></span>
+             <span class="write">모든 베이커리 레시피</span>
+           </div> 
+        </div>
+        <hr>
+        <div class="main_img_logo">
+            <img class="img-logo" alt="logo" src="../img/logo.png">
+            <div>
+            <router-link to="/main"><span class="recipe_name">최신 레시피</span></router-link>
+            </div>
+        </div>
+        <div class="recent_recipe">
+            <img src="../img/hamburger.jpg" alt="" class="recent_img">
+            <img src="../img/hamburger.jpg" alt="" class="recent_img">
+            <img src="../img/hamburger.jpg" alt="" class="recent_img">
+            <img src="../img/hamburger.jpg" alt="" class="recent_img">
+        </div>
+        <hr>
+        <div class="main_img_logo">
+            <img class="img-logo" alt="logo" src="../img/logo.png">
+            <div>
+            <router-link to="/main"><span class="recipe_name">최신 레시피</span></router-link>
+            </div>
+        </div>
+        <div class="best_recipe">
+            <img src="../img/pizza.jpg" alt="" class="best_img">
+            <img src="../img/pizza.jpg" alt="" class="best_img">
+            <img src="../img/pizza.jpg" alt="" class="best_img">
+        </div>
+        <hr>
+        <div class="main_img_logo">
+            <img class="img-logo" alt="logo" src="../img/logo.png">
+            <div>
+            <router-link to="/main"><span class="recipe_name">인기 쉐프?</span></router-link>
+            </div>
+        </div>
+        <div class="footer">
+
+        </div>
+         <!-- 게시물 입력 폼 -->
+      <div class="board_form">
+      </div>
+   
+    </div>
+   </div> 
+   <script src="../js/board.js"></script> 
+</body>
+</html>
