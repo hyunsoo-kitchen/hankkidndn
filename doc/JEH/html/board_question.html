@@ -7,23 +7,50 @@
   <link rel="stylesheet" href="../css/board.css">
 </head>
 <body>
+  <header>
+    <div class="header-container">
+      <div class="header-content">
+        <img class="img-logo" alt="logo" src="../img/logo.png">
+        <div>
+          <router-link to="/main"><h1>한끼든든</h1></router-link>
+        </div>
+        <!-- <div class="btn-group"> -->
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/login')" class="header-btn">로그인</button>
+            </div>
+            <div class="btn-group" v-if="!$store.state.authFlg">
+              <button @click="$router.push('/registration')" class="header-btn">가입하기</button>
+            </div>
+        <!-- </div> -->
+      </div>
+    </div>
+</header>
    <div class="board_container">
     <div class="board_header_img">
-      <img src="" alt="">
+      <img class="head_img" src="../img/Rectangle 112.png" alt="">
     </div>
     <div class="board_menu">
-      <ul>
-        <li><a href="./board_free.html">자유게시판</a></li>
-        <li><a href="./board_question.html">질문게시판</a></li>
-        <li><a href="./board_inquiry.html">문의게시판</a></li>
-     
-      </ul>
+      <!-- div 연습 -->
+       <div class="parent">
+        <div class="child item1"><a href="./board_free.html">자유게시판</a></div>
+        <div class="child item2"><a href="./board_question.html">질문게시판</a></div>
+        <div class="child item3"><a href="./board_inquiry.html">문의게시판</a></div>
+       </div>
     </div>
     <div class="board_main">
-            <h1>질문 게시판</h1>
-            <div class="board_search">
-                <input type="text" id="searchInput" placeholder="검색어를 입력하세요.">
-                <button onclick="search()">검색</button>
+        <div class="parent2">
+            <div class="free_board_name item4">
+            <span>질문게시판</span>
+            </div>
+            <div class="board_search item5">
+                <select name="" id="title">
+                    <option value="#">제목</option>
+                    <option value="#">닉네임</option>
+                </select>
+                <input type="text" class="searchInput" id="searchInput" placeholder="검색어를 입력하세요.">
+                <a href="../img/search.png"></a>
+                <!-- <button onclick="search()">검색</button> -->
+            </div>
             </div>
         </div>
       <table>
@@ -68,8 +95,9 @@
             </tr>
         </tbody>
       </table>
-      <li><a href="write.html">글쓰기</a></li>
+      <li class="write_btn"><a href="write_1.html">글쓰기</a></li>
       <div class="pagination" id="pagination"></div>
+      
     </div>
    </div> 
    <script src="../js/board.js"></script> 

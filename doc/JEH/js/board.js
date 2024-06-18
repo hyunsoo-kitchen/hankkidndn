@@ -1,3 +1,4 @@
+
 // 샘플 데이터 (실제 데이터는 서버에서 가져올 수 있습니다)
 const boardData = [
     { id: 1, title: '첫 번째 게시물', author: '관리자', date: '2024-06-16' },
@@ -33,7 +34,7 @@ const boardData = [
     // 더 많은 데이터 추가 가능
 ];
 
-const rowsPerPage = 5;
+const rowsPerPage = 15;
 let currentPage = 1;
 
 function displayTablePage(page) {
@@ -99,3 +100,48 @@ function search() {
 
 // 초기 로드
 displayTablePage(currentPage);
+
+document.getElementById('newPostForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // 폼 제출 기본 동작 방지
+
+  const boardSelect = document.getElementById('board_option_select');
+  const selectedBoard = boardSelect.options[boardSelect.selectedIndex].value;
+  const title = document.getElementById('post_title').value;
+  const content = document.getElementById('post_content').value;
+
+  if (!selectedBoard) {
+    alert('게시판을 선택해주세요.');
+    return;
+  }
+
+  // 게시물 데이터
+  const postData = {
+    title: title,
+    content: content
+  };
+
+  // 서버로 게시물 전송 (예제 URL 사용)
+  fetch(`/api/boards/${selectedBoard}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // 성공적으로 게시물이 업로드되면 해당 게시판으로 이동
+      window.location.href = `/${selectedBoard}`;
+    } else {
+      alert('게시물 업로드에 실패했습니다.');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('게시물 업로드 중 오류가 발생했습니다.');
+  });
+});
+
+  
+
