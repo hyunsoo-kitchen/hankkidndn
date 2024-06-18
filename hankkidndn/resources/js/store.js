@@ -8,10 +8,15 @@ const store = createStore({
             authFlg: document.cookie.indexOf('auth=') >= 0 ? true : false,
             // 유저 정보 받아오는 쪽
             userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
-            recipeListData: [],
+            RecipeListData: [],
             BoardListData:[],
+            // 메인 페이지에 출력할 리스트
             MainNewData:[],
             MainBestData:[],
+
+            // 페이지 네이션
+            recipes: [],
+            pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
             // 이현수
             boardList: [], 
             boardDetail: null 
@@ -22,13 +27,18 @@ const store = createStore({
         setMainBoardData(state, data) {
             state.MainNewData = data;
         },
+        // 메인 베스트레시피 출력
         setMainBestData(state, data) {
-            console.log(data);
+            // console.log(data);
             state.MainBestData = data
         },
         // 레시피 리스트 저장
-        setRecipeBoardData(state, data) {
-            state.recipeListData = data;
+        setRecipeData(state, data) {
+            state.recipeListData = data.data;
+            state.pagination = data
+            localStorage.setItem('pagination', JSON.stringify(data));
+            // console.log(state.pagination);
+            console.log(state.recipeListData);
         },
         // 질문,자유 게시판 등 리스트 저장
         setBoardData(state, data) {
@@ -57,6 +67,7 @@ const store = createStore({
         }
     },
     actions: {
+        // 메인페이지 게시글 획득
         getMainNewList(context) {
             const url = '/api/main'
 
@@ -68,35 +79,42 @@ const store = createStore({
             })
             .catch();
         },
-
+        
         // 레시피 페이지 이동 후 해당 게시글 획득
-        getRecipeList(context, num) {
-            const url = '/api/recipe=' + num;
+        getRecipeList(context, data) {
+            const url = '/api/recipe/' + data.board_type + '?page=' + data.page;
 
             axios.get(url)
             .then(response => {
-                console.log(response.data.data)
-                context.commit('setRecipeBoardData', response.data.data);
-
-                router.push('/recipe=' + num);
+                // console.log(response.data)
+                
+                context.commit('setRecipeData', response.data.data);
+                router.push('/recipe/' + data.board_type + '?page=' + data.page);
             })
             .catch()
         },
 
         // 보드 페이지 이동 후 해당 게시글 획득
         getBoardList(context, num) {
-            const url = '/api/board=' + num;
+            const url = '/api/board/' + num;
 
             axios.get(url)
             .then(response => {
                 console.log(response.data.data)
                 context.commit('setBoardData', response.data.data);
-                router.push('/board='+ num);
             })
             .catch()
+        },
 
-            
+        // 리스트에서 디테일 페이지 이동
+        moveDetail(context, id) {
+            const url = '/api/detail/' + id
 
+            axios.get(url, data)
+            .then(response => {
+
+            })
+            .catch()
         },
         
         userInfoUpdate(context) {
@@ -116,8 +134,9 @@ const store = createStore({
             const data = new FormData(form);
             // const data = new FormData(document.querySelector('#registrationForm'));
             console.log(data);
-
-            axios.post(url, data)
+            
+           // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
+            axios.post(url, data, config)
             .then(response => {
                 console.log(response.data) //TODO
                 router.replace('/login');
@@ -130,9 +149,11 @@ const store = createStore({
 
         //로그인 처리
         login(context) {
-            const url = '/login';
+            const url = '/api/login';
             const form = document.querySelector('#loginForm');
             const data = new FormData(form);
+
+            // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
             axios.post(url, data)
             .then(response => {
                 console.log(response.data); //TODO
@@ -145,6 +166,29 @@ const store = createStore({
             .catch(error => {
                 console.log(error.response); //TODO
                 alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
+            });
+        },
+
+        //로그아웃 처리
+        logout(context) {
+            const url = '/api/logout';
+
+            axios.post(url)
+            .then(response => {
+                console.log(response.data); // TODO
+            })
+            .catch(error => {
+                console.log(error.response); // TODO
+                // alert('문제가 발생해 강제 로그아웃 합니다.(' + error.response.data.code + ')');
+            })
+            .finally(() => {
+                localStorage.clear();
+
+                context.commit('setAuthFlg', false);
+                context.commit('setUserInfo', null);
+                alert('로그아웃 되었습니다.');
+
+                router.replace('/main');
             });
         },
 

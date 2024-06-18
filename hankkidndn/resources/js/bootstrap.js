@@ -8,7 +8,9 @@ window._ = require('lodash');
 
 window.axios = require('axios');
 
+// 새로운 csrf 토큰생성방식 테스트 -노경호-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

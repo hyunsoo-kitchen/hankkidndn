@@ -2,30 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recipe_boards;
+use App\Models\RecipeBoards;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class RecipeBoardController extends Controller
 {
     // 각 페이지의 리스트 획득
     public function getList($num) {
-        if($num === 100) {
-            $recipeData = Recipe_boards::select('recipe_boards.*', 'users.u_nickname')
-                                ->join('users', 'users.id', '=', 'recipe_boards.user_id')
+        
+        if($num == 100) {
+            $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                ->select('recipe_boards.*', 'users.u_nickname')
                                 ->orderBy('recipe_boards.id', 'DESC')
-                                ->limit(16)
-                                ->get();
-        } else if($num === 99 ) {
-            $recipeData = Recipe_boards::select('recipe_boards.*', 'users.u_nickname')
-                                ->join('users', 'users.id', '=', 'recipe_boards.user_id')
-                                ->orderBy('recipe_boards.likes_num', 'ESC')
-                                ->limit(16)
-                                ->get();
+                                ->paginate(16);
+
+        } else if($num == 99 ) {
+            $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                ->select('recipe_boards.*', 'users.u_nickname')
+                                ->orderBy('recipe_boards.likes_num', 'DESC')
+                                ->paginate(16);
+
         } else {
-            $recipeData = Recipe_boards::select('recipe_boards.*', 'users.u_nickname')
+            $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                ->select('recipe_boards.*', 'users.u_nickname')
                                 ->where('boards_type_id', '=', $num)
-                                ->limit(16)                        
-                                ->get();
+                                ->paginate(16);                       
+
         }
         
         $responseData = [
@@ -35,5 +38,9 @@ class RecipeBoardController extends Controller
         ];
 
         return response()->json($responseData, 200);
+    }
+
+    public function getDetail($num) {
+       
     }
 }

@@ -42,7 +42,7 @@ const routes = [
         component: RegistCompliteComponent,
     },
     {
-        path: '/recipe',
+        path: '/recipe/:id',
         component: RecipeListComponent,
     },
     {
@@ -58,7 +58,7 @@ const routes = [
         component: RecipeDetailComponent,
     },
     {
-        path: '/board=:num',
+        path: '/board',
         component: BoardListComponent,
     },
     {

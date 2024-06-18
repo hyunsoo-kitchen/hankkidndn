@@ -20,17 +20,15 @@ class Users extends Authenticatable
      */
     protected $fillable = [
         'u_name',
+        'birth_at',
         'u_id',
         'u_password',
-        'u_nickname',
-        'gender',
-        'u_email',
-        'birth_at',
         'u_post',
         'u_address',
-        'u_detail_address',
-        'u_phone_num'
-
+        'u_address_detail',
+        'u_phone_num',
+        'u_nickname',
+        'gender',
 
     ];
 
@@ -41,7 +39,7 @@ class Users extends Authenticatable
      */
     protected $hidden = [
         'u_password',
-        'remember_token',
+        'refresh_token',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
