@@ -9,7 +9,7 @@ class BoardController extends Controller
 {
     public function getList($num) {
         $recipeData = Boards::where('boards_type_id', '=', $num)
-                                    ->get();
+                            ->paginate(16);
         
         $responseData = [
             'code' => '0'

@@ -17,7 +17,7 @@ class BoardsFactory extends Factory
     {
         $date = $this->faker->dateTimeBetween('-1 years'); // -1년 ~ 현재 랜덤 날짜 획득
         $user_id = $this->faker->numberBetween(1, 50); // 1부터 50까지의 랜덤한 사용자 ID
-        $boards_type_id = $this->faker->numberBetween(1, 5); // 1부터 5까지의 랜덤한 게시판 타입 ID
+        $boards_type_id = $this->faker->numberBetween(6, 9); // 1부터 5까지의 랜덤한 게시판 타입 ID
         
         return [
             'user_id' => $user_id,
