@@ -34,3 +34,6 @@ Route::post('/api/registration', [UserController::class, 'registration']);
 
 // 마이페이지
 Route::put('/api/user', [MypageController::class, 'update']);
+
+// 디테일 게시글 획득
+Route::get('/api/detail/{num}', [RecipeBoardController::class, 'getDtail']);

@@ -33,7 +33,7 @@
             </div>
             <div class="main-list-content">
                 <div class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
-                    <img :src="item.thumbnail">
+                    <img :src="item.thumbnail" @click="$store.dispatch('moveDetail', item.id)">
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
@@ -42,11 +42,11 @@
                     </div>
                 </div>
             </div>
-            <div @click="pageMove($store.state.pagination.current_page - 1)">이전</div> 
-            <a v-for="num in maxPageNum" :key="num" :href="`./list.php?page=${num}`" class="a-button small-button">
-                {{ num }}
-            </a>     
-            <div @click="pageMove($store.state.pagination.current_page + 1)">다음</div>
+            <button @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+            <div v-for="page_num in page" :key="page_num">
+                <button @click="pageMove(page_num)">{{ page_num }}</button>
+            </div>
+            <button @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
         </div>
     </div>
 </template>
@@ -59,16 +59,33 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
+const page = ref([]);
+const now_page = route.query.page;
+const last_page = store.state.pagination.last_page;
+const start_page = (Math.ceil(now_page / 5)) * 5 - 4;
+const max_page = Math.min(start_page + 4, last_page)
 const data = {
     board_type: '',
     page: '',
 };
 
+
+function pagination() {
+    for (let i = start_page; i <= max_page; i++) {
+        page.value.push(i);
+        console.log(page.value);
+    }
+}
+
+
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
-    console.log(store.state.pagination);
+
+    pagination();
+
+    // console.log(store.state.pagination);
     data.board_type = route.params.id;
-    data.page = route.query.page;
+    data.page = now_page;
     store.dispatch('getRecipeList', data);
 });
 

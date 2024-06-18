@@ -39,4 +39,8 @@ class RecipeBoardController extends Controller
 
         return response()->json($responseData, 200);
     }
+
+    public function getDetail($num) {
+       
+    }
 }

@@ -90,6 +90,17 @@ const store = createStore({
             })
             .catch()
         },
+
+        // 리스트에서 디테일 페이지 이동
+        moveDetail(context, id) {
+            const url = '/api/detail/' + id
+
+            axios.get(url, data)
+            .then(response => {
+
+            })
+            .catch()
+        },
         
         userInfoUpdate(context) {
             const url = '/api/user'
