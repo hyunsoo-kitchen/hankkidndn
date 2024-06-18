@@ -211,14 +211,13 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response); // TODO
-                // alert('문제가 발생해 강제 로그아웃 합니다.(' + error.response.data.code + ')');
+                alert('문제가 발생해 강제 로그아웃합니다. (' + error.response.data.code + ')');
             })
             .finally(() => {
                 localStorage.clear();
 
                 context.commit('setAuthFlg', false);
                 context.commit('setUserInfo', null);
-                alert('로그아웃 되었습니다.');
 
                 router.replace('/main');
             });
