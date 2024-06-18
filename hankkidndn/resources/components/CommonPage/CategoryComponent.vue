@@ -6,25 +6,25 @@
             <div @click="closeModal" id="close-hambuger" :style="closeHambuger"></div>
                 <nav v-if="!isMobileView" id="nav-list">
                     <ul>
-                        <li><button @click="getRecipeList(99)">추천</button></li>
+                        <li><button @click="$router.push('/recipe/99?page=1')">추천</button></li>
                         <li class="dropdown">
                             <button>레시피</button>
                             <ul class="dropdown-content">
-                                <li><button @click="getRecipeList(100)">전체</button></li>
-                                <li><button @click="getRecipeList(1)">한식</button></li>
-                                <li><button @click="getRecipeList(2)">중식</button></li>
-                                <li><button @click="getRecipeList(3)">양식</button></li>
-                                <li><button @click="getRecipeList(4)">일식</button></li>
-                                <li><button @click="getRecipeList(5)">베이킹</button></li>
+                                <li><button @click="$router.push('/recipe/100?page=1')">전체</button></li>
+                                <li><button @click="$router.push('/recipe/1?page=1')">한식</button></li>
+                                <li><button @click="$router.push('/recipe/2?page=1')">중식</button></li>
+                                <li><button @click="$router.push('/recipe/3?page=1')">양식</button></li>
+                                <li><button @click="$router.push('/recipe/4?page=1')">일식</button></li>
+                                <li><button @click="$router.push('/recipe/5?page=1')">베이킹</button></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <button>게시판</button>
                             <ul class="dropdown-content">
-                                <li><button @click="getBoardList(6)">공지사항</button></li>
-                                <li><button @click="getBoardList(7)">자유게시판</button></li>
-                                <li><button @click="getBoardList(8)">질문게시판</button></li>
-                                <li><button @click="getBoardList(9)">문의게시판</button></li>
+                                <li><button @click="$router.push('/board/6?page=1')">공지사항</button></li>
+                                <li><button @click="$router.push('/board/7?page=1')">자유게시판</button></li>
+                                <li><button @click="$router.push('/board/8?page=1')">질문게시판</button></li>
+                                <li><button @click="$router.push('/board/9?page=1')">문의게시판</button></li>
                             </ul>
                         </li>
                         <li><button>이벤트</button></li>
@@ -33,19 +33,19 @@
         </div>
         <nav v-if="isModalOpen" class="hambuger-nav-list">
             <ul class="dropdown-content">
-                <li class="dropdown-content-li">추천</li>
+                <li  @click="$router.push('/recipe/99?page=1')" class="dropdown-content-li">추천</li>
                 <hr>
-                <li @click="getRecipeList(100)" class="dropdown-content-li">전체</li>
-                <li @click="getRecipeList(1)" class="dropdown-content-li">한식</li>
-                <li @click="getRecipeList(2)" class="dropdown-content-li">중식</li>
-                <li @click="getRecipeList(3)" class="dropdown-content-li">양식</li>
-                <li @click="getRecipeList(4)" class="dropdown-content-li">일식</li>
-                <li @click="getRecipeList(5)" class="dropdown-content-li">베이킹</li>
+                <li @click="$router.push('/recipe/100?page=1')" class="dropdown-content-li">전체</li>
+                <li @click="$router.push('/recipe/1?page=1')" class="dropdown-content-li">한식</li>
+                <li @click="$router.push('/recipe/2?page=1')" class="dropdown-content-li">중식</li>
+                <li @click="$router.push('/recipe/3?page=1')" class="dropdown-content-li">양식</li>
+                <li @click="$router.push('/recipe/4?page=1')" class="dropdown-content-li">일식</li>
+                <li @click="$router.push('/recipe/5?page=1')" class="dropdown-content-li">베이킹</li>
                 <hr>
-                <li @click="getBoardList(6)" class="dropdown-content-li">공지사항</li>
-                <li @click="getBoardList(7)" class="dropdown-content-li">자유게시판</li>
-                <li @click="getBoardList(8)" class="dropdown-content-li">질문게시판</li>
-                <li @click="getBoardList(9)" class="dropdown-content-li">문의게시판</li>
+                <li @click="$router.push('/board/6?page=1')" class="dropdown-content-li">공지사항</li>
+                <li @click="$router.push('/board/7?page=1')" class="dropdown-content-li">자유게시판</li>
+                <li @click="$router.push('/board/8?page=1')" class="dropdown-content-li">질문게시판</li>
+                <li @click="$router.push('/board/9?page=1')" class="dropdown-content-li">문의게시판</li>
                 <hr>
                 <li class="dropdown-content-li">이벤트</li>
             </ul>

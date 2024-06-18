@@ -26,8 +26,8 @@ Route::get('/{any}', function() {
 Route::get('/api/main', [CommonController::class, 'getList']);
 
 // 각 게시판 정보 획득
-Route::get('/api/recipe/list={num}', [RecipeBoardController::class, 'getList']);
-Route::get('/api/board/list/{num}', [BoardController::class, 'getList']);
+Route::get('/api/recipe/{num}', [RecipeBoardController::class, 'getList']);
+Route::get('/api/board/{num}', [BoardController::class, 'getList']);
 
 // 회원가입 - 노경호
 Route::post('/api/registration', [UserController::class, 'registration']);
@@ -39,3 +39,6 @@ Route::middleware('auth')->post('/api/logout', [UserController::class, 'logout']
 
 // 마이페이지
 Route::put('/api/user', [MypageController::class, 'update']);
+
+// 디테일 게시글 획득
+Route::get('/api/detail/{num}', [RecipeBoardController::class, 'getDtail']);

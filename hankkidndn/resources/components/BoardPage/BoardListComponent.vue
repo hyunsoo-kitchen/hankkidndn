@@ -86,8 +86,24 @@
         </div>
     </div>
 </template>
-<script upset>
+<script setup>
+    
+import { onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
 
+
+const store = useStore();
+
+onBeforeMount(() => {
+    // 현재 주소 값 획득
+    const url = new URL(window.location.href)
+    // console.log(url);
+    const urlParams = url.searchParams
+
+    // 주소값에서 list의 파라미터 획득
+    const num = urlParams.get('list')
+    store.dispatch('getBoardList', num)
+});
 </script>
 <style scoped src="../../css/boardlist.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
