@@ -28,7 +28,7 @@
             </div>
     </div>
 </template>
-<script upset>
+<script setup>
 
 </script>
 <style scoped src="../../css/my_comment.css">

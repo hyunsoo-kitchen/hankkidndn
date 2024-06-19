@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BoardImages;
 use App\Models\Boards;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
+    // 보드 게시글 리스트 획득 및 페이지네이션
     public function getList($num) {
         $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
                             ->select('boards.*', 'users.u_nickname')
@@ -24,6 +26,7 @@ class BoardController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 보드 게시글 획득
     public function getDetail($id) {
         $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
                             ->select('boards.*', 'users.u_nickname')
@@ -39,7 +42,9 @@ class BoardController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 보드 게시글 삭제 처리
     public function delete($id) {
+
         Boards::destroy($id);
 
         $responseData = [
@@ -51,26 +56,34 @@ class BoardController extends Controller
         return response()->json($responseData);
     }
 
-    public function boardIndex(Request $request) {
-        // 인서트 처리
-        $boardModel = Boards::select('boards.*', 'user_id')
-                            ->join('users', 'user_id', '=', 'id')
-                            ->where('user_id', Auth::id())
-                            ->first();
+    public function boardInsert(Request $request) {
 
+        $user = Auth::user();
+        $request['user_id'] = $user->id;
 
-        
-        $boardModel->title = $request->title;
-        $boardModel->content = $request->content;
-        $boardModel->user_id = Auth::id();
-        $boardModel->board_type_id = $request->board;
-        $boardModel->save();
+        // 데이터들을 배열 형태로 반환
+        $insertData = $request->all();
 
+        // 제목과 내용만 보드테이블에 작성
+        $boardData = Boards::create($insertData);
+
+        // 작성한 게시글의 번호 획득
+        $boardId = $boardData->id;
+
+        // 배열형태의 이미지를 foreach로 돌려서 따로 저장
+        foreach ($request->file('images') as $image) {
+            $path = '/'.$image->store('img');
+
+            BoardImages::create([
+                'board_id' => $boardId,
+                'img_path' => $path
+            ]);
+        }
         // 레스폰스 처리
         $responseData = [
             'code' => '0'
             ,'msg' => '글 작성 완료'
-            ,'data' => $boardModel->toArray()
+            ,'data' => $boardData
         ];
 
         return response()->json($responseData, 200);

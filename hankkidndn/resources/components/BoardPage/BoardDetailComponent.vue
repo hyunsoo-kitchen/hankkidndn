@@ -45,21 +45,32 @@
             <button class="comment-submit">댓글</button>
             </div>
         </div>
-        </div>
+    </div>
+
+
+    <!-- 삭제 모달 -->
+    <div v-if="modalFlg">
+        <div>정말로 삭제 하시겠습니까?</div>
+        <button @click="data.board_type = $store.state.boardDetail.boards_type_id, $store.dispatch('boardDelete', data)">삭제</button>
+        <button @click="closeModal()">취소</button>
     </div>
 </div>
 
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
 const modalFlg = ref(false);
-const id = route.params.id
+const data = reactive({
+    board_type: null,
+    id: route.params.id,
+});
+// const id = route.params.id
 
 function openModal() {
     modalFlg.value = true
@@ -70,7 +81,7 @@ function closeModal() {
 }
 
 onBeforeMount(() => {
-    store.dispatch('getBoardDetail', id);
+    store.dispatch('getBoardDetail', data.id);
 });
 // import { mapState } from 'vuex';
 

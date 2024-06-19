@@ -97,8 +97,6 @@ class UserController extends Controller
 
     // 로그아웃
     public function logout() {
-        Log::debug(Auth::check());
-        Log::debug(Auth::id(), Auth::user());
         Auth::logout();
         Session::invalidate(); // 기본 세션 파기하고 새로운 세션 생성
         Session::regenerateToken(); // CSRF 토큰 재발급
@@ -110,6 +108,23 @@ class UserController extends Controller
         return response()
                 ->json($responseData, 200)
                 ->cookie('auth', '1', -1, null, null, false, false);
+    }
+
+    // 마이페이지 유저정보 획득
+    public function getUserInfo() {
+        $boardData = Users::select('recipe_boards.COUNT(user_id) AS recipe_count', 'users.name', 'comments.*')
+                            ->join('users', 'id', '=', 'recipe_boards.user_id')
+                            ->join('users', 'id', '=', 'comments.user_id')
+                            ->where('users.id', '=', Auth::user())
+                            ->get();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $boardData->toArray()
+        ];
+          
+        return response()->json($responseData, 200);
     }
 }
 

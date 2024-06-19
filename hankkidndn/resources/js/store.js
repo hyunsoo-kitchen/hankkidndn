@@ -17,8 +17,11 @@ const store = createStore({
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
             // 이현수
-            boardList: [], 
+            // boardList: [], 
             boardDetail: [], 
+            //---------------------노경호------------------------------
+            mypageUserinfo: [],
+            //-------------------------끝------------------------------
         }
     },
     mutations: {
@@ -42,7 +45,7 @@ const store = createStore({
             state.boardListData = data.data;
             state.pagination = data
             localStorage.setItem('pagination', JSON.stringify(data));
-            console.log(state.boardListData);
+            // console.log(state.boardListData);
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -58,16 +61,16 @@ const store = createStore({
         },
         // 이현수
         // 게시글을 가장 처음에 넣기
-        setUnshiftBoardData(state, data) {
-            state.boardData.unshift(data);
-        },
-        setAddUserBoardsCount(state){
-            state.userInfo.boards_count++;
-            localStorage.setItem('userInfo', state.userInfo);
-        },
-        setBoardDetail(state, boardDetail) {
-            state.boardDetail = boardDetail; 
-        }
+        // setUnshiftBoardData(state, data) {
+        //     state.boardData.unshift(data);
+        // },
+        // setAddUserBoardsCount(state){
+        //     state.userInfo.boards_count++;
+        //     localStorage.setItem('userInfo', state.userInfo);
+        // },
+        // setBoardDetail(state, boardDetail) {
+        //     state.boardDetail = boardDetail; 
+        // }
     },
     actions: {
         // 메인페이지 게시글 획득
@@ -76,7 +79,7 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                console.log(response.data.bestData)
+                // console.log(response.data.bestData)
                 context.commit('setMainBoardData', response.data.newData)
                 context.commit('setMainBestData', response.data.bestData)
             })
@@ -128,23 +131,42 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setBoardDetail', response.data.data)
-                console.log(response.data.data)
+                // console.log(response.data.data)
                 router.push('/board/detail/' + id);
             })
             .catch();
         },
 
         // 보드 게시글 삭제 처리
-        boardDelete(context, id) {
-            const url = '/api/board/delete/' + id
-
+        boardDelete(context, data) {
+            const url = '/api/board/delete/' + data.id
+            // console.log(data.id)
+            // console.log(data.board_type)
             axios.delete(url)
             .then(response => {
-                const boardType = state.boardDetail.board_type
-                router.replace('/board/' + boardType + '?page=1')
+                router.replace('/board/' + data.board_type + '?page=1')
             })
             .catch(error => {
-                alert('글 삭제에 실패했습니다.' + error.response);
+                alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+            });
+        },
+
+        // 보드 게시글 작성 처리
+        boardInsert(context) {
+            const url= '/api/boardinsert';
+            const data = new FormData(document.querySelector('#boardInsertForm'));
+            console.log(data)
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data);
+
+                // context.commit('setUnshiftBoardData', response.data.data);
+                // context.commit('setAddUserBoardsCount');
+                router.replace('/board/8?page1');
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
             });
         },
 
@@ -222,40 +244,23 @@ const store = createStore({
                 router.replace('/main');
             });
         },
-
-        boardInsert(context) {
-            const url= '/api/boardinsert';
-            const data = new FormData(document.querySelector('#boardInsertForm'));
-
-            axios.post(url, data)
-            .then(response => {
-                console.log(response.data);
-
-                context.commit('setUnshiftBoardData', response.data.data);
-                context.commit('setAddUserBoardsCount');
-                router.replace('/boardinsert');
-            })
-            .catch(error => {
-                console.log(error.response.data);
-                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
-            });
-        },
-
-        boardDetail(context, boardId) {
-            const url = `/api/board/${boardId}`;
+        //---------------------노경호------------------------------
+        // 마이 페이지 유저정보
+        getMypageUserInfo(context) {
+            const url ='/api/mypage/recipe';
 
             axios.get(url)
-                .then(response => {
-                    console.log(response.data);
+            .then(response => {
+                console.log(response.data); //TODO
+                context.commit('setMypageUserInfo', response.data.data);
+            })
+            .catch(error => {
+                console.log(error.response); //TODO
+                alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+            });
+        },
+        //-------------------------끝------------------------------
 
-                    context.commit('setBoardDetail', response.data.data);
-                    router.push(`/board/${boardId}`);
-                })
-                .catch(error => {
-                    console.log(error.response.data);
-                    alert('게시글 조회에 실패했습니다. (' + error.response.data.code + ')');
-                });
-        }
     }
 });
 
