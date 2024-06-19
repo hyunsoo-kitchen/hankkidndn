@@ -146,12 +146,14 @@ const store = createStore({
 
         // 보드 게시글 삭제 처리
         boardDelete(context, data) {
-            const url = '/api/board/delete/' + data.id
+            const url = '/api/board/delete/' + data
             // console.log(data.id)
             // console.log(data.board_type)
             axios.delete(url)
             .then(response => {
-                router.replace('/board/' + data.board_type + '?page=1')
+                const board_type = context.state.boardDetail.boards_type_id
+                // 삭제한 게시글의 게시판 첫번째 페이지로 이동
+                router.replace('/board/' + board_type + '?page=1')
             })
             .catch(error => {
                 alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
@@ -188,6 +190,7 @@ const store = createStore({
             .catch();
         },
 
+        // 보드 수정페이지 게시글 수정 처리
         boardUpdate(context, id) {
             const url = '/api/board/update/' + id
             const data = new FormData(document.querySelector('#boardUpdateForm'));
@@ -195,6 +198,7 @@ const store = createStore({
             axios.post(url, data)
             .then(response => {
                 console.log(response.data)
+                context.commit('setBoardDetail', response.data)
                 router.replace('/board/detail/' + id)
             })
             .catch();

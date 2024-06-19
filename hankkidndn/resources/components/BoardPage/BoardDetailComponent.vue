@@ -4,7 +4,7 @@
     <div v-if="modalFlg" class="delete-modal">
         <div class="modal-title">정말로 삭제 하시겠습니까?</div>
         <div class="delete-btn">
-        <button @click="$store.dispatch('boardDelete', id)">삭제</button>
+        <button @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)">삭제</button>
         <button @click="closeModal()">취소</button>
         </div>
     </div>
@@ -75,9 +75,9 @@ function closeModal() {
 }
 
 // 나중에 조회수 용
-// onBeforeMount(() => {
-    
-// });
+onBeforeMount(() => {
+    store.dispatch('getBoardDetail', data.id) 
+});
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
