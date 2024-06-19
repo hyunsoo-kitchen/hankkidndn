@@ -17,8 +17,11 @@ const store = createStore({
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
             // 이현수
-            boardList: [], 
+            boardList: [],                                                                                                          
             boardDetail: [], 
+            //---------------------노경호------------------------------
+            mypageUserinfo: [],
+            //-------------------------끝------------------------------
         }
     },
     mutations: {
@@ -65,9 +68,12 @@ const store = createStore({
             state.userInfo.boards_count++;
             localStorage.setItem('userInfo', state.userInfo);
         },
-        setBoardDetail(state, boardDetail) {
-            state.boardDetail = boardDetail; 
-        }
+        //---------------------노경호------------------------------
+        // 내가 쓴 레시피 게시글 카운트
+        setMypageUserInfo(state, count) {
+            state.mypageUserinfo = count;
+        },
+        //-------------------------끝------------------------------
     },
     actions: {
         // 메인페이지 게시글 획득
@@ -255,7 +261,23 @@ const store = createStore({
                     console.log(error.response.data);
                     alert('게시글 조회에 실패했습니다. (' + error.response.data.code + ')');
                 });
-        }
+        },
+        //---------------------노경호------------------------------
+        // 마이 페이지 유저정보
+        getMypageUserInfo(context) {
+            const url ='/api/mypage/recipe';
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data); //TODO
+                context.commit('setMypageUserInfo', response.data.data);
+            })
+            .catch(error => {
+                console.log(error.response); //TODO
+                alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+            });
+        },
+        //-------------------------끝------------------------------
     }
 });
 

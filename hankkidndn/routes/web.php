@@ -42,10 +42,12 @@ Route::post('/api/registration', [UserController::class, 'registration']);
 Route::post('/api/login', [UserController::class, 'login']);
 // 로그아웃 - 노경호
 Route::middleware('auth')->post('/api/logout', [UserController::class, 'logout']);
-
-
+//---------------------노경호------------------------------
+// 마이페이지 유저정보 획득
+Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'getUserInfo']);
+//-----------------------끝--------------------------------
 // 마이페이지
-Route::put('/api/user', [MypageController::class, 'update']);
+// Route::put('/api/user', [MypageController::class, 'update']);
 
 //보드 
 Route::middleware('auth')->get('/api/board{id}', [BoardController::class, 'boardDeatil']);
