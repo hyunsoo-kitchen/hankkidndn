@@ -1,5 +1,4 @@
 * {
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -114,6 +113,10 @@
     padding: 10px 20px;
     cursor: pointer;
     grid-column: auto;
+    background-color: #7fccde;
+    border: none;
+    color: white;
+    border-radius: 10px;
 }
 
 .main-list-content {
@@ -135,6 +138,8 @@
 .card img {
     width: 100%;
     height: auto;
+    max-height: 200px;
+    object-fit: cover;  
 }
 
 .card-title {
@@ -143,16 +148,17 @@
     padding: 10px;
 }
 
-.card-name,
-.card-star,
-.card-view {
+.card-name{
     font-size: 14px;
     padding: 5px 10px;
 }
 
 .card-star {
-    color: #FFD700;
+    color: gray;
+    font-size: 0.7rem;
+    padding: 5px 10px;
 }
+
 
 .number-container {
     display: grid;
@@ -165,17 +171,35 @@
 
 .star-view{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0.6fr;
     padding-top: 10px;
 }
 
 .card-view{
     justify-self: end;
     color: gray;
+    font-size: 0.7rem;
+    padding: 5px 10px;
 }
 
 .btn-container {
     display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.number{
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    border-radius: 5px;
 }
 
 @media (max-width: 768px) {
@@ -202,6 +226,12 @@
     .main-list-content {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
+    .card img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;  
+    }
 }
     
 @media (max-width: 480px) {
@@ -221,6 +251,12 @@
 
     .main-list-content {
         grid-template-columns: 1fr;
+    }
+    .card img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;  
     }
 }
 
