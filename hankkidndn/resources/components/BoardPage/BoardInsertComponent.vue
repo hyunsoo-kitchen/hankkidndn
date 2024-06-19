@@ -8,7 +8,7 @@
             <h2>글 작성</h2>
             <hr>
             <div class="select_why">
-                <select name="board">
+                <select name="boards_type_id">
                     <option value="7">자유게시판</option>
                     <option value="8">질문게시판</option>
                     <option value="9">문의게시판</option>
@@ -16,7 +16,7 @@
                 <label for="file">
                     <div>이미지 파일</div>
                 </label>
-                <input hidden @change="setFile" type="file" id="file" name="file" accept="image/*" multiple>
+                <input hidden @change="setFile" type="file" id="file" name="file[]" accept="image/*" multiple>
             </div>
             <input name="title" type="text" placeholder="제목">
             <div class="content-box">

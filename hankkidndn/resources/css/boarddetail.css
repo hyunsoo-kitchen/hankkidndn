@@ -100,7 +100,14 @@ p{
   color: black;
 }
 
-
+.main_content > img {
+  width: 20%;
+  height: 30%;
+  margin: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 
 .comment-section {
   padding: 20px;

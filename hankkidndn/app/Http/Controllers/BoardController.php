@@ -6,6 +6,8 @@ use App\Models\BoardImages;
 use App\Models\Boards;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BoardController extends Controller
 {
@@ -32,11 +34,23 @@ class BoardController extends Controller
                             ->select('boards.*', 'users.u_nickname')
                             ->where('boards.id', '=', $id)
                             ->first();
+                            
+        $imgData = BoardImages::select('img_path')
+                                ->where('board_images.board_id', '=', $id)
+                                ->get();
+
+        // $boardData = Boards::select('boards.*', 'users.u_nickname', 'board_images.img_path')
+        //                     ->join('users', 'users.id', '=', 'boards.user_id')
+        //                     ->leftJoin('board_images', 'board_images.board_id', '=', 'boards.id')
+        //                     ->where('boards.id', '=', $id)
+        //                     ->orderBy('board_images.id', 'DESC')
+        //                     ->get();
 
         $responseData = [
             'code' => '0'
             ,'msg' => '게시글 획득 완료'
             ,'data' => $boardData
+            ,'img' => $imgData
         ];
 
         return response()->json($responseData, 200);
@@ -61,8 +75,15 @@ class BoardController extends Controller
         $user = Auth::user();
         $request['user_id'] = $user->id;
 
+        $insertData = [
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'boards_type_id' => $request->input('boards_type_id', 0), // 기본값을 설정하여 추가합니다.
+            'user_id' => $user->id
+        ];
+
         // 데이터들을 배열 형태로 반환
-        $insertData = $request->all();
+        // $insertData = $request->all();
 
         // 제목과 내용만 보드테이블에 작성
         $boardData = Boards::create($insertData);
@@ -70,14 +91,16 @@ class BoardController extends Controller
         // 작성한 게시글의 번호 획득
         $boardId = $boardData->id;
 
-        // 배열형태의 이미지를 foreach로 돌려서 따로 저장
-        foreach ($request->file('images') as $image) {
-            $path = '/'.$image->store('img');
-
-            BoardImages::create([
-                'board_id' => $boardId,
-                'img_path' => $path
-            ]);
+        if($request->file('file')) {
+            // 배열형태의 이미지를 foreach로 돌려서 따로 저장
+            foreach ($request->file('file') as $image) {
+                $path = '/'.$image->store('img');
+    
+                BoardImages::create([
+                    'board_id' => $boardId,
+                    'img_path' => $path
+                ]);
+            }
         }
         // 레스폰스 처리
         $responseData = [

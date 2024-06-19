@@ -16,9 +16,10 @@ const store = createStore({
 
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
-            // 이현수
-            // boardList: [], 
+
+            // 보드게시판 데이터
             boardDetail: [], 
+            boardImg: [],
             //---------------------노경호------------------------------
             mypageUserinfo: [],
             //-------------------------끝------------------------------
@@ -49,7 +50,8 @@ const store = createStore({
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
-            state.boardDetail = data;
+            state.boardDetail = data.data;
+            state.boardImg = data.img;
         },
         // 인증 플래그 저장
         setAuthFlg(state, flg) {
@@ -130,8 +132,8 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                context.commit('setBoardDetail', response.data.data)
-                // console.log(response.data.data)
+                context.commit('setBoardDetail', response.data)
+                console.log(response.data)
                 router.push('/board/detail/' + id);
             })
             .catch();
@@ -162,7 +164,7 @@ const store = createStore({
 
                 // context.commit('setUnshiftBoardData', response.data.data);
                 // context.commit('setAddUserBoardsCount');
-                router.replace('/board/8?page1');
+                router.replace('/board/'+ response.data.data.boards_type_id +'?page=1');
             })
             .catch(error => {
                 console.log(error.response.data);
