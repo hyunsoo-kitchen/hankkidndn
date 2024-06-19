@@ -51,8 +51,8 @@
                 <div class="best-recipe-content" >
                     <p class="text-thick font-big">{{ item.title }}</p>
                     <p class="text-gray">{{ item.content }}</p>
-                    <div class="line"></div>
-                </div>
+                    </div>
+                <div class="line"></div>
                 <div class="best-recipe-footer">
                     <p>{{ item.cnt }}</p>
                     <p>조회수</p>

@@ -27,7 +27,7 @@
     list-style: none;
     padding: 10px 0;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(4, auto);
     width: 50%;
     border-radius: 30px;
     margin: 0 auto;
@@ -104,6 +104,7 @@
     grid-template-columns: 0.3fr 1fr 0.5fr 0.7fr;
     justify-items: center;
     padding-top: 20px;
+    cursor: pointer;
 }
 
 .btn-box {
@@ -122,25 +123,26 @@
     cursor: pointer;
     font-size: 16px;
     text-align: center;
-}
+}   
 
-.number-container {
-    display: grid;
-    grid-template-columns: repeat(6, auto);
-    gap: 10px;
+.btn-container {
+    display: flex;
     justify-content: center;
+    padding: 20px 0;
     align-items: center;
-    margin: 20px 0;
+    gap: 10px;
 }
 
-.number-container .number {
+.number{
     padding: 10px;
     cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
     text-align: center;
-}
-
-.number-container img {
-    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    border-radius: 5px;
 }
 
 @media (max-width: 600px) {
