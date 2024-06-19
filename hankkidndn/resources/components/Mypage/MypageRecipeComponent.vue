@@ -9,13 +9,13 @@
                     <div class="sub_title_content title_select">내 레시피</div>
                     <div class="sub_title_content title_none_select">내 댓글</div>
                 </div>
-                <div class="main_content">
+                <div class="main_content" v-for="userInfo in $store.state.mypageUserinfo">
                     <!-- 내 레시피 -->
                     <div class="main_my_page">
-                        <img :src="$store.state.userInfo.profile">
-                        <h2>{{ $store.state.userInfo.nickname }} 님 안녕하세요.</h2>
+                        <img :src="userInfo.profile">
+                        <h2>{{ userInfo.u_nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
-                            <p>내가 쓴 글 34건</p>
+                            <p>내가 쓴 글 {{ userInfo.recipe_count }}건</p>
                             <p>내가 쓴 댓글 40건</p>
                         </div>
                     </div>
@@ -26,8 +26,17 @@
             </div>
     </div>
 </template>
-<script upset>
+<script setup>
+import { computed, onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
+
+onBeforeMount(() => {
+    if(store.state.mypageUserinfo.length < 1) {
+        store.dispatch('getMypageUserInfo');
+    }
+});
 </script>
 <style scoped src="../../css/my_recipe.css">
      @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

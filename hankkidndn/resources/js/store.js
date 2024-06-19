@@ -19,6 +19,9 @@ const store = createStore({
             // 이현수
             // boardList: [], 
             boardDetail: [], 
+            //---------------------노경호------------------------------
+            mypageUserinfo: [],
+            //-------------------------끝------------------------------
         }
     },
     mutations: {
@@ -241,23 +244,23 @@ const store = createStore({
                 router.replace('/main');
             });
         },
+        //---------------------노경호------------------------------
+        // 마이 페이지 유저정보
+        getMypageUserInfo(context) {
+            const url ='/api/mypage/recipe';
 
+            axios.get(url)
+            .then(response => {
+                console.log(response.data); //TODO
+                context.commit('setMypageUserInfo', response.data.data);
+            })
+            .catch(error => {
+                console.log(error.response); //TODO
+                alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+            });
+        },
+        //-------------------------끝------------------------------
 
-        // boardDetail(context, boardId) {
-        //     const url = `/api/board/${boardId}`;
-
-        //     axios.get(url)
-        //         .then(response => {
-        //             console.log(response.data);
-
-        //             context.commit('setBoardDetail', response.data.data);
-        //             router.push(`/board/${boardId}`);
-        //         })
-        //         .catch(error => {
-        //             console.log(error.response.data);
-        //             alert('게시글 조회에 실패했습니다. (' + error.response.data.code + ')');
-        //         });
-        // }
     }
 });
 
