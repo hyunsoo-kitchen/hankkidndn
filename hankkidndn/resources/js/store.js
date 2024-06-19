@@ -71,6 +71,10 @@ const store = createStore({
         // setBoardDetail(state, boardDetail) {
         //     state.boardDetail = boardDetail; 
         // }
+        setMypageUserInfo(state, userInfo) {
+            state.mypageUserinfo = userInfo;
+            console.log(state.mypageUserinfo);
+        }   
     },
     actions: {
         // 메인페이지 게시글 획득
@@ -190,7 +194,7 @@ const store = createStore({
             console.log(data);
             
            // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
-            axios.post(url, data, config)
+            axios.post(url, data)
             .then(response => {
                 console.log(response.data) //TODO
                 router.replace('/login');

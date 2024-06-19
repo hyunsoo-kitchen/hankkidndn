@@ -5,9 +5,9 @@
     <h2 class="page_title">마이페이지</h2>
     <div class="main_container">
         <div class="sub_title">
-            <div class="sub_title_content title_none_select">내 레시피</div>
-            <div class="sub_title_content title_none_select">내 댓글</div>
-            <div class="sub_title_content title_select">개인정보수정</div>
+            <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
+            <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select">내 댓글</div>
+            <div @click="$router.push('/mypage/update')" class="sub_title_content title_select">개인정보수정</div>
         </div>
         <form class="main_content" id="myPageForm">
             <!-- 개인정보수정 -->
