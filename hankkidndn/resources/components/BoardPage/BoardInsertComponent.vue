@@ -8,25 +8,47 @@
             <h2>글 작성</h2>
             <hr>
             <div class="select_why">
-                <select name="board" id="board" >
+                <select name="board">
                     <option value="7">자유게시판</option>
                     <option value="8">질문게시판</option>
                     <option value="9">문의게시판</option>
                 </select>
-                <div></div>
+                <label for="file">
+                    <div>이미지 파일</div>
+                </label>
+                <input hidden @change="setFile" type="file" id="file" name="file" accept="image/*" multiple>
             </div>
-            <input type="text" placeholder="제목">
-            <textarea name="content" id="content" rows="30" placeholder="내용을 입력해주세요"></textarea>
+            <input name="title" type="text" placeholder="제목">
+            <div class="content-box">
+                <img v-for="(item, index) in preview" :key="index" :src="item">
+                <textarea name="content" rows="30" placeholder="내용을 입력해주세요"></textarea>
+            </div>
             <div class="buttons">
-                <button @click="store.dispatch('boardInsert')" class="complete">작성하기</button>
-                <button @click="$router.back()" class="cancel ">취소</button>
+                <button type="button" @click="$store.dispatch('boardInsert')" class="complete">작성하기</button>
+                <button type="button" @click="$router.back()" class="cancel ">취소</button>
             </div>
         </div>
     </div>
 </form>
 </template>
-<script upset>
+<script setup>
+import { ref } from 'vue';
+const preview = ref([]);
 
+function setFile(e) {
+    const file = e.target.files;
+    const fileList = [];
+    if(file.length > 5) {
+        alert('이미지 파일은 최대 5개까지 선택할 수 있습니다.')
+        e = null;
+        return
+    }
+    for(let i = 0; i < file.length; i++) {
+        fileList.push(URL.createObjectURL(file[i]));
+    }
+    preview.value = fileList;
+
+};
 </script>
 <style scoped src="../../css/boardinsert.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
