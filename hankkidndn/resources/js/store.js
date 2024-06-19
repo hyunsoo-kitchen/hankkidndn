@@ -52,6 +52,7 @@ const store = createStore({
         setBoardDetail(state, data){
             state.boardDetail = data.data;
             state.boardImg = data.img;
+            console.log(state.boardDetail)
         },
         // 인증 플래그 저장
         setAuthFlg(state, flg) {
@@ -155,12 +156,12 @@ const store = createStore({
 
         // 보드 게시글 작성 처리
         boardInsert(context) {
-            const url= '/api/boardinsert';
+            const url= '/api/board/insert';
             const data = new FormData(document.querySelector('#boardInsertForm'));
             console.log(data)
             axios.post(url, data)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
 
                 // context.commit('setUnshiftBoardData', response.data.data);
                 // context.commit('setAddUserBoardsCount');
@@ -170,6 +171,29 @@ const store = createStore({
                 console.log(error.response.data);
                 alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
             });
+        },
+
+        // 보드 수정페이지 게시글 획득처리
+        getBoardUpdate(context, id) {
+            const url = '/api/board/update/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setBoardDetail', response.data)
+            })
+            .catch();
+        },
+
+        boardUpdate(context, id) {
+            const url = '/api/board/update/' + id
+            const data = new FormData(document.querySelector('#boardUpdateForm'));
+            
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data)
+                router.replace('/board/detail/' + id)
+            })
+            .catch();
         },
 
         

@@ -37,7 +37,12 @@ Route::get('/api/board/detail/{num}', [BoardController::class, 'getDetail']);
 Route::delete('/api/board/delete/{num}', [BoardController::class, 'delete']);
 
 // 보드 게시글 작성 처리 - 권현수
-Route::middleware('auth')->post('api/boardinsert', [BoardController::class, 'boardInsert']);
+Route::middleware('auth')->post('/api/board/insert', [BoardController::class, 'boardInsert']);
+
+// 보드 게시글 수정 처리 - 권현수
+Route::middleware('auth')->get('/api/board/update/{num}', [BoardController::class, 'getBoardUpdate']);
+Route::middleware('auth')->post('/api/board/update/{num}', [BoardController::class, 'boardUpdate']);
+
 
 // 회원가입 - 노경호
 Route::post('/api/registration', [UserController::class, 'registration']);

@@ -66,7 +66,7 @@ const routes = [
         component: BoardInsertComponent,
     },
     {
-        path: '/board/update',
+        path: '/board/update/:id',
         component: BoardUpdateComponent,
     },
     {
