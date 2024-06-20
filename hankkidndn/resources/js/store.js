@@ -141,8 +141,8 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                context.commit('setBoardDetail', response.data.data)
-                // console.log(response.data.data)
+                context.commit('setBoardDetail', response.data)
+                console.log(response.data.data)
                 router.push('/board/detail/' + id);
             })
             .catch();
