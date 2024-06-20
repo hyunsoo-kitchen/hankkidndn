@@ -20,14 +20,48 @@
                             <p>내가 쓴 댓글 {{ $store.state.mypageUserinfo.comments_count }}건</p>
                         </div>
                     </div>
-                    <div>
-                        <div class="cotents_head_box">
-                            <div>내가 쓴 글</div>
-                            <div>내가 쓴 댓글</div>
+                    <div class="contents_box">
+                        <div class="contents_head_box">
+                            <button @click="activeTab = 'recipe'" class="title_select" :class="{ active: activeTab === 'recipe' }">
+                                내가 쓴 레시피</button>
+                            <button @click="activeTab = 'board'" class=" title_none_select" :class="{ active: activeTab === 'board'}">
+                                내가 쓴 글</button>
                         </div>
-                        <div class="">
+                        <div class="contents_board_list">
+                            
+                            <div v-if="activeTab === 'recipe'">
+                                <div class="my_list">
+                                    <div class="list_title">제목</div>
+                                    <div class="list_views">조회수</div>
+                                    <div class="list_date">작성일</div>
+                                </div>
+                                <hr>
+                                <div v-for="(item, index) in myRecipeData" :key="index">
+                                    <div class="my_list">
+                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_date">{{ formatDate(item.created_at) }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div v-if="activeTab === 'board'">
+                                <div class="my_list">
+                                    <div class="list_title">제목</div>
+                                    <div class="list_views">조회수</div>
+                                    <div class="list_date">작성일</div>
+                                </div>
+                                <hr>
+                                <div  v-for="(item, index) in myBoardData" :key="index">
+                                    <div class="my_list">
+                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_date">{{ formatDate(item.created_at) }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
-                        </div>
                     </div>
                 </div>
             </div>
@@ -36,15 +70,32 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const activeTab = ref('recipe');
+const myRecipeData = computed(() => store.state.mypageRecipeList);
+const myBoardData = computed(() => store.state.mypageBoardList);
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+};
+
 
 onBeforeMount(() => {
     store.dispatch('getMypageUserInfo');
+    store.dispatch('getRecipeListInMy');
+  store.dispatch('getBoardListInMy');
 });
+
 </script>
 <style scoped src="../../css/my_recipe.css">
      @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>
+
+

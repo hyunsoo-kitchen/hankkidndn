@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\MyAutheException;
 use App\Exceptions\MyValidateException;
+use App\Models\Boards;
+use App\Models\RecipeBoards;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,6 +107,7 @@ class UserController extends Controller
         $responseData = [
             'code' => '0'
             ,'msg' => '로그아웃 완료'
+
         ];
         return response()
                 ->json($responseData, 200)
@@ -114,20 +117,60 @@ class UserController extends Controller
     // 마이페이지 유저정보 획득
     public function getUserInfo() {
         $user_id = Auth::id();
+    
+        $boardData = Users::select(
+                'users.profile',
+                'users.u_nickname',
+                DB::raw('(SELECT COUNT(rb.user_id) FROM recipe_boards AS rb WHERE users.id = rb.user_id) as recipe_count'),
+                DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id) as comments_count')
+            )
+            ->where('users.id', $user_id)
+            ->first();
+    
+        $responseData = [
+            'code' => '0',
+            'msg' => '게시글 획득 완료',
+            'data' => $boardData->toArray()
+        ];
+          
+        return response()->json($responseData, 200);
+    }
+    
+    // 마이페이지에서 유저가 쓴 보드 리스트 획득 및 페이지네이션 
+    public function getBoardListInMy() {
+        $user_id = Auth::id();
 
-        $boardData = Users::select('users.profile', 'users.u_nickname', DB::raw('COUNT(rb.user_id) as recipe_count'), DB::raw('COUNT(cm.user_id) as comments_count'))
-                ->leftJoin('recipe_boards as rb', 'users.id', '=', 'rb.user_id')
-                ->leftJoin('comments as cm', 'users.id', '=', 'cm.user_id')
-                ->where('users.id', $user_id)
-                ->groupBy('users.id', 'users.profile', 'users.u_nickname')
-                ->first();
-
+        $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
+                            ->select('boards.*', 'users.u_nickname')
+                            ->where('users.id', $user_id)
+                            ->orderBy('boards.created_at', 'DESC')
+                            ->paginate(10);
+        
         $responseData = [
             'code' => '0'
             ,'msg' => '게시글 획득 완료'
             ,'data' => $boardData->toArray()
         ];
-          
+
+        return response()->json($responseData, 200);
+    }
+    
+    // 마이페이지에서 유저가 쓴 레시피 리스트 획득 및 페이지네이션
+    public function getRecipeListInMy() {
+        $user_id = Auth::id();
+
+        $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                    ->select('recipe_boards.*', 'users.u_nickname')
+                                    ->where('users.id', $user_id)
+                                    ->orderBy('recipe_boards.created_at', 'DESC')
+                                    ->paginate(10);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $recipeData->toArray()
+        ];
+        
         return response()->json($responseData, 200);
     }
 }

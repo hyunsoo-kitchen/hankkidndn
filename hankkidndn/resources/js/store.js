@@ -20,8 +20,8 @@ const store = createStore({
 
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
-
-            // 보드게시판 데이터
+            // 이현수
+            // boardList: [], 
             boardDetail: [], 
             boardImg: [],
 
@@ -32,6 +32,9 @@ const store = createStore({
 
             //---------------------노경호------------------------------
             mypageUserinfo: [],
+            mypageRecipeList: [],
+            mypageBoardList: [],
+
             //-------------------------끝------------------------------
         }
     },
@@ -88,7 +91,21 @@ const store = createStore({
         setMypageUserInfo(state, userInfo) {
             state.mypageUserinfo = userInfo;
             console.log(state.mypageUserinfo);
-        }   
+        },
+        setMyBoardData(state, data) {
+            state.mypageBoardList = data.data;
+            // state.pagination = data
+            // localStorage.setItem('pagination', JSON.stringify(data));
+            // console.log(state.boardListData);
+        },
+        setMyRecipeData(state, data) {
+            state.mypageRecipeList = data.data;
+        },
+        //-------------------------노경호 끝-------------------------- 
+        setBoardViewCount(state, data) {
+            state.boardData = data;
+        },
+        // --------------- 이현수 끝
     },
     actions: {
         //---------------------권현수------------------------------
@@ -184,7 +201,7 @@ const store = createStore({
 
                 // context.commit('setUnshiftBoardData', response.data.data);
                 // context.commit('setAddUserBoardsCount');
-                router.replace('/board/'+ response.data.data.boards_type_id +'?page=1');
+                router.replace('/board/8?page1');
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -289,7 +306,8 @@ const store = createStore({
                 context.commit('setUserInfo', response.data.data);
                 context.commit('setAuthFlg', true);
 
-                router.replace('/main');
+                // router.replace('/main');
+                router.back();
             })
             .catch(error => {
                 console.log(error.response); //TODO
@@ -315,13 +333,14 @@ const store = createStore({
                 context.commit('setAuthFlg', false);
                 context.commit('setUserInfo', null);
 
-                router.replace('/main');
+                // router.replace('/main');
+                router.back();
             });
         },
         //---------------------노경호------------------------------
         // 마이 페이지 유저정보
         getMypageUserInfo(context) {
-            const url ='/api/mypage/recipe';
+            const url ='/api/mypage/userinfo';
 
             axios.get(url)
             .then(response => {
@@ -333,8 +352,48 @@ const store = createStore({
                 alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
             });
         },
-        //-------------------------끝------------------------------
 
+        // 마이페이지 내가 쓴 레시피
+        getRecipeListInMy(context, data) {
+            const url ='api/mypage/recipe';
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data);
+                context.commit('setMyRecipeData', response.data.data);
+            })
+            .catch()
+        },
+
+
+        // 마이페이지 내가 쓴 게시글
+        getBoardListInMy(context, data) {
+            const url ='/api/mypage/board';
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data);
+                context.commit('setMyBoardData', response.data.data);
+                // router.push('/board/' + data.board_type + '?page=' + data.page);
+            })
+            .catch()
+        },
+
+        //-------------------------끝------------------------------
+        // 이현수
+        // getBoardViewCount(context) {
+        //     const url = 'api/board/detail';
+
+        //     axios.get(url)
+        //     .then(response => {
+        //         console.log(response.data);
+        //         context.commit('setBoardViewCount', response.data.data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error.response);
+        //         alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+        //     });
+        // }
     }
 });
 
