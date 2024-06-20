@@ -47,7 +47,7 @@
         grid-column: 2/3;
         grid-row: 1/3;
         margin-top: 20px;
-        display: grid;
+        /* display: grid; */
     }
     /* 개인정보 수정 */
     .main-box {
@@ -124,7 +124,7 @@
     
     .buttons {
         margin-top: 20px;
-        justify-self: center;   
+        text-align: center; 
     }
     
     button.cancel, button.complete {
@@ -154,7 +154,7 @@
         font-size: 20px;
     }
     .main_content {
-        display: grid;
+        /* display: grid; */
         margin-top: 20px;
     }
     /* 화면 작을 때 개인정보수정 CSS */
@@ -233,7 +233,7 @@
     
     .buttons {
         margin-top: 20px;
-        justify-self: center;   
+        text-align: center;   
     }
     
     button.cancel, button.complete {
@@ -263,7 +263,7 @@
         font-size: 20px;
     }
     .main_content {
-        display: grid;
+        /* display: grid; */
         margin-top: 20px;
     }
     /* 화면 작을 때 개인정보수정 CSS */
@@ -346,7 +346,7 @@
     
     .buttons {
         margin-top: 20px;
-        justify-self: center;   
+        text-align: center;  
     }
     
     button.cancel, button.complete {

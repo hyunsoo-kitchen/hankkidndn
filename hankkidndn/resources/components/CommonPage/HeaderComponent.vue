@@ -7,16 +7,27 @@
               <router-link to="/main"><h1>한끼든든</h1></router-link>
             </div>
                 <div class="btn-group" v-if="!$store.state.authFlg">
-                  <button @click="$router.push('/login')" class="header-btn" id="login">로그인</button>
+                  <button @click="$router.push('/login')" class="header-btn" id="login">
+                    <img v-if="flgResizeSmaller1044" src="/img/login.png" alt="login">
+                    <span v-if="!flgResizeSmaller1044">로그인</span>
+                  </button>
                 </div>
                 <div class="btn-group" v-if="!$store.state.authFlg">
-                  <button @click="$router.push('/regist/agree')" class="header-btn" id="regist">가입하기</button>
+                  <button @click="$router.push('/regist/agree')" class="header-btn" id="regist">
+                    <img v-if="flgResizeSmaller1044" src="/img/regist.png" alt="register">
+                    <span v-if="!flgResizeSmaller1044">가입하기</span>
+                  </button>
                 </div>
-                <div class="btn-group" v-else>
-                  <button @click="$store.dispatch('logout')" class="header-btn myInfo"></button>
+                <div class="btn-group" v-if="$store.state.authFlg">
+                  <button @click="$router.push('/mypage')" class="header-btn">
+                    <span v-if="!flgResizeSmaller1044" >내 정보</span>
+                  </button>
                 </div>
-                <div class="btn-group" v-else>
-                  <button @click="$store.dispatch('logout')" class="header-btn" id="logout">로그아웃</button>
+                <div class="btn-group" v-if="$store.state.authFlg">
+                  <button @click="$store.dispatch('logout')" class="header-btn" id="logout">
+                    <img v-if="flgResizeSmaller1044" src="/img/logout.png" alt="logout">
+                    <span v-if="!flgResizeSmaller1044" >로그아웃</span>
+                  </button>
                 </div>
           </div>
         </div>
@@ -24,33 +35,35 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 
-function displayImage() {
-  const loginImage = document.querySelector('#login');
-  const registImage = document.querySelector('#regist');
-  loginImage.style.display = 'block';
-  registImage.style.display = 'block';
-  loginImage.textContent = "";
-  registImage.textContent = "";
-  loginImage.innerHTML = '<img src="/login.png" alt="login">';
-  registImage.innerHTML = '<img src="/regist.png" alt="register">';
-}
-function closeImage() {
-  const loginImage = document.querySelector('#login');
-  const registImage = document.querySelector('#regist');
-  loginImage.style.display = 'block';
-  registImage.style.display = 'block';
-  loginImage.textContent = "로그인";
-  registImage.textContent = "가입하기";
-}
+const flgResizeSmaller1044 = ref(true);
+
+// function displayImage() {
+//   const loginImage = document.querySelector('#login');
+//   const registImage = document.querySelector('#regist');
+//   loginImage.style.display = 'block';
+//   registImage.style.display = 'block';
+//   loginImage.textContent = "";
+//   registImage.textContent = "";
+//   loginImage.innerHTML = '<img src="/login.png" alt="login">';
+//   registImage.innerHTML = '<img src="/regist.png" alt="register">';
+// }
+// function closeImage() {
+//   const loginImage = document.querySelector('#login');
+//   const registImage = document.querySelector('#regist');
+//   loginImage.style.display = 'block';
+//   registImage.style.display = 'block';
+//   loginImage.textContent = "로그인";
+//   registImage.textContent = "가입하기";
+// }
 
 // 화면 크기 변경을 감지하는 함수
 function handleResize() {
   if (window.innerWidth <= 1044) {
-    displayImage();
+    flgResizeSmaller1044.value = true;
   } else {
-    closeImage();
+    flgResizeSmaller1044.value = false;
   }
 }
 

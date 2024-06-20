@@ -27,7 +27,7 @@
     list-style: none;
     padding: 10px 0;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(4, auto);
     width: 50%;
     border-radius: 30px;
     margin: 0 auto;
@@ -49,6 +49,11 @@
     cursor: pointer;
     font-weight: 500;
 }
+
+.header .ul-list ul li.active {
+    color: #874c00; 
+    font-weight: 900;
+    }
 
 .line {
     border-right: 1px solid white;
@@ -104,6 +109,7 @@
     grid-template-columns: 0.3fr 1fr 0.5fr 0.7fr;
     justify-items: center;
     padding-top: 20px;
+    cursor: pointer;
 }
 
 .btn-box {
@@ -122,26 +128,33 @@
     cursor: pointer;
     font-size: 16px;
     text-align: center;
-}
+}   
 
-.number-container {
-    display: grid;
-    grid-template-columns: repeat(6, auto);
-    gap: 10px;
+.btn-container {
+    display: flex;
     justify-content: center;
+    padding: 20px 0;
     align-items: center;
-    margin: 20px 0;
+    gap: 10px;
 }
 
-.number-container .number {
+.number{
     padding: 10px;
     cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
     text-align: center;
+    font-size: 16px;
+    color: #333;
+    border-radius: 5px;
+    transition: none;
 }
 
-.number-container img {
-    cursor: pointer;
-}
+.number.activePage {
+    background-color: #F0D264;
+    color: white;
+  }
 
 @media (max-width: 600px) {
     .header .ul-list ul {

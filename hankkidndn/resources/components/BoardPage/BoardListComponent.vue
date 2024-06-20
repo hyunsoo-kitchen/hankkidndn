@@ -4,10 +4,10 @@
             <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
-                    <li @click="boardTypeMove(6)" class="line">공지게시판</li>
-                    <li @click="boardTypeMove(7)" class="line">자유게시판</li>
-                    <li @click="boardTypeMove(8)" class="line">질문게시판</li>
-                    <li @click="boardTypeMove(9)" class="line">문의게시판</li>
+                    <li :class="{ 'active': activeType === 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
+                    <li :class="{ 'active': activeType === 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
+                    <li :class="{ 'active': activeType === 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
+                    <li :class="{ 'active': activeType === 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
                 </ul>
             </div>
         </div>
@@ -26,13 +26,13 @@
                 </form>
             </div>
             <div class="text-box-head">
-                <div class="list-number"></div>
+                <div class="list-number">번호</div>
                 <div class="list-title">제목</div>
                 <div class="list-ninkname">닉네임</div>
                 <div class="list-day">등록일</div>
             </div>
             <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
-            <div @click="$router.push('/board/detail/' + item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
+            <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
                 <!-- 게시글 출력 -->
                 <div class="list-number">1</div>
                 <div class="list-title">{{ item.title }}</div>
@@ -45,11 +45,11 @@
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
-                <button class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
-                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button :class="{ activePage: page_num === $store.state.pagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
-                <button class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+                <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
             </div>
         </div>
     </div>
@@ -66,6 +66,7 @@ const data = {
     board_type: '',
     page: '',
 };
+const activeType = ref(6);
 
 // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
 watch(() => route.query.page, (newPage) => {
@@ -105,6 +106,7 @@ function pageMove(page) {
 
 // 레시피 타입 이동
 function boardTypeMove(type) {
+    activeType.value = type;
     data.board_type = type
     data.page = 1
     store.dispatch('getBoardList', data)

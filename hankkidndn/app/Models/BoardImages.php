@@ -16,7 +16,6 @@ class BoardImages extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'recipe_board_id',
         'board_id',
         'img_path',
     ];
