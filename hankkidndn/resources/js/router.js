@@ -66,7 +66,7 @@ const routes = [
         component: BoardInsertComponent,
     },
     {
-        path: '/board/update',
+        path: '/board/update/:id',
         component: BoardUpdateComponent,
     },
     {
@@ -75,16 +75,16 @@ const routes = [
     },
     {
         path: '/mypage',
-        component: MypageComponent,
-    },
-    {
-        path: '/mypage/comment',
-        component: MypageCommentComponent,
-    },
-    {
-        path: '/mypage/recipe',
         component: MypageRecipeComponent,
     },
+    {
+        path: '/mypage/update',
+        component: MypageComponent, 
+    },
+    {
+        path: '/mypage/comments',
+        component: MypageCommentComponent,
+    }
 ];
 
 const router = createRouter({

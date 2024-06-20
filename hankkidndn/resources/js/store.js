@@ -52,6 +52,7 @@ const store = createStore({
         setBoardDetail(state, data){
             state.boardDetail = data.data;
             state.boardImg = data.img;
+            console.log(state.boardDetail)
         },
         // 인증 플래그 저장
         setAuthFlg(state, flg) {
@@ -73,6 +74,10 @@ const store = createStore({
         // setBoardDetail(state, boardDetail) {
         //     state.boardDetail = boardDetail; 
         // }
+        setMypageUserInfo(state, userInfo) {
+            state.mypageUserinfo = userInfo;
+            console.log(state.mypageUserinfo);
+        },   
         setBoardViewCount(state, data) {
             state.boardData = data;
         },
@@ -145,12 +150,14 @@ const store = createStore({
 
         // 보드 게시글 삭제 처리
         boardDelete(context, data) {
-            const url = '/api/board/delete/' + data.id
+            const url = '/api/board/delete/' + data
             // console.log(data.id)
             // console.log(data.board_type)
             axios.delete(url)
             .then(response => {
-                router.replace('/board/' + data.board_type + '?page=1')
+                const board_type = context.state.boardDetail.boards_type_id
+                // 삭제한 게시글의 게시판 첫번째 페이지로 이동
+                router.replace('/board/' + board_type + '?page=1')
             })
             .catch(error => {
                 alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
@@ -159,12 +166,12 @@ const store = createStore({
 
         // 보드 게시글 작성 처리
         boardInsert(context) {
-            const url= '/api/boardinsert';
+            const url= '/api/board/insert';
             const data = new FormData(document.querySelector('#boardInsertForm'));
             console.log(data)
             axios.post(url, data)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
 
                 // context.commit('setUnshiftBoardData', response.data.data);
                 // context.commit('setAddUserBoardsCount');
@@ -174,6 +181,31 @@ const store = createStore({
                 console.log(error.response.data);
                 alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
             });
+        },
+
+        // 보드 수정페이지 게시글 획득처리
+        getBoardUpdate(context, id) {
+            const url = '/api/board/update/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setBoardDetail', response.data)
+            })
+            .catch();
+        },
+
+        // 보드 수정페이지 게시글 수정 처리
+        boardUpdate(context, id) {
+            const url = '/api/board/update/' + id
+            const data = new FormData(document.querySelector('#boardUpdateForm'));
+            
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setBoardDetail', response.data)
+                router.replace('/board/detail/' + id)
+            })
+            .catch();
         },
 
         
@@ -196,7 +228,7 @@ const store = createStore({
             console.log(data);
             
            // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
-            axios.post(url, data, config)
+            axios.post(url, data)
             .then(response => {
                 console.log(response.data) //TODO
                 router.replace('/login');

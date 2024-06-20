@@ -37,17 +37,24 @@ Route::get('/api/board/detail/{num}', [BoardController::class, 'getDetail']);
 Route::delete('/api/board/delete/{num}', [BoardController::class, 'delete']);
 
 // 보드 게시글 작성 처리 - 권현수
-Route::middleware('auth')->post('api/boardinsert', [BoardController::class, 'boardInsert']);
+Route::middleware('auth')->post('/api/board/insert', [BoardController::class, 'boardInsert']);
 
-// 회원가입 - 노경호
-Route::post('/api/registration', [UserController::class, 'registration']);
-// 로그인 - 노경호
-Route::post('/api/login', [UserController::class, 'login']);
-// 로그아웃 - 노경호
-Route::middleware('auth')->post('/api/logout', [UserController::class, 'logout']);
+// 보드 게시글 수정 처리 - 권현수
+Route::middleware('auth')->get('/api/board/update/{num}', [BoardController::class, 'getBoardUpdate']);
+Route::middleware('auth')->post('/api/board/update/{num}', [BoardController::class, 'boardUpdate']);
+
+
 //---------------------노경호------------------------------
+
+// 회원가입
+Route::post('/api/registration', [UserController::class, 'registration']);
+// 로그인
+Route::post('/api/login', [UserController::class, 'login']);
+// 로그아웃
+Route::middleware('auth')->post('/api/logout', [UserController::class, 'logout']);
 // 마이페이지 유저정보 획득
 Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'getUserInfo']);
+
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

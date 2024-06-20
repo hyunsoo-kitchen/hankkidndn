@@ -7,6 +7,7 @@ use App\Exceptions\MyValidateException;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -48,7 +49,7 @@ class UserController extends Controller
         $insertData = $request->all();
 
         // 비밀번호 설정
-        $insertData['u_password'] = Hash::make($request->password);
+        $insertData['u_password'] = Hash::make($request->u_password);
 
         // 인서트 처리
         $userInfo = Users::create($insertData);
@@ -76,7 +77,7 @@ class UserController extends Controller
         if(!isset($userInfo)) {
             // 유저 없음
             throw new MyAutheException('E20');
-        } else if(!(Hash::check($request->password, $userInfo->u_password))) {
+        } else if(!(Hash::check($request->u_password, $userInfo->u_password))) {
             // 비밀번호 오류
             throw new MyAutheException('E21');
         }
@@ -112,11 +113,14 @@ class UserController extends Controller
 
     // 마이페이지 유저정보 획득
     public function getUserInfo() {
-        $boardData = Users::select('recipe_boards.COUNT(user_id) AS recipe_count', 'users.name', 'comments.*')
-                            ->join('users', 'id', '=', 'recipe_boards.user_id')
-                            ->join('users', 'id', '=', 'comments.user_id')
-                            ->where('users.id', '=', Auth::user())
-                            ->get();
+        $user_id = Auth::id();
+
+        $boardData = Users::select('users.profile', 'users.u_nickname', DB::raw('COUNT(rb.user_id) as recipe_count'), DB::raw('COUNT(cm.user_id) as comments_count'))
+                ->leftJoin('recipe_boards as rb', 'users.id', '=', 'rb.user_id')
+                ->leftJoin('comments as cm', 'users.id', '=', 'cm.user_id')
+                ->where('users.id', $user_id)
+                ->groupBy('users.id', 'users.profile', 'users.u_nickname')
+                ->first();
 
         $responseData = [
             'code' => '0'

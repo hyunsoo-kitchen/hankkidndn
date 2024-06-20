@@ -4,7 +4,7 @@
     <div v-if="modalFlg" class="delete-modal">
         <div class="modal-title">정말로 삭제 하시겠습니까?</div>
         <div class="delete-btn">
-        <button @click="$store.dispatch('boardDelete', id)">삭제</button>
+        <button @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)">삭제</button>
         <button @click="closeModal()">취소</button>
         </div>
     </div>
@@ -12,14 +12,14 @@
             <div class="main_title">
                 <h2 class="title_name">작성게시판</h2>
                 <div class="buttons">
-                    <button class="update" @click="$router.push('/board/update')">수정</button>
+                    <button class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
                     <button @click="openModal()" class="delete">삭제</button>
                     <div>조회수{{ $store.state.boardDetail.views }}</div>
                 </div>
             </div>
             <hr>
             <div class="main_title_content">
-                <h2>{{ $store.state.boardDetail.title }} </h2>
+                <h2>{{ $store.state.boardDetail.title }}</h2>
                 <div class="main_title_content_title">
                     <p>{{ $store.state.boardDetail.created_at }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>
@@ -75,36 +75,10 @@ function closeModal() {
     modalFlg.value = false
 }
 
+// 나중에 조회수 용
 onBeforeMount(() => {
-    store.dispatch('getBoardDetail', data.id);
+    store.dispatch('getBoardDetail', data.id) 
 });
-// import { mapState } from 'vuex';
-
-// export default {
-//     computed: {
-//         ...mapState({
-//             boardDetail: state => state.boardDetail
-//         })
-//     },
-//     methods: {
-//         goToEditPage() {
-//             const boardId = this.$route.params.id;
-//             this.$router.push(`/board/edit/${boardId}`);
-//         },
-//         deleteBoard() {
-//             const boardId = this.$route.params.id;
-//             this.$store.dispatch('deleteBoard', boardId)
-//                 .then(() => {
-//                     alert('게시글이 삭제되었습니다.');
-//                     this.$router.push('/board');
-//                 })
-//                 .catch(error => {
-//                     console.log(error.response.data);
-//                     alert('게시글 삭제에 실패했습니다. (' + error.response.data.code + ')');
-//                 });
-//         }
-//     }
-// };$store.dispatch('getBoardDetail', item.id)
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

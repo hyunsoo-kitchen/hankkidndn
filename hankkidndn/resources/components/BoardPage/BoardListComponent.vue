@@ -32,7 +32,7 @@
                 <div class="list-day">등록일</div>
             </div>
             <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
-            <div @click="$router.push('/board/detail/' + item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
+            <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
                 <!-- 게시글 출력 -->
                 <div class="list-number">1</div>
                 <div class="list-title">{{ item.title }}</div>
@@ -45,11 +45,11 @@
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
-                <button class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
                     <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
-                <button class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+                <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
             </div>
         </div>
     </div>
