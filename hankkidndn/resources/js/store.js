@@ -16,8 +16,8 @@ const store = createStore({
 
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
-
-            // 보드게시판 데이터
+            // 이현수
+            // boardList: [], 
             boardDetail: [], 
             boardImg: [],
             //---------------------노경호------------------------------
@@ -73,6 +73,10 @@ const store = createStore({
         // setBoardDetail(state, boardDetail) {
         //     state.boardDetail = boardDetail; 
         // }
+        setBoardViewCount(state, data) {
+            state.boardData = data;
+        },
+        // --------------- 이현수 끝
     },
     actions: {
         // 메인페이지 게시글 획득
@@ -132,8 +136,8 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                context.commit('setBoardDetail', response.data)
-                console.log(response.data)
+                context.commit('setBoardDetail', response.data.data)
+                // console.log(response.data.data)
                 router.push('/board/detail/' + id);
             })
             .catch();
@@ -164,7 +168,7 @@ const store = createStore({
 
                 // context.commit('setUnshiftBoardData', response.data.data);
                 // context.commit('setAddUserBoardsCount');
-                router.replace('/board/'+ response.data.data.boards_type_id +'?page=1');
+                router.replace('/board/8?page1');
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -262,7 +266,20 @@ const store = createStore({
             });
         },
         //-------------------------끝------------------------------
+        // 이현수
+        // getBoardViewCount(context) {
+        //     const url = 'api/board/detail';
 
+        //     axios.get(url)
+        //     .then(response => {
+        //         console.log(response.data);
+        //         context.commit('setBoardViewCount', response.data.data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error.response);
+        //         alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+        //     });
+        // }
     }
 });
 

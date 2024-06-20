@@ -14,6 +14,7 @@
                 <div class="buttons">
                     <button class="update" @click="$router.push('/board/update')">수정</button>
                     <button @click="openModal()" class="delete">삭제</button>
+                    <div>조회수{{ $store.state.boardDetail.views }}</div>
                 </div>
             </div>
             <hr>
