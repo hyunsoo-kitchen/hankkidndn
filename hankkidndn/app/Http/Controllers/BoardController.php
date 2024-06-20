@@ -7,7 +7,7 @@ use App\Models\Boards;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Log;
 
 class BoardController extends Controller
@@ -31,11 +31,16 @@ class BoardController extends Controller
 
     // 보드 게시글 획득
     public function getDetail($id) {
+        // 보드 정보 획득
         $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
                             ->select('boards.*', 'users.u_nickname')
                             ->where('boards.id', '=', $id)
                             ->first();
-                            
+
+        // 조회수 1  증가                    
+        $boardData->increment('views');
+
+        // 이미지 획득
         $imgData = BoardImages::select('img_path')
                                 ->where('board_images.board_id', '=', $id)
                                 ->get();
@@ -184,5 +189,17 @@ class BoardController extends Controller
 
         return response()->json($responseData, 200);
     }
+
+    // ------------이현수 레츠고------------------
+    // public function viewDetail($num){
+    //     $board = Boards::findOrFail($num);
+
+    //     $board->increment('views');
+
+    //     return response()->json([
+    //         'boards' => $board,
+    //         'views' => $board->views
+    //     ]);
+    // }
     
 }

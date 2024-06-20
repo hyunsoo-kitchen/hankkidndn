@@ -76,6 +76,42 @@
         font-size: 1.1rem;
         font-weight: 600;
     }
+    /* 추가 작업 */
+    .contents_box {
+        display: grid;
+        grid-template-rows: 30px auto;
+    }
+    .contents_head_box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 4fr;
+    }
+    .contents_head_box > div {
+        justify-self: center;
+    }
+    .contents_board_list {
+        display: grid;
+        grid-template-rows: repeat(10, 30px);
+    }
+    .my_list {
+        display: grid;
+        grid-template-columns: 2fr 0.5fr 0.5fr;
+    }
+    .list_title {
+        justify-self: center;
+        font-size: 17px;
+    }
+    /* 페이지 네이션 버튼 */
+    .number{
+        padding: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        background-color: #f8f9fa;
+        text-align: center;
+        font-size: 16px;
+        color: #333;
+        border-radius: 5px;
+    }
 }
 /* 화면 중간 사이즈일 때*/
 @media screen and (max-width: 849px) {

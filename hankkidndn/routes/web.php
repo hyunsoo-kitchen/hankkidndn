@@ -62,9 +62,18 @@ Route::post('/api/login', [UserController::class, 'login']);
 // 로그아웃
 Route::middleware('auth')->post('/api/logout', [UserController::class, 'logout']);
 // 마이페이지 유저정보 획득
-Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'getUserInfo']);
+Route::middleware('auth')->get('/api/mypage/userinfo', [UserController::class, 'getUserInfo']);
+// 마이페이지 유저가 작성한 보드리스트 획득
+Route::middleware('auth')->get('/api/mypage/board', [UserController::class, 'getBoardListInMy']);
+// 마이페이지 유저가 작성한 레시피 리스트 획득
+Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'getRecipeListInMy']);
 
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);
+
+//--------------------------------------------------
+// 보드디테일 조회수기능 이현수
+// Route::get('/api/board/detail/{num}',[BoardController::class, 'viewDetail']);
+// ------------------- 끝 -----------------------------
 
