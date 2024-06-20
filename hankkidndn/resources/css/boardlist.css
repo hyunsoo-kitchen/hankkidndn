@@ -50,6 +50,11 @@
     font-weight: 500;
 }
 
+.header .ul-list ul li.active {
+    color: #874c00; 
+    font-weight: 900;
+    }
+
 .line {
     border-right: 1px solid white;
 }
@@ -143,7 +148,13 @@
     font-size: 16px;
     color: #333;
     border-radius: 5px;
+    transition: none;
 }
+
+.number.activePage {
+    background-color: #F0D264;
+    color: white;
+  }
 
 @media (max-width: 600px) {
     .header .ul-list ul {

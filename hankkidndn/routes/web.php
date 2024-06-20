@@ -63,3 +63,8 @@ Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'ge
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);
 
+//--------------------------------------------------
+// 보드디테일 조회수기능 이현수
+// Route::get('/api/board/detail/{num}',[BoardController::class, 'viewDetail']);
+// ------------------- 끝 -----------------------------
+

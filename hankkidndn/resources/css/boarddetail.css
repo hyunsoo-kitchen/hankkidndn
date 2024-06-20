@@ -105,9 +105,9 @@ p{
     max-width: 200px; 
     height: 100%;
     min-height: 100px;
-    display: block;
     margin: 0 auto;
     object-fit: cover;
+    aspect-ratio: 1;
 }
 
 .comment-section {
@@ -269,4 +269,3 @@ p{
     padding: 10px 0;
 }
 
-  
