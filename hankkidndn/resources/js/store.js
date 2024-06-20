@@ -8,6 +8,10 @@ const store = createStore({
             authFlg: document.cookie.indexOf('auth=') >= 0 ? true : false,
             // 유저 정보 받아오는 쪽
             userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
+
+            //---------------------권현수------------------------------
+
+            // 각 게시판 리스트 정보
             recipeListData: [],
             boardListData:[],
             // 메인 페이지에 출력할 리스트
@@ -20,12 +24,20 @@ const store = createStore({
             // 보드게시판 데이터
             boardDetail: [], 
             boardImg: [],
+
+            // 댓글 데이터
+            commentData: [],
+            cocommentData: [],
+            //-------------------------끝------------------------------
+
             //---------------------노경호------------------------------
             mypageUserinfo: [],
             //-------------------------끝------------------------------
         }
     },
     mutations: {
+        //---------------------권현수------------------------------
+
         // 메인 최근레시피 출력
         setMainBoardData(state, data) {
             state.mainNewData = data;
@@ -52,8 +64,18 @@ const store = createStore({
         setBoardDetail(state, data){
             state.boardDetail = data.data;
             state.boardImg = data.img;
-            console.log(state.boardDetail)
+            state.commentData = data.comment;
+            state.cocommentData = data.cocomment;
+            // console.log(state.boardDetail);
         },
+        setMoreComment(state, data){
+            state.commentData.push(data)
+        },
+        setMoreCocomment(state, data){
+            state.cocommentData.push(data)
+        },
+        //---------------------끝---------------------------
+
         // 인증 플래그 저장
         setAuthFlg(state, flg) {
             state.authFlg = flg;
@@ -62,24 +84,15 @@ const store = createStore({
         setUserInfo(state, data) {
             state.boardData = data;
         },
-        // 이현수
-        // 게시글을 가장 처음에 넣기
-        // setUnshiftBoardData(state, data) {
-        //     state.boardData.unshift(data);
-        // },
-        // setAddUserBoardsCount(state){
-        //     state.userInfo.boards_count++;
-        //     localStorage.setItem('userInfo', state.userInfo);
-        // },
-        // setBoardDetail(state, boardDetail) {
-        //     state.boardDetail = boardDetail; 
-        // }
+
         setMypageUserInfo(state, userInfo) {
             state.mypageUserinfo = userInfo;
             console.log(state.mypageUserinfo);
         }   
     },
     actions: {
+        //---------------------권현수------------------------------
+
         // 메인페이지 게시글 획득
         getMainNewList(context) {
             const url = '/api/main'
@@ -107,7 +120,7 @@ const store = createStore({
             .catch()
         },
 
-        // 보드 페이지 이동 후 해당 게시글 획득
+        // 보드 페이지 리스트 처리
         getBoardList(context, data) {
             const url = '/api/board/' + data.board_type + '?page=' + data.page;
 
@@ -126,7 +139,7 @@ const store = createStore({
 
             axios.get(url, data)
             .then(response => {
-                console.log(response.data.data)
+                // console.log(response.data.data)
             })
             .catch()
         },
@@ -138,7 +151,7 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setBoardDetail', response.data)
-                console.log(response.data)
+                // console.log(response.data)
                 router.push('/board/detail/' + id);
             })
             .catch();
@@ -204,7 +217,34 @@ const store = createStore({
             .catch();
         },
 
-        
+        // 보드 게시글 댓글 작성 처리
+        commentInsert(context, id) {
+            const url = '/api/board/comment/' + id
+            const data = new FormData(document.querySelector('#boardComment'));
+            console.log(id)
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data.data)
+                context.commit('setMoreComment', response.data.data);
+            })
+            .catch();
+        },
+
+        // 보드 게시글 대댓글 작성 처리
+        cocomentInsert(context, id) {
+            const url = '/api/board/cocomment/' + id
+            console.log(id);
+            const data = new FormData(document.querySelector('#boardCocomment'));
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data.data)
+                context.commit('setMoreCocomment', response.data.data);
+            })
+            .catch();
+        },
+        //---------------------끝---------------------------
+
+
         userInfoUpdate(context) {
             const url = '/api/user'
             const data = new FormData(document.querySelector('#myPageForm'));

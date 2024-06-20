@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BoardImages;
 use App\Models\Boards;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,12 +40,28 @@ class BoardController extends Controller
                                 ->where('board_images.board_id', '=', $id)
                                 ->get();
 
+        $commentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->where('comments.board_id', $id)
+                                ->whereNull('comments.cocomment')
+                                ->get();
+
+        $cocommentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->whereNotNull('comments.cocomment')
+                                ->get();
+
         $responseData = [
             'code' => '0'
             ,'msg' => '게시글 획득 완료'
             ,'data' => $boardData
             ,'img' => $imgData
+            ,'comment' => $commentData
+            ,'cocomment' => $cocommentData
         ];
+
 
         return response()->json($responseData, 200);
     }

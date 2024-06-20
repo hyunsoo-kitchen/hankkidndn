@@ -16,12 +16,12 @@
             </div>
             <div class="ul-list">
                 <ul>
-                    <li @click="recipeTypeMove(100)" class="line">전체</li>
-                    <li @click="recipeTypeMove(1)" class="line">한식</li>
-                    <li @click="recipeTypeMove(2)" class="line">중식</li>
-                    <li @click="recipeTypeMove(3)" class="line">일식</li>
-                    <li @click="recipeTypeMove(4)" class="line">양식</li>
-                    <li @click="recipeTypeMove(5)">베이커리</li>
+                    <li :class="{ 'active': $route.params.id == 100 }" @click="recipeTypeMove(100)" class="line">전체</li>
+                    <li :class="{ 'active': $route.params.id == 1 }" @click="recipeTypeMove(1)" class="line">한식</li>
+                    <li :class="{ 'active': $route.params.id == 2 }" @click="recipeTypeMove(2)" class="line">중식</li>
+                    <li :class="{ 'active': $route.params.id == 3 }" @click="recipeTypeMove(3)" class="line">일식</li>
+                    <li :class="{ 'active': $route.params.id == 4 }" @click="recipeTypeMove(4)" class="line">양식</li>
+                    <li :class="{ 'active': $route.params.id == 5 }" @click="recipeTypeMove(5)">베이커리</li>
                 </ul>
             </div>
         </div>
@@ -44,11 +44,11 @@
                 </div>
             </div>
             <div class="btn-container">
-                <button class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
-                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button class="number" :class="{ 'active': page_num == $store.state.pagination.current_page }" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
-                <button class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+                <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
             </div>
         </div>
     </div>
@@ -62,15 +62,16 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
-const page = ref([]);
+const page = ref(route.query.page);
 
 const data = {
     board_type: '',
     page: '',
 };
 
-watch(() => route.query.page, (newPage) => {
+watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
+    data.board_type = newId
     pagination(newPage);
     store.dispatch('getRecipeList', data);
 });

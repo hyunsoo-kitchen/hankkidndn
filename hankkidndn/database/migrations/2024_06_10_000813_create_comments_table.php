@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('recipe_board_id')->unsigned()->nullable();
             $table->bigInteger('board_id')->unsigned()->nullable();
-            $table->integer('cocoment');
+            $table->integer('cocomment');
             $table->string('content', 500 );
             $table->integer('likes_num')->default(0);
             $table->timestamps();

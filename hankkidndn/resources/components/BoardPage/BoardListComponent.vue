@@ -13,7 +13,7 @@
         </div>
         <div class="main-list">
             <div class="head-title">
-                <h3>자유게시판</h3>
+                <h3>{{ getBoardName($route.params.id) }}</h3>
                 <form action="#">
                     <div class="search-bar">
                         <select name="name-tag" id="name-tag">
@@ -34,20 +34,20 @@
             <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
             <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
                 <!-- 게시글 출력 -->
-                <div class="list-number">1</div>
+                <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
                 <div class="list-title">{{ item.title }}</div>
                 <div class="list-ninkname">{{ item.u_nickname }}</div>
                 <div class="list-day">{{ item.created_at }}</div>
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
-                <button @click="$router.push('/board/insert')" class="text-btn" type="submit">글쓰기</button>
+                <button @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
                 <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
-                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button type="button" class="number" :class="{ 'active': page_num == $store.state.pagination.current_page }" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
                 <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
             </div>
@@ -68,8 +68,9 @@ const data = {
 };
 
 // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
-watch(() => route.query.page, (newPage) => {
+watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
+    data.board_type = newId
     pagination(newPage);
     store.dispatch('getBoardList', data);
 });
@@ -109,6 +110,21 @@ function boardTypeMove(type) {
     data.page = 1
     store.dispatch('getBoardList', data)
 }
+
+// 게시판 이름 획득
+function getBoardName(id) {
+      switch (parseInt(id)) {
+        case 6:
+          return '공지게시판';
+        case 7:
+          return '자유게시판';
+        case 8:
+          return '질문게시판';
+        case 9:
+          return '문의게시판';
+    }
+}
+
 </script>
 
 <style scoped src="../../css/boardlist.css">

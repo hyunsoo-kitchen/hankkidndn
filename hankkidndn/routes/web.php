@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\RecipeBoardController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function() {
     return view('welcome');
 })->where('any', '^(?!api).*$');
+//---------------------권현수------------------------------
 
 // 메인 리스트 게시글 획득 - 권현수
 Route::get('/api/main', [CommonController::class, 'getList']);
@@ -43,6 +45,13 @@ Route::middleware('auth')->post('/api/board/insert', [BoardController::class, 'b
 Route::middleware('auth')->get('/api/board/update/{num}', [BoardController::class, 'getBoardUpdate']);
 Route::middleware('auth')->post('/api/board/update/{num}', [BoardController::class, 'boardUpdate']);
 
+// 보드 댓글 처리 - 권현수
+Route::post('/api/board/comment/{num}', [CommentController::class, 'commentInsert']);
+Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentInsert']);
+
+
+
+//-------------------------끝------------------------------
 
 //---------------------노경호------------------------------
 

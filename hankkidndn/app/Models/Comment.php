@@ -19,9 +19,8 @@ class Comment extends Model
         'user_id',
         'recipe_board_id',
         'board_id',
-        'cocoment',
+        'cocomment',
         'content',
-        'likes_num',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
