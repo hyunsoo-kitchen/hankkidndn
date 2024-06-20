@@ -85,6 +85,8 @@ const formatDate = (dateString) => {
         day: '2-digit'
     });
 };
+
+
 onBeforeMount(() => {
     store.dispatch('getMypageUserInfo');
     store.dispatch('getRecipeListInMy');
