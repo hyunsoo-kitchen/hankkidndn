@@ -22,6 +22,9 @@ const store = createStore({
             boardImg: [],
             //---------------------노경호------------------------------
             mypageUserinfo: [],
+            mypageRecipeList: [],
+            mypageBoardList: [],
+
             //-------------------------끝------------------------------
         }
     },
@@ -74,10 +77,21 @@ const store = createStore({
         // setBoardDetail(state, boardDetail) {
         //     state.boardDetail = boardDetail; 
         // }
+        //-------------------------노경호----------------------------
         setMypageUserInfo(state, userInfo) {
             state.mypageUserinfo = userInfo;
             console.log(state.mypageUserinfo);
-        }   
+        },
+        setMyBoardData(state, data) {
+            state.mypageBoardList = data.data;
+            // state.pagination = data
+            // localStorage.setItem('pagination', JSON.stringify(data));
+            // console.log(state.boardListData);
+        },
+        setMyRecipeData(state, data) {
+            state.mypageRecipeList = data.data;
+        },
+        //-------------------------노경호 끝--------------------------
     },
     actions: {
         // 메인페이지 게시글 획득
@@ -249,7 +263,8 @@ const store = createStore({
                 context.commit('setUserInfo', response.data.data);
                 context.commit('setAuthFlg', true);
 
-                router.replace('/main');
+                // router.replace('/main');
+                router.back();
             })
             .catch(error => {
                 console.log(error.response); //TODO
@@ -275,13 +290,14 @@ const store = createStore({
                 context.commit('setAuthFlg', false);
                 context.commit('setUserInfo', null);
 
-                router.replace('/main');
+                // router.replace('/main');
+                router.back();
             });
         },
         //---------------------노경호------------------------------
         // 마이 페이지 유저정보
         getMypageUserInfo(context) {
-            const url ='/api/mypage/recipe';
+            const url ='/api/mypage/userinfo';
 
             axios.get(url)
             .then(response => {
@@ -293,6 +309,33 @@ const store = createStore({
                 alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
             });
         },
+
+        // 마이페이지 내가 쓴 레시피
+        getRecipeListInMy(context, data) {
+            const url ='api/mypage/recipe';
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data);
+                context.commit('setMyRecipeData', response.data.data);
+            })
+            .catch()
+        },
+
+
+        // 마이페이지 내가 쓴 게시글
+        getBoardListInMy(context, data) {
+            const url ='/api/mypage/board';
+
+            axios.get(url)
+            .then(response => {
+                console.log(response.data);
+                context.commit('setMyBoardData', response.data.data);
+                // router.push('/board/' + data.board_type + '?page=' + data.page);
+            })
+            .catch()
+        },
+
         //-------------------------끝------------------------------
 
     }
