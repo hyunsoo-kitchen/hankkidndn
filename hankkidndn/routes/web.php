@@ -47,6 +47,11 @@ Route::middleware('auth')->post('/api/board/update/{num}', [BoardController::cla
 
 // 보드 댓글 처리 - 권현수
 Route::post('/api/board/comment/{num}', [CommentController::class, 'commentInsert']);
+Route::post('/api/board/comment/update/{num}', [CommentController::class, 'commentUpdate']);
+Route::delete('/api/board/comment/delete/{num}', [CommentController::class, 'commentDelete']);
+Route::put('/api/board/comment/like/{num}', [CommentController::class, 'commentLike']);
+
+// 보드 대댓글 처리 - 권현수
 Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentInsert']);
 
 
