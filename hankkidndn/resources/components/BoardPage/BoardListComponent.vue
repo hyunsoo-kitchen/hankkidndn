@@ -4,10 +4,10 @@
             <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
-                    <li :class="{ 'active': activeType === 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
-                    <li :class="{ 'active': activeType === 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
-                    <li :class="{ 'active': activeType === 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
-                    <li :class="{ 'active': activeType === 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
+                    <li :class="{ 'active': activeType == 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
+                    <li :class="{ 'active': activeType == 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
+                    <li :class="{ 'active': activeType == 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
+                    <li :class="{ 'active': activeType == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
                 </ul>
             </div>
         </div>
@@ -66,7 +66,7 @@ const data = {
     board_type: '',
     page: '',
 };
-const activeType = ref(6);
+const activeType = ref();
 
 // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
 watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
@@ -90,6 +90,7 @@ function pagination(nowPage) {
 
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
+    activeType.value = route.params.id
     pagination(route.query.page);
     data.board_type = route.params.id;
     data.page = route.query.page;

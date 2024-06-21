@@ -69,6 +69,7 @@ const store = createStore({
             state.boardImg = data.img;
             state.commentData = data.comment;
             state.cocommentData = data.cocomment;
+            console.log(state.userInfo)
             // console.log(state.boardDetail);
         },
         setMoreComment(state, data){
@@ -85,7 +86,8 @@ const store = createStore({
         },
         // 유저 정보 저장
         setUserInfo(state, data) {
-            state.boardData = data;
+            console.log(data)
+            state.userInfo = data;
         },
 
         setMypageUserInfo(state, userInfo) {
@@ -301,7 +303,7 @@ const store = createStore({
             // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
             axios.post(url, data)
             .then(response => {
-                console.log(response.data); //TODO
+                // console.log(response.data); //TODO
                 localStorage.setItem('userInfo', JSON.stringify(response.data.data));
                 context.commit('setUserInfo', response.data.data);
                 context.commit('setAuthFlg', true);
@@ -333,8 +335,8 @@ const store = createStore({
                 context.commit('setAuthFlg', false);
                 context.commit('setUserInfo', null);
 
-                // router.replace('/main');
-                router.back();
+                router.replace('/main');
+                // router.back();
             });
         },
         //---------------------노경호------------------------------
