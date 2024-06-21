@@ -69,14 +69,31 @@ const store = createStore({
             state.boardImg = data.img;
             state.commentData = data.comment;
             state.cocommentData = data.cocomment;
-            console.log(state.userInfo)
-            // console.log(state.boardDetail);
         },
         setMoreComment(state, data){
             state.commentData.push(data)
         },
         setMoreCocomment(state, data){
             state.cocommentData.push(data)
+        },
+
+        // 삭제 후 배열에 삭제한 댓글 추가
+        setCommentData(state, data){
+            console.log(data);
+            state.commentData.splice(data.key, 1);
+            state.commentData[data.key] = data.data;
+        },
+        setCocommentData(state, data){
+            state.cocommentData.splice(data.key, 1);
+            state.cocommentData[data.key] = data.data;
+        },
+
+        // 보드 게시글 댓글 업데이트 처리
+        updateCommentData(state, data) {
+            state.commentData[data.key] = data.data;
+        },
+        updateCocommentData(state, data) {
+            state.cocommentData[data.key] = data.data;
         },
         //---------------------끝---------------------------
 
@@ -170,8 +187,8 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setBoardDetail', response.data)
-                // console.log(response.data)
-                router.push('/board/detail/' + id);
+                console.log(response.data)
+                router.replace('/board/detail/' + id);
             })
             .catch();
         },
@@ -199,11 +216,8 @@ const store = createStore({
             console.log(data)
             axios.post(url, data)
             .then(response => {
-                // console.log(response.data);
-
-                // context.commit('setUnshiftBoardData', response.data.data);
-                // context.commit('setAddUserBoardsCount');
-                router.replace('/board/8?page1');
+                console.log(response.data);
+                router.replace('/board/'+ response.data.data.boards_type_id +'?page=1');
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -260,6 +274,79 @@ const store = createStore({
                 context.commit('setMoreCocomment', response.data.data);
             })
             .catch();
+        },
+
+        // 보드 게시글 댓글 수정 처리
+        commentUpdate(context, id) {
+            const url = '/api/board/comment/update/' + id
+            const data = new FormData(document.querySelector('#boardCommentUpdate'));
+
+            axios.post(url, data)
+            .then(response => {
+                const changeData = {
+                    'data': '',
+                    'key': '',
+                }
+
+                context.state.commentData.forEach((item, key) => {
+                    if(item.id == response.data.data.id) {
+                        changeData.data = response.data.data;
+                        changeData.key = key;
+                        context.commit('updateCommentData', changeData)
+                        return false;
+                    }
+                });
+                context.state.cocommentData.forEach((item, key) => {
+                    if(item.id == response.data.data.id) {
+                        changeData.data = response.data.data;
+                        changeData.key = key;
+                        context.commit('updateCocommentData', changeData)
+                        return false;
+                    }
+                });
+            })
+            .catch();
+        },
+
+        // 보드 게시글 댓글 삭제 처리
+        commentDelete(context, id) {
+            const url = '/api/board/comment/delete/' + id
+
+            axios.delete(url)
+            .then(response => {
+                const changeData = {
+                    'data': '',
+                    'key': '',
+                }
+                context.state.commentData.forEach((item, key) => {
+                    if(item.id == response.data.data.id) {
+                        changeData.data = response.data.data;
+                        changeData.key = key;
+                        context.commit('setCommentData', changeData)
+                        return false;
+                    }
+                });
+                context.state.cocommentData.forEach((item, key) => {
+                    if(item.id == response.data.data.id) {
+                        changeData.data = response.data.data;
+                        changeData.key = key;
+                        context.commit('setCocommentData', changeData)
+                        return false;
+                    }
+                });
+            })
+            .catch();
+        },
+
+        // 보드 게시글 댓글 좋아요 처리
+        boardCommentLike(context, id) {
+            const url = '/api/board/comment/like/' + id
+            console.log(id)
+            axios.put(url)
+            .then(response => {
+                
+            })
+            .catch();  
         },
         //---------------------끝---------------------------
 

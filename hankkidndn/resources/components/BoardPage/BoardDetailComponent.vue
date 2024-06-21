@@ -19,6 +19,7 @@
             <hr>
             <div class="main_title_content">
                 <h2>{{ $store.state.boardDetail.title }}</h2>
+                <p>{{ $store.state.boardDetail.views }}</p>
                 <div class="main_title_content_title">
                     <p>{{ $store.state.boardDetail.created_at }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>
@@ -33,43 +34,72 @@
                 <div class="comment-section">
                     <!-- 댓글 불러오기 시작 -->
                     <div v-if="$store.state.commentData" v-for="(item, index) in $store.state.commentData" :key="index" class="comment">
-                        <div class="comment-header">
-                            <p class="comment-author">{{ item.u_nickname }}</p>
-                            <p class="comment-date">{{ item.created_at }}</p>
-                            <button v-if="$store.state.userInfo.id == item.user_id" type="button">수정</button>
-                            <button v-if="$store.state.userInfo.id == item.user_id" type="button">삭제</button>
-                        </div>
-                        <p class="comment-content">{{ item.content }}</p>
-                        <div class="comment-actions">
+                        <div v-if="commentFlg || item.id !== commentId">
+                            <div class="comment-header">
+                                <p v-if="!item.deleted_at" class="comment-author">{{ item.u_nickname }}</p>
+                                <p v-if="!item.deleted_at" class="comment-date">{{ item.created_at }}</p>
+                                <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo.id == item.user_id && !item.deleted_at" type="button">수정</button>
+                                <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo.id == item.user_id && !item.deleted_at" type="button">삭제</button>
+                            </div>
+                            <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
+                            <p v-else>삭제된 댓글 입니다.</p>
+    
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
-                            <button type="button" @click="cocomentOn(item.id)">답글</button>
-                            <button type="button" class="like-button">{{ item.like_chk }}<img src="../../../../hankkidndn/public/img/like.png"></button>
-                            <p>{{ item.likes_num }}</p>
+                            <div class="comment-actions">
+                                <button v-if="!item.deleted_at && $store.state.authFlg" type="button" @click="cocomentOn(item.id)">답글</button>
+                                <button v-if="!item.deleted_at && $store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                <p v-if="!item.deleted_at" >{{ item.likes_num }}</p>
+                            </div>
                         </div>
+                        <!-- 댓글 수정창 -->
+                        <div v-if="commentUpdateFlg && item.id == commentId" class="comment-form">
+                            <form id="boardCommentUpdate">
+                                <input autocomplete="off" name="content" type="text" placeholder="댓글" class="comment-input" :value="item.content">
+                                <button type="button" @click="$store.dispatch('commentUpdate', item.id); commentUpdateOff();" class="comment-submit">수정</button>
+                            </form>
+                        </div>
+
                         <!-- 대댓글 불러오기 시작 -->
                         <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
-                            <div v-if="item2.cocomment == item.id" class="comment">
-                                <div class="comment-header">
-                                    <p class="comment-author">{{ item2.u_nickname }}</p>
-                                    <p class="comment-date">{{ item2.created_at }}</p>
-                                </div>
-                                <p class="comment-content">{{ item2.content }}</p>
-                                <div class="comment-actions">
-                                    <button type="button" class="like-button">{{ item2.like_chk }}<img src="../../../../hankkidndn/public/img/like.png"></button>
-                                    <p>{{ item2.likes_num }}</p>
+                            <div v-if="item2.cocomment == item.id || item2.id !== cocommentId" class="comment">
+                                <!-- <div v-if="item2.id !== cocommentId"> -->
+                                    <div class="comment-header">
+                                        <p v-if="!item2.deleted_at" class="comment-author">{{ item2.u_nickname }}</p>
+                                        <p v-if="!item2.deleted_at" class="comment-date">{{ item2.created_at }}</p>
+                                        <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo.id == item2.user_id && !item2.deleted_at" type="button">수정</button>
+                                        <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo.id == item2.user_id && !item2.deleted_at" type="button">삭제</button>
+                                    </div>
+                                    <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
+                                    <p v-else>삭제된 댓글 입니다.</p>
+                                    <div class="comment-actions">
+                                        <button v-if="!item2.deleted_at && $store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                        <p v-if="!item2.deleted_at" >{{ item2.likes_num }}</p>
+                                    </div>
+                                <!-- </div> -->
+
+                                <!-- 대댓글 수정창 -->
+                                <div v-if="commentUpdateFlg && item2.id == cocommentId" class="comment-form">
+                                    <form id="boardCommentUpdate">
+                                        <input autocomplete="off" name="content" type="text" placeholder="댓글" class="comment-input" :value="item2.content">
+                                        <button type="button" @click="$store.dispatch('commentUpdate', item2.id); commentUpdateOff();" class="comment-submit">수정</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div v-if="cocomentFlg && item.id == commentId" class="comment-form">
+
+                        <!-- 대댓글 입력 칸 -->
+                        <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
                             <form id="boardCocomment">
-                                <input name="content" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
+                                <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
                                 <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
                             </form>
                         </div>
                     </div>
+                    
+                    <!-- 댓글 입력창 -->
                     <form id="boardComment">
                         <div v-if="$store.state.authFlg" class="comment-form">
-                            <input @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
+                            <input @keyup.enter="$store.dispatch('commentInsert', data.id)" autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
                             <button type="button" @click="$store.dispatch('commentInsert', data.id), comment = '';" class="comment-submit">댓글</button>
                         </div>
                         <div v-else class="comment-form">
@@ -83,21 +113,36 @@
 </template>
 
 <script setup>
-import { onBeforeMount, reactive, ref } from 'vue';
+import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
-const comment = ref('');
-const cocomment = ref('');
-const commentId = ref();
 const store = useStore();
 const route = useRoute();
-const modalFlg = ref(false);
+
+// 댓글 관련
+const comment = ref('');
+const commentId = ref();
+const cocommentId = ref();
+const cocomment = ref('');
+const commentFlg = ref(true);
 const cocomentFlg = ref(false);
+
+// 댓글 수정
+const commentUpdateFlg = ref(false);
+
+// 삭제 모달
+const modalFlg = ref(false);
 const data = reactive({
     board_type: null,
     id: route.params.id,
 });
+
+// watch(() => [store.state.commentData, store.state.cocommentData], ([commentData, cocommentData]) => {
+//     store.state.commentData = commentData;
+//     store.state.cocommentData = cocommentData;
+// });
+
 
 
 function openModal() {
@@ -110,7 +155,7 @@ function closeModal() {
 
 // 답글 창 생성 기능
 function cocomentOn(id) {
-    commentId.value = id;
+    cocommentId.value = id;
     cocomentFlg.value = true;
 }
 
@@ -118,6 +163,33 @@ function cocomentOn(id) {
 function cocomentOff() {
     cocomentFlg.value = false;
 }
+
+// 댓글 수정창 생성 기능
+function commentUpdateOn(id) {
+    commentUpdateFlg.value = true;
+    commentFlg.value = false;
+    cocommentId.value = id;
+    commentId.value = id;
+}
+
+function commentUpdateOff() {
+    commentUpdateFlg.value = false;
+    commentFlg.value = true;
+}
+
+// 좋아요 기능
+function likeToggle(commentData) {
+    console.log(commentData)
+  if(commentData.like_chk == 1) {
+    commentData.like_chk = 0;
+    commentData.likes_num--;
+  } else {
+    commentData.like_chk = 1;
+    commentData.likes_num++;
+  }
+}
+
+
 onBeforeMount(() => {
     store.dispatch('getBoardDetail', data.id)
 });

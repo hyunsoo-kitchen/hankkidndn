@@ -50,13 +50,32 @@ class BoardController extends Controller
                                 ->join('users', 'users.id', '=', 'comments.user_id')
                                 ->where('comments.board_id', $id)
                                 ->whereNull('comments.cocomment')
+                                ->withTrashed()
                                 ->get();
 
         $cocommentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
                                 ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
                                 ->join('users', 'users.id', '=', 'comments.user_id')
                                 ->whereNotNull('comments.cocomment')
+                                ->withTrashed()
                                 ->get();
+
+        // 백에서 처리
+
+        // $data = $commentData->toArray();
+        // $ccdata = $cocommentData->toArray();
+
+        // foreach($data as $key => $item){
+        //     $data[$key]['cocomment'] = [];
+
+        //     foreach($ccdata as $cckey => $ccItem) {
+        //         if($item['id'] == $ccItem['cocomment']) {
+        //             $data[$key]['cocomment'][] = $ccItem;
+        //             unset($ccdata[$cckey]);
+        //             break;
+        //         }
+        //     }
+        // }
 
         $responseData = [
             'code' => '0'
@@ -65,6 +84,7 @@ class BoardController extends Controller
             ,'img' => $imgData
             ,'comment' => $commentData
             ,'cocomment' => $cocommentData
+            // ,'data' => $data
         ];
 
 
@@ -150,6 +170,7 @@ class BoardController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 게시글 수정처리
     public function boardUpdate(Request $request) {
         
         $insertData = [
