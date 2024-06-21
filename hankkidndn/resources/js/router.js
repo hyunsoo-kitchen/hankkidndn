@@ -15,6 +15,8 @@ import RegistCompliteComponent from '../components/UserPage/RegistCompliteCompon
 import MypageComponent from '../components/Mypage/MypageComponent.vue';
 import MypageCommentComponent from '../components/Mypage/MypageCommentComponent.vue';
 import MypageRecipeComponent from '../components/Mypage/MypageRecipeComponent.vue';
+import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeListComponent.vue'
+import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 
 const routes = [
     {
@@ -84,7 +86,15 @@ const routes = [
     {
         path: '/mypage/comments',
         component: MypageCommentComponent,
-    }
+    },
+    {
+        path: '/search/recipe',
+        component: SearchRecipeListComponent,
+    },
+    {
+        path: '/search/board/:id/:search',
+        component: SearchBoardListComponent,
+    },
 ];
 
 const router = createRouter({

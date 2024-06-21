@@ -41,7 +41,23 @@ class RecipeBoardController extends Controller
         return response()->json($responseData, 200);
     }
 
-    public function getDetail($num) {
-       
+    public function search(Request $request)
+    {
+        $query = $request->search;
+
+        $results = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                ->select('recipe_boards.*', 'users.u_nickname')
+                                ->where('title', 'like', "%{$query}%")
+                                ->paginate(16);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '검색 게시글 획득 완료'
+            ,'data' => $results->toArray()
+        ];
+
+        return response()->json($responseData, 200);
     }
+
+    
 }
