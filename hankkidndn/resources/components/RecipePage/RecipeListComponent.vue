@@ -16,12 +16,12 @@
             </div>
             <div class="ul-list">
                 <ul>
-                    <li :class="{ 'active': $route.params.id == 100 }" @click="recipeTypeMove(100)" class="line">전체</li>
-                    <li :class="{ 'active': $route.params.id == 1 }" @click="recipeTypeMove(1)" class="line">한식</li>
-                    <li :class="{ 'active': $route.params.id == 2 }" @click="recipeTypeMove(2)" class="line">중식</li>
-                    <li :class="{ 'active': $route.params.id == 3 }" @click="recipeTypeMove(3)" class="line">일식</li>
-                    <li :class="{ 'active': $route.params.id == 4 }" @click="recipeTypeMove(4)" class="line">양식</li>
-                    <li :class="{ 'active': $route.params.id == 5 }" @click="recipeTypeMove(5)">베이커리</li>
+                    <li :class="{ 'active': activeType === 100 }" @click="recipeTypeMove(100)" class="line">전체</li>
+                    <li :class="{ 'active': activeType === 1 }" @click="recipeTypeMove(1)" class="line">한식</li>
+                    <li :class="{ 'active': activeType === 2 }" @click="recipeTypeMove(2)" class="line">중식</li>
+                    <li :class="{ 'active': activeType === 3 }" @click="recipeTypeMove(3)" class="line">일식</li>
+                    <li :class="{ 'active': activeType === 4 }" @click="recipeTypeMove(4)" class="line">양식</li>
+                    <li :class="{ 'active': activeType === 5 }" @click="recipeTypeMove(5)">베이커리</li>
                 </ul>
             </div>
         </div>
@@ -68,7 +68,10 @@ const page = ref(route.query.page);
 const data = {
     board_type: '',
     page: '',
-}; 
+};
+
+const activeType = ref(100);    
+ 
 
 watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
