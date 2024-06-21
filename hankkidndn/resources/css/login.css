@@ -75,9 +75,15 @@
         width: 300px;
         height: 45px;
         border: none;
+        background-image: url('/img/kakao_login_medium_wide.png');
     }
     .kakao:hover {
         cursor: pointer;
+    }
+    .kakao_modal {
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: #fff;
     }
 }
 @media screen and (max-width: 1044px) {

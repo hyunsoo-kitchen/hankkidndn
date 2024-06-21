@@ -34,6 +34,8 @@ const store = createStore({
             mypageUserinfo: [],
             mypageRecipeList: [],
             mypageBoardList: [],
+            myRecipePagination: localStorage.getItem('myRecipePagination') ? JSON.parse(localStorage.getItem('myRecipePagination')) : {current_page: '1'},
+            myBoardPagination: localStorage.getItem('myBoardPagination') ? JSON.parse(localStorage.getItem('myBoardPagination')) : {current_page: '1'},
 
             //-------------------------끝------------------------------
         }
@@ -96,12 +98,13 @@ const store = createStore({
         },
         setMyBoardData(state, data) {
             state.mypageBoardList = data.data;
-            // state.pagination = data
-            // localStorage.setItem('pagination', JSON.stringify(data));
-            // console.log(state.boardListData);
+            state.myBoardPagination = data;
+            localStorage.setItem('myBoardPagination', JSON.stringify(data));
         },
         setMyRecipeData(state, data) {
             state.mypageRecipeList = data.data;
+            state.myRecipePagination = data;
+            localStorage.setItem('myRecipePagination', JSON.stringify(data));
         },
         //-------------------------노경호 끝-------------------------- 
         setBoardViewCount(state, data) {
@@ -356,12 +359,13 @@ const store = createStore({
         },
 
         // 마이페이지 내가 쓴 레시피
-        getRecipeListInMy(context, data) {
-            const url ='api/mypage/recipe';
-
+        getRecipeListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/recipe' + param;
+            
+            console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data);
                 context.commit('setMyRecipeData', response.data.data);
             })
             .catch()
@@ -369,14 +373,14 @@ const store = createStore({
 
 
         // 마이페이지 내가 쓴 게시글
-        getBoardListInMy(context, data) {
-            const url ='/api/mypage/board';
+        getBoardListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/board' + param;
 
+            console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data);
                 context.commit('setMyBoardData', response.data.data);
-                // router.push('/board/' + data.board_type + '?page=' + data.page);
             })
             .catch()
         },
