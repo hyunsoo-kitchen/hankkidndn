@@ -121,8 +121,9 @@ class UserController extends Controller
         $boardData = Users::select(
                 'users.profile',
                 'users.u_nickname',
-                DB::raw('(SELECT COUNT(rb.user_id) FROM recipe_boards AS rb WHERE users.id = rb.user_id) as recipe_count'),
-                DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id) as comments_count')
+                DB::raw('(SELECT COUNT(rb.user_id) FROM recipe_boards AS rb WHERE users.id = rb.user_id AND deleted_at IS null) as recipe_count'),
+                DB::raw('(SELECT COUNT(boards.user_id) FROM boards WHERE users.id = boards.user_id AND deleted_at IS null) as boards_count'),
+                DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id AND deleted_at IS null) as comments_count')
             )
             ->where('users.id', $user_id)
             ->first();

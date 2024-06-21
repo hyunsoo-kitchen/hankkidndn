@@ -79,6 +79,8 @@ Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'ge
 
 //--------------------------------------------------
 // 보드디테일 조회수기능 이현수
-// Route::get('/api/board/detail/{num}',[BoardController::class, 'viewDetail']);
+Route::get('/api/search/recipe', [RecipeBoardController::class, 'search']);
+Route::get('/api/search/board/{id}', [BoardController::class, 'search']);
+Route::get('/api/search/board/name/{id}', [BoardController::class, 'searchName']);
 // ------------------- 끝 -----------------------------
 

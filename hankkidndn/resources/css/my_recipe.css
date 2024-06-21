@@ -25,6 +25,11 @@
 .page_title{
     margin: 20px 0px 20px 10px;  
 }
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
 /* 화면 클때 개인정보 수정 css */
 @media screen and (min-width: 850px) {
     .main_container {
@@ -69,7 +74,7 @@
     .main_comment {
         display: grid;
         grid-column: 2 / 3;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
     .main_comment > p {
         justify-self: center;
@@ -94,23 +99,19 @@
     }
     .my_list {
         display: grid;
-        grid-template-columns: 2fr 0.5fr 0.5fr;
+        grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
+        margin: 10px 0;
     }
-    .list_title {
+    .my_list > div {
         justify-self: center;
         font-size: 17px;
-    }
-    /* 페이지 네이션 버튼 */
-    .number{
-        padding: 10px;
         cursor: pointer;
-        text-decoration: none;
-        border: 1px solid #ccc;
-        background-color: #f8f9fa;
+    }
+    .page_btn_box {
         text-align: center;
-        font-size: 16px;
-        color: #333;
-        border-radius: 5px;
+    }
+    .page_btn {
+        margin: 0 10px;
     }
 }
 /* 화면 중간 사이즈일 때*/

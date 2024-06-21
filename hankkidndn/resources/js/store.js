@@ -34,8 +34,19 @@ const store = createStore({
             mypageUserinfo: [],
             mypageRecipeList: [],
             mypageBoardList: [],
+            myRecipePagination: localStorage.getItem('myRecipePagination') ? JSON.parse(localStorage.getItem('myRecipePagination')) : {current_page: '1'},
+            myBoardPagination: localStorage.getItem('myBoardPagination') ? JSON.parse(localStorage.getItem('myBoardPagination')) : {current_page: '1'},
 
             //-------------------------끝------------------------------
+            
+            //------------------------이현수---------------------------
+            recipeListData: [],
+            filteredRecipes: [],
+            searchRecipeListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
+            searchPagination: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')) : {current_page: '1'},
+            searchBoardListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
+            
+            //-----------------------끝-------------------------------
         }
     },
     mutations: {
@@ -113,18 +124,37 @@ const store = createStore({
         },
         setMyBoardData(state, data) {
             state.mypageBoardList = data.data;
-            // state.pagination = data
-            // localStorage.setItem('pagination', JSON.stringify(data));
-            // console.log(state.boardListData);
+            state.myBoardPagination = data;
+            localStorage.setItem('myBoardPagination', JSON.stringify(data));
         },
         setMyRecipeData(state, data) {
             state.mypageRecipeList = data.data;
+            state.myRecipePagination = data;
+            localStorage.setItem('myRecipePagination', JSON.stringify(data));
         },
         //-------------------------노경호 끝-------------------------- 
+
+        //-------------------------이현수 시작------------------------
         setBoardViewCount(state, data) {
             state.boardData = data;
         },
-        // --------------- 이현수 끝
+        setFilteredRecipes(state, data) {
+            state.filteredRecipes = data.data;
+            state.pagination = data
+        },
+        // 검색 레시피 리스트 저장
+        setSearchRecipeData(state, data) {
+            state.searchRecipeListData = data.data;
+            state.searchPagination = data
+            localStorage.setItem('searchPagination', JSON.stringify(data));
+        },
+        
+        setSearchBoardData(state, data) {
+            state.searchBoardListData = data.data;
+            state.searchPagination = data
+            localStorage.setItem('searchPagination', JSON.stringify(data));
+        },
+        // -----------------------이현수 끝 ---------------------------
     },
     actions: {
         //---------------------권현수------------------------------
@@ -443,12 +473,13 @@ const store = createStore({
         },
 
         // 마이페이지 내가 쓴 레시피
-        getRecipeListInMy(context, data) {
-            const url ='api/mypage/recipe';
-
+        getRecipeListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/recipe' + param;
+            
+            console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data);
                 context.commit('setMyRecipeData', response.data.data);
             })
             .catch()
@@ -456,14 +487,14 @@ const store = createStore({
 
 
         // 마이페이지 내가 쓴 게시글
-        getBoardListInMy(context, data) {
-            const url ='/api/mypage/board';
+        getBoardListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/board' + param;
 
+            console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data);
                 context.commit('setMyBoardData', response.data.data);
-                // router.push('/board/' + data.board_type + '?page=' + data.page);
             })
             .catch()
         },
@@ -483,6 +514,41 @@ const store = createStore({
         //         alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
         //     });
         // }
+
+        searchRecipes(context, data) {
+            const url ='/api/search/recipe?search=' + data.search + '&page=' + data.page;
+            axios.get(url)
+            .then(response => {
+                console.log(response.data);
+                context.commit('setSearchRecipeData', response.data.data);
+                router.replace('/search/recipe?page=' + data.page);
+            })
+            .catch(error => {
+                console.log(error.response);
+            }) 
+        },
+
+        searchBoards(context, data) {
+            const url = '/api/search/board/' + data.board_type + '?search=' + data.search + '&page=' + data.page;
+            // let url;
+            // if (data.searchCriteria === 'title') {
+            //     url = `/api/search/board/${data.board_type}?search=${data.search}&page=${data.page}`;
+            // } else if (data.searchCriteria === 'nickname') {
+            //     url = `/api/search/board/name/${data.board_type}?search=${data.search}&page=${data.page}`;
+            // }
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log('searchBoards', response.data);
+                context.commit('setSearchBoardData', response.data.data);
+                router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+
+
     }
 });
 

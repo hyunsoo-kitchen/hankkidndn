@@ -17,12 +17,18 @@
                     </div>
                 </form>
                 <div class="kakao-btn">
-                    <button class="kakao" type="button">
-                        <img class="btn-img" src="../../../public/img/kakao_login_medium_wide.png">
+                    <button class="kakao" type="button" @click="handleKakaoButtonClick">
+                        <!-- <img class="btn-img" src="../../../public/img/kakao_login_medium_wide.png"> -->
+                        <div class="kakao_modal">
+                            <p>카카오 로그인은 업데이트 예정입니다!</p>
+                            <p>2024년 7월 3차 발표에서 만나요!</p>
+                            <button>닫기</button>
+                        </div>
                     </button>
                 </div>
             </div>
     </div>
+    <!-- 엔터키 눌러서 로그인 처리 TODO -->
 </template>
 
 <script setup>
@@ -45,6 +51,11 @@ const handleLogin = () => {
     console.error('Login failed', error);
   }
 
+};
+
+const handleKakaoButtonClick = () => {
+    // 알림창 출력
+    // alert('카카오 로그인은 업데이트 예정입니다!');
 };
 
 </script>

@@ -48,7 +48,9 @@
     </div>
 </template>
 <script setup>
-document.addEventListener('DOMContentLoaded', function() {
+import { onMounted } from 'vue';
+
+onMounted(() => {
     const agree1 = document.querySelector('#agreement_1');
     const agree2 = document.querySelector('#agreement_2');
     const notAgree1 = document.querySelector('#not_agreement_1');
@@ -57,10 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function checkAgreement() {
         if (agree1.checked && agree2.checked) {
-            // nextButton.disabled = false;
             nextButton.removeAttribute('disabled');
         } else {
-            // nextButton.disabled = true;
             nextButton.setAttribute('disabled', true);
         }
     }
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 페이지 로드시 초기 체크 상태를 확인
     checkAgreement();
-});
+    });
 </script>
 <style scoped src="../../css/regist_agree.css">
     
