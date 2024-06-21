@@ -37,6 +37,8 @@
                         <div class="comment-header">
                             <p class="comment-author">{{ item.u_nickname }}</p>
                             <p class="comment-date">{{ item.created_at }}</p>
+                            <button v-if="$store.state.userInfo.id == item.user_id" type="button">수정</button>
+                            <button v-if="$store.state.userInfo.id == item.user_id" type="button">삭제</button>
                         </div>
                         <p class="comment-content">{{ item.content }}</p>
                         <div class="comment-actions">
@@ -97,7 +99,7 @@ const data = reactive({
     board_type: null,
     id: route.params.id,
 });
-// const id = route.params.id
+
 
 function openModal() {
     modalFlg.value = true
