@@ -27,13 +27,13 @@
         </div>
         <div class="main-list">
             <div class="main-list-title">
-                <h3>총 {{ $store.state.pagination.total }}개의 레시피가 있습니다.</h3>
+                <h3>총 {{ $store.state.searchPagination.total }}개의 레시피가 있습니다.</h3>
                 <button @click="$router.push('/recipe/insert')">레시피 작성하기</button>
                 <button>최신순</button>
-                <div>{{ $store.state.pagination.current_page }}</div>
+                <div>{{ $store.state.searchPagination.current_page }}</div>
             </div>
             <div class="main-list-content">
-                <div class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                <div class="card" v-for="(item, index) in $store.state.searchRecipeListData" :key="index">
                     <img :src="item.thumbnail" @click="$store.dispatch('getRecipeDetail', item.id)">
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
@@ -44,11 +44,11 @@
                 </div>
             </div>
             <div class="btn-container">
-                <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <button v-if="$store.state.searchPagination.current_page !== 1" class="number" @click="pageMove($store.state.searchPagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
-                    <button :class="{ activePage: page_num === $store.state.pagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button :class="{ activePage: page_num === $store.state.searchPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
-                <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+                <button v-if="$store.state.searchPagination.current_page < $store.state.searchPagination.last_page" class="number" @click="pageMove($store.state.searchPagination.current_page + 1)">다음</button>
             </div>
         </div>
     </div>
@@ -71,7 +71,8 @@ const data = {
     search: '',
 };
 
-const activeType = ref(100);
+const activeType = ref(100);    
+const searchQuery = ref('');
 const filteredRecipes = ref([]);
  
 
@@ -79,12 +80,11 @@ watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
     data.board_type = newId
     pagination(newPage);
-    store.dispatch('getRecipeList', data);
+    store.dispatch('searchRecipes', data);
 });
 
-
 function pagination(nowPage) {
-    const last_page = store.state.pagination.last_page;
+    const last_page = store.state.searchPagination.last_page;
     const start_page = (Math.ceil(nowPage / 5)) * 5 - 4;
     const max_page = Math.min(start_page + 4, last_page)
     page.value = [];
@@ -93,21 +93,11 @@ function pagination(nowPage) {
     }
 }
 
-
-// 최초~추가 게시글 획득
-onBeforeMount(() => {
-
-    pagination(route.query.page);
-    data.board_type = route.params.id;
-    data.page = route.query.page;
-    store.dispatch('getRecipeList', data);
-});
-
 // page 이동 버튼
 function pageMove(page) {
-    if(page >= 1 && page <= store.state.pagination.last_page) {
+    if(page >= 1 && page <= store.state.searchPagination.last_page) {
         data.page = page;
-        store.dispatch('getRecipeList', data)
+        store.dispatch('searchRecipes', data)
         pagination(route.query.page)
         }
 }
@@ -120,10 +110,11 @@ function recipeTypeMove(type) {
     store.dispatch('getRecipeList', data)
 }
 
+
 // 검색 추가 
 function search() {
     data.board_type = '100';
-    data.page = '1';
+    data.page = route.query.page;
     store.dispatch('searchRecipes', data);
 }
 

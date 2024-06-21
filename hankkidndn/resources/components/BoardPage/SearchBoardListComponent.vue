@@ -4,10 +4,10 @@
             <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
-                    <li :class="{ 'active': activeType == 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
-                    <li :class="{ 'active': activeType == 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
-                    <li :class="{ 'active': activeType == 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
-                    <li :class="{ 'active': activeType == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
+                    <li :class="{ 'active': activeType === 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
+                    <li :class="{ 'active': activeType === 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
+                    <li :class="{ 'active': activeType === 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
+                    <li :class="{ 'active': activeType === 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
                 </ul>
             </div>
         </div>
@@ -32,9 +32,9 @@
                 <div class="list-day">등록일</div>
             </div>
             <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
-            <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
+            <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.searchBoardListData" :key="index">
                 <!-- 게시글 출력 -->
-                <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
+                <div class="list-number">{{ ($store.state.searchPagination.total - index) - (($store.state.searchPagination.current_page - 1) * 10) }}</div>
                 <div class="list-title">{{ item.title }}</div>
                 <div class="list-ninkname">{{ item.u_nickname }}</div>
                 <div class="list-day">{{ item.created_at }}</div>
@@ -45,20 +45,19 @@
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
-                <button v-if="$store.state.pagination.current_page !== 1" class="number" @click="pageMove($store.state.pagination.current_page - 1)">이전</button>
+                <button v-if="$store.state.searchPagination.current_page !== 1" class="number" @click="pageMove($store.state.searchPagination.current_page - 1)">이전</button>
                 <div v-for="page_num in page" :key="page_num">
-                    <button :class="{ activePage: page_num === $store.state.pagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button :class="{ activePage: page_num === $store.state.searchPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
-                <button v-if="$store.state.pagination.current_page < $store.state.pagination.last_page" class="number" @click="pageMove($store.state.pagination.current_page + 1)">다음</button>
+                <button v-if="$store.state.searchPagination.current_page < $store.state.searchPagination.last_page" class="number" @click="pageMove($store.state.searchPagination.current_page + 1)">다음</button>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { onBeforeMount, reactive, ref, watch } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import router from '../../js/router';
     
 const store = useStore();
 const route = useRoute();
@@ -67,21 +66,21 @@ const data = reactive({
     board_type: '',
     page: '',
     searchCriteria: 'title', // 기본 검색 기준
-    search: '' // 검색어 입력
+    search: route.params.search // 검색어 입력
 });
 const activeType = ref(6);
 
-// watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
+// // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
 watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
     data.board_type = newId
     pagination(newPage);
-    store.dispatch('getBoardList', data);
+    // store.dispatch('getBoardList', data);
 });
 
 // 페이지네이션
 function pagination(nowPage) {
-    const last_page = store.state.pagination.last_page;
+    const last_page = store.state.searchPagination.last_page;
     const start_page = (Math.ceil(nowPage / 5)) * 5 - 4;
     const max_page = Math.min(start_page + 4, last_page)
     page.value = [];
@@ -93,18 +92,20 @@ function pagination(nowPage) {
 
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
-    activeType.value = route.params.id
+    console.log('검색 게시판 비포마운트');
     pagination(route.query.page);
     data.board_type = route.params.id;
     data.page = route.query.page;
-    store.dispatch('getBoardList', data);
+
+    store.dispatch('searchBoards', data);
 });
 
 // page 이동 버튼
 function pageMove(page) {
-    if(page >= 1 && page <= store.state.pagination.last_page) {
+    if(page >= 1 && page <= store.state.searchPagination.last_page) {
         data.page = page;
-        store.dispatch('getBoardList', data)
+        data.board_type = route.params.id;
+        store.dispatch('searchBoards', data)
         pagination(route.query.page)
     }
 }
@@ -136,10 +137,9 @@ function getBoardName(id) {
 function search() {
     data.page = '1'; // 검색 시 페이지를 1로 초기화합니다.
     data.board_type = route.params.id;
+
     store.dispatch('searchBoards', data);
 }
-
-
 
 </script>
 

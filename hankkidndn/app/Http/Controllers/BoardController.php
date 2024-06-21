@@ -201,5 +201,44 @@ class BoardController extends Controller
     //         'views' => $board->views
     //     ]);
     // }
+
+    public function search(Request $request, $id)
+    {
+        $query = $request->search;
+        Log::debug('type : ' . $id);
+        Log::debug('query : ' . $query);
+        $results = Boards::join('users', 'users.id', '=', 'boards.user_id')
+                                ->select('boards.*', 'users.u_nickname')
+                                ->where('boards_type_id', '=', $id)
+                                ->where('title', 'like', "%{$query}%")
+                                ->paginate(16);
+                                
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '검색 게시글 획득 완료'
+            ,'data' => $results->toArray()
+        ];
+
+        return response()->json($responseData, 200);
+    }
+    public function searchName(Request $request, $id)
+    {
+        $query = $request->search;
+        Log::debug('type : ' . $id);
+        Log::debug('query : ' . $query);
+        $results = Boards::join('users', 'users.id', '=', 'boards.user_id')
+                                ->select('boards.*', 'users.u_nickname')
+                                ->where('boards_type_id', '=', $id)
+                                ->where('u_nickname', 'like', "%{$query}%")
+                                ->paginate(16);
+                                
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '검색 게시글 획득 완료'
+            ,'data' => $results->toArray()
+        ];
+
+        return response()->json($responseData, 200);
+    }
     
 }
