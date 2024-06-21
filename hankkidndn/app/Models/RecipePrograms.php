@@ -18,6 +18,7 @@ class RecipePrograms extends Model
     protected $fillable = [
         'recipe_board_id',
         'img_path',
+        'order',
         'program_content',
     ];
 

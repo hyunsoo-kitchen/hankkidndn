@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\RecipeBoards;
+use App\Models\RecipePrograms;
+use App\Models\RecipeStuffs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -39,6 +41,35 @@ class RecipeBoardController extends Controller
         ];
 
         return response()->json($responseData, 200);
+    }
+
+    public function getDetail($id) {
+        $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                    ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
+                                    ->where('recipe_boards.id', '=', $id)
+                                    ->select('recipe_boards.*', 'users.u_nickname', 'users.profile','recipe_likes.like_chk')
+                                    ->first();
+
+        $recipeProgramData = RecipePrograms::where('recipe_board_id', '=', $id)
+                                            ->select('img_path', 'program_content', 'order')
+                                            ->get();
+
+        $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
+                                        ->select('stuff', 'stuff_gram')
+                                        ->orderBy('id', 'DESC')
+                                        ->get();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $recipeData
+            ,'program' => $recipeProgramData
+            ,'stuff' => $recipeStuffData
+        ];
+
+
+        return response()->json($responseData, 200);
+
     }
 
     public function search(Request $request)

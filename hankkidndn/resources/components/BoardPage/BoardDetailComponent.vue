@@ -62,8 +62,8 @@
 
                         <!-- 대댓글 불러오기 시작 -->
                         <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
-                            <div v-if="item2.cocomment == item.id || item2.id !== cocommentId" class="comment">
-                                <!-- <div v-if="item2.id !== cocommentId"> -->
+                            <div v-if="item2.cocomment == item.id" class="comment">
+                                <div v-if="item2.id !== cocommentId">
                                     <div class="comment-header">
                                         <p v-if="!item2.deleted_at" class="comment-author">{{ item2.u_nickname }}</p>
                                         <p v-if="!item2.deleted_at" class="comment-date">{{ item2.created_at }}</p>
@@ -76,7 +76,7 @@
                                         <button v-if="!item2.deleted_at && $store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                         <p v-if="!item2.deleted_at" >{{ item2.likes_num }}</p>
                                     </div>
-                                <!-- </div> -->
+                                </div>
 
                                 <!-- 대댓글 수정창 -->
                                 <div v-if="commentUpdateFlg && item2.id == cocommentId" class="comment-form">
@@ -139,13 +139,6 @@ const data = reactive({
     id: route.params.id,
 });
 
-// watch(() => [store.state.commentData, store.state.cocommentData], ([commentData, cocommentData]) => {
-//     store.state.commentData = commentData;
-//     store.state.cocommentData = cocommentData;
-// });
-
-
-
 function openModal() {
     modalFlg.value = true
 }
@@ -176,6 +169,7 @@ function commentUpdateOn(id) {
 function commentUpdateOff() {
     commentUpdateFlg.value = false;
     commentFlg.value = true;
+    cocommentId.value = null;
 }
 
 // 좋아요 기능

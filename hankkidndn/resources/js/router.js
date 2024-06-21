@@ -56,7 +56,7 @@ const routes = [
         component: RecipeUpdateComponent,
     },
     {
-        path: '/recipe/detail',
+        path: '/recipe/detail/:id',
         component: RecipeDetailComponent,
     },
     {

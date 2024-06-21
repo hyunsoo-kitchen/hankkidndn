@@ -20,7 +20,7 @@ class RecipeStuffsFactory extends Factory
     {
         $date = $this->faker->dateTimeBetween('-1 years'); // -1년 ~ 현재 랜덤 날짜 획득
         return [
-            'recipe_board_id' => $this->faker->numberBetween(2, 10),
+            'recipe_board_id' => $this->faker->numberBetween(2, 500),
             'stuff' => $this->faker->realText(rand(10, 15)),
             'stuff_gram' => $this->faker->numberBetween(1, 200),
             'created_at' => $date,

@@ -20,12 +20,17 @@ const store = createStore({
 
             // 페이지 네이션
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
-            // 이현수
-            // boardList: [], 
+
+            // 레시피 디테일 페이지
+            recipeData: [],
+            recipeProgram: [],
+            recipeStuff: [],
+
+            // 보드 디테일 페이지
             boardDetail: [], 
             boardImg: [],
 
-            // 댓글 데이터
+            // 보드 디테일 페이지 댓글 데이터
             commentData: [],
             cocommentData: [],
             //-------------------------끝------------------------------
@@ -74,6 +79,13 @@ const store = createStore({
             localStorage.setItem('pagination', JSON.stringify(data));
             // console.log(state.boardListData);
         },
+        // 레시피 디테일 정보 저장
+        setRecipeDetail(state, data){
+            console.log(data)
+            state.recipeData = data.data
+            state.recipeProgram = data.program
+            state.recipeStuff = data.stuff
+        },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
             state.boardDetail = data.data;
@@ -90,12 +102,14 @@ const store = createStore({
 
         // 삭제 후 배열에 삭제한 댓글 추가
         setCommentData(state, data){
+            console.log(state.commentData[data.key]);
             console.log(data);
-            state.commentData.splice(data.key, 1);
+            // state.commentData.splice(data.key, 1);
             state.commentData[data.key] = data.data;
+            console.log(state.commentData[data.key]);
         },
         setCocommentData(state, data){
-            state.cocommentData.splice(data.key, 1);
+            // state.cocommentData.splice(data.key, 1);
             state.cocommentData[data.key] = data.data;
         },
 
@@ -104,7 +118,9 @@ const store = createStore({
             state.commentData[data.key] = data.data;
         },
         updateCocommentData(state, data) {
+            console.log(state.cocommentData[data.key]);
             state.cocommentData[data.key] = data.data;
+            console.log(state.cocommentData[data.key]);
         },
         //---------------------끝---------------------------
 
@@ -203,9 +219,11 @@ const store = createStore({
         getRecipeDetail(context, id) {
             const url = '/api/recipe/detail/' + id
 
-            axios.get(url, data)
+            axios.get(url)
             .then(response => {
-                // console.log(response.data.data)
+                console.log(response.data.data)
+                context.commit('setRecipeDetail', response.data)
+                router.replace('/recipe/detail/' + response.data.data.id)
             })
             .catch()
         },
@@ -218,7 +236,7 @@ const store = createStore({
             .then(response => {
                 context.commit('setBoardDetail', response.data)
                 console.log(response.data)
-                router.replace('/board/detail/' + id);
+                router.push('/board/detail/' + id);
             })
             .catch();
         },
@@ -341,7 +359,6 @@ const store = createStore({
         // 보드 게시글 댓글 삭제 처리
         commentDelete(context, id) {
             const url = '/api/board/comment/delete/' + id
-
             axios.delete(url)
             .then(response => {
                 const changeData = {
@@ -350,6 +367,7 @@ const store = createStore({
                 }
                 context.state.commentData.forEach((item, key) => {
                     if(item.id == response.data.data.id) {
+                        console.log('코멘트 삭제 아이템 : ',item);
                         changeData.data = response.data.data;
                         changeData.key = key;
                         context.commit('setCommentData', changeData)
@@ -358,6 +376,7 @@ const store = createStore({
                 });
                 context.state.cocommentData.forEach((item, key) => {
                     if(item.id == response.data.data.id) {
+                        console.log('코코멘트 삭제 아이템 : ',item);
                         changeData.data = response.data.data;
                         changeData.key = key;
                         context.commit('setCocommentData', changeData)
