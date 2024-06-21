@@ -28,7 +28,7 @@
                             <button @click="activeTab = 'board'"  :class="{ active: activeTab === 'board', title_select: activeTab === 'board', title_none_select: activeTab !== 'board'}, title_select">
                                 내가 쓴 글</button>
                         </div>
-                        <div class="contents_board_list">
+                        <div class="contents_list">
                             <div v-if="activeTab === 'recipe'">
                                 <div class="my_list">
                                     <div class="list_num">번호</div>
