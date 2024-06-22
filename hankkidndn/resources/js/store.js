@@ -37,10 +37,18 @@ const store = createStore({
 
             //---------------------노경호------------------------------
             mypageUserinfo: [],
+
             mypageRecipeList: [],
             mypageBoardList: [],
+
+            myRecipeCommentList: [],
+            myBoardCommentList: [],
+            
             myRecipePagination: localStorage.getItem('myRecipePagination') ? JSON.parse(localStorage.getItem('myRecipePagination')) : {current_page: '1'},
             myBoardPagination: localStorage.getItem('myBoardPagination') ? JSON.parse(localStorage.getItem('myBoardPagination')) : {current_page: '1'},
+
+            myRCommentPagination: localStorage.getItem('myRCommentPagination') ? JSON.parse(localStorage.getItem('myRCommentPagination')) : {current_page: '1'},
+            myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
             //-------------------------끝------------------------------
             
@@ -147,6 +155,16 @@ const store = createStore({
             state.mypageRecipeList = data.data;
             state.myRecipePagination = data;
             localStorage.setItem('myRecipePagination', JSON.stringify(data));
+        },
+        setMyBCommentData(state,data) {
+            state.myBoardCommentList = data.data;
+            state.myBCommentPagination = data;
+            localStorage.setItem('myBCommentPagination', JSON.stringify(data));
+        },
+        setMyRCommentData(state,data) {
+            state.myRecipeCommentList = data.data;
+            state.myRCommentPagination = data;
+            localStorage.setItem('myRCommentPagination', JSON.stringify(data));
         },
         //-------------------------노경호 끝-------------------------- 
 
@@ -514,6 +532,32 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setMyBoardData', response.data.data);
+            })
+            .catch()
+        },
+
+        // 마이페이지 내가 레시피 게시판에 쓴 댓글
+        getRCommentListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/rcomment' + param;
+
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                context.commit('setMyRCommentData', response.data.data);
+            })
+            .catch()
+        },
+
+        // 마이페이지 내가 보드 게시판에 쓴 댓글
+        getBCommentListInMy(context, page) {
+            const param = page == 1 ? '' : '?page=' + page;
+            const url = '/api/mypage/bcomment' + param;
+
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                context.commit('setMyBCommentData', response.data.data);
             })
             .catch()
         },

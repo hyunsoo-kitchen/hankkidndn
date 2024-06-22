@@ -47,7 +47,7 @@
 .main_comment {
     display: grid;
     grid-column: 2 / 3;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .main_comment > p {
@@ -60,9 +60,13 @@
     display: grid;
     grid-template-columns: 150px 150px auto;
     min-height: 200px;
-    
-
 }
+
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
 /* 화면 클때 css */
 @media screen and (min-width: 850px) {
     /* 메인 컨테이너 */
@@ -80,6 +84,38 @@
     .sub_title_content {
         padding: 10px 0;
         font-size: 20px;
+    }
+    /* 내용 추가작업 */
+    .contents_box {
+        display: grid;
+        grid-template-rows: 30px auto;
+    }
+    .contents_head_box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 4fr;
+    }
+    .contents_head_box > div {
+        justify-self: center;
+    }
+    .contents_list {
+        display: grid;
+        grid-template-rows: repeat(10, 30px);
+    }
+    .my_list {
+        display: grid;
+        grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
+        margin: 10px 0;
+    }
+    .my_list > div {
+        justify-self: center;
+        font-size: 17px;
+        cursor: pointer;
+    }
+    .page_btn_box {
+        text-align: center;
+    }
+    .page_btn {
+        margin: 0 10px;
     }
 }
 /* 화면 중간 사이즈일 때  */

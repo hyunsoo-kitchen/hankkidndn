@@ -19,20 +19,30 @@
                 <div class="kakao-btn">
                     <button class="kakao" type="button" @click="handleKakaoButtonClick">
                         <!-- <img class="btn-img" src="../../../public/img/kakao_login_medium_wide.png"> -->
-                        <div class="kakao_modal">
-                            <p>카카오 로그인은 업데이트 예정입니다!</p>
-                            <p>2024년 7월 3차 발표에서 만나요!</p>
-                            <button>닫기</button>
-                        </div>
                     </button>
                 </div>
             </div>
+    </div>
+    <!-- 모달창 -->
+    <!-- <div v-if="'isModalVisible'">
+        <div class="kakao_modal">
+            <p>카카오 로그인은 업데이트 예정입니다!</p>
+            <p>2024년 7월 3차 발표에서 만나요!</p>
+            <button @click="closeModal">닫기</button>
+        </div>
+    </div> -->
+    <div v-if="isModalVisible" class="modal-overlay">
+        <div class="kakao_modal">
+            <p>카카오 로그인은 업데이트 예정입니다!</p>
+            <p>2024년 7월 3차 발표에서 만나요!</p>
+            <button @click="closeModal">닫기</button>
+        </div>
     </div>
     <!-- 엔터키 눌러서 로그인 처리 TODO -->
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -44,6 +54,18 @@ const form = reactive({
 const store = useStore();
 const router = useRouter();
 
+// 모달창 컨트롤
+const isModalVisible = ref(false);
+
+const handleKakaoButtonClick = () => {
+  isModalVisible.value = true;
+};
+
+const closeModal = () => {
+  isModalVisible.value = false;
+};
+
+
 const handleLogin = () => {
   try {
     store.dispatch('login', form);
@@ -53,10 +75,10 @@ const handleLogin = () => {
 
 };
 
-const handleKakaoButtonClick = () => {
-    // 알림창 출력
-    // alert('카카오 로그인은 업데이트 예정입니다!');
-};
+// const handleKakaoButtonClick = () => {
+//     // 알림창 출력
+//     // alert('카카오 로그인은 업데이트 예정입니다!');
+// };
 
 </script>
 

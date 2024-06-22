@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\MyAutheException;
 use App\Exceptions\MyValidateException;
 use App\Models\Boards;
+use App\Models\Comment;
 use App\Models\RecipeBoards;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -174,5 +175,46 @@ class UserController extends Controller
         
         return response()->json($responseData, 200);
     }
+
+    // 마이페이지에서 유저가 레시피보드에서 쓴 댓글 리스트 획득 및 페이지 네이션
+    public function getRecieCommentList() {
+        $user_id = Auth::id();
+        
+        $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
+                          ->join('users', 'comments.user_id', '=', 'users.id')
+                          ->select('comments.*', 'recipe_boards.title as recipe_title', 'users.u_nickname')
+                          ->where('comments.user_id', $user_id)
+                          ->orderBy('comments.created_at', 'DESC')
+                          ->paginate(10);
+
+    $responseData = [
+        'code' => '0',
+        'msg' => '댓글 및 레시피 제목 획득 완료',
+        'data' => $rcommentData->toArray()
+    ];
+
+    return response()->json($responseData, 200);
+    }
+
+    // 마이페이지에서 유저가 보드게시판에서 쓴 댓글 리스트 획득 및 페이지 네이션 
+    public function getBoardCommentList() {
+        $user_id = Auth::id();
+        
+        $bcommentData = Comment::join('boards', 'comments.board_id', '=', 'boards.id')
+                          ->join('users', 'comments.user_id', '=', 'users.id')
+                          ->select('comments.*', 'boards.title as title', 'users.u_nickname')
+                          ->where('comments.user_id', $user_id)
+                          ->orderBy('comments.created_at', 'DESC')
+                          ->paginate(10);
+
+    $responseData = [
+        'code' => '0',
+        'msg' => '댓글 및 레시피 제목 획득 완료',
+        'data' => $bcommentData->toArray()
+    ];
+
+    return response()->json($responseData, 200);
+    }
+    
 }
 
