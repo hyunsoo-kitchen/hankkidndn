@@ -85,6 +85,10 @@ Route::middleware('auth')->get('/api/mypage/userinfo', [UserController::class, '
 Route::middleware('auth')->get('/api/mypage/board', [UserController::class, 'getBoardListInMy']);
 // 마이페이지 유저가 작성한 레시피 리스트 획득
 Route::middleware('auth')->get('/api/mypage/recipe', [UserController::class, 'getRecipeListInMy']);
+// 마이페이지 유저가 레시피보드에서 작성한 댓글 리스트 획득
+Route::middleware('auth')->get('/api/mypage/rcomment', [UserController::class, 'getRecieCommentList']);
+// 마이페이지 유저가 게시판보드에서 작성한 댓글 리스트 획득
+Route::middleware('auth')->get('/api/mypage/bcomment', [UserController::class, 'getBoardCommentList']);
 
 //-----------------------끝--------------------------------
 // 마이페이지
