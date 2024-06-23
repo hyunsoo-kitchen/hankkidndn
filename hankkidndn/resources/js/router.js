@@ -52,7 +52,7 @@ const routes = [
         component: RecipeInsertComponent,
     },
     {
-        path: '/recipe/update',
+        path: '/recipe/update/:id',
         component: RecipeUpdateComponent,
     },
     {

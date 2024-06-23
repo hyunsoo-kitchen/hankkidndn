@@ -1,17 +1,31 @@
 <template>
     <div class="container">
+        <div v-if="modalFlg" class="delete-modal">
+            <div class="modal-title">정말로 삭제 하시겠습니까?</div>
+            <div class="delete-btn">
+                <button type="button" @click="$store.dispatch('recipeDelete', $store.state.recipeData.id)">삭제</button>
+                <button type="button" @click="closeModal()">취소</button>
+            </div>
+        </div>
         <div class="header">
             <div class="header-img-wrapper">
                 <img class="header-img" :src="$store.state.recipeData.thumbnail">
-                <button class="header-like">좋아요 버튼<img src="../../../public/img/like.png" alt=""></button>
                 <div class="header-view">{{ $store.state.recipeData.views }}</div>
             </div>
+            <button v-if="$store.state.authFlg" @click="$store.dispatch('recipeLike', $route.params.id); likeToggle($store.state.recipeData)" class="header-like" type="button"><img src="../../../public/img/like.png" alt=""></button>
             <div class="header-userinfo">
                 <img class="header-profile" :src="$store.state.recipeData.profile">
                 <div class="header-name">{{ $store.state.recipeData.u_nickname }}</div>
             </div>
         </div>
 
+        <!-- 삭제와 수정 버튼 -->
+        <div v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id">
+            <button type="button" class="update" @click="$router.push('/recipe/update/' + $store.state.recipeData.id)">수정</button>
+            <button type="button" @click="openModal()" class="delete">삭제</button>
+        </div>
+        
+        <div>{{ $store.state.recipeData.likes_num }}</div>
         <!-- 요리 제목과 간단설명 -->
         <div class="explain">
             <div class="explain-title">{{ $store.state.recipeData.title }}</div>
@@ -31,18 +45,21 @@
         <!-- 레시피 과정 시작 -->
         <div class="recipe" v-for="(item, index) in $store.state.recipeProgram" :key="index" >
             <img class="recipe-img" :src="item.img_path">
-            <div class="recipe-order">과정순서1</div>
+            <div class="recipe-order">과정순서 {{ item.order }}</div>
             <div class="recipe-content">{{ item.program_content }}</div>
         </div>
 
         <!-- 동영상 링크 한개 -->
         <div class="video">
-            <div class="video-title">{{ $store.state.recipeData.video_link }}</div>
+            <p>{{ $store.state.recipeData.embed_url }}</p>
+            <!-- <div class="video-title">{{ $store.state.recipeData.video_link }}</div> -->
+            <iframe width="560" height="315" :src="store.state.recipeData.embed_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <!-- <iframe width="560" height="315" :src="$store.state.recipeData.video_link" frameborder="0" allowfullscreen></iframe> -->
         </div>
 
         <!-- 작성자 정보 -->
         <div class="profile">
-            <div class="profile-title">레시피 작성자</div> <!-- 이건 고정제목 -->
+            <div class="profile-title">레시피 작성자</div>
             <img :src="$store.state.recipeData.profile" class="profile-img">
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
             <div class="profile-link">작성자 링크?</div>
@@ -75,15 +92,37 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
+const modalFlg = ref(false);
+
+function openModal() {
+    modalFlg.value = true
+}
+
+function closeModal() {
+    modalFlg.value = false
+}
+
+// 좋아요 기능
+function likeToggle(recipeData) {
+    
+  if(recipeData.like_chk == 1) {
+    recipeData.like_chk = 0;
+    recipeData.likes_num--;
+  } else {
+    recipeData.like_chk = 1;
+    recipeData.likes_num++;
+  }
+}
 
 onBeforeMount(() => {
     store.dispatch('getRecipeDetail', route.params.id);
+    // console.log(store.state.recipeData)
 })
 </script>
 <style scoped src="../../css/recipedetail.css">

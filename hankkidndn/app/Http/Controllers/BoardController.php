@@ -114,7 +114,7 @@ class BoardController extends Controller
         $insertData = [
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'boards_type_id' => $request->input('boards_type_id'), // 기본값을 설정하여 추가합니다.
+            'boards_type_id' => $request->input('boards_type_id'),
             'user_id' => $user->id
         ];
 

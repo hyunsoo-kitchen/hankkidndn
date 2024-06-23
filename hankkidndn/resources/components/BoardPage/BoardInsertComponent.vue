@@ -47,7 +47,6 @@ function setFile(e) {
         fileList.push(URL.createObjectURL(file[i]));
     }
     preview.value = fileList;
-
 };
 </script>
 <style scoped src="../../css/boardinsert.css">

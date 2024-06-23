@@ -70,11 +70,13 @@ const store = createStore({
         // 메인 최근레시피 출력
         setMainBoardData(state, data) {
             state.mainNewData = data;
+            // console.log(state.mainNewData)
         },
         // 메인 베스트레시피 출력
         setMainBestData(state, data) {
             // console.log(data);
             state.mainBestData = data
+            // console.log(state.mainBestData)
         },
         // 레시피 리스트 저장
         setRecipeData(state, data) {
@@ -91,8 +93,8 @@ const store = createStore({
         },
         // 레시피 디테일 정보 저장
         setRecipeDetail(state, data){
-            console.log(data)
             state.recipeData = data.data
+            // console.log(state.recipeData)
             state.recipeProgram = data.program
             state.recipeStuff = data.stuff
         },
@@ -112,11 +114,11 @@ const store = createStore({
 
         // 삭제 후 배열에 삭제한 댓글 추가
         setCommentData(state, data){
-            console.log(state.commentData[data.key]);
-            console.log(data);
+            // console.log(state.commentData[data.key]);
+            // console.log(data);
             // state.commentData.splice(data.key, 1);
             state.commentData[data.key] = data.data;
-            console.log(state.commentData[data.key]);
+            // console.log(state.commentData[data.key]);
         },
         setCocommentData(state, data){
             // state.cocommentData.splice(data.key, 1);
@@ -128,9 +130,9 @@ const store = createStore({
             state.commentData[data.key] = data.data;
         },
         updateCocommentData(state, data) {
-            console.log(state.cocommentData[data.key]);
+            // console.log(state.cocommentData[data.key]);
             state.cocommentData[data.key] = data.data;
-            console.log(state.cocommentData[data.key]);
+            // console.log(state.cocommentData[data.key]);
         },
         //---------------------끝---------------------------
 
@@ -247,9 +249,13 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                console.log(response.data.data)
+                // console.log(response.data.data)
+                const videoLink = response.data.data.video_link
+                const videoId = videoLink.split("v=")[1].split("&")[0];
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                response.data.data.embed_url = embedUrl;
                 context.commit('setRecipeDetail', response.data)
-                router.replace('/recipe/detail/' + response.data.data.id)
+                router.push('/recipe/detail/' + response.data.data.id)
             })
             .catch()
         },
@@ -267,19 +273,51 @@ const store = createStore({
             .catch();
         },
 
-        // 보드 게시글 삭제 처리
-        boardDelete(context, data) {
-            const url = '/api/board/delete/' + data
+        // 레시피 게시글 삭제 처리
+        recipeDelete(context, id) {
+            const url = '/api/recipe/delete/' + id
             // console.log(data.id)
             // console.log(data.board_type)
             axios.delete(url)
             .then(response => {
-                const board_type = context.state.boardDetail.boards_type_id
+                const recipeType = context.state.recipeData.boards_type_id
                 // 삭제한 게시글의 게시판 첫번째 페이지로 이동
-                router.replace('/board/' + board_type + '?page=1')
+                router.replace('/recipe/' + recipeType + '?page=1')
             })
             .catch(error => {
                 alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+            });
+        },
+
+        // 보드 게시글 삭제 처리
+        boardDelete(context, id) {
+            const url = '/api/board/delete/' + id
+            // console.log(data.id)
+            // console.log(data.board_type)
+            axios.delete(url)
+            .then(response => {
+                const recipeType = context.state.boardDetail.boards_type_id
+                // 삭제한 게시글의 게시판 첫번째 페이지로 이동
+                router.replace('/board/' + recipeType + '?page=1')
+            })
+            .catch(error => {
+                alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+            });
+        },
+
+        // 레시피 게시글 작성 처리
+        recipeInsert(context) {
+            const url = '/api/recipe/insert'
+            const data = new FormData(document.querySelector('#recipeForm'));
+            console.log(data)
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data)
+                router.replace('/recipe/'+ response.data.data.boards_type_id +'?page=1');
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
             });
         },
 
@@ -297,6 +335,21 @@ const store = createStore({
                 console.log(error.response.data);
                 alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
             });
+        },
+
+        // 레시피 수정페이지 게시글 획득처리
+        getRecipeUpdate(context, id) {
+            const url = '/api/recipe/update/' + id
+
+            axios.get(url)
+            .then(response => {
+                const videoLink = response.data.data.video_link
+                const videoId = videoLink.split("v=")[1].split("&")[0];
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                response.data.data.embed_url = embedUrl;
+                context.commit('setRecipeDetail', response.data)
+            })
+            .catch();
         },
 
         // 보드 수정페이지 게시글 획득처리
@@ -411,6 +464,17 @@ const store = createStore({
                 });
             })
             .catch();
+        },
+
+        // 레시피 좋아요 처리
+        recipeLike(context, id) {
+            const url = '/api/recipe/like/' + id
+            console.log(id)
+            axios.put(url)
+            .then(response => {
+                
+            })
+            .catch();  
         },
 
         // 보드 게시글 댓글 좋아요 처리
