@@ -77,6 +77,9 @@ Route::middleware('auth')->get('/api/mypage/rcomment', [UserController::class, '
 // 마이페이지 유저가 게시판보드에서 작성한 댓글 리스트 획득
 Route::middleware('auth')->get('/api/mypage/bcomment', [UserController::class, 'getBoardCommentList']);
 
+// 마이페이지에서 개인정보 인증
+Route::post('/api/authenticate', [UserController::class, 'authenticate']);
+
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

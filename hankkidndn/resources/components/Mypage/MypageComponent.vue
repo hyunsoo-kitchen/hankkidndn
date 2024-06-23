@@ -9,76 +9,61 @@
             <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select">내 댓글</div>
             <div @click="$router.push('/mypage/update')" class="sub_title_content title_select">개인정보수정</div>
         </div>
-        <form class="main_content" id="myPageForm">
-            <!-- 개인정보수정 -->
-            <div class="main-box">
-                <div class="title">이름</div>
-                <div class="sub-title-main">
-                    <input type="text" name="u_name" readonly :value="$store.state.userInfo.u_name">
-                    <div></div>
+        <div class="main_content">
+
+            <!-- 내 정보 변경 전 본인인증 -->
+            <div class="auth_box" v-if="!isAuthenticated">
+                <div class="">
+                    <div>비밀번호</div>
+                    <input type="password" v-model="u_password">
                 </div>
+                <button @click="authenticate">인증</button>
             </div>
-            <div class="main-box">
-                <div class="title">아이디</div>
-                <div class="sub-title-main">
-                    <input type="text" name="u_id" readonly :value="$store.state.userInfo.u_id">
-                    <!-- <input type="text" name="u_id" readonly value="tester123"> -->
-                    <div></div>
+
+            <!-- 개인정보 수정 -->
+            <div class="update_container" v-if="isAuthenticated">
+                <!-- 프로필 사진 등록 -->
+                <!-- <div class="">
+
+                </div> -->
+
+                <!-- 비밀번호 수정 -->
+                <!-- <div class="">
+
+                </div> -->
+
+                <!-- 주소 수정 -->
+                <!-- <div class="">
+
                 </div>
+                 -->
+                <!-- 휴대폰 번호 수정 -->
+                <!-- <div class="">
+
+                </div> -->
+
+                <!-- 닉네임 수정 -->
+                <!-- <div class="">
+
+                </div> -->
+                <span>테스트</span>
             </div>
-            <div class="main-box">
-                <div class="title">비밀번호</div>
-                <div class="sub-title-main">
-                    <input name="u_password" type="password">
-                    <button type="button" class="change">비밀번호변경</button>
-                </div>
-            </div>
-            <div class="main-box">
-                <div class="title">주소</div>
-                <div class="sub-title-street">
-                    <!-- <input class="input3" type="text" name="u_post" readonly :value="$store.state.userInfo.u_post"> -->
-                    <input class="input3" type="text" name="u_post" readonly>
-                    <!-- <input class="input1" type="text" name="u_address" readonly :value="$store.state.userInfo.u_address"> -->
-                    <input class="input1" type="text" name="u_address" readonly>
-                    <!-- <input class="input2" type="text" name="u_detail_address" readonly :value="$store.state.userInfo.u_detail_address"> -->
-                    <input class="input2" type="text" name="u_detail_address" readonly>
-                </div>
-            </div>
-            <div class="main-box">
-                <div class="title">휴대전화</div>
-                <div class="sub-title-number">
-                    <div class="phone-number">
-                        <!-- <select name="first_num" id="phone-num">
-                            <option value="010" :selected="$store.state.userInfo.phone.split('-')[0] == '010'">010</option>
-                            <option value="011" :selected="$store.state.userInfo.phone.split('-')[0] == '011'">011</option>
-                            <option value="016" :selected="$store.state.userInfo.phone.split('-')[0] == '016'">016</option>
-                            <option value="02" :selected="$store.state.userInfo.phone.split('-')[0] == '02'">02</option>
-                            <option value="053" :selected="$store.state.userInfo.phone.split('-')[0] == '053'">053</option>
-                        </select>
-                        <input name="middle_num" class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[1]">
-                        <input name="last_num" class="phone" type="text" :value="$store.state.userInfo.phone.split('-')[2]">
-                        <div></div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="main-box">
-                <div class="title">닉네임</div>
-                <div class="sub-title-main">
-                    <!-- <input name="u_nickname" type="text" :value="$store.userInfo.u_nickname"> -->
-                    <input name="u_nickname" type="text">
-                    <button type="button" class="change">닉네임변경</button>
-                </div>
-            </div>
-            <div class="buttons">
-                <button type="button" @click="$router.back()" class="cancel">취소</button>
-                <button type="button" @click="$store.dispatch('userInfoUpdate')"class="complete">완료</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 </template>
 <script setup>
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
+
+const password = ref('');
+const isAuthenticated = computed(() => store.state.isAuthenticated);
+
+const authenticate = () => {
+  store.dispatch('authenticate', password.value);
+};
 </script>
 <style scoped src="../../css/my_update.css">
      @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

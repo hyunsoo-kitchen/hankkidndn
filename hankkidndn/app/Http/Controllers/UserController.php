@@ -216,5 +216,16 @@ class UserController extends Controller
     return response()->json($responseData, 200);
     }
     
+    // 마이페이지에서 유저 비밀번호 인증을 확인
+    public function authenticate(Request $request)
+    {
+        $user = Auth::user();
+
+        if (Hash::check($request->u_password, $user->u_password)) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false], 401);
+        }
+    }
 }
 

@@ -50,6 +50,8 @@ const store = createStore({
             myRCommentPagination: localStorage.getItem('myRCommentPagination') ? JSON.parse(localStorage.getItem('myRCommentPagination')) : {current_page: '1'},
             myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
+            isAuthenticated: false,
+
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -166,6 +168,12 @@ const store = createStore({
             state.myRCommentPagination = data;
             localStorage.setItem('myRCommentPagination', JSON.stringify(data));
         },
+
+        //마이페이지 개인정보 인증
+        setAuthenticate(state, isAuthenticated) {
+            state.isAuthenticated = isAuthenticated;
+        },
+
         //-------------------------노경호 끝-------------------------- 
 
         //-------------------------이현수 시작------------------------
@@ -562,6 +570,21 @@ const store = createStore({
             .catch()
         },
 
+        //마이페이지 내 정보 인증
+        authenticate({ commit }, password) {
+            axios.post('/api/authenticate', { password })
+              .then(response => {
+                if (response.data.success) {
+                  commit('SET_AUTHENTICATED', true);
+                } else {
+                  alert('비밀번호가 틀렸습니다.');
+                }
+              })
+              .catch(error => {
+                console.error('인증 오류:', error);
+                alert('인증 중 오류가 발생했습니다.');
+              });
+        },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {
