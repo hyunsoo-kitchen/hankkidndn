@@ -6,6 +6,7 @@ use App\Http\Controllers\CommonController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\RecipeBoardController;
 use App\Http\Controllers\UserController;
+use App\Models\RecipeBoards;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,18 @@ Route::get('/api/main', [CommonController::class, 'getList']);
 // 각 게시판 정보 획득 - 권현수
 Route::get('/api/recipe/{num}', [RecipeBoardController::class, 'getList']);
 Route::get('/api/board/{num}', [BoardController::class, 'getList']);
+
+// 레시피 게시글 작성 처리 - 권현수
+Route::middleware('auth')->post('/api/recipe/insert', [RecipeBoardController::class, 'recipeInsert']);
+
+// 레시피 게시글 수정 처리 - 권현수
+Route::middleware('auth')->get('/api/recipe/update/{num}', [RecipeBoardController::class, 'getRecipeUpdate']);
+
+// 레시피 삭제 처리 - 권현수
+Route::delete('/api/recipe/delete/{num}', [RecipeBoardController::class, 'delete']);
+
+// 레시피 게시글 좋아요 처리 - 권현수
+Route::put('/api/recipe/like/{num}', [RecipeBoardController::class, 'recipeLike']);
 
 // 디테일 게시글 획득 - 권현수
 Route::get('/api/recipe/detail/{num}', [RecipeBoardController::class, 'getDetail']);

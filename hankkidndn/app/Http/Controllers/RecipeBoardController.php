@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\RecipeBoards;
+use App\Models\RecipeLikes;
 use App\Models\RecipePrograms;
 use App\Models\RecipeStuffs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class RecipeBoardController extends Controller
@@ -29,7 +32,7 @@ class RecipeBoardController extends Controller
             $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
                                 ->select('recipe_boards.*', 'users.u_nickname')
                                 ->where('boards_type_id', '=', $num)
-                                
+                                ->orderBy('recipe_boards.created_at', 'DESC')
                                 ->paginate(16);                       
 
         }
@@ -43,7 +46,103 @@ class RecipeBoardController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 레시피 페이지 작성 처리
+    public function recipeInsert(Request $request) {
+        $user = Auth::user();
+
+        $thumbnail = '/'.$request->file('thumbnail')->store('img');
+
+        $insertData = [
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'boards_type_id' => $request->input('boards_type_id'),
+            'video_link' => $request->input('video'),
+            'thumbnail' => $thumbnail,
+            'user_id' => $user->id
+        ];
+
+        $recipeData = RecipeBoards::create($insertData);
+
+        $recipeId = $recipeData->id;
+
+        // 레시피 재료 처리
+
+        $stuff_gram = $request->input('stuff_gram');
+
+        if($request->input('stuff')) {
+            // 배열형태의 이미지를 foreach로 돌려서 따로 저장
+            foreach ($request->input('stuff') as $index => $stuff) {
+
+                RecipeStuffs::create([
+                    'recipe_board_id' => $recipeId,
+                    'stuff_gram' => $stuff_gram[$index],
+                    'stuff' => $stuff
+                ]);
+            }
+        }
+        Log::debug('재료 완료');
+        // 레시피 과정 내용과 이미지 함께 처리
+        $texts = $request->input('list');
+
+        $files = $request->file('file');
+    
+        if ($request->file('file')) {
+            foreach ($files as $index => $file) {
+                $path = '/'.$file->store('img');
+            
+                RecipePrograms::create([
+                    'recipe_board_id' => $recipeId,
+                    'img_path' => $path,
+                    'program_content' => $texts[$index],
+                    'order' => $index + 1
+                ]);
+            }
+        } 
+
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '글 작성 완료'
+            ,'data' => $recipeData
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 레시피 디테일 정보 획득
     public function getDetail($id) {
+        $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                                    ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
+                                    ->where('recipe_boards.id', '=', $id)
+                                    ->select('recipe_boards.*', 'users.u_nickname', 'users.profile','recipe_likes.like_chk')
+                                    ->first();
+
+        $recipeProgramData = RecipePrograms::where('recipe_board_id', '=', $id)
+                                            ->select('img_path', 'program_content', 'order')
+                                            ->get();
+
+        $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
+                                        ->select('stuff', 'stuff_gram')
+                                        ->orderBy('id', 'DESC')
+                                        ->get();
+
+        $recipeData->increment('views');
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $recipeData
+            ,'program' => $recipeProgramData
+            ,'stuff' => $recipeStuffData
+        ];
+
+
+        return response()->json($responseData, 200);
+
+    }
+
+    // 레시피 수정 정보 획득
+    public function getRecipeUpdate($id) {
         $recipeData = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
                                     ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
                                     ->where('recipe_boards.id', '=', $id)
@@ -69,9 +168,27 @@ class RecipeBoardController extends Controller
 
 
         return response()->json($responseData, 200);
-
     }
 
+    // 보드 게시글 삭제 처리
+    public function delete($id) {
+
+        RecipeBoards::destroy($id);
+
+        RecipeStuffs::where('recipe_board_id', '=', $id)->delete();
+
+        RecipePrograms::where('recipe_board_id', '=', $id)->delete();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '글 삭제 완료'
+            ,'data' => $id
+        ];
+
+        return response()->json($responseData);
+    }
+
+    // 레시피 검색 기능
     public function search(Request $request)
     {
         $query = $request->search;
@@ -90,5 +207,38 @@ class RecipeBoardController extends Controller
         return response()->json($responseData, 200);
     }
 
-    
+    public function recipeLike($id) {
+        DB::beginTransaction();
+        // like 검색
+        $likeData = RecipeLikes::where('user_id', Auth::id())
+                            ->where('recipe_board_id', $id)
+                            ->first();
+        if(isset($likeData)) {
+            $likeData->like_chk = $likeData->like_chk == '0' ? '1' : '0';
+        } else {
+            $likeData = new RecipeLikes();
+            $likeData->user_id = Auth::id();
+            $likeData->recipe_board_id = $id;
+            $likeData->like_chk = '1';
+        }
+        $likeData->save();
+
+        // comments 갱신
+        $recipeData = RecipeBoards::find($id);
+        if($likeData->like_chk == '1') {
+            $recipeData->likes_num += 1;
+        } else {
+            $recipeData->likes_num -= 1;
+        }
+        $recipeData->save();
+        DB::commit();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '좋아요 완료'
+            ,'data' => $likeData
+        ];
+
+        return response()->json($responseData, 200);
+    }
 }
