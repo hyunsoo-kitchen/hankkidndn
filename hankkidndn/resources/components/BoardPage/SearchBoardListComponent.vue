@@ -97,7 +97,9 @@ onBeforeMount(() => {
     data.board_type = route.params.id;
     data.page = route.query.page;
 
-    store.dispatch('searchBoards', data);
+    if(!store.state.searchPagination) {
+        store.dispatch('searchBoards', data);
+    }
 });
 
 // page 이동 버튼

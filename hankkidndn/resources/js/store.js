@@ -58,7 +58,7 @@ const store = createStore({
             recipeListData: [],
             filteredRecipes: [],
             searchRecipeListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
-            searchPagination: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')) : {current_page: '1'},
+            searchPagination: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')) : null,
             searchBoardListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
             
             //-----------------------끝-------------------------------
@@ -679,24 +679,25 @@ const store = createStore({
         },
 
         searchBoards(context, data) {
-            const url = '/api/search/board/' + data.board_type + '?search=' + data.search + '&page=' + data.page;
-            // let url;
-            // if (data.searchCriteria === 'title') {
-            //     url = `/api/search/board/${data.board_type}?search=${data.search}&page=${data.page}`;
-            // } else if (data.searchCriteria === 'nickname') {
-            //     url = `/api/search/board/name/${data.board_type}?search=${data.search}&page=${data.page}`;
-            // }
+            let url;
+            if (data.searchCriteria === 'title') {
+                url = `/api/search/board/${data.board_type}?search=${data.search}&page=${data.page}`;
+            } else if (data.searchCriteria === 'nickname') {
+                url = `/api/search/board/name/${data.board_type}?search=${data.search}&page=${data.page}`;
+            }
+
             console.log(url);
+
             axios.get(url)
-            .then(response => {
-                console.log('searchBoards', response.data);
-                context.commit('setSearchBoardData', response.data.data);
-                router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        },
+                .then(response => {
+                    console.log('searchBoards', response.data);
+                    context.commit('setSearchBoardData', response.data.data);
+                    router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            },
 
 
     }
