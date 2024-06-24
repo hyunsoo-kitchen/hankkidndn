@@ -233,7 +233,7 @@ class BoardController extends Controller
                                 ->select('boards.*', 'users.u_nickname')
                                 ->where('boards_type_id', '=', $id)
                                 ->where('title', 'like', "%{$query}%")
-                                ->paginate(16);
+                                ->paginate(10);
                                 
         $responseData = [
             'code' => '0'
@@ -252,7 +252,7 @@ class BoardController extends Controller
                                 ->select('boards.*', 'users.u_nickname')
                                 ->where('boards_type_id', '=', $id)
                                 ->where('u_nickname', 'like', "%{$query}%")
-                                ->paginate(16);
+                                ->paginate(10);
                                 
         $responseData = [
             'code' => '0'

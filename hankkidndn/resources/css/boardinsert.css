@@ -56,12 +56,14 @@ textarea {
 }
 
 .content-box > img {
-    width: 20%;
-    height: 30%;
-    margin: 5px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
+    max-height: 200px;
+    margin: 0 auto;
+    -o-object-fit: cover;
+    object-fit: cover;
+    aspect-ratio: 1;
 }
 
 .buttons {

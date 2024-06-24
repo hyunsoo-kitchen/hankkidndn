@@ -134,9 +134,10 @@ function getBoardName(id) {
 
 // 검색 기준과 텍스트에 따라 검색을 수행하는 함수를 구현합니다.
 function search() {
-    data.page = '1'; // 검색 시 페이지를 1로 초기화합니다.
+    data.page = 1; // 검색 시 페이지를 1로 초기화합니다.
     data.board_type = route.params.id;
     store.dispatch('searchBoards', data);
+    // router.push({ path: `/search/board/${data.board_type}/${data.search}`, query: { page: data.page, searchCriteria: data.searchCriteria } });
 }
 
 
