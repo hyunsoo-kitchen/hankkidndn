@@ -119,6 +119,7 @@ class RecipeBoardController extends Controller
 
         $recipeProgramData = RecipePrograms::where('recipe_board_id', '=', $id)
                                             ->select('img_path', 'program_content', 'order')
+                                            ->orderBy('order', 'ASC')
                                             ->get();
 
         $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
@@ -151,6 +152,7 @@ class RecipeBoardController extends Controller
 
         $recipeProgramData = RecipePrograms::where('recipe_board_id', '=', $id)
                                             ->select('img_path', 'program_content', 'order')
+                                            ->orderBy('order', 'ASC')
                                             ->get();
 
         $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
@@ -210,25 +212,65 @@ class RecipeBoardController extends Controller
             }
         }
 
-        RecipePrograms::where('recipe_board_id', $id)->delete();
+        RecipePrograms::where('recipe_board_id', '=', $id)->delete();
 
-        // 레시피 과정 내용과 이미지 함께 처리
-        $texts = $request->input('list');
+        $updateData = json_decode($request->json);
 
-        $files = $request->file('file');
-    
-        if ($request->file('file')) {
-            foreach ($files as $index => $file) {
-                $path = '/'.$file->store('img');
-            
-                RecipePrograms::create([
-                    'recipe_board_id' => $id,
-                    'img_path' => $path,
-                    'program_content' => $texts[$index],
-                    'order' => $index + 1
-                ]);
+        foreach($updateData as $key => $item) {
+            $recipeData = new RecipePrograms();
+            $recipeData->recipe_board_id = $id;
+            $recipeData->img_path = $item->img_path;
+            $recipeData->program_content = $item->program_content;
+            $recipeData->order = $key + 1;
+
+            if($request->has('file'.($key + 1))) {
+                $imgPath = $request->file('file'.($key + 1))->store('img');
+
+                $recipeData->img_path = '/'.$imgPath;
             }
-        } 
+            Log::debug('테스트', $recipeData->toArray());
+            $recipeData->save();
+        }
+
+        // $programData = RecipePrograms::where('recipe_board_id', '=', $id)->get();
+
+        // for ($i = 1; $i <= 20; $i++) {
+        //     $programOrder = $programData->where('order', $i)->first();
+        //     if ($request->hasFile('file'.$i)) {
+        //         if ($programOrder) {
+        //             $programOrder->delete();
+        //         }
+
+        //         RecipePrograms::create([
+        //             'recipe_board_id' => $id,
+        //             'img_path' => '/'.$request->file('file'.$i)->store('img'),
+        //             'program_content' => $request->input('list'.$i),
+        //             'order' => $i,
+        //         ]);
+        //     } elseif ($programOrder) {
+        //         if($request->hasFile('list'.$i)) {
+        //             $programOrder->update([
+        //                 'program_content' => $request->input('list'.$i) ?? '', // 기본값으로 빈 문자열 사용
+        //             ]);
+        //         }
+        //     } else {
+        //         break;
+        //     }
+        // }
+    
+        // if ($request->file('file')) {
+        //     RecipePrograms::where('recipe_board_id', $id)->delete();
+        //     foreach ($files as $index => $file) {
+        //         $path = '/'.$file->store('img');
+            
+        //         RecipePrograms::create([
+        //             'recipe_board_id' => $id,
+        //             'img_path' => $path,
+        //             'program_content' => $texts[$index],
+        //             'order' => $index + 1
+        //         ]);
+        //     }
+        // } 
 
 
         $responseData = [

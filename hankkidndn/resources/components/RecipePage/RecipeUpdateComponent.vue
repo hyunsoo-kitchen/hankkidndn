@@ -54,14 +54,15 @@
                 </div>
                 <div class="content_list" v-for="(item, index) in $store.state.recipeProgram" :key="index">
                     <p> Step {{ index + 1 }}</p>
-                    <textarea class="text-list" name="list[]" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                    <textarea class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
                     <img v-if="item.img_path" :src="item.img_path" style="max-width: 200px; margin-bottom: 10px;">
                     <label>
                         <div>이미지 파일</div>
-                        <input hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
+                        <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
                     <button v-if="$store.state.recipeProgram.length > 2" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
+                <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
             </div>
 
             <!-- 요리 팁 -->

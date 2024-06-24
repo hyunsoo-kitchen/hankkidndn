@@ -372,7 +372,7 @@ const store = createStore({
         recipeUpdate(context, id) {
             const url = '/api/recipe/update/' + id
             const data = new FormData(document.querySelector('#recipeForm'));
-
+            data.append('json', JSON.stringify(context.state.recipeProgram));
             axios.post(url, data)
             .then(response => {
                 console.log(response.data)
