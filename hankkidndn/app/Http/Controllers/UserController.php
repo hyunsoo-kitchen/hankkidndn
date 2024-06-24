@@ -8,6 +8,7 @@ use App\Models\Boards;
 use App\Models\Comment;
 use App\Models\RecipeBoards;
 use App\Models\Users;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -122,9 +123,10 @@ class UserController extends Controller
         $boardData = Users::select(
                 'users.profile',
                 'users.u_nickname',
+                'users.u_id',
                 DB::raw('(SELECT COUNT(rb.user_id) FROM recipe_boards AS rb WHERE users.id = rb.user_id AND deleted_at IS null) as recipe_count'),
-                DB::raw('(SELECT COUNT(boards.user_id) FROM boards WHERE users.id = boards.user_id AND deleted_at IS null) as boards_count'),
-                DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id AND deleted_at IS null) as comments_count')
+                DB::raw('(SELECT COUNT(boards.user_id) FROM boards WHERE users.id = boards.user_id AND boards.deleted_at IS null) as boards_count'),
+                DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id AND cm.deleted_at IS null) as comments_count')
             )
             ->where('users.id', $user_id)
             ->first();
@@ -219,13 +221,117 @@ class UserController extends Controller
     // 마이페이지에서 유저 비밀번호 인증을 확인
     public function authenticate(Request $request)
     {
+        // 현재 인증된 사용자의 ID를 가져옵니다.
+    $userId = Auth::id();
+
+    // 사용자 정보를 데이터베이스에서 조회합니다.
+    $users = Users::find($userId);
+    Log::debug('비번체크 유저 ID : '.$userId);
+    Log::debug('비번체크 DB PW : '. $users->u_password);
+    Log::debug('비번체크 REQ PW : '. $request->u_password);
+    // 사용자가 존재하는지 확인합니다.
+    if (!$users) {
+        return response()->json(['success' => false, 'message' => '사용자를 찾을 수 없습니다.'], 404);
+    }
+
+    // 비밀번호를 확인합니다.
+    if (Hash::check($request->u_password, $users->u_password)) {
+        return response()->json(['success' => true]);
+    } else {
+        return response()->json(['success' => false, 'message' => '비밀번호가 틀렸습니다.'], 401);
+    }
+    }
+
+    //프로필 사진 등록
+    // public function uploadProfilePicture(Request $request)
+    // {
+    //     $userId = Auth::id();
+    //     $user = Users::find($userId);
+
+    //     if ($user) {
+    //         if ($request->hasFile('profile')) {
+    //             $file = $request->file('profile');
+    //             $path = $file->store('profiles', 'public');
+    //             $user->profile_picture = $path;
+    //             $user->save();
+
+    //             return response()->json(['success' => true, 'path' => $path]);
+    //         } else {
+    //             return response()->json(['success' => false, 'message' => '파일이 업로드되지 않았습니다.'], 400);
+    //         }
+    //     } else {
+    //         return response()->json(['success' => false, 'message' => '사용자를 찾을 수 없습니다.'], 404);
+    //     }
+    // }
+
+    // 비밀번호 수정
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'u_password' => ['required', 'min:4', 'max:20', 'regex:/^[a-zA-Z0-9!@#$%^]+$/u']
+            ,'password_chk' => ['same:u_password']
+        ]);
+
         $user = Auth::user();
 
-        if (Hash::check($request->u_password, $user->u_password)) {
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false], 401);
-        }
+        $userData = User::find($user->id);
+
+        $userData->u_password = Hash::make($request->u_password);
+        $userData->save();
+
+        return response()->json(['success' => true]);
     }
+
+    // 닉네임 변경
+    public function updateNickname(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'u_nickname' => 'required|unique:users,u_nickname,' . auth()->user()->id,
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+    
+        $user = auth()->user();
+        $user->u_nickname = $request->u_nickname;
+        $user->save();
+    
+        return response()->json(['success' => true]);
+    }
+
+    // 휴대폰 번호 수정
+    // public function updatePhonenum(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'u_phone_num' =>['required','regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/'] . auth()->user()->id,
+    //     ]);
+    
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+    //     }
+    
+    //     $user = auth()->user();
+    //     $user->u_phone_num = $request->u_phone_num;
+    //     $user->save();
+    
+    //     return response()->json(['success' => true]);
+    // }
+    public function updatePhonenum(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'u_phone_num' => ['required', 'regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/']
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+    }
+
+    $user = auth()->user();
+    $user->u_phone_num = $request->u_phone_num;
+    $user->save();
+
+    return response()->json(['success' => true]);
+}
 }
 

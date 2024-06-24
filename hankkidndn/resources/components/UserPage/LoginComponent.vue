@@ -12,7 +12,7 @@
                         <input class="user-pass" type="password" id="u_password" name="u_password" v-model="form.u_password">
                     </div>
                     <div class="button">
-                        <button @click="handleLogin" class="login" type="button">로그인</button>
+                        <button @click="handleLogin" class="login">로그인</button>
                         <button @click="$router.push('/regist/agree')"class="register" type="button">회원가입</button>
                     </div>
                 </form>
@@ -24,13 +24,6 @@
             </div>
     </div>
     <!-- 모달창 -->
-    <!-- <div v-if="'isModalVisible'">
-        <div class="kakao_modal">
-            <p>카카오 로그인은 업데이트 예정입니다!</p>
-            <p>2024년 7월 3차 발표에서 만나요!</p>
-            <button @click="closeModal">닫기</button>
-        </div>
-    </div> -->
     <div v-if="isModalVisible" class="modal-overlay">
         <div class="kakao_modal">
             <p>카카오 로그인은 업데이트 예정입니다!</p>
