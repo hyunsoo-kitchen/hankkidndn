@@ -94,6 +94,12 @@ Route::middleware('auth')->get('/api/mypage/bcomment', [UserController::class, '
 // 마이페이지에서 개인정보 인증
 Route::post('/api/authenticate', [UserController::class, 'authenticate']);
 
+// 비밀번호 수정
+Route::post('/api/user/updatepassword', [UserController::class, 'updatepassword']);
+// 닉네임변경
+Route::post('/api/user/updatenickname', [UserController::class, 'updatenickname']);
+// 휴대폰번호 수정
+Route::post('/api/user/updatephonenum', [UserController::class, 'updatephonenum']);
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

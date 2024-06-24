@@ -25,6 +25,12 @@
 .page_title{
     margin: 20px 0px 20px 10px;  
 }
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
 /* 화면 클때 개인정보 수정 css */
 @media screen and (min-width: 850px) {
     .main_container {
@@ -49,7 +55,99 @@
         margin-top: 20px;
         /* display: grid; */
     }
+    /* 유저 info */
+    .user_container {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        grid-template-rows: 0.5fr 0.5fr;
+        margin-bottom: 20px;
+    }
+    .user_profile {
+        grid-row: 1 / 3;
+        justify-self: center;
+    }
+    .user_container > div {
+        justify-self: center;
+    }
+    /* content버튼 */
+    .contents_head_box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 4fr;
+    }
+    .contents_head_box > div {
+        justify-self: center;
+    }
+    /* content 내용 */
+    .contents_title {
+        margin: 10px;
+    }
+    .detail_box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 3fr;
+    }
+    .detail_container {
+        display: grid;
+        grid-template-rows: 1.2fr 1fr 1fr 1fr;
+    }
+    .detail_title {
+        align-self: center;
+        font-size: 19px;
+        margin: 10px 0 10px 4px;
+    }
+    .myprofile_title {
+        align-self: center;
+        font-size: 19px;
+        margin: 10px 0 10px 4px;
+        cursor: pointer;
+    }
+    .detail_box {
+        margin: 10px 0 10px 4px;
+    }
+    .update_btn {
+        width: 100px;
+        background-color: #333;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        align-self: center;
+        padding: 10px;
+        margin: 0 auto;
+    }
+    .cancle_btn {
+        width: 100px;
+        background-color: #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        align-self: center;
+        padding: 10px;
+        margin: 0 auto;
+    }
+    .modal_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
     
+    .profile_modal,
+    .nickname_modal,
+    .phone_modal,
+    .birth_modal,
+    .address_modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    height: 50%;
+    max-width: 80%;
+    }
 }
 /* 화면 제일 작을 때 */
 @media screen and (max-width: 600px) {

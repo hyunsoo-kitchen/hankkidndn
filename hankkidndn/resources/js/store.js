@@ -176,6 +176,10 @@ const store = createStore({
         setAuthenticate(state, isAuthenticated) {
             state.isAuthenticated = isAuthenticated;
         },
+        // 마이페이지 개인정보 인증 초기화
+        resetAuthenticate(state) {
+            state.isAuthenticated = false;
+        },
 
         //-------------------------노경호 끝-------------------------- 
 
@@ -508,7 +512,7 @@ const store = createStore({
         },
         //---------------------끝---------------------------
 
-
+        //---------------------노경호------------------------------
         userInfoUpdate(context) {
             const url = '/api/user'
             const data = new FormData(document.querySelector('#myPageForm'));
@@ -584,7 +588,7 @@ const store = createStore({
                 // router.back();
             });
         },
-        //---------------------노경호------------------------------
+
         // 마이 페이지 유저정보
         getMypageUserInfo(context) {
             const url ='/api/mypage/userinfo';
@@ -612,7 +616,6 @@ const store = createStore({
             })
             .catch()
         },
-
 
         // 마이페이지 내가 쓴 게시글
         getBoardListInMy(context, page) {
@@ -655,19 +658,77 @@ const store = createStore({
 
         //마이페이지 내 정보 인증
         authenticate({ commit }, password) {
-            axios.post('/api/authenticate', { password })
+            const data = new FormData();
+            data.append('u_password', password);
+
+            axios.post('/api/authenticate', data)
+            .then(response => {
+                if (response.data.success) {
+                    commit('setAuthenticate', true);
+                } else {
+                    alert(response.data.message || '비밀번호가 틀렸습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('인증 오류:', error.response ? error.response.data : error.message);
+                alert('비밀번호를 확인해주세요.');
+            });
+        },
+        
+        // 비밀번호 업데이트
+        updatePassword(context) {
+            const data = new FormData(document.querySelector('#updatePasswordForm'));
+
+            axios.post('/api/user/updatepassword', data)
               .then(response => {
                 if (response.data.success) {
-                  commit('SET_AUTHENTICATED', true);
+                  alert('비밀번호가 성공적으로 변경되었습니다.');
                 } else {
-                  alert('비밀번호가 틀렸습니다.');
+                  alert('비밀번호 변경에 실패했습니다.');
                 }
               })
               .catch(error => {
-                console.error('인증 오류:', error);
-                alert('인증 중 오류가 발생했습니다.');
+                console.log(error.response.data);
+                alert('비밀번호 변경 중 오류가 발생했습니다.');
               });
         },
+
+        // 닉네임 변경
+        updateNickname(context) {
+            const data = new FormData(document.querySelector('#updateNicknameForm'));
+
+            axios.post('/api/user/updatenickname', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('닉네임이 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('닉네임 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('닉네임 변경 중 오류가 발생했습니다.');
+                });
+        },
+
+        // 휴대폰번호 변경
+        updatePhonenum(context) {
+            const data = new FormData(document.querySelector('#updatePhoneForm'));
+
+            axios.post('/api/user/updatephonenum', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('휴대폰번호가 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('휴대폰번호 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('휴대폰번호 변경 중 오류가 발생했습니다.');
+                });
+        },
+
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {
