@@ -13,11 +13,11 @@
                         <option value="4">일식게시판</option>
                         <option value="5">베이커리게시판</option>
                     </select>
-                    <label>
+                    <label class="btn_label">
                         <div>썸네일 이미지</div>
-                        <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*" >
+                        <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
-                    <img v-if="thumbnail" :src="thumbnail">
+                    <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
                 </div>
                 <div class="section grid_box">
@@ -44,29 +44,23 @@
             </div>
 
             <!-- 요리 순서 추가 -->
-            <div class="cook-list">
+            <div class="cook_list">
                 <div class="cook-btn">
                     <h3>요리순서</h3>
-                </div>
-                <div class="list-input">
-                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
                 </div>
                 <div class="content_list" v-for="(item, index) in programs" :key="index">
                     <p> Step {{ index + 1 }}</p>
                     <textarea class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
-                    <img v-if="item.previewUrl" :src="item.previewUrl" style="max-width: 200px; margin-bottom: 10px;">
-                    <label>
+                    <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
+                    <label class="btn_label2">
                         <div>이미지 파일</div>
                         <input hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
                     <button v-if="programs.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
-            </div>
-
-            <!-- 요리 팁 -->
-            <div class="cooktip">
-                <h3>요리팁</h3>
-                <textarea name="tip" id="tip" placeholder="예) 고기가 타지않도록 . . ." rows="3"></textarea>
+                <div class="list-input">
+                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
+                </div>
             </div>
             <div class="actions">
                 <button @click="$store.dispatch('recipeInsert')" type="button">저장</button>
