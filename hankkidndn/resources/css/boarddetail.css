@@ -28,6 +28,15 @@ h2{
     grid-template-columns: 1fr 1fr;
     padding-top: 5vw;
 }
+.main_title_grid{
+    padding: 5px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.main_view{
+  justify-self: end;
+}
 
 .buttons{
     padding: 20px 10px;
@@ -104,7 +113,7 @@ p{
     width: 100%;
     max-width: 200px; 
     height: 100%;
-    min-height: 100px;
+    max-height: 100px;
     margin: 0 auto;
     object-fit: cover;
     aspect-ratio: 1;

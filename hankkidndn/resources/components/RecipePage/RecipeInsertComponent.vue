@@ -13,7 +13,11 @@
                         <option value="4">일식게시판</option>
                         <option value="5">베이커리게시판</option>
                     </select>
-                    <input name="thumbnail" type="file" accept="image/*" >
+                    <label class="btn_label">
+                        <div>썸네일 이미지</div>
+                        <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
+                    </label>
+                    <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
                 </div>
                 <div class="section grid_box">
@@ -33,34 +37,30 @@
                     <div class="ingredient_row ingredient_box" v-for="(item, index) in stuffs" :key="index">
                         <input class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
                         <input class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
-                        <!-- <input class="note_input ingredient_content" type="text" name="quantity[]" placeholder="10(수량)"> -->
-                        <!-- <input class="note_input ingredient_content" type="text" name="" placeholder="예) (비고)"> -->
-                        <button v-if="stuffs.length > 2" @click="removeStuff(item)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
+                        <button v-if="stuffs.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
                     </div>
                 </div>
                 <button @click="addStuff()" class="add_btn" type="button" id="addIngredient">추가</button>
             </div>
 
             <!-- 요리 순서 추가 -->
-            <div class="cook-list">
+            <div class="cook_list">
                 <div class="cook-btn">
                     <h3>요리순서</h3>
-                </div>
-                <div class="list-input">
-                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
                 </div>
                 <div class="content_list" v-for="(item, index) in programs" :key="index">
                     <p> Step {{ index + 1 }}</p>
                     <textarea class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
-                    <input name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
-                    <button v-if="programs.length > 2" @click="removePrograms(item)" class="list-btn-start" type="button">순서 제거</button>
+                    <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
+                    <label class="btn_label2">
+                        <div>이미지 파일</div>
+                        <input hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
+                    </label>
+                    <button v-if="programs.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
-            </div>
-
-            <!-- 요리 팁 -->
-            <div class="cooktip">
-                <h3>요리팁</h3>
-                <textarea name="tip" id="tip" placeholder="예) 고기가 타지않도록 . . ." rows="3"></textarea>
+                <div class="list-input">
+                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
+                </div>
             </div>
             <div class="actions">
                 <button @click="$store.dispatch('recipeInsert')" type="button">저장</button>
@@ -71,16 +71,21 @@
     </div>
 </template>
 <script setup>
-    import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+
+// 썸네일 미리보기용
+const thumbnail = ref();
+
+// 이미지 미리보기용
+const preview = ref([]);
 
 // 추가된 input v-model로 받아서 화면 출력
 const stuffs = reactive([
-  { stuff: '', stuff_gram: '' },
   { stuff: '', stuff_gram: '' }
 ]);
 
 const programs = reactive([
-  { program: '', program_img: null }
+    { program: '', program_img: null, previewUrl: '' }
 ]);
 
 // 추가 및 제거 함수
@@ -93,16 +98,36 @@ function removeStuff(index){
 };
 
 function addPrograms(){
-    programs.push({ program: '', program_img: null });
+    programs.push({ program: '', program_img: null, previewUrl: '' });
 };
 
 function removePrograms(index){
     programs.splice(index, 1);
 };
 
+// 썸네일 미리보기
+function thumbnailImg(e) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const imageUrl = URL.createObjectURL(file);
+    thumbnail.value = imageUrl;
+}
+
+// 진행과정 이미지 미리보기
 function programImg(img, index) {
     const file = img.target.files[0];
+    // programs[index].program_img = file;
+
+    // 취소 누를경우 빈배열 생기는걸 방지
+    if (!file) return;
+
+    // 선택한 파일의 URL 생성
+    const imageUrl = URL.createObjectURL(file);
+
+    // 이미지 URL을 해당 프로그램에 저장
     programs[index].program_img = file;
+    programs[index].previewUrl = imageUrl;
 }
 
 </script>

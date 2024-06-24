@@ -14,12 +14,14 @@
                 <div class="buttons">
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
-                    <div>조회수{{ $store.state.boardDetail.views }}</div>
                 </div>
             </div>
             <hr>
             <div class="main_title_content">
+                <div class="main_title_grid">
                 <h2>{{ $store.state.boardDetail.title }}</h2>
+                <div class="main_view">조회수{{ $store.state.boardDetail.views }}</div>
+            </div>
                 <p>{{ $store.state.boardDetail.views }}</p>
                 <div class="main_title_content_title">
                     <p>{{ $store.state.boardDetail.created_at }}</p>

@@ -19,6 +19,7 @@
     "dependencies": {
         "vue-loader": "^17.4.2",
         "vue-router": "^4.3.2",
+        "vue3-youtube": "^0.1.9",
         "vuex": "^4.0.2"
     }
 }

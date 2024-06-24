@@ -13,7 +13,7 @@ class AddViewToBoardTable extends Migration
         });
 
         Schema::table('recipe_boards', function (Blueprint $table) {
-            $table->integer('views')->nullable()->after('video_link');
+            $table->integer('views')->nullable()->default(0)->after('video_link');
         });
     }
 
