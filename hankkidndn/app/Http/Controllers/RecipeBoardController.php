@@ -123,7 +123,7 @@ class RecipeBoardController extends Controller
 
         $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
                                         ->select('stuff', 'stuff_gram')
-                                        ->orderBy('id', 'DESC')
+                                        ->orderBy('id', 'ASC')
                                         ->get();
 
         $recipeData->increment('views');
@@ -170,7 +170,77 @@ class RecipeBoardController extends Controller
         return response()->json($responseData, 200);
     }
 
-    // 보드 게시글 삭제 처리
+    // 레시피 게시글 수정 처리
+    public function recipeUpdate(Request $request, $id) {
+
+        $recipeData = RecipeBoards::find($id);
+
+        if($request->hasFile('thumbnail')) {
+            $thumbnail = '/'.$request->file('thumbnail')->store('img');
+        } else {
+            $thumbnail = $recipeData->thumbnail;;
+        }
+
+        $insertData = [
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'boards_type_id' => $request->input('boards_type_id'),
+            'video_link' => $request->input('video'),
+            'thumbnail' => $thumbnail,
+        ];
+
+        $recipeData->update($insertData);
+
+
+        RecipeStuffs::where('recipe_board_id', $id)->delete();
+
+        // 레시피 재료 처리
+
+        $stuff_gram = $request->input('stuff_gram');
+
+        if($request->input('stuff')) {
+            // 배열형태의 이미지를 foreach로 돌려서 따로 저장
+            foreach ($request->input('stuff') as $index => $stuff) {
+
+                RecipeStuffs::create([
+                    'recipe_board_id' => $id,
+                    'stuff_gram' => $stuff_gram[$index],
+                    'stuff' => $stuff
+                ]);
+            }
+        }
+
+        RecipePrograms::where('recipe_board_id', $id)->delete();
+
+        // 레시피 과정 내용과 이미지 함께 처리
+        $texts = $request->input('list');
+
+        $files = $request->file('file');
+    
+        if ($request->file('file')) {
+            foreach ($files as $index => $file) {
+                $path = '/'.$file->store('img');
+            
+                RecipePrograms::create([
+                    'recipe_board_id' => $id,
+                    'img_path' => $path,
+                    'program_content' => $texts[$index],
+                    'order' => $index + 1
+                ]);
+            }
+        } 
+
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '글 작성 완료'
+            ,'data' => $recipeData
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 레시피 게시글 삭제 처리
     public function delete($id) {
 
         RecipeBoards::destroy($id);

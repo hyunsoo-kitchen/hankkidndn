@@ -20,7 +20,6 @@
             <hr>
             <div class="main_title_content">
                 <h2>{{ $store.state.boardDetail.title }}</h2>
-                <p>{{ $store.state.boardDetail.views }}</p>
                 <div class="main_title_content_title">
                     <p>{{ $store.state.boardDetail.created_at }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>

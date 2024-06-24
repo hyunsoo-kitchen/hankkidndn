@@ -93,10 +93,11 @@ const store = createStore({
         },
         // 레시피 디테일 정보 저장
         setRecipeDetail(state, data){
+            console.log(data)
             state.recipeData = data.data
-            // console.log(state.recipeData)
             state.recipeProgram = data.program
             state.recipeStuff = data.stuff
+            console.log(state.recipeProgram)
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -251,9 +252,17 @@ const store = createStore({
             .then(response => {
                 // console.log(response.data.data)
                 const videoLink = response.data.data.video_link
-                const videoId = videoLink.split("v=")[1].split("&")[0];
-                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                response.data.data.embed_url = embedUrl;
+                if (videoLink.includes("watch")) {
+                    const videoId = videoLink.split("v=")[1].split("&")[0];
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    response.data.data.embed_url = embedUrl;
+                } else if (videoLink.includes("be/")) {
+                    const videoId = videoLink.split("be/")[1].split("&")[0];
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    response.data.data.embed_url = embedUrl;
+                } else {
+                    response.data.data.embed_url = videoLink;
+                }
                 context.commit('setRecipeDetail', response.data)
                 router.push('/recipe/detail/' + response.data.data.id)
             })
@@ -267,7 +276,7 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setBoardDetail', response.data)
-                console.log(response.data)
+
                 router.push('/board/detail/' + id);
             })
             .catch();
@@ -340,13 +349,9 @@ const store = createStore({
         // 레시피 수정페이지 게시글 획득처리
         getRecipeUpdate(context, id) {
             const url = '/api/recipe/update/' + id
-
+            
             axios.get(url)
             .then(response => {
-                const videoLink = response.data.data.video_link
-                const videoId = videoLink.split("v=")[1].split("&")[0];
-                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                response.data.data.embed_url = embedUrl;
                 context.commit('setRecipeDetail', response.data)
             })
             .catch();
@@ -359,6 +364,20 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 context.commit('setBoardDetail', response.data)
+            })
+            .catch();
+        },
+
+        // 레시피 수정페이지
+        recipeUpdate(context, id) {
+            const url = '/api/recipe/update/' + id
+            const data = new FormData(document.querySelector('#recipeForm'));
+
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setRecipeDetail', response.data)
+                router.replace('/recipe/detail/' + id)
             })
             .catch();
         },

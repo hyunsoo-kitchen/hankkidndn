@@ -51,10 +51,7 @@
 
         <!-- 동영상 링크 한개 -->
         <div class="video">
-            <p>{{ $store.state.recipeData.embed_url }}</p>
-            <!-- <div class="video-title">{{ $store.state.recipeData.video_link }}</div> -->
             <iframe width="560" height="315" :src="store.state.recipeData.embed_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <!-- <iframe width="560" height="315" :src="$store.state.recipeData.video_link" frameborder="0" allowfullscreen></iframe> -->
         </div>
 
         <!-- 작성자 정보 -->
@@ -62,7 +59,7 @@
             <div class="profile-title">레시피 작성자</div>
             <img :src="$store.state.recipeData.profile" class="profile-img">
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
-            <div class="profile-link">작성자 링크?</div>
+            <!-- <div class="profile-link">작성자 링크?</div> -->
         </div>
 
         <!-- 댓글 시작 -->
@@ -122,7 +119,6 @@ function likeToggle(recipeData) {
 
 onBeforeMount(() => {
     store.dispatch('getRecipeDetail', route.params.id);
-    // console.log(store.state.recipeData)
 })
 </script>
 <style scoped src="../../css/recipedetail.css">

@@ -5,6 +5,7 @@ import router from './router';
 import store from './store.js';
 import AppComponent from '../components/AppComponent.vue';
 
+
 createApp({
     components: {
         AppComponent,

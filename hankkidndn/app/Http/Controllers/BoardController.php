@@ -150,6 +150,7 @@ class BoardController extends Controller
 
     }
 
+    // 보드 페이지 수정글 가져오기
     public function getBoardUpdate($id) {
         $boardData = Boards::join('users', 'users.id', '=', 'boards.user_id')
                             ->select('boards.*', 'users.u_nickname')
@@ -170,7 +171,7 @@ class BoardController extends Controller
         return response()->json($responseData, 200);
     }
 
-    // 게시글 수정처리
+    // 보드 게시글 수정처리
     public function boardUpdate(Request $request) {
         
         $insertData = [

@@ -212,7 +212,9 @@ h3 {
     }
 
     .content_list {
-        grid-template-columns: 0.1fr 0.8fr 0.2fr;
+        grid-template-columns: 0.3fr 1fr 1fr 0.1fr 0.1fr;
+        align-items: center;
+        justify-items: center;
     }
 
     .cook-btn {

@@ -37,6 +37,7 @@ Route::middleware('auth')->post('/api/recipe/insert', [RecipeBoardController::cl
 
 // 레시피 게시글 수정 처리 - 권현수
 Route::middleware('auth')->get('/api/recipe/update/{num}', [RecipeBoardController::class, 'getRecipeUpdate']);
+Route::middleware('auth')->post('/api/recipe/update/{num}', [RecipeBoardController::class, 'recipeUpdate']);
 
 // 레시피 삭제 처리 - 권현수
 Route::delete('/api/recipe/delete/{num}', [RecipeBoardController::class, 'delete']);
