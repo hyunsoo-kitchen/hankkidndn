@@ -39,7 +39,7 @@
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ item.created_at }}</div>
-                        <div class="card-view">조회수 1.7만</div>
+                        <div class="card-view">{{ item.views }}</div>
                     </div>
                 </div>
             </div>

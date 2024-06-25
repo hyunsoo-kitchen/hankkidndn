@@ -228,7 +228,7 @@ class RecipeBoardController extends Controller
 
                 $recipeData->img_path = '/'.$imgPath;
             }
-            Log::debug('테스트', $recipeData->toArray());
+            // Log::debug('테스트', $recipeData->toArray());
             $recipeData->save();
         }
 
