@@ -23,7 +23,7 @@
                 <div class="main_view">조회수 : {{ $store.state.boardDetail.views }}</div>
             </div>
                 <div class="main_title_content_title">
-                    <p>{{ $store.state.boardDetail.created_at }}</p>
+                    <p>{{ formatDate($store.state.boardDetail.created_at) }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>
                 </div>
                 <hr>
@@ -204,6 +204,17 @@ function getBoardName(id) {
           return '문의게시판';
     }
 }
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).replace(/\.$/, '');  // 마지막 점 제거
+};
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

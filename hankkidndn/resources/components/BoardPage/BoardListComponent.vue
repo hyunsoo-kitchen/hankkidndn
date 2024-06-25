@@ -41,7 +41,7 @@
                 <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
                 <div class="list-title">{{ item.title }}</div>
                 <div class="list-ninkname">{{ item.u_nickname }}</div>
-                <div class="list-day">{{ item.created_at }}</div>
+                <div class="list-day">{{ formatDate(item.created_at) }}</div>
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
@@ -154,6 +154,15 @@ function insertModalOn() {
 function insertModalOff() {
     insertModal.value = false;
 }
+
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, '');  // 마지막 점제거
+};
 
 
 </script>

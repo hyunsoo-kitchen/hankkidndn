@@ -34,8 +34,9 @@
                 <h3>총 {{ $store.state.pagination.total }}개의 레시피가 있습니다.</h3>
                 <button v-if="$store.state.authFlg" @click="$router.push('/recipe/insert')">레시피 작성하기</button>
                 <button v-if="!$store.state.authFlg" @click="insertModalOn()">레시피 작성하기</button>
-                <button>최신순</button>
-                <div>{{ $store.state.pagination.current_page }}</div>
+                <!-- <button>최신순</button>
+                <button>좋아요순</button>
+                <button>조회순</button> -->
             </div>
             <div class="main-list-content">
                 <div class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
@@ -43,8 +44,8 @@
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
-                        <div class="card-star">{{ item.created_at }}</div>
-                        <div class="card-view">{{ item.views }}</div>
+                        <div class="card-star">{{ formatDate(item.created_at) }}</div>
+                        <div class="card-view">조회수 : {{ item.views }}</div>
                     </div>
                 </div>
             </div>
@@ -99,8 +100,8 @@ function pagination(nowPage) {
 
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
-
     pagination(route.query.page);
+    console.log(store.state.pagination)
     data.board_type = route.params.id;
     data.page = route.query.page;
     store.dispatch('getRecipeList', data);
@@ -112,7 +113,7 @@ function pageMove(page) {
         data.page = page;
         store.dispatch('getRecipeList', data)
         pagination(route.query.page)
-        }
+    }
 }
 
 // 레시피 타입 이동
@@ -137,6 +138,16 @@ function insertModalOn() {
 function insertModalOff() {
     insertModal.value = false;
 }
+
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, '');  // 마지막 점제거
+};
+
 
 </script>
 

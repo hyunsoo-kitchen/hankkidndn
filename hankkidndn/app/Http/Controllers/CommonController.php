@@ -44,4 +44,15 @@ class CommonController extends Controller
         return response()->json($responseData, 200);
     }
 
+    public function getRecipe($id) {
+        $data = RecipeBoards::find($id);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => ''
+            ,'data' => $data
+        ];
+
+        return response()->json($responseData, 200);
+    }
 }
