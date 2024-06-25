@@ -66,7 +66,6 @@ const routes = [
     {
         path: '/recipe/detail/:id',
         component: RecipeDetailComponent,
-        beforeEnter: chkRecipeDetail,
     },
     {
         path: '/board/:id',
@@ -173,23 +172,5 @@ function chkPageNum(to, from, next) {
     } else {
         next();
     }
-}
-
-function chkRecipeDetail(to, from, next) {
-    const url = '/api/recipe/route/' + to.params.id
-
-    console.log(to.params.id)
-
-    axios.get(url)
-    .then(response => {
-        next()
-    })
-    .catch(error => {
-        if (error.response) {
-            // 서버가 요청을 받았지만 오류 응답을 반환함 (예: 4xx, 5xx 상태 코드)
-            console.error('Server Error:', error.response.data);
-            alert('서버 오류가 발생했습니다.');
-        }
-    })
 }
 export default router;

@@ -147,6 +147,7 @@ body {
     
     .dropdown-content-li {
         margin: 10px auto;
+        cursor: pointer;
     }
     
     hr {

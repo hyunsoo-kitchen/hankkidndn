@@ -17,13 +17,17 @@
                         <div>썸네일 이미지</div>
                         <input required hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
+                    <div v-if="thumbnailFlg">썸네일 이미지를 골라주세요.</div>
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
-                    <input  class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
+                    <h3>요리제목</h3>
+                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
+                    <!-- <div>요리 제목을 입력 해 주세요.</div> -->
                 </div>
                 <div class="section grid_box">
                     <!-- <label class="column_1to2 title_font" for="content"><h3>요리소개</h3></label> -->
                     <h3>요리소개</h3>
                     <textarea class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
+                    <!-- <div>요리 소개를 입력 해 주세요.</div> -->
                 </div>
                 <div class="section grid_box">
                     <!-- <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label> -->
@@ -75,6 +79,9 @@
 <script setup>
 import { reactive, ref } from 'vue';
 
+// 입력 여부 체크 플래그
+const thumbnailFlg = ref(true);
+
 // 썸네일 미리보기용
 const thumbnail = ref();
 
@@ -111,6 +118,7 @@ function thumbnailImg(e) {
 
     const imageUrl = URL.createObjectURL(file);
     thumbnail.value = imageUrl;
+    thumbnailFlg.value = false;
 }
 
 // 진행과정 이미지 미리보기

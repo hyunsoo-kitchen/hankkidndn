@@ -14,7 +14,7 @@
                     <option value="9">문의게시판</option>
                 </select>
                 <label for="file">
-                    <div>이미지 파일</div>
+                    <div class="img-file">이미지 파일</div>
                 </label>
                 <input hidden @change="setFile" type="file" id="file" name="file[]" accept="image/*" multiple>
             </div>

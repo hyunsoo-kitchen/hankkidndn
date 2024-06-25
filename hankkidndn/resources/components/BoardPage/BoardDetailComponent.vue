@@ -54,7 +54,7 @@
                             <div class="comment-actions" v-show="!item.deleted_at">
                                 <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
                                 <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                <p class="likes_num">{{ item.likes_num }}</p>
+                                <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
                                 <div class="like_grid">
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                     <p v-else>삭제된 댓글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
                                         <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                        <p>{{ item2.likes_num }}</p>
+                                        <p>좋아요 수 : {{ item2.likes_num }}</p>
                                     </div>
                                 </div>
 

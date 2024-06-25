@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\RecipeBoards;
 use App\Models\RecipeLikes;
 use App\Models\RecipePrograms;
@@ -127,6 +128,21 @@ class RecipeBoardController extends Controller
                                         ->orderBy('id', 'ASC')
                                         ->get();
 
+        $commentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->where('comments.recipe_board_id', '=', $id)
+                                ->whereNull('comments.cocomment')
+                                ->withTrashed()
+                                ->get();
+        
+        $cocommentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->whereNotNull('comments.cocomment')
+                                ->withTrashed()
+                                ->get();
+
         $recipeData->increment('views');
 
         $responseData = [
@@ -135,6 +151,8 @@ class RecipeBoardController extends Controller
             ,'data' => $recipeData
             ,'program' => $recipeProgramData
             ,'stuff' => $recipeStuffData
+            ,'comment' => $commentData
+            ,'cocomment' => $cocommentData
         ];
 
 

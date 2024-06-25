@@ -47,7 +47,7 @@
                 <img class="new-recipe-img" :src="item.thumbnail">
                 <div class="new-recipe-header">
                     <p class="text-white">{{ item.u_nickname }}</p>
-                    <p class="text-white">{{ item.created_at }}</p>
+                    <p class="text-white">{{ formatDate(item.created_at) }}</p>
                 </div>
                 <div class="new-recipe-body">
                     <p class="new-recipe-title text-white">{{ item.title }}</p>
@@ -69,7 +69,7 @@
                     <img class="best-recipe-profile" :src="item.profile" alt="">
                     <div class="best-recipe-title">
                         <p class="text-gray">{{ item.u_nickname }}</p>
-                        <p class="text-gray">{{ item.created_at }}</p>
+                        <p class="text-gray">{{ formatDate(item.created_at) }}</p>
                     </div>
                 </div>
                 <div class="best-recipe-content" >
@@ -98,6 +98,15 @@ const store = useStore();
 onBeforeMount(() => {
     store.dispatch('getMainNewList');
 });
+
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, '');  // 마지막 점제거
+};
 
 </script>
 

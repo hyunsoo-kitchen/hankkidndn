@@ -48,8 +48,13 @@ Route::delete('/api/recipe/delete/{num}', [RecipeBoardController::class, 'delete
 // 레시피 게시글 좋아요 처리 - 권현수
 Route::put('/api/recipe/like/{num}', [RecipeBoardController::class, 'recipeLike']);
 
-// 디테일 게시글 획득 - 권현수
+// 레시피 디테일 게시글 획득 - 권현수
 Route::get('/api/recipe/detail/{num}', [RecipeBoardController::class, 'getDetail']);
+
+// 레시피 댓글 처리
+Route::post('/api/recipe/comment/{num}', [CommentController::class, 'commentRecipeInsert']);
+
+// 보드 디테일 게시글 획득 - 권현수
 Route::get('/api/board/detail/{num}', [BoardController::class, 'getDetail']);
 
 // 보드 게시글 삭제 처리 - 권현수

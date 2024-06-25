@@ -60,7 +60,7 @@ class BoardController extends Controller
                                 ->withTrashed()
                                 ->get();
 
-        // 백에서 처리
+        // // 백에서 처리
 
         // $data = $commentData->toArray();
         // $ccdata = $cocommentData->toArray();
@@ -84,7 +84,7 @@ class BoardController extends Controller
             ,'img' => $imgData
             ,'comment' => $commentData
             ,'cocomment' => $cocommentData
-            // ,'data' => $data
+            // ,'data2' => $data
         ];
 
 
