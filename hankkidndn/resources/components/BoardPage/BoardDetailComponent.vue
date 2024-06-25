@@ -12,8 +12,10 @@
             <div class="main_title">
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
                 <div class="buttons">
+                    <div class="btn_grid">
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
+                </div>
                 </div>
             </div>
             <hr>
@@ -40,8 +42,10 @@
                             <div v-if="!item.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item.u_nickname }}</p>
                                 <p class="comment-date">{{ item.created_at }}</p>
+                                <div class="btn_grid">
                                 <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
                                 <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                            </div>
                             </div>
                             <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
                             <p v-else>삭제된 댓글 입니다.</p>

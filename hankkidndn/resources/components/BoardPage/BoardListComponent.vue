@@ -1,7 +1,20 @@
 <template>
-    <div v-if="insertModal" class="insert-modal">
-        <div class="insert-modal-text">글 작성은 로그인 후 작성 가능합니다.</div>
-        <button @click="insertModalOff()" type="button">확인</button>
+    <!-- 모달 창 -->
+    <div class="modal" v-show="insertModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="insertModalOff" class="close">×</button>
+          </div>
+          <div class="modal-body">
+            <p>글 작성은 로그인 후 가능합니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="insertModalOff" class="btn btn-primary">확인</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
         <div class="header">
@@ -163,6 +176,7 @@ const formatDate = (dateString) => {
         day: '2-digit'
     }).replace(/\.$/, '');  // 마지막 점제거
 };
+
 
 
 </script>
