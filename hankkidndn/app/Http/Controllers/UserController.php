@@ -47,7 +47,7 @@ class UserController extends Controller
         if($validator->fails()) {
             Log::debug('유효성 검사 실패', $validator->errors()->toArray());
             throw new MyValidateException('E01');
-            }
+        }
             
         // 작성 데이터 생성
         $insertData = $request->all();

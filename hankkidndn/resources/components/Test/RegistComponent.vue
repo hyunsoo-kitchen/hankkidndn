@@ -1,145 +1,128 @@
 <template>
-    <!-- 0614 노경호. 
-        TODO: 필수입력처리. 미입력시 js로 안적엇다고 출력
-        ,정규표현식 처리 -->
-    <!-- <form action="" id="registrationForm"> -->
-        <!-- 폼박스 넣으니까 오류나는데 이것도 고쳐야함 : 해결완료-노경호 -->
-        <div class="container">
+    <div class="container">
         <h2>개인정보입력</h2>
         <form @submit.prevent="validateForm">
             <div class="main_title">
                 <!-- 이름 -->
                 <div class="title_content">
                     <div class="title">
-                        <div class="title_main">이름 <span>*</span></div>
+                        <div class="title_main">이름<span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="text" v-model="formData.u_name" autoComplete="off">
+                        <input type="text" v-model="FormData.u_name" autocomplete="off">
                         <div class="error-message" v-if="errors.u_name">이름을 입력해주세요.</div>
                     </div>
                 </div>
                 <!-- 생년월일 -->
                 <div class="title_content">
                     <div class="title">
-                        <div class="title_main">생년월일 <span>*</span></div>
+                        <div class="title_main">생년월일<span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="date" v-model="formData.birth_at" @input="chkBirth">
+                        <input type="date" v-model="FormData.birth_at" @input="chkBirth">
                         <div class="error-message" v-if="errors.birth_at">생년월일을 입력해주세요.</div>
                     </div>
                 </div>
                 <!-- 아이디 -->
-                <div class="title_content">
+                 <div class="title_content">
                     <div class="title">
-                        <div class="title_main">아이디 <span>*</span></div>
+                        <div class="title_main">아이디<span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="text" v-model="formData.u_id" autoComplete="off">
+                        <input type="text" v-model="FormData.u_id" autocomplete="off">
                         <button class="check" type="button">중복확인</button>
                         <div class="error-message" v-if="errors.u_id">아이디를 입력해주세요.</div>
                     </div>
-                </div>
-                <!-- 비밀번호 -->
-                <div class="title_content">
+                 </div>
+                 <!-- 비밀번호 확인 -->
+                  <div class="title_content">
                     <div class="title">
-                        <div class="title_main">비밀번호 <span>*</span></div>
+                        <div class="title_main">비밀번호 확인<span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="password" v-model="formData.u_password" autoComplete="off">
-                        <div class="error-message" v-if="errors.u_password">비밀번호를 입력해주세요.</div>
-                    </div>
-                </div>
-                <!-- 비밀번호 확인 -->
-                <div class="title_content">
-                    <div class="title">
-                        <div class="title_main">비밀번호 확인 <span>*</span></div>
-                    </div>
-                    <div class="content">
-                        <input type="password" v-model="formData.password_chk" autoComplete="off">
+                        <input type="password" v-model="formData.password_chk" autocomplete="off">
                         <div class="error-message" v-if="errors.password_match">비밀번호가 일치하지 않습니다.</div>
                     </div>
-                </div>
-                <!-- 주소 -->
-                <div class="title_content">
+                  </div>
+                  <!-- 주소 -->
+                   <div class="title_content">
                     <div class="title">
-                        <div class="title_main">주소 <span>*</span></div>
+                        <div class="title_main">주소<span>*</span></div>
                     </div>
                     <div class="content_address">
                         <input type="text" id="u_post" name="u_post" readonly v-model="postcode" class="input1" placeholder="우편번호">
-                        <button type="button" class="address_btn" @click="kakaoPostcode" id="post_search">주소검색</button>
+                        <button type="button" class="address_btn" @click="kakaoPostcode" id="post_search"></button>
                         <input type="text" name="u_address" id="u_address" class="input2" v-model="address" readonly @click="kakaoPostcode">
-                        <input type="text" class="input3" name="u_detail_address" id="u_detail_address" v-model="detailAddress" autoComplete="off">
+                        <input type="text" class="input3" name="u_detail_address" id="u_detail_address" v-model="detailAddress" autocomplete="off">
                         <div class="error-message" v-if="errors.u_address">주소를 입력해주세요.</div>
                     </div>
-                </div>
-                <!-- 전화번호 -->
-                <div class="title_content">
-                    <div class="title">
-                        <div class="title_main">전화번호 <span>*</span></div>
+                   </div>
+                   <!-- 전화번호 -->
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">전화번호<span>*</span></div>
+                        </div>
+                        <div class="pon_content">
+                            <input type="text" class="input1" name="u_phone_num" id="u_phone_num" placeholder="010-1234-5678" v-model="formData.u_phone_num" autocomplete="off">
+                            <div class="error_message" v-if="errors.u_phone">전화번호를 입력해주세요</div>
+                        </div>
                     </div>
-                    <div class="pon_content">
-                        <input type="text" class="input1" name="u_phone_num" id="u_phone_num" placeholder="010-1234-5678" v-model="formData.u_phone_num" autoComplete="off">
-                        <div class="error-message" v-if="errors.u_phone">전화번호를 입력해주세요.</div>
-                    </div>
-                </div>
-                <!-- 닉네임 -->
-                <div class="title_content">
-                    <div class="title">
-                        <div class="title_main">닉네임 <span>*</span></div>
-                    </div>
-                    <div class="content">
-                        <input type="text" v-model="formData.u_nickname" autoComplete="off">
-                        <button class="check" type="button">중복확인</button>
+                   <!-- 닉네임 -->
+                   <div class="title_content">
+                     <div class="title">
+                        <div class="title_main">닉네임<span>*</span></div>
+                     </div>
+                     <div class="content">
+                        <input type="text" v-model="formData.u_nickname" autocomplete="off" >
+                        <button class="check" type="button">증복확인</button>
                         <div class="error-message" v-if="errors.u_nickname">닉네임을 입력해주세요</div>
-                    </div>
-                </div>
-                <!-- 성별 -->
-                <div class="title_content">
-                    <div class="title">
-                        <div class="title_main">성별 <span>*</span></div>
-                    </div>
-                    <div class="radio-box">
-                        <div class="select_gender">
-                            <label for="male">남자</label>
-                            <input type="radio" name="gender" id="male" value="남자" v-model="formData.gender">
+                     </div>
+                   </div>
+                   <!-- 성별 -->
+                    <div class="title_content">
+                        <div class="title">
+                            <div class="title_main">성별<span>*</span></div>
                         </div>
-                        <div>
-                            <label for="female">여자</label>
-                            <input type="radio" name="gender" id="female" value="여자" v-model="formData.gender">
+                        <div class="radio-box">
+                            <div class="select_gender">
+                                <label for="male">남자</label>
+                                <input type="radio" name="gender" id="male" value="남자" v-model="FormData.gender">
+                            </div>
+                            <div>
+                                <label for="female">여자</label>
+                                <input type="radio" name="gender" id="female" value="여자" v-model="FormData.gender">
+                            </div>
                         </div>
+                        <div class="error-message" v-if="errors.gender">성별을 선택해주세요.</div>
                     </div>
-                    <div class="error-message" v-if="errors.gender">성별을 선택해주세요.</div>
-                </div>
-            
-                <div class="buttons">
-                    <button class="cancel" type="button" @click="$router.back()">취소</button>
-                    <button class="complete" type="submit">다음단계</button>
-                </div>
+                    <div class="buttons">
+                        <button class="cancel" type="button" @click="$router.back()">취소</button>
+                        <button class="complete" type="submit">다음단계</button>
+                    </div>
             </div>
         </form>
     </div>
-    <!-- </form> -->
 </template>
-<script setup>  
+<script setup>
 import { ref } from 'vue';
 
 const address = ref('');
 const detailAddress = ref('');
 const postcode = ref('');
 
-
 //  formData -> 객체 
 //  각 필드는 사용자 입력 폼에서 제출되거나 수정될 데이터를 저장하는 데 사용된다.
 const formData = ref({
-    u_name: '',
+    u_name= '',
     birth_at: '',
     u_id: '',
     u_password: '',
-    password_chk: '',
-    u_phone_num: '',
-    u_nickname: '',
-    gender: ''
+    password_chk:'',
+    u_phone_num:'',
+    u_nickname:'',
+    gender:''
 });
+
 
 const errors = ref({
     u_name: false,
@@ -200,28 +183,28 @@ function kakaoPostcode() {
 
 // 전화번호 합쳐서 데이터 전송
 function updatePhoneNumber() {
-    // 선택한 번호 가져오기
-    var selectedPrefix = document.getElementById("first_num").value;
+            // 선택한 번호 가져오기
+            var selectedPrefix = document.getElementById("first_num").value;
 
-    // 입력한 번호 가져오기
-    var middleNumber = document.getElementById("middle_num").value;
-    var lastNumber = document.getElementById("last_num").value;
+            // 입력한 번호 가져오기
+            var middleNumber = document.getElementById("middle_num").value;
+            var lastNumber = document.getElementById("last_num").value;
 
-    // 양식 조합
-    var formattedPhoneNumber = selectedPrefix + "-" + middleNumber + "-" + lastNumber;
+            // 양식 조합
+            var formattedPhoneNumber = selectedPrefix + "-" + middleNumber + "-" + lastNumber;
 
-    // 결과를 입력 필드에 넣기
-    document.getElementById("phone_num").value = formattedPhoneNumber;
-}
+            // 결과를 입력 필드에 넣기
+            document.getElementById("phone_num").value = formattedPhoneNumber;
+        }
 
-// 입력 필드의 변경을 감지하여 자동으로 전화번호를 업데이트
-var inputs = document.querySelectorAll('.phone');
-inputs.forEach(input => {
-    input.addEventListener('input', updatePhoneNumber);
-});
+        // 입력 필드의 변경을 감지하여 자동으로 전화번호를 업데이트
+        var inputs = document.querySelectorAll('.phone');
+        inputs.forEach(input => {
+            input.addEventListener('input', updatePhoneNumber);
+        });
 
-function validateForm() {
-    // 유효성 검사 조건 -> 비어있는지 check
+        function validateForm() {
+        // 유효성 검사 조건 -> 비어있는지 check
     errors.value = {
         u_name: formData.value.u_name === '',
         birth_at: formData.value.birth_at === '',
@@ -243,9 +226,7 @@ function validateForm() {
     }
 }
 
-
-
 </script>
 <style scoped src="../../css/regist.css">
-    
+
 </style>
