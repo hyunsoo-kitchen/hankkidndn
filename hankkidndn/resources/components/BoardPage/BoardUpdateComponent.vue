@@ -14,15 +14,15 @@
                     <option value="9">문의게시판</option>
                 </select>
                 <label for="file">
-                    <div>이미지 파일</div>
+                    <div class="img-file">이미지 파일</div>
                 </label>
                 <input hidden @change="setFile" type="file" id="file" name="file[]" accept="image/*" multiple>
             </div>
-            <input name="title" type="text" placeholder="제목" :value="$store.state.boardDetail.title">
+            <input autocomplete="off" name="title" type="text" placeholder="제목" :value="$store.state.boardDetail.title">
             <div class="content-box">
                 <img v-if="preview == ''" v-for="(item, index) in $store.state.boardImg" :key="index" :src="item.img_path">
                 <img v-for="(item, index) in preview" :key="index" :src="item">
-                <textarea name="content" rows="30" placeholder="내용을 입력해주세요">{{ $store.state.boardDetail.content }}</textarea>
+                <textarea autocomplete="off" name="content" rows="30" placeholder="내용을 입력해주세요">{{ $store.state.boardDetail.content }}</textarea>
             </div>
             <div class="buttons">
                 <button type="button" @click="$store.dispatch('boardUpdate', board_id)" class="complete">작성하기</button>

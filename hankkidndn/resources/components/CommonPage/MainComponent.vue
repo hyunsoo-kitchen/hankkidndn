@@ -52,9 +52,9 @@
                 <div class="new-recipe-body">
                     <p class="new-recipe-title text-white">{{ item.title }}</p>
                     <div class=""></div>
-                    <p class="text-left text-white">조회수</p>
-                    <p class="text-left text-white">{{ item.cnt }}</p>
-                    <p class="text-right text-white">{{ item.like_chk }}</p>
+                    <p class="text-left text-white"> 조회수 : {{ item.views }}</p>
+                    <!-- <p class="text-left text-white">{{ item.cnt }}</p> -->
+                    <!-- <p class="text-right text-white">{{ item.like_chk }}</p> -->
                 </div>
             </div>
         </div>
@@ -76,11 +76,12 @@
                     <p class="text-thick font-big">{{ item.title }}</p>
                     <p class="text-gray">{{ item.content }}</p>
                     </div>
-                <div class="line"></div>
-                <div class="best-recipe-footer">
-                    <p>{{ item.cnt }}</p>
-                    <p>조회수</p>
-                    <p>{{ item.like_chk }}</p>
+                <div class="info-line"></div>
+                <!-- <div class="best-recipe-footer"> -->
+                <div>
+                    <p>조회수 : {{ item.views }}</p>
+                    <!-- <p>{{ item.cnt }}</p> -->
+                    <!-- <p>{{ item.like_chk }}</p> -->
                 </div>
             </div>
         </div>

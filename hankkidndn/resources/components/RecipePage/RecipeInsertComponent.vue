@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2 class="main_h2">레시피 등록</h2>
-        <form id="recipeForm">
+        <form autocomplete="off" id="recipeForm">
             <div class="first_box">
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="title"><h3>레시피 제목</h3></label>
@@ -15,18 +15,20 @@
                     </select>
                     <label class="btn_label">
                         <div>썸네일 이미지</div>
-                        <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
+                        <input required hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
-                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
+                    <input  class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
                 </div>
                 <div class="section grid_box">
-                    <label class="column_1to2 title_font" for="summary"><h3>요리소개</h3></label>
+                    <!-- <label class="column_1to2 title_font" for="content"><h3>요리소개</h3></label> -->
+                    <h3>요리소개</h3>
                     <textarea class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
                 </div>
                 <div class="section grid_box">
-                    <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label>
-                    <input class="column_2to3" type="url" id="video" name="video" placeholder="예) 영상이 youtube에 있다면 주소를 넣어주세요. https://youtu.be/abcd1234"></input>
+                    <!-- <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label> -->
+                    <h3>동영상</h3>
+                    <input class="column_2to3" type="text" id="video" name="video" placeholder="예) 영상이 youtube에 있다면 주소를 넣어주세요. https://youtu.be/abcd1234"></input>
                 </div>
             </div>
 
@@ -35,8 +37,8 @@
                 <h3>재료 정보</h3>
                 <div id="ingredients">
                     <div class="ingredient_row ingredient_box" v-for="(item, index) in stuffs" :key="index">
-                        <input class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
-                        <input class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
+                        <input  class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
+                        <input  class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
                         <button v-if="stuffs.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
                     </div>
                 </div>
@@ -50,7 +52,7 @@
                 </div>
                 <div class="content_list" v-for="(item, index) in programs" :key="index">
                     <p> Step {{ index + 1 }}</p>
-                    <textarea class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                    <textarea  class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
                     <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
                     <label class="btn_label2">
                         <div>이미지 파일</div>
@@ -65,7 +67,7 @@
             <div class="actions">
                 <button @click="$store.dispatch('recipeInsert')" type="button">저장</button>
                 <!-- <button type="button" id="saveAndShare">저장 후 공개하기</button> -->
-                <button type="button" id="cancel">취소</button>
+                <button @click="$router.back()" type="button" id="cancel">취소</button>
             </div>
         </form>
     </div>
@@ -75,9 +77,6 @@ import { reactive, ref } from 'vue';
 
 // 썸네일 미리보기용
 const thumbnail = ref();
-
-// 이미지 미리보기용
-const preview = ref([]);
 
 // 추가된 input v-model로 받아서 화면 출력
 const stuffs = reactive([
@@ -107,7 +106,7 @@ function removePrograms(index){
 
 // 썸네일 미리보기
 function thumbnailImg(e) {
-    const file = event.target.files[0];
+    const file = e.target.files[0];
     if (!file) return;
 
     const imageUrl = URL.createObjectURL(file);

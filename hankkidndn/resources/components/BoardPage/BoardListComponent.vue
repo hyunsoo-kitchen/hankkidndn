@@ -1,4 +1,21 @@
 <template>
+    <!-- 모달 창 -->
+    <div class="modal" v-show="insertModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="insertModalOff" class="close">×</button>
+          </div>
+          <div class="modal-body">
+            <p>글 작성은 로그인 후 가능합니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="insertModalOff" class="btn btn-primary">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
         <div class="header">
             <img class="main-img" src="../../../public/img/recipe_order.png">
@@ -37,11 +54,12 @@
                 <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
                 <div class="list-title">{{ item.title }}</div>
                 <div class="list-ninkname">{{ item.u_nickname }}</div>
-                <div class="list-day">{{ item.created_at }}</div>
+                <div class="list-day">{{ formatDate(item.created_at) }}</div>
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
-                <button @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-if="$store.state.authFlg" @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-if="!$store.state.authFlg" @click="insertModalOn()" class="text-btn" type="button">글쓰기</button>
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
@@ -58,10 +76,11 @@
 import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import router from '../../js/router';
+
     
 const store = useStore();
 const route = useRoute();
+const insertModal = ref(false);
 let page = ref([]);
 const data = reactive({
     board_type: '',
@@ -139,6 +158,24 @@ function search() {
     store.dispatch('searchBoards', data);
     // router.push({ path: `/search/board/${data.board_type}/${data.search}`, query: { page: data.page, searchCriteria: data.searchCriteria } });
 }
+
+// 비로그인시 작성 모달창
+function insertModalOn() {
+    insertModal.value = true;
+}
+
+function insertModalOff() {
+    insertModal.value = false;
+}
+
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, '');  // 마지막 점제거
+};
 
 
 
