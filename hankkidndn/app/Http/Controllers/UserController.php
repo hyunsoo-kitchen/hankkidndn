@@ -184,8 +184,13 @@ class UserController extends Controller
         
         $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
                           ->join('users', 'comments.user_id', '=', 'users.id')
-                          ->select('comments.*', 'recipe_boards.title as recipe_title', 'users.u_nickname')
+                          ->select(
+                              'comments.*', 
+                              'recipe_boards.title as recipe_title', 
+                              'users.u_nickname'
+                          )
                           ->where('comments.user_id', $user_id)
+                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 
@@ -206,6 +211,7 @@ class UserController extends Controller
                           ->join('users', 'comments.user_id', '=', 'users.id')
                           ->select('comments.*', 'boards.title as title', 'users.u_nickname')
                           ->where('comments.user_id', $user_id)
+                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 
@@ -301,37 +307,85 @@ class UserController extends Controller
     }
 
     // 휴대폰 번호 수정
-    // public function updatePhonenum(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'u_phone_num' =>['required','regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/'] . auth()->user()->id,
-    //     ]);
-    
-    //     if ($validator->fails()) {
-    //         return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
-    //     }
-    
-    //     $user = auth()->user();
-    //     $user->u_phone_num = $request->u_phone_num;
-    //     $user->save();
-    
-    //     return response()->json(['success' => true]);
-    // }
     public function updatePhonenum(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'u_phone_num' => ['required', 'regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/']
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'u_phone_num' => ['required', 'regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/']
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $user = auth()->user();
+        $user->u_phone_num = $request->u_phone_num;
+        $user->save();
+
+        return response()->json(['success' => true]);
     }
 
-    $user = auth()->user();
-    $user->u_phone_num = $request->u_phone_num;
-    $user->save();
+    // 프로필 이미지 업로드 처리
+    public function profileInsert(Request $request) {
+        // 파일 유효성 검사 및 저장
+        $request->validate([
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif', // jpeg, png, jpg, gif 
+        ]);
+        
+        // 이미지 파일 저장 및 경로 설정
+        if ($request->file('profile')) {
+        $path = $request->file('profile')->store('/img');
+        } else {
+            return response()->json(['error' => '이미지를 업로드해주세요.'], 400);
+        }
 
-    return response()->json(['success' => true]);
-}
+        // 현재 인증된 사용자 정보 가져오기
+        $user = auth()->user();
+
+        // 사용자 프로필 정보 업데이트
+        $user->profile = '/'.$path;
+        $user->save();
+
+        return response()->json(['success' => true, 'profile_path' => $path]);
+    }
+
+    // 생년월일 수정
+    public function updateBirthat(Request $request)
+    {
+        $request->validate([
+            'birth_at' => ['required']
+        ]);
+
+        $user = Auth::user();
+
+        $userData = User::find($user->id);
+
+        $userData->birth_at = $request->birth_at;
+        $userData->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    // 주소 변경
+    public function updateAddress(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'u_post' => ['required', 'regex:/^\d{5}$/'],
+            'u_address' => ['required']
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+    
+        $user = auth()->user();
+        $user->u_post = $request->u_post;
+        $user->u_address = $request->u_address;
+        $user->u_detail_address = $request->u_detail_address;
+        $user->save();
+    
+        return response()->json(['success' => true]);
+    }
+
+
 }
 

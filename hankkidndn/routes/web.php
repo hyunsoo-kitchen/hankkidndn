@@ -95,11 +95,19 @@ Route::middleware('auth')->get('/api/mypage/bcomment', [UserController::class, '
 Route::post('/api/authenticate', [UserController::class, 'authenticate']);
 
 // 비밀번호 수정
-Route::post('/api/user/updatepassword', [UserController::class, 'updatepassword']);
+Route::post('/api/user/updatepassword', [UserController::class, 'updatePassword']);
 // 닉네임변경
-Route::post('/api/user/updatenickname', [UserController::class, 'updatenickname']);
+Route::post('/api/user/updatenickname', [UserController::class, 'updateNickname']);
 // 휴대폰번호 수정
-Route::post('/api/user/updatephonenum', [UserController::class, 'updatephonenum']);
+Route::post('/api/user/updatephonenum', [UserController::class, 'updatePhonenum']);
+// 프로필사진 등록
+Route::post('/api/user/updateprofile', [UserController::class, 'profileInsert']);
+// 생년월일 수정
+Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat']);
+// 주소 수정
+Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress']);
+
+
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);
