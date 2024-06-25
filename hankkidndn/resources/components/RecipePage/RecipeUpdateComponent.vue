@@ -17,8 +17,8 @@
                         <div>썸네일 이미지</div>
                         <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*" >
                     </label>
-                    <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail">
-                    <img v-if="thumbnail" :src="thumbnail">
+                    <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail" class="img_thumb">
+                    <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" :value="store.state.recipeData.title">
                 </div>
                 <div class="section grid_box">
@@ -45,24 +45,24 @@
             </div>
 
             <!-- 요리 순서 추가 -->
-            <div class="cook-list">
+            <div class="cook_list">
                 <div class="cook-btn">
                     <h3>요리순서</h3>
-                </div>
-                <div class="list-input">
-                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
                 </div>
                 <div class="content_list" v-for="(item, index) in $store.state.recipeProgram" :key="index">
                     <p> Step {{ index + 1 }}</p>
                     <textarea class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
-                    <img v-if="item.img_path" :src="item.img_path" style="max-width: 200px; margin-bottom: 10px;">
-                    <label>
+                    <img v-if="item.img_path" :src="item.img_path" style="margin-bottom: 10px;" class="img_thumb">
+                    <label class="btn_label2">
                         <div>이미지 파일</div>
                         <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
                     <button v-if="$store.state.recipeProgram.length > 2" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
                 <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
+                <div class="list-input">
+                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
+                </div>
             </div>
 
             <!-- 요리 팁 -->

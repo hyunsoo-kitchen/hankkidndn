@@ -48,10 +48,12 @@
                             <p v-else>삭제된 댓글 입니다.</p>
     
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
-                            <div v-if="!item.deleted_at" class="comment-actions">
-                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)">답글</button>
+                            <div class="comment-actions" v-show="!item.deleted_at">
+                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
                                 <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                <p>{{ item.likes_num }}</p>
+                                <p class="likes_num">{{ item.likes_num }}</p>
+                                <div class="like_grid">
+                                </div>
                             </div>
                         </div>
                         <!-- 댓글 수정창 -->
@@ -69,8 +71,10 @@
                                     <div v-if="!item2.deleted_at" class="comment-header">
                                         <p class="comment-author">{{ item2.u_nickname }}</p>
                                         <p class="comment-date">{{ item2.created_at }}</p>
+                                        <div class="btn_grid">
                                         <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
                                         <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                    </div>
                                     </div>
                                     <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
                                     <p v-else>삭제된 댓글 입니다.</p>
