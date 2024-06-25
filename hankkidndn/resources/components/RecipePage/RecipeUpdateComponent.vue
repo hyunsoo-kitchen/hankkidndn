@@ -17,8 +17,8 @@
                         <div>썸네일 이미지</div>
                         <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*" >
                     </label>
-                    <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail">
-                    <img v-if="thumbnail" :src="thumbnail">
+                    <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail" class="img_thumb">
+                    <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" :value="store.state.recipeData.title">
                 </div>
                 <div class="section grid_box">

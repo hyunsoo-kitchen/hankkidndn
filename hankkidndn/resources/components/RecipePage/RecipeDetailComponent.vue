@@ -1,12 +1,31 @@
 <template>
+<!-- 모달 창 -->
+<div class="modal" v-show="modalFlg">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">알림</h3>
+          <button @click="closeModal" class="close">×</button>
+        </div>
+        <div class="modal-body">
+          <p>정말로 삭제 하시겠습니까?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" @click="deleteRecipe" class="btn btn-primary">삭제</button>
+          <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
-        <div v-if="modalFlg" class="delete-modal">
+        <!-- <div v-if="modalFlg" class="delete-modal">
             <div class="modal-title">정말로 삭제 하시겠습니까?</div>
             <div class="delete-btn">
                 <button type="button" @click="$store.dispatch('recipeDelete', $store.state.recipeData.id)">삭제</button>
                 <button type="button" @click="closeModal()">취소</button>
             </div>
-        </div>
+        </div> -->
         <div class="header">
             <div class="header-img-wrapper">
                 <img class="header-img" :src="$store.state.recipeData.thumbnail">
@@ -63,29 +82,88 @@
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
         </div>
 
-        <div class="comments">
-            <div class="comments-title">요리후기 : 댓글수</div>
-            <div class="line"></div>
-            <div class="comment-container">
-                <div class="comments-detail">
-                    <img class="comment-img" src="" alt="">
-                    <span class="comment-name">홍길동</span>
-                    <span class="comment-date">2024-06-11 02:33</span>
-                    <div class="comment-content">댓글내용</div>
-                    <div class="comment-retouch">
-                        <button>수정</button>
-                        <button>삭제</button>
+        <div class="comment-section">
+                    <!-- 댓글 불러오기 시작 -->
+                    <div v-if="$store.state.commentData" v-for="(item, index) in $store.state.commentData" :key="index" class="comment">
+                        <div v-if="commentFlg || item.id !== commentId">
+                            <div v-if="!item.deleted_at" class="comment-header">
+                                <p class="comment-author">{{ item.u_nickname }}</p>
+                                <p class="comment-date">{{ item.created_at }}</p>
+                                <div class="btn_grid">
+                                <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
+                                <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                            </div>
+                            </div>
+                            <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
+                            <p v-else>삭제된 댓글 입니다.</p>
+    
+                            <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
+                            <div class="comment-actions" v-show="!item.deleted_at">
+                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
+                                <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                <p class="likes_num">{{ item.likes_num }}</p>
+                                <div class="like_grid">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 댓글 수정창 -->
+                        <div v-if="commentUpdateFlg && item.id == commentId" class="comment-form">
+                            <form id="boardCommentUpdate">
+                                <input autocomplete="off" name="content" type="text" placeholder="댓글" class="comment-input" :value="item.content">
+                                <button type="button" @click="$store.dispatch('commentUpdate', item.id); commentUpdateOff();" class="comment-submit">수정</button>
+                            </form>
+                        </div>
+
+                        <!-- 대댓글 불러오기 시작 -->
+                        <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
+                            <div v-if="item2.cocomment == item.id" class="comment">
+                                <div v-if="item2.id !== cocommentId">
+                                    <div v-if="!item2.deleted_at" class="comment-header">
+                                        <p class="comment-author">{{ item2.u_nickname }}</p>
+                                        <p class="comment-date">{{ item2.created_at }}</p>
+                                        <div class="btn_grid">
+                                        <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
+                                        <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                    </div>
+                                    </div>
+                                    <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
+                                    <p v-else>삭제된 댓글 입니다.</p>
+                                    <div v-if="!item2.deleted_at" class="comment-actions">
+                                        <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                        <p>{{ item2.likes_num }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- 대댓글 수정창 -->
+                                <div v-if="commentUpdateFlg && item2.id == cocommentId" class="comment-form">
+                                    <form id="boardCommentUpdate">
+                                        <input autocomplete="off" name="content" type="text" placeholder="댓글" class="comment-input" :value="item2.content">
+                                        <button type="button" @click="$store.dispatch('commentUpdate', item2.id); commentUpdateOff();" class="comment-submit">수정</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 대댓글 입력 칸 -->
+                        <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
+                            <form id="boardCocomment">
+                                <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
+                                <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="comment-reply">
-                        <button class="comment-reply-btn">답글</button>
-                    </div>
+                    
+                    <!-- 댓글 입력창 -->
+                    <form id="boardComment">
+                        <div v-if="$store.state.authFlg" class="comment-form">
+                            <input autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
+                            <button type="button" @click="$store.dispatch('commentInsert', data.id), comment = '';" class="comment-submit">댓글</button>
+                        </div>
+                        <div v-else class="comment-form">
+                            <div class="comment-input">로그인 후 댓글을 작성해주세요</div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div class="comment-input">
-                <textarea class="comment-input-content" name="" id=""></textarea>
-                <button class="comment-input-btn">입력</button>
-            </div>
-        </div>
     </div>
 </template>
 <script setup>
@@ -96,6 +174,7 @@ import { useRoute } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const modalFlg = ref(false);
+
 
 function openModal() {
     modalFlg.value = true
