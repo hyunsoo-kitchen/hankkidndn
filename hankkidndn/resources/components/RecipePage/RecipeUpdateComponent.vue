@@ -38,7 +38,7 @@
                     <div class="ingredient_row ingredient_box" v-for="(item, index) in $store.state.recipeStuff" :key="index">
                         <input autocomplete="off" class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
                         <input autocomplete="off" class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
-                        <button v-if="$store.state.recipeStuff.length > 2" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
+                        <button v-if="$store.state.recipeStuff.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
                     </div>
                 </div>
                 <button @click="addStuff()" class="add_btn" type="button" id="addIngredient">추가</button>
@@ -57,7 +57,7 @@
                         <div>이미지 파일</div>
                         <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
-                    <button v-if="$store.state.recipeProgram.length > 2" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
+                    <button v-if="$store.state.recipeProgram.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
                 <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
                 <div class="list-input">
@@ -68,7 +68,7 @@
             <!-- 작성 버튼 -->
             <div class="actions">
                 <button @click="$store.dispatch('recipeUpdate', store.state.recipeData.id)" type="button">저장</button>
-                <button type="button" id="cancel">취소</button>
+                <button @click="$router.back()" type="button" id="cancel">취소</button>
             </div>
         </form>
     </div>

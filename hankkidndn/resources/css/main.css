@@ -95,6 +95,7 @@ h2 {
     gap: 1rem;
     text-align: center;
     padding: 20px;
+    cursor: pointer;
 }
 
 .new-recipe-card {
@@ -147,6 +148,7 @@ h2 {
     padding: 1rem;
     gap: 1rem;
     text-align: center;
+    cursor: pointer;
 }
 
 .best-recipe-card {

@@ -17,6 +17,7 @@ import MypageCommentComponent from '../components/Mypage/MypageCommentComponent.
 import MypageRecipeComponent from '../components/Mypage/MypageRecipeComponent.vue';
 import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeListComponent.vue'
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
+import store from './store';
 
 const routes = [
     {
@@ -30,30 +31,37 @@ const routes = [
     {
         path: '/login',
         component: LoginComponent,
+        beforeEnter: chkAuthon,
     },
     {
         path: '/regist',
         component: RegistComponent,
+        beforeEnter: chkAuthon,
     },
     {
         path: '/regist/agree',
         component: RegistAgreeComponent,
+        beforeEnter: chkAuthon,
     },
     {
         path: '/regist/comp',
         component: RegistCompliteComponent,
+        beforeEnter: chkAuthon,
     },
     {
         path: '/recipe/:id',
         component: RecipeListComponent,
+        beforeEnter:  [chkPageNum, chkRecipeType]
     },
     {
         path: '/recipe/insert',
         component: RecipeInsertComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/recipe/update/:id',
         component: RecipeUpdateComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/recipe/detail/:id',
@@ -62,14 +70,17 @@ const routes = [
     {
         path: '/board/:id',
         component: BoardListComponent,
+        beforeEnter:  [chkPageNum, chkBoardType]
     },
     {
         path: '/board/insert',
         component: BoardInsertComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/board/update/:id',
         component: BoardUpdateComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/board/detail/:id',
@@ -78,14 +89,17 @@ const routes = [
     {
         path: '/mypage',
         component: MypageRecipeComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/mypage/update',
         component: MypageComponent, 
+        beforeEnter: chkAuth,
     },
     {
         path: '/mypage/comments',
         component: MypageCommentComponent,
+        beforeEnter: chkAuth,
     },
     {
         path: '/search/recipe',
@@ -110,5 +124,53 @@ const router = createRouter({
     routes,
 });
 
+// 비로그인시 못가는 페이지 처리
+function chkAuth(to, from, next) {
+    if(store.state.authFlg) {
+        next();
+    } else {
+        alert('로그인이 필요한 서비스입니다.');
+        next('/login');
+    }
+};
 
+// 로그인시 못가는 페이지 처리
+function chkAuthon(to, from, next) {
+    if(!(store.state.authFlg)) {
+        next();
+    } else {
+        alert('로그인 상태에서는 접속 할 수 없습니다.');
+        next('/main');
+    }
+};
+
+// 보드 게시판 타입 관리
+function chkBoardType(to, from, next) {
+    if(to.params.id >= 10 || to.params.id <= 5) {
+        alert('해당 게시판은 없는 게시판 입니다.');
+        router.back();
+    } else {
+        next();
+    }
+}
+
+// 레시피 게시판 타입 관리
+function chkRecipeType(to, from, next) {
+    if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100) {
+        next();
+    } else {
+        alert('해당 게시판은 없는 게시판 입니다.');
+        router.back();
+    }
+}
+
+// 게시글 페이지 초과시 처리
+function chkPageNum(to, from, next) {
+    if(to.query.page > store.state.pagination.last_page || to.query.page < 1 ) {
+        alert('해당 페이지는 없는 페이지 입니다.');
+        router.back();
+    } else {
+        next();
+    }
+}
 export default router;

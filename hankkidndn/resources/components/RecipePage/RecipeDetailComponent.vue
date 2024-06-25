@@ -42,6 +42,7 @@
                     </button>
                     <div class="like_text">{{ $store.state.recipeData.likes_num }}</div>
                 </div>
+                    <div>작성일자 : {{ formatDate($store.state.recipeData.created_at) }}</div>
                     <div class="header-view">조회수 {{ $store.state.recipeData.views }}</div>
                 </div>
             </div>
@@ -168,6 +169,7 @@
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
+import { onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -196,10 +198,66 @@ function likeToggle(recipeData) {
   }
 }
 
-onBeforeMount(() => {
-    store.dispatch('getRecipeDetail', route.params.id);
-})
+// onBeforeMount(() => {
+//     store.dispatch('getRecipeDetail', route.params.id);
+//     console.log(store.state.recipeData)
+// })
+
+onBeforeRouteUpdate((to, from, next) => {
+    const url = '/api/recipe/detail/' + id
+
+    axios.get(url)
+    .then(response => {
+        // console.log(response.data.data)
+        const videoLink = response.data.data.video_link
+        if (videoLink.includes("watch")) {
+            const videoId = videoLink.split("v=")[1].split("&")[0];
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            response.data.data.embed_url = embedUrl;
+        } else if (videoLink.includes("be/")) {
+            const videoId = videoLink.split("be/")[1].split("&")[0];
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            response.data.data.embed_url = embedUrl;
+        } else {
+            response.data.data.embed_url = videoLink;
+        }
+        context.commit('setRecipeDetail', response.data)
+        router.push('/recipe/detail/' + response.data.data.id)
+    })
+    .catch((error) => {
+        alert('해당 게시글은 없는 게시글 입니다.');
+        route.back();
+    });
+});
+// onBeforeRouteUpdate((to, from, next) => {
+//     const url = '/api/recipe/route/' + to.params.id
+
+//     axios.get(url)
+//     .then(response => {
+//         console.log(response.data)
+//         next();
+//     })
+//     .catch((error) => {
+//         alert('해당 게시글은 없는 게시글 입니다.');
+//         route.back();
+//     });
+// });
+
+
+
+// 시간 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).replace(/\.$/, '');  // 마지막 점 제거
+};
 </script>
+
 <style scoped src="../../css/recipedetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>

@@ -93,11 +93,11 @@ const store = createStore({
         },
         // 레시피 디테일 정보 저장
         setRecipeDetail(state, data){
-            console.log(data)
+            // console.log(data)
             state.recipeData = data.data
             state.recipeProgram = data.program
             state.recipeStuff = data.stuff
-            console.log(state.recipeProgram)
+            console.log(state.recipeData)
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
