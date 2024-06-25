@@ -97,7 +97,7 @@ const store = createStore({
             state.recipeData = data.data
             state.recipeProgram = data.program
             state.recipeStuff = data.stuff
-            console.log(state.recipeData)
+            // console.log(state.recipeData)
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -254,19 +254,19 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                // console.log(response.data.data)
+                console.log(response.data.data)
                 const videoLink = response.data.data.video_link
-                if (videoLink.includes("watch")) {
-                    const videoId = videoLink.split("v=")[1].split("&")[0];
-                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                    response.data.data.embed_url = embedUrl;
-                } else if (videoLink.includes("be/")) {
-                    const videoId = videoLink.split("be/")[1].split("&")[0];
-                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                    response.data.data.embed_url = embedUrl;
-                } else {
-                    response.data.data.embed_url = videoLink;
-                }
+                    if (videoLink.includes("watch")) {
+                        const videoId = videoLink.split("v=")[1].split("&")[0];
+                        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        response.data.data.embed_url = embedUrl;
+                    } else if (videoLink.includes("be/")) {
+                        const videoId = videoLink.split("be/")[1].split("&")[0];
+                        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        response.data.data.embed_url = embedUrl;
+                    } else {
+                        response.data.data.embed_url = null;
+                    }
                 context.commit('setRecipeDetail', response.data)
                 router.push('/recipe/detail/' + response.data.data.id)
             })

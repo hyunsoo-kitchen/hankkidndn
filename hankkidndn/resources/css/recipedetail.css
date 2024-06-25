@@ -25,6 +25,9 @@ button {
 
 .like{
     display: grid;
+}
+
+.like-btn {
     grid-template-columns: 1fr 1fr;
 }
 
@@ -110,6 +113,7 @@ button {
     width: 100%;
     max-width: 500px;
     margin-top: 10px;
+    align-items: center;
 }
 
 .header-like {

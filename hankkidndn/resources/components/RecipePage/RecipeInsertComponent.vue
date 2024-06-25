@@ -15,18 +15,20 @@
                     </select>
                     <label class="btn_label">
                         <div>썸네일 이미지</div>
-                        <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
+                        <input required hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <input  class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
                 </div>
                 <div class="section grid_box">
-                    <label class="column_1to2 title_font" for="summary"><h3>요리소개</h3></label>
-                    <textarea  class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
+                    <!-- <label class="column_1to2 title_font" for="content"><h3>요리소개</h3></label> -->
+                    <h3>요리소개</h3>
+                    <textarea class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
                 </div>
                 <div class="section grid_box">
-                    <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label>
-                    <input  class="column_2to3" type="url" id="video" name="video" placeholder="예) 영상이 youtube에 있다면 주소를 넣어주세요. https://youtu.be/abcd1234"></input>
+                    <!-- <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label> -->
+                    <h3>동영상</h3>
+                    <input class="column_2to3" type="text" id="video" name="video" placeholder="예) 영상이 youtube에 있다면 주소를 넣어주세요. https://youtu.be/abcd1234"></input>
                 </div>
             </div>
 

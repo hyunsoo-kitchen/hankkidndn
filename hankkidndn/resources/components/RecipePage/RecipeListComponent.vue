@@ -101,7 +101,7 @@ function pagination(nowPage) {
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
     pagination(route.query.page);
-    console.log(store.state.pagination)
+    // console.log(store.state.pagination)
     data.board_type = route.params.id;
     data.page = route.query.page;
     store.dispatch('getRecipeList', data);

@@ -25,6 +25,9 @@ Route::get('/{any}', function() {
 })->where('any', '^(?!api).*$');
 //---------------------권현수------------------------------
 
+// 네비게이션 가드 - 권현수
+Route::get('/api/recipe/route/{num}', [CommonController::class, 'getRecipe']);
+
 // 메인 리스트 게시글 획득 - 권현수
 Route::get('/api/main', [CommonController::class, 'getList']);
 

@@ -17,11 +17,11 @@
                     <div class="header-name">{{ $store.state.recipeData.u_nickname }}</div>
                 </div>
                 <div class="header-actions">
-                    <div class="like">
+                    <div :class="{ 'like-btn': $store.state.authFlg }" class="like">
                     <button v-if="$store.state.authFlg" @click="$store.dispatch('recipeLike', $route.params.id); likeToggle($store.state.recipeData)" class="header-like" type="button">
                         <img src="../../../public/img/like.png" alt="">
                     </button>
-                    <div class="like_text">{{ $store.state.recipeData.likes_num }}</div>
+                    <div class="like_text">좋아요 수 : {{ $store.state.recipeData.likes_num }}</div>
                 </div>
                     <div>작성일자 : {{ formatDate($store.state.recipeData.created_at) }}</div>
                     <div class="header-view">조회수 {{ $store.state.recipeData.views }}</div>
@@ -30,8 +30,8 @@
         </div>
 
         <div v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id" class="btn">
-            <button type="button" class="update" @click="$router.push('/recipe/update/' + $store.state.recipeData.id)">수정</button>
-            <button type="button" @click="openModal()" class="delete">삭제</button>
+            <button v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/recipe/update/' + $store.state.recipeData.id)">수정</button>
+            <button v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
         </div>
         
         <div class="explain">
@@ -55,7 +55,8 @@
         </div>
 
         <div class="video">
-            <iframe width="560" height="315" :src="store.state.recipeData.embed_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe v-if="$store.state.recipeData.embed_url !== null " width="560" height="315" :src="$store.state.recipeData.embed_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div v-else>이 게시글은 동영상이 없습니다.</div>
         </div>
 
         <div class="profile">
@@ -91,7 +92,6 @@
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -119,52 +119,10 @@ function likeToggle(recipeData) {
   }
 }
 
-// onBeforeMount(() => {
-//     store.dispatch('getRecipeDetail', route.params.id);
-//     console.log(store.state.recipeData)
-// })
-
-onBeforeRouteUpdate((to, from, next) => {
-    const url = '/api/recipe/detail/' + id
-
-    axios.get(url)
-    .then(response => {
-        // console.log(response.data.data)
-        const videoLink = response.data.data.video_link
-        if (videoLink.includes("watch")) {
-            const videoId = videoLink.split("v=")[1].split("&")[0];
-            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            response.data.data.embed_url = embedUrl;
-        } else if (videoLink.includes("be/")) {
-            const videoId = videoLink.split("be/")[1].split("&")[0];
-            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            response.data.data.embed_url = embedUrl;
-        } else {
-            response.data.data.embed_url = videoLink;
-        }
-        context.commit('setRecipeDetail', response.data)
-        router.push('/recipe/detail/' + response.data.data.id)
-    })
-    .catch((error) => {
-        alert('해당 게시글은 없는 게시글 입니다.');
-        route.back();
-    });
-});
-// onBeforeRouteUpdate((to, from, next) => {
-//     const url = '/api/recipe/route/' + to.params.id
-
-//     axios.get(url)
-//     .then(response => {
-//         console.log(response.data)
-//         next();
-//     })
-//     .catch((error) => {
-//         alert('해당 게시글은 없는 게시글 입니다.');
-//         route.back();
-//     });
-// });
-
-
+onBeforeMount(() => {
+    store.dispatch('getRecipeDetail', route.params.id);
+    console.log(store.state.recipeStuff)
+})
 
 // 시간 표시 제어
 const formatDate = (dateString) => {
