@@ -19,7 +19,7 @@
                     </label>
                     <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail">
                     <img v-if="thumbnail" :src="thumbnail">
-                    <input autocomplete="off" class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" :value="store.state.recipeData.title">
+                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" :value="store.state.recipeData.title">
                 </div>
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="summary"><h3>요리소개</h3></label>
@@ -45,16 +45,13 @@
             </div>
 
             <!-- 요리 순서 추가 -->
-            <div class="cook-list">
+            <div class="cook_list">
                 <div class="cook-btn">
                     <h3>요리순서</h3>
                 </div>
-                <div class="list-input">
-                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
-                </div>
                 <div class="content_list" v-for="(item, index) in $store.state.recipeProgram" :key="index">
                     <p> Step {{ index + 1 }}</p>
-                    <textarea autocomplete="off" class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                    <textarea class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
                     <img v-if="item.img_path" :src="item.img_path" style="max-width: 200px; margin-bottom: 10px;">
                     <label>
                         <div>이미지 파일</div>
@@ -63,6 +60,9 @@
                     <button v-if="$store.state.recipeProgram.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
                 </div>
                 <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
+                <div class="list-input">
+                    <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
+                </div>
             </div>
 
             <!-- 작성 버튼 -->
