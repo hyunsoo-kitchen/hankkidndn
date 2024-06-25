@@ -29,6 +29,7 @@ class Users extends Authenticatable
         'u_phone_num',
         'u_nickname',
         'gender',
+        'profile'
 
     ];
 

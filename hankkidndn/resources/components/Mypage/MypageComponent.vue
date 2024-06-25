@@ -61,15 +61,15 @@
                         <div class="modal_overlay"  v-if="profileModalVisible" @click.self="profileCloseModal">
                             <div class="profile_modal">
                                 <div>프로필 이미지 등록</div>
-                                <form action="">
-                                    <img v-if="profilePreview" :src="profilePreview" alt="프로필 사진 미리보기">
+                                <form action="" id="updateProfileForm">
+                                    <img :src="preview" class="preview-image">
                                     <div>
-                                        <label for="profile">프로필 이미지 업로드</label>
+                                        <label for="profile">이미지 업로드</label>
+                                        <input @change="setFile($event)" id="profile" type="file" name="profile" accept="image/*" >
                                     </div>
-                                    <input hidden type="file" id="profile" name="profile" @change="previewProfile">
                                 </form>
-                                    <button @click="profileCloseModal" class="cancle_btn">취소</button>
-                                    <button class="update_btn">수정</button>
+                                    <button @click="profileCloseModal" class="cancle_btn" type="button">취소</button>
+                                    <button @click="$store.dispatch('updateProfile')" class="update_btn" type="button">업로드</button>
                             </div>
                         </div>
 
@@ -78,7 +78,7 @@
                             <div class="nickname_modal">
                                 <div>닉네임 변경</div>
                                 <form action="" id="updateNicknameForm">
-                                    <input type="text" autoComplete="off" id="u_nickname" name="u_nickname">
+                                    <input type="text" autoComplete="off" id="u_nickname" name="u_nickname" v-model="formData.u_nickname">
                                     <button class="check" type="button">중복확인</button>
                                 </form>
                                     <button @click="nicknameCloseModal" class="cancle_btn">취소</button>
@@ -91,7 +91,7 @@
                             <div class="phone_modal">
                                 <div>휴대폰 번호 수정</div>
                                 <form action="" id="updatePhoneForm">
-                                    <input type="text" placeholder="010-1234-1234" id="u_phone_num" name="u_phone_num">
+                                    <input type="text" v-model="formData.u_phone_num" placeholder="010-1234-1234" id="u_phone_num" name="u_phone_num" autoComplete="off">
                                 </form>
                                     <button @click="phoneCloseModal" class="cancle_btn">취소</button>
                                     <button class="update_btn" @click="$store.dispatch('updatePhonenum')">수정</button>
@@ -101,11 +101,11 @@
                         <div class="modal_overlay" v-if="dateModalVisible" @click.self="dateCloseModal">
                             <div class="birth_modal">
                                 <div>생년월일</div>
-                                    <form action="">
-                                        <input type="date" name="birth_at" id="birth_at" laceholder="2000-01-01" @input="chkBirth">
+                                    <form action="" id="updateBirthForm">
+                                        <input type="date" name="birth_at" id="birth_at" laceholder="2000-01-01" @input="chkBirth" v-model="formData.birth_at">
                                     </form>
                                         <button @click="dateCloseModal" class="cancle_btn">취소</button>
-                                        <button class="update_btn">수정</button>
+                                        <button class="update_btn" @click="$store.dispatch('updateBirthat')">수정</button>
                             </div>
                         </div>
                         <!-- 주소 -->
@@ -113,7 +113,7 @@
                             <div class="address_modal">
                                 <div>내 주소 수정</div>
                                     <div>
-                                        <form action="">
+                                        <form action="" id="updateBirthForm">
                                             <input type="text" id="u_post" name="u_post" readonly v-model="postcode" class="input1" placeholder="우편번호">
                                         <button type="button" class="address_btn" @click="kakaoPostcode" id="post_search">주소검색</button>
                                         <input type="text" name="u_address" id="u_address" class="input2" v-model="address" readonly @click="kakaoPostcode">
@@ -121,7 +121,7 @@
                                         </form>
                                     </div>
                                         <button @click="addressCloseModal" class="cancle_btn">취소</button>
-                                        <button class="update_btn">수정</button>
+                                        <button class="update_btn" @click="$store.dispatch('updateAddress')">수정</button>
                             </div>
                         </div>
                     </div>
@@ -132,14 +132,14 @@
                         <hr>
                         <form action="" id="updatePasswordForm">
                             <div class="detail_container">
-                                <div class="detail_title">변경할 비밀번호</div>
+                                <div class="detail_title">비밀번호 변경</div>
                                     <div class="detail_box">
                                         <label for="u_password">비밀번호</label>
-                                        <input type="password" id="u_password" name="u_password" autoComplete="off">
+                                        <input type="password" id="u_password" name="u_password" autoComplete="off" v-model="formData.u_password">
                                     </div>
                                     <div class="detail_box">
                                         <div class="password_chk">비밀번호 확인</div>
-                                        <input type="password" id="password_chk" name="password_chk" autoComplete="off">
+                                        <input type="password" id="password_chk" name="password_chk" autoComplete="off" v-model="formData.password_chk">
                                     </div>
                                 <button class="update_btn"  @click.prevent="$store.dispatch('updatePassword')">수정</button>
                             </div>
@@ -162,6 +162,16 @@ const activeTab = ref('myprofile');
 const address = ref('');
 const detailAddress = ref('');
 const postcode = ref('');
+const preview = ref('');
+
+const formData = ref({
+    profile: null,
+    birth_at: '',
+    u_password: '',
+    password_chk: '',
+    u_phone_num: '',
+    u_nickname: '',
+});
 
 // 유저 정보 인증
 const u_password = ref('');
@@ -220,6 +230,13 @@ onBeforeMount(() => {
     store.dispatch('getMypageUserInfo');
 });
 
+//프로필 이미지 셋파일
+function setFile(e) {
+    const file = e.target.files[0]; // 파일 객체를 직접 formData.profile에 할당
+
+    preview.value = URL.createObjectURL(file);
+    // preview.value = file;
+}
 
 // 카카오 주소 API
 function kakaoPostcode() {
@@ -265,7 +282,6 @@ function kakaoPostcode() {
         }
     }).open();
 }
-
 
 
 

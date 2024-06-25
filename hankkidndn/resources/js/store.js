@@ -752,6 +752,61 @@ const store = createStore({
                 });
         },
 
+        // 프로필사진 변경
+        updateProfile(context) {
+            const data = new FormData(document.querySelector('#updateProfileForm'));
+
+            axios.post('/api/user/updateprofile', data)
+            .then(response => {
+                if (response.data.success) {
+                    alert('프로필이 성공적으로 변경되었습니다.');
+                } else {
+                    alert('프로필 변경에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                alert('프로필사진 변경 중 오류가 발생했습니다.');
+            });
+
+        },
+
+        // 생년월일 변경
+        updateBirthat(context) {
+            const data = new FormData(document.querySelector('#updateBirthForm'));
+
+            axios.post('/api/user/updatebirthat', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('생년월일이 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('생년월일 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('생년월일 변경 중 오류가 발생했습니다.');
+                });
+        },
+        
+        // 주소 변경
+        updateAddress(context) {
+            const data = new FormData(document.querySelector('#updateBirthForm'));
+
+            axios.post('/api/user/updateaddress', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('주소가 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('주소 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('주소 변경 중 오류가 발생했습니다.');
+                });
+        },
+
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {
