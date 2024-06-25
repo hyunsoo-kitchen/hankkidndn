@@ -20,9 +20,8 @@
             <div class="main_title_content">
                 <div class="main_title_grid">
                 <h2>{{ $store.state.boardDetail.title }}</h2>
-                <div class="main_view">조회수{{ $store.state.boardDetail.views }}</div>
+                <div class="main_view">조회수 : {{ $store.state.boardDetail.views }}</div>
             </div>
-                <p>{{ $store.state.boardDetail.views }}</p>
                 <div class="main_title_content_title">
                     <p>{{ $store.state.boardDetail.created_at }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>
@@ -102,7 +101,7 @@
                     <!-- 댓글 입력창 -->
                     <form id="boardComment">
                         <div v-if="$store.state.authFlg" class="comment-form">
-                            <input @keyup.enter="$store.dispatch('commentInsert', data.id)" autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
+                            <input autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
                             <button type="button" @click="$store.dispatch('commentInsert', data.id), comment = '';" class="comment-submit">댓글</button>
                         </div>
                         <div v-else class="comment-form">

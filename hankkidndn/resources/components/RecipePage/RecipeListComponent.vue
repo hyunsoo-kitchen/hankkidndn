@@ -1,4 +1,8 @@
 <template>
+    <div v-if="insertModal" class="insert-modal">
+        <div class="insert-modal-text">글 작성은 로그인 후 작성 가능합니다.</div>
+        <button @click="insertModalOff()" type="button">확인</button>
+    </div>
     <div class="container">
         <div class="header">
             <div class="main-img">
@@ -28,7 +32,8 @@
         <div class="main-list">
             <div class="main-list-title">
                 <h3>총 {{ $store.state.pagination.total }}개의 레시피가 있습니다.</h3>
-                <button @click="$router.push('/recipe/insert')">레시피 작성하기</button>
+                <button v-if="$store.state.authFlg" @click="$router.push('/recipe/insert')">레시피 작성하기</button>
+                <button v-if="!$store.state.authFlg" @click="insertModalOn()">레시피 작성하기</button>
                 <button>최신순</button>
                 <div>{{ $store.state.pagination.current_page }}</div>
             </div>
@@ -39,7 +44,7 @@
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ item.created_at }}</div>
-                        <div class="card-view">조회수 1.7만</div>
+                        <div class="card-view">{{ item.views }}</div>
                     </div>
                 </div>
             </div>
@@ -64,6 +69,7 @@ import { useRoute } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const page = ref(route.query.page);
+const insertModal = ref(false);
 
 const data = {
     board_type: '',
@@ -123,6 +129,14 @@ function search() {
     store.dispatch('searchRecipes', data);
 }
 
+// 비로그인시 작성 모달창
+function insertModalOn() {
+    insertModal.value = true;
+}
+
+function insertModalOff() {
+    insertModal.value = false;
+}
 
 </script>
 

@@ -1,4 +1,8 @@
 <template>
+    <div v-if="insertModal" class="insert-modal">
+        <div class="insert-modal-text">글 작성은 로그인 후 작성 가능합니다.</div>
+        <button @click="insertModalOff()" type="button">확인</button>
+    </div>
     <div class="container">
         <div class="header">
             <img class="main-img" src="../../../public/img/recipe_order.png">
@@ -41,7 +45,8 @@
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
-                <button @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-if="$store.state.authFlg" @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-if="!$store.state.authFlg" @click="insertModalOn()" class="text-btn" type="button">글쓰기</button>
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
@@ -58,10 +63,11 @@
 import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-import router from '../../js/router';
+
     
 const store = useStore();
 const route = useRoute();
+const insertModal = ref(false);
 let page = ref([]);
 const data = reactive({
     board_type: '',
@@ -140,6 +146,14 @@ function search() {
     // router.push({ path: `/search/board/${data.board_type}/${data.search}`, query: { page: data.page, searchCriteria: data.searchCriteria } });
 }
 
+// 비로그인시 작성 모달창
+function insertModalOn() {
+    insertModal.value = true;
+}
+
+function insertModalOff() {
+    insertModal.value = false;
+}
 
 
 </script>

@@ -18,11 +18,11 @@
                         <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
-                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
+                    <input autocomplete="off" class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
                 </div>
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="summary"><h3>요리소개</h3></label>
-                    <textarea class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
+                    <textarea autocomplete="off" class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
                 </div>
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label>
@@ -35,8 +35,8 @@
                 <h3>재료 정보</h3>
                 <div id="ingredients">
                     <div class="ingredient_row ingredient_box" v-for="(item, index) in stuffs" :key="index">
-                        <input class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
-                        <input class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
+                        <input autocomplete="off" class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
+                        <input autocomplete="off" class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
                         <button v-if="stuffs.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="content_list" v-for="(item, index) in programs" :key="index">
                     <p> Step {{ index + 1 }}</p>
-                    <textarea class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                    <textarea autocomplete="off" class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
                     <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
                     <label class="btn_label2">
                         <div>이미지 파일</div>
