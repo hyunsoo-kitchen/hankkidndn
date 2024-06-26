@@ -1,13 +1,14 @@
 <template>
     <div class="container">
             <!-- 헤드 이미지 -->
-            <img class="main-img" src="../../../public/img/my_page.png">
+            <!-- <img class="main-img" src="../../../public/img/my_page.png"> -->
             <h2 class="page_title">마이페이지</h2>
+            <hr>
             <div class="main_container">
                 <div class="sub_title">
                     <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
                     <div @click="$router.push('/mypage/comments')" class="sub_title_content title_select">내 댓글</div>
-                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보수정</div>
+                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보</div>
                 </div>
                 <div class="main_content">
                     <!-- 내 레시피 -->
@@ -62,7 +63,7 @@
                                     <div>작성일</div>
                                 </div>
                                 <hr>
-                                <div @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in myBoardData" :key="index">
+                                <div v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
                                         <div class="list_title ellipsis">{{ item.content }}</div>

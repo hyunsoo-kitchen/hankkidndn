@@ -182,17 +182,16 @@ class UserController extends Controller
     public function getRecieCommentList() {
         $user_id = Auth::id();
         
-        $rcommentData = Comment::leftJoin('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
-                          ->join('users', 'comments.user_id', '=', 'users.id')
-                          ->select(
-                              'comments.*', 
-                              'recipe_boards.title as recipe_title', 
-                              'users.u_nickname'
-                          )
-                          ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
-                          ->orderBy('comments.created_at', 'DESC')
-                          ->paginate(10);
+        $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
+                                ->join('users', 'comments.user_id', '=', 'users.id')
+                                ->select(
+                                    'comments.*', 
+                                    'recipe_boards.title as recipe_title', 
+                                    'users.u_nickname'
+                                )
+                                ->where('comments.user_id', $user_id)
+                                ->orderBy('comments.created_at', 'DESC')
+                                ->paginate(10);
 
     $responseData = [
         'code' => '0',
@@ -211,7 +210,6 @@ class UserController extends Controller
                           ->join('users', 'comments.user_id', '=', 'users.id')
                           ->select('comments.*', 'boards.title as title', 'users.u_nickname', 'boards.id as board_id')
                           ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 

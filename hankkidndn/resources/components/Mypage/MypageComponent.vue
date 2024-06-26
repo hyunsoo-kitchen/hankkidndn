@@ -1,19 +1,25 @@
 <template>
 <div class="container">
     <!-- 헤드 이미지 -->
-    <img class="main-img" src="../../../public/img/my_page.png">
+    <!-- <img class="main-img" src="../../../public/img/my_page.png"> -->
     <h2 class="page_title">마이페이지</h2>
+    <hr>
     <div class="main_container">
         <div class="sub_title">
             <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
             <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select">내 댓글</div>
-            <div @click="$router.push('/mypage/update')" class="sub_title_content title_select">개인정보수정</div>
+            <div @click="$router.push('/mypage/update')" class="sub_title_content title_select">개인정보</div>
         </div>
         <div class="main_content">
 
             <!-- 내 정보 변경 전 본인인증 -->
             <div class="auth_box" v-if="!isAuthenticated">
+                <div class="auth_title">
+                    개인정보 열람, 수정
+                </div>
                 <div class="">
+                    <p>개인정보 열람, 수정시 본인인증이 필요합니다.</p>
+                    <p>로그인 중인 아이디의 비밀번호를 입력해주세요.</p>
                     <div>비밀번호</div>
                     <input type="password" v-model="u_password">
                 </div>
