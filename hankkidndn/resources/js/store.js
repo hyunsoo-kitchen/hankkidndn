@@ -829,7 +829,8 @@ const store = createStore({
             .then(response => {
                 console.log(response.data);
                 context.commit('setSearchRecipeData', response.data.data);
-                router.replace('/search/recipe?page=' + data.page);
+                // router.replace('/search/recipe?page=' + data.page);
+                router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
             })
             .catch(error => {
                 console.log(error.response);

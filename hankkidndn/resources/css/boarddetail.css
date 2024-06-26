@@ -47,7 +47,8 @@ body{
 
 .modal-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  margin: 0 10px;
 }
 
 .btn {
@@ -62,12 +63,21 @@ body{
   color: white;
 }
 
+.btn-primary1 {
+  background-color: #f5f5f5;
+}
+
 .close {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 20px;
   color: #888;
+}
+button {
+  cursor: pointer;
+  padding: 0;
+  display: inline-block;
 }
 
 /* 모달 끝 */
@@ -294,7 +304,7 @@ border-bottom: 1px solid #eee;
 margin-bottom: 10px;
 border-radius: 5px;
 background-color: #e6f7ff; 
-margin-left: 40px; 
+margin-left: 80px; 
 }
 
 .cocomment:last-child {
@@ -388,7 +398,11 @@ align-items: center;
 margin-top: 20px;
 border-top: 1px solid #eee;
 padding-top: 10px;
-margin-left: 60px; /* 대댓글 폼 들여쓰기 */
+margin-left: 80px; /* 대댓글 폼 들여쓰기 */
+}
+
+.comment_margin{
+  margin-left: 50px;
 }
 
 .cocomment-input {
