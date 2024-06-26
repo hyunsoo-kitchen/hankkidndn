@@ -30,7 +30,7 @@
                 <h3>총 {{ $store.state.searchPagination.total }}개의 레시피가 있습니다.</h3>
                 <button @click="$router.push('/recipe/insert')">레시피 작성하기</button>
                 <button>최신순</button>
-                <div>{{ $store.state.searchPagination.current_page }}</div>
+                <!-- <div>{{ $store.state.searchPagination.current_page }}</div> -->
             </div>
             <div class="main-list-content">
                 <div class="card" v-for="(item, index) in $store.state.searchRecipeListData" :key="index">

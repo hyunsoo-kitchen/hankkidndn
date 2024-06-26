@@ -142,6 +142,7 @@
                 <!-- 대댓글 입력 칸 -->
                 <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
                     <form id="boardCocomment">
+                        <input type="hidden" name="recipe_board_id" :value="route.params.id">
                         <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
                         <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
                     </form>

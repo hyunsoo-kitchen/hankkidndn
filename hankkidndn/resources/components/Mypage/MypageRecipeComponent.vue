@@ -32,7 +32,7 @@
                         </div>
                         <div class="contents_list">
                             <div v-if="activeTab === 'recipe'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div class="list_num">번호</div>
                                     <div class="list_title">제목</div>
                                     <div class="list_views">조회수</div>
@@ -42,7 +42,7 @@
                                 <div v-for="(item, index) in myRecipeData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRecipePagination.total - index) - (($store.state.myRecipePagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_title" @click="$store.dispatch('getRecipeDetail', item.id)">{{ item.title }}</div>
                                         <div class="list_views">{{ item.views }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
@@ -56,17 +56,17 @@
                             </div>
                             
                             <div v-if="activeTab === 'board'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div class="list_num">번호</div>
                                     <div class="list_title">제목</div>
                                     <div class="list_views">조회수</div>
                                     <div class="list_date">작성일</div>
                                 </div>
                                 <hr>
-                                <div  @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in myBoardData" :key="index">
+                                <div  v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBoardPagination.total - index) - (($store.state.myBoardPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_title" @click="$store.dispatch('getBoardDetail', item.id)">{{ item.title }}</div>
                                         <div class="list_views">{{ item.views }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
