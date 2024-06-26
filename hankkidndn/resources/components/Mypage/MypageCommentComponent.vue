@@ -41,8 +41,8 @@
                                 <div v-for="(item, index) in myRecipeData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRCommentPagination.total - index) - (($store.state.myRCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.content }}</div>
-                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_title" >{{ item.content }}</div>
+                                        <div class="list_views" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ item.recipe_title }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
@@ -62,11 +62,11 @@
                                     <div>작성일</div>
                                 </div>
                                 <hr>
-                                <div @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in myBoardData" :key="index">
+                                <div v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
                                         <div class="list_title ellipsis">{{ item.content }}</div>
-                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)">{{ item.title }}</div>
+                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ item.title }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>

@@ -168,6 +168,7 @@ const store = createStore({
             state.myBoardCommentList = data.data;
             state.myBCommentPagination = data;
             localStorage.setItem('myBCommentPagination', JSON.stringify(data));
+            console.log(state.myBoardCommentList)
         },
         setMyRCommentData(state,data) {
             state.myRecipeCommentList = data.data;
@@ -662,6 +663,7 @@ const store = createStore({
             console.log(url);
             axios.get(url)
             .then(response => {
+                // console.log(response.data.data)
                 context.commit('setMyRCommentData', response.data.data);
             })
             .catch()
@@ -855,7 +857,7 @@ const store = createStore({
             axios.get(url)
                 .then(response => {
                     if(response.data.data.total !== 0) {
-                    console.log('searchBoards', response.data);
+                    // console.log('searchBoards', response.data);
                     context.commit('setSearchBoardData', response.data.data);
                     router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
                     } else {
