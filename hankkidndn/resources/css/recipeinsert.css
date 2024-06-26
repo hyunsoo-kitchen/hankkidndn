@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+.font-red {
+    color: red;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;

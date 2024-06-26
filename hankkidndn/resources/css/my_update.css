@@ -47,6 +47,7 @@ button{
     .sub_title_content {
         padding: 10px 0;
         font-size: 20px;
+        cursor: pointer;
     }
     /* 메인 컨테이너 */
     .main_content {

@@ -25,6 +25,9 @@ Route::get('/{any}', function() {
 })->where('any', '^(?!api).*$');
 //---------------------권현수------------------------------
 
+// 네비게이션 가드 - 권현수
+Route::get('/api/recipe/route/{num}', [CommonController::class, 'getRecipe']);
+
 // 메인 리스트 게시글 획득 - 권현수
 Route::get('/api/main', [CommonController::class, 'getList']);
 
@@ -45,8 +48,13 @@ Route::delete('/api/recipe/delete/{num}', [RecipeBoardController::class, 'delete
 // 레시피 게시글 좋아요 처리 - 권현수
 Route::put('/api/recipe/like/{num}', [RecipeBoardController::class, 'recipeLike']);
 
-// 디테일 게시글 획득 - 권현수
+// 레시피 디테일 게시글 획득 - 권현수
 Route::get('/api/recipe/detail/{num}', [RecipeBoardController::class, 'getDetail']);
+
+// 레시피 댓글 처리
+Route::post('/api/recipe/comment/{num}', [CommentController::class, 'commentRecipeInsert']);
+
+// 보드 디테일 게시글 획득 - 권현수
 Route::get('/api/board/detail/{num}', [BoardController::class, 'getDetail']);
 
 // 보드 게시글 삭제 처리 - 권현수
@@ -95,11 +103,19 @@ Route::middleware('auth')->get('/api/mypage/bcomment', [UserController::class, '
 Route::post('/api/authenticate', [UserController::class, 'authenticate']);
 
 // 비밀번호 수정
-Route::post('/api/user/updatepassword', [UserController::class, 'updatepassword']);
+Route::post('/api/user/updatepassword', [UserController::class, 'updatePassword']);
 // 닉네임변경
-Route::post('/api/user/updatenickname', [UserController::class, 'updatenickname']);
+Route::post('/api/user/updatenickname', [UserController::class, 'updateNickname']);
 // 휴대폰번호 수정
-Route::post('/api/user/updatephonenum', [UserController::class, 'updatephonenum']);
+Route::post('/api/user/updatephonenum', [UserController::class, 'updatePhonenum']);
+// 프로필사진 등록
+Route::post('/api/user/updateprofile', [UserController::class, 'profileInsert']);
+// 생년월일 수정
+Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat']);
+// 주소 수정
+Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress']);
+
+
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

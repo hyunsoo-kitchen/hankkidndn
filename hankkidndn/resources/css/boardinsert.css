@@ -92,6 +92,10 @@ button.complete {
     margin: 0 10px;
 }
 
+.img-file {
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .select_why {
         grid-template-columns: 1fr;

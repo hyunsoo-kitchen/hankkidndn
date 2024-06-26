@@ -13,6 +13,34 @@ use Illuminate\Support\Facades\DB;
 class CommentController extends Controller
 {
 
+    // 레시피 게시글 댓글 작성
+    public function commentRecipeInsert(Request $request, $id) {
+        $user = Auth::user();
+
+        $insertData = [
+            'recipe_board_id' => $id,
+            'content' => $request->content,
+            'user_id' => $user->id,
+        ];
+
+        $comment = Comment::create($insertData);
+
+        $commentId = $comment->id;
+        
+        $commentData = Comment::select('comments.*', 'users.u_nickname')
+                            ->join('users', 'comments.user_id', '=', 'users.id')
+                            ->where('comments.id', '=' , $commentId)
+                            ->first();
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $commentData
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
     // 보드 게시글 댓글 작성하기
     public function commentInsert(Request $request, $id) {
         $user = Auth::user();

@@ -12,8 +12,10 @@
             <div class="main_title">
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
                 <div class="buttons">
+                    <div class="btn_grid">
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
                     <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
+                </div>
                 </div>
             </div>
             <hr>
@@ -23,7 +25,7 @@
                 <div class="main_view">조회수 : {{ $store.state.boardDetail.views }}</div>
             </div>
                 <div class="main_title_content_title">
-                    <p>{{ $store.state.boardDetail.created_at }}</p>
+                    <p>{{ formatDate($store.state.boardDetail.created_at) }}</p>
                     <p class="name">{{ $store.state.boardDetail.u_nickname }}</p>
                 </div>
                 <hr>
@@ -40,17 +42,21 @@
                             <div v-if="!item.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item.u_nickname }}</p>
                                 <p class="comment-date">{{ item.created_at }}</p>
+                                <div class="btn_grid">
                                 <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
                                 <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                            </div>
                             </div>
                             <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
                             <p v-else>삭제된 댓글 입니다.</p>
     
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
-                            <div v-if="!item.deleted_at" class="comment-actions">
-                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)">답글</button>
+                            <div class="comment-actions" v-show="!item.deleted_at">
+                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
                                 <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                <p>{{ item.likes_num }}</p>
+                                <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
+                                <div class="like_grid">
+                                </div>
                             </div>
                         </div>
                         <!-- 댓글 수정창 -->
@@ -68,14 +74,16 @@
                                     <div v-if="!item2.deleted_at" class="comment-header">
                                         <p class="comment-author">{{ item2.u_nickname }}</p>
                                         <p class="comment-date">{{ item2.created_at }}</p>
+                                        <div class="btn_grid">
                                         <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
                                         <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                    </div>
                                     </div>
                                     <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
                                     <p v-else>삭제된 댓글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
                                         <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                        <p>{{ item2.likes_num }}</p>
+                                        <p>좋아요 수 : {{ item2.likes_num }}</p>
                                     </div>
                                 </div>
 
@@ -204,6 +212,17 @@ function getBoardName(id) {
           return '문의게시판';
     }
 }
+
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).replace(/\.$/, '');  // 마지막 점 제거
+};
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

@@ -93,11 +93,14 @@ const store = createStore({
         },
         // 레시피 디테일 정보 저장
         setRecipeDetail(state, data){
-            console.log(data)
-            state.recipeData = data.data
-            state.recipeProgram = data.program
-            state.recipeStuff = data.stuff
-            console.log(state.recipeProgram)
+            // console.log(data)
+            state.recipeData = data.data;
+            state.recipeProgram = data.program;
+            state.recipeStuff = data.stuff;
+            state.commentData = data.comment;
+            state.cocommentData = data.cocomment;
+            // console.log(state.commentData)
+            // console.log(state.recipeData)
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -255,22 +258,29 @@ const store = createStore({
             axios.get(url)
             .then(response => {
                 // console.log(response.data.data)
-                const videoLink = response.data.data.video_link
-                if (videoLink.includes("watch")) {
-                    const videoId = videoLink.split("v=")[1].split("&")[0];
-                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                    response.data.data.embed_url = embedUrl;
-                } else if (videoLink.includes("be/")) {
-                    const videoId = videoLink.split("be/")[1].split("&")[0];
-                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                    response.data.data.embed_url = embedUrl;
+                if(response.data.data.video_link) {
+                    const videoLink = response.data.data.video_link
+                        if (videoLink.includes("watch")) {
+                            const videoId = videoLink.split("v=")[1].split("&")[0];
+                            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            response.data.data.embed_url = embedUrl;
+                        } else if (videoLink.includes("be/")) {
+                            const videoId = videoLink.split("be/")[1].split("&")[0];
+                            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            response.data.data.embed_url = embedUrl;
+                        } else {
+                            response.data.data.embed_url = null;
+                        }
                 } else {
-                    response.data.data.embed_url = videoLink;
+                    response.data.data.embed_url = null;
                 }
                 context.commit('setRecipeDetail', response.data)
                 router.push('/recipe/detail/' + response.data.data.id)
             })
-            .catch()
+            .catch(error => {
+                alert('존재하지않는 게시글 입니다.')
+                router.back();
+            })
         },
 
         // 리스트에서 보드 디테일 페이지로 이동
@@ -396,6 +406,19 @@ const store = createStore({
                 console.log(response.data)
                 context.commit('setBoardDetail', response.data)
                 router.replace('/board/detail/' + id)
+            })
+            .catch();
+        },
+
+        // 레시피 게시글 댓글 작성 처리
+        commentRecipeInsert(context, id) {
+            const url = '/api/recipe/comment/' + id
+            const data = new FormData(document.querySelector('#boardComment'));
+            console.log(id)
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data.data)
+                context.commit('setMoreComment', response.data.data);
             })
             .catch();
         },
@@ -726,6 +749,61 @@ const store = createStore({
                 .catch(error => {
                     console.log(error.response.data);
                     alert('휴대폰번호 변경 중 오류가 발생했습니다.');
+                });
+        },
+
+        // 프로필사진 변경
+        updateProfile(context) {
+            const data = new FormData(document.querySelector('#updateProfileForm'));
+
+            axios.post('/api/user/updateprofile', data)
+            .then(response => {
+                if (response.data.success) {
+                    alert('프로필이 성공적으로 변경되었습니다.');
+                } else {
+                    alert('프로필 변경에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                alert('프로필사진 변경 중 오류가 발생했습니다.');
+            });
+
+        },
+
+        // 생년월일 변경
+        updateBirthat(context) {
+            const data = new FormData(document.querySelector('#updateBirthForm'));
+
+            axios.post('/api/user/updatebirthat', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('생년월일이 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('생년월일 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('생년월일 변경 중 오류가 발생했습니다.');
+                });
+        },
+        
+        // 주소 변경
+        updateAddress(context) {
+            const data = new FormData(document.querySelector('#updateBirthForm'));
+
+            axios.post('/api/user/updateaddress', data)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('주소가 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('주소 변경에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    alert('주소 변경 중 오류가 발생했습니다.');
                 });
         },
 

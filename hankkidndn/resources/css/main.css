@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Jua", sans-serif;
 }
 /* 텍스트 조절 */
 
@@ -60,6 +61,11 @@ h2 {
     margin: 10px auto;
 }
 
+.info-line {
+    width: 100%; 
+    border-top: 1px solid black;
+}
+
 .header-img{
     width: 100%;
     display: grid;
@@ -95,6 +101,7 @@ h2 {
     gap: 1rem;
     text-align: center;
     padding: 20px;
+    cursor: pointer;
 }
 
 .new-recipe-card {
@@ -147,6 +154,7 @@ h2 {
     padding: 1rem;
     gap: 1rem;
     text-align: center;
+    cursor: pointer;
 }
 
 .best-recipe-card {
