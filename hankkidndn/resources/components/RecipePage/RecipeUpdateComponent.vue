@@ -19,11 +19,13 @@
                     </label>
                     <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail" class="img_thumb">
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
-                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" :value="store.state.recipeData.title">
+                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국" v-model="store.state.recipeData.title">
+                    <div v-if="store.state.recipeData.title === ''" class="font-red">요리 제목을 입력 해 주세요.</div>
                 </div>
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="summary"><h3>요리소개</h3></label>
-                    <textarea autocomplete="off" class="column_2to3to" id="content" name="content" placeholder="예) " rows="5">{{ $store.state.recipeData.content }}</textarea>
+                    <textarea v-model="store.state.recipeData.content" autocomplete="off" class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
+                    <div v-if="store.state.recipeData.content === ''" class="font-red">요리 소개를 입력 해 주세요.</div>
                 </div>
                 <div class="section grid_box">
                     <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label>
@@ -39,6 +41,7 @@
                         <input autocomplete="off" class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
                         <input autocomplete="off" class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
                         <button v-if="$store.state.recipeStuff.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
+                        <div class="font-red" v-if="item.stuff == '' || item.stuff_gram == ''">재료와 재료의 양을 입력해주세요.</div>
                     </div>
                 </div>
                 <button @click="addStuff()" class="add_btn" type="button" id="addIngredient">추가</button>
@@ -58,6 +61,7 @@
                         <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
                     <button v-if="$store.state.recipeProgram.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
+                    <div v-if="item.program_content == '' || item.img_path[index] == ''" class="font-red">요리순서와 이미지를 넣어주세요.</div>
                 </div>
                 <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
                 <div class="list-input">
@@ -84,6 +88,13 @@ const route = useRoute();
 
 const thumbnail = ref();
 
+// 입력 사항 체크
+const formData = ref({
+    title: '',
+    content: '',
+});
+
+
 // 추가 및 제거 함수
 function addStuff(){
     store.state.recipeStuff.push({ stuff: '', stuff_gram: '' });
@@ -103,7 +114,7 @@ function removePrograms(index){
 
 // 썸네일 미리보기
 function thumbnailImg(e) {
-    const file = event.target.files[0];
+    const file = e.target.files[0];
     if (!file) return;
 
     const imageUrl = URL.createObjectURL(file);
