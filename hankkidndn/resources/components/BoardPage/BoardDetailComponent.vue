@@ -1,13 +1,30 @@
 <template>
+    <div class="modal" v-show="modalFlg">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">알림</h3>
+          <button @click="closeModal" class="close">×</button>
+        </div>
+        <div class="modal-body">
+          <p>정말로 삭제 하시겠습니까?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)" class="btn btn-primary">삭제</button>
+          <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
     <div class="container">
          <!-- 삭제 모달 -->
-        <div v-if="modalFlg" class="delete-modal">
+        <!-- <div v-if="modalFlg" class="delete-modal">
             <div class="modal-title">정말로 삭제 하시겠습니까?</div>
             <div class="delete-btn">
                 <button type="button" @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)">삭제</button>
                 <button type="button" @click="closeModal()">취소</button>
             </div>
-        </div>
+        </div> -->
         <div class="main_list">
             <div class="main_title">
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
@@ -70,7 +87,7 @@
                         <!-- 대댓글 불러오기 시작 -->
                         <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
                             <div v-if="item2.cocomment == item.id" class="comment">
-                                <div v-if="item2.id !== cocommentId">
+                                <div v-if="item2.id !== cocommentId" class="comment_margin">
                                     <div v-if="!item2.deleted_at" class="comment-header">
                                         <p class="comment-author">{{ item2.u_nickname }}</p>
                                         <p class="comment-date">{{ item2.created_at }}</p>

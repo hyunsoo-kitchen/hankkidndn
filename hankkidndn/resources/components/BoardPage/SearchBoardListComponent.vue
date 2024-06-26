@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="header">
-            <img class="main-img" src="../../../public/img/recipe_order.png">
+            <img class="main-img" src="/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
                     <li :class="{ 'active': activeType === 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
@@ -21,7 +21,7 @@
                             <option value="nickname">닉네임</option>
                         </select>
                         <input v-model="data.search" type="text" placeholder="검색어를 입력하세요">
-                        <button type="submit"><img src="../../../public/img/search.png"></button>
+                        <button type="submit"><img src="/img/search.png"></button>
                     </div>
                 </form>
             </div>

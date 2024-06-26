@@ -554,22 +554,17 @@ const store = createStore({
         },
         //회원가입 처리 action
         registration(context) {
-            const url = '/api/registration';
-            const form = document.querySelector('#registrationForm');
-            const data = new FormData(form);
-            // const data = new FormData(document.querySelector('#registrationForm'));
-            console.log(data);
-            
-           // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
-            axios.post(url, data)
+            const data = new FormData(document.querySelector('#registrationForm'));
+
+            axios.post('/api/registration', data)
             .then(response => {
-                console.log(response.data) //TODO
-                router.replace('/login');
-            })
-            .catch(error => {
-                console.log(error.response.data); //TODO
-                alert('회원가입에 실패했습니다 (' + error.response.data.code + ')');
-            });
+                  alert('회원가입이 완료되었습니다.');
+                  router.replace('/login');
+              })
+              .catch(error => {
+                console.log(error.response.data);
+                alert('회원가입 중 오류가 발생했습니다.');
+              });
         },
 
         //로그인 처리
@@ -835,7 +830,8 @@ const store = createStore({
             .then(response => {
                 console.log(response.data);
                 context.commit('setSearchRecipeData', response.data.data);
-                router.replace('/search/recipe?page=' + data.page);
+                // router.replace('/search/recipe?page=' + data.page);
+                router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
             })
             .catch(error => {
                 console.log(error.response);

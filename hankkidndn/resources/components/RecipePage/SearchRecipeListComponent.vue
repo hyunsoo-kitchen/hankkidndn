@@ -2,7 +2,7 @@
     <div class="container">
         <div class="header">
             <div class="main-img">
-                <img class="img-main" src="../../../public/img/recipe.png">
+                <img class="img-main" src="/img/recipe.png">
             </div>
             <div class="input-btn">
                 <div>
@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     <button  @click="search" class="search" type="button">
-                        <img src="../../../public/img/search.png">
+                        <img src="/img/search.png">
                     </button>
                 </div>
             </div>
@@ -63,12 +63,16 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
-const page = ref(route.query.page);
+const page = ref([]);
+
+onBeforeMount(() => {
+    pagination(route.query.page);
+});
 
 const data = {
     board_type: '',
-    page: '',
-    search: '',
+    page: route.query.page,
+    search: route.query.search,
 };
 
 const activeType = ref(100);    
@@ -76,11 +80,11 @@ const searchQuery = ref('');
 const filteredRecipes = ref([]);
  
 
-watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
+watch(() => [route.query.page, route.query.search], ([newPage, newSearch]) => {
     data.page = newPage;
-    data.board_type = newId
+    data.search = newSearch
     pagination(newPage);
-    store.dispatch('searchRecipes', data);
+    // store.dispatch('searchRecipes', data);
 });
 
 function pagination(nowPage) {

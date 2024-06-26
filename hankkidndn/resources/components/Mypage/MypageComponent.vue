@@ -23,7 +23,7 @@
             <!-- 개인정보 수정 -->
             <div class="update_container" v-if="isAuthenticated">
                 <div class="user_container">
-                    <div class="user_profile">
+                    <div class="profile_img_box">
                         <img :src="$store.state.mypageUserinfo.profile" alt="">
                     </div>
                     <div class="user_nickname">
