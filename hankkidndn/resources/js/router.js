@@ -104,10 +104,12 @@ const routes = [
     {
         path: '/search/recipe',
         component: SearchRecipeListComponent,
+        beforeEnter: chkSearchPageNum,
     },
     {
         path: '/search/board/:id/:search',
         component: SearchBoardListComponent,
+        beforeEnter: chkSearchPageNum,
     },
 ];
 
@@ -167,6 +169,16 @@ function chkRecipeType(to, from, next) {
 // 게시글 페이지 초과시 처리
 function chkPageNum(to, from, next) {
     if(to.query.page > store.state.pagination.last_page || to.query.page < 1 ) {
+        alert('해당 페이지는 없는 페이지 입니다.');
+        router.back();
+    } else {
+        next();
+    }
+}
+
+// 게시글 페이지 초과시 처리
+function chkSearchPageNum(to, from, next) {
+    if(to.query.page > store.state.searchPagination.last_page || to.query.page < 1 ) {
         alert('해당 페이지는 없는 페이지 입니다.');
         router.back();
     } else {

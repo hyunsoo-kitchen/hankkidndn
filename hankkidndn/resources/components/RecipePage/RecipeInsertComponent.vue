@@ -17,17 +17,17 @@
                         <div>썸네일 이미지</div>
                         <input required hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
-                    <div v-if="thumbnailFlg">썸네일 이미지를 골라주세요.</div>
+                    <div class="font-red" v-if="thumbnailFlg">썸네일 이미지를 골라주세요.</div>
                     <img v-if="thumbnail" :src="thumbnail" class="img_thumb">
                     <h3>요리제목</h3>
-                    <input class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
-                    <!-- <div>요리 제목을 입력 해 주세요.</div> -->
+                    <input required v-model="formData.title" class="column_2to3" type="text" name="title" id="title" placeholder="예) 소고기 무국">
+                    <div v-if="formData.title == ''" class="font-red">요리 제목을 입력 해 주세요.</div>
                 </div>
                 <div class="section grid_box">
                     <!-- <label class="column_1to2 title_font" for="content"><h3>요리소개</h3></label> -->
                     <h3>요리소개</h3>
-                    <textarea class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
-                    <!-- <div>요리 소개를 입력 해 주세요.</div> -->
+                    <textarea required v-model="formData.content" class="column_2to3to" id="content" name="content" placeholder="예) " rows="5"></textarea>
+                    <div v-if="formData.content == ''" class="font-red">요리 소개를 입력 해 주세요.</div>
                 </div>
                 <div class="section grid_box">
                     <!-- <label class="column_1to2 title_font" for="video"><h3>동영상</h3></label> -->
@@ -41,8 +41,9 @@
                 <h3>재료 정보</h3>
                 <div id="ingredients">
                     <div class="ingredient_row ingredient_box" v-for="(item, index) in stuffs" :key="index">
-                        <input  class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
-                        <input  class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
+                        <input required class="note_input1 ingredient_content" type="text" v-model="item.stuff" name="stuff[]" placeholder="재료 예)돼지고기">
+                        <input required class="note_input ingredient_content" type="text" name="stuff_gram[]" v-model="item.stuff_gram" placeholder="예)g, ml(단위)">
+                        <div class="font-red" v-if="item.stuff == '' || item.stuff_gram == ''">재료와 재료의 양을 입력해주세요.</div>
                         <button v-if="stuffs.length > 1" @click="removeStuff(index)" class="remove_btn ingredient_content delete_btn" type="button">제거</button>
                     </div>
                 </div>
@@ -56,13 +57,14 @@
                 </div>
                 <div class="content_list" v-for="(item, index) in programs" :key="index">
                     <p> Step {{ index + 1 }}</p>
-                    <textarea  class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                    <textarea required class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
                     <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
                     <label class="btn_label2">
                         <div>이미지 파일</div>
-                        <input hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
+                        <input required hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
                     </label>
                     <button v-if="programs.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
+                    <div v-if="item.program == '' || item.previewUrl == ''" class="font-red">요리순서와 이미지를 넣어주세요.</div>
                 </div>
                 <div class="list-input">
                     <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>
@@ -70,7 +72,6 @@
             </div>
             <div class="actions">
                 <button @click="$store.dispatch('recipeInsert')" type="button">저장</button>
-                <!-- <button type="button" id="saveAndShare">저장 후 공개하기</button> -->
                 <button @click="$router.back()" type="button" id="cancel">취소</button>
             </div>
         </form>
@@ -78,6 +79,13 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue';
+
+// 입력 사항 체크
+const formData = ref({
+    title: '',
+    content: '',
+
+});
 
 // 입력 여부 체크 플래그
 const thumbnailFlg = ref(true);
