@@ -105,15 +105,22 @@ button{
         display: grid;
         grid-template-rows: repeat(10, 30px);
     }
+    .head_list {
+        display: grid;
+        grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
+        margin: 10px 0;
+    }
     .my_list {
         display: grid;
         grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
         margin: 10px 0;
     }
+    .list_title {
+        cursor: pointer;
+    }
     .my_list > div {
         justify-self: center;
         font-size: 17px;
-        cursor: pointer;
     }
     .page_btn_box {
         text-align: center;

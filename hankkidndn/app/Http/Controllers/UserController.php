@@ -208,7 +208,7 @@ class UserController extends Controller
         
         $bcommentData = Comment::join('boards', 'comments.board_id', '=', 'boards.id')
                           ->join('users', 'comments.user_id', '=', 'users.id')
-                          ->select('comments.*', 'boards.title as title', 'users.u_nickname')
+                          ->select('comments.*', 'boards.title as title', 'users.u_nickname', 'boards.id as board_id')
                           ->where('comments.user_id', $user_id)
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
