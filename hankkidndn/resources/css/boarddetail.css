@@ -186,12 +186,11 @@ color: black;
   width: 100%;
   max-width: 200px; 
   height: 100%;
-  max-height: 100px;
+  max-height: 200px;
   margin: 0 auto;
   object-fit: cover;
   aspect-ratio: 1;
 }
-
 
 .comment-section {
 padding: 20px;
