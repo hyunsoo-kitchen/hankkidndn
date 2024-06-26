@@ -393,7 +393,10 @@ const store = createStore({
                 context.commit('setRecipeDetail', response.data)
                 router.replace('/recipe/detail/' + id)
             })
-            .catch();
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+            });
         },
 
         // 보드 수정페이지 게시글 수정 처리
@@ -407,7 +410,10 @@ const store = createStore({
                 context.commit('setBoardDetail', response.data)
                 router.replace('/board/detail/' + id)
             })
-            .catch();
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+            });
         },
 
         // 레시피 게시글 댓글 작성 처리
@@ -824,7 +830,8 @@ const store = createStore({
             .then(response => {
                 console.log(response.data);
                 context.commit('setSearchRecipeData', response.data.data);
-                router.replace('/search/recipe?page=' + data.page);
+                // router.replace('/search/recipe?page=' + data.page);
+                router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
             })
             .catch(error => {
                 console.log(error.response);
