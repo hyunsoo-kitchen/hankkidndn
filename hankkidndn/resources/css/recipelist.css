@@ -24,6 +24,9 @@
 .img-main {
     width: 100%;
     height: auto;
+    min-width: 1200px;
+    max-height: 450px;
+    object-fit: cover
 }
 
 .header input[type="text"] {

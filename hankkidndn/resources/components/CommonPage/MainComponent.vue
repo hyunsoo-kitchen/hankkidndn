@@ -8,31 +8,31 @@
         <div class="category">
             <!-- 카테고리 돌릴거 -->
             <div @click="$router.push('/recipe/1?page=1')">
-                <img class="category-img" src="../../../public/img/main.png" alt="">
+                <img class="category-img" src="/img/koreanfood.jpg" alt="">
                 <p class="text-gray text-thick">한식</p>
                 <br>
                 <p class="text-gray">모든 한식 레시피</p>
             </div>
             <div @click="$router.push('/recipe/2?page=1')">
-                <img class="category-img" src="../../../public/img/main.png" alt="">
+                <img class="category-img" src="/img/chinesefood.jpg" alt="">
                 <p class="text-gray text-thick">중식</p>
                 <br>
                 <p class="text-gray">모든 중식 레시피</p>
             </div>
             <div @click="$router.push('/recipe/3?page=1')">
-                <img class="category-img" src="../../../public/img/main.png" alt="">
+                <img class="category-img" src="/img/pastafood.jpg" alt="">
                 <p class="text-gray text-thick">양식</p>
                 <br>
                 <p class="text-gray">모든 양식 레시피</p>
             </div>
             <div @click="$router.push('/recipe/4?page=1')">
-                <img class="category-img" src="../../../public/img/main.png" alt="">
+                <img class="category-img" src="/img/japanfood.jpg" alt="">
                 <p class="text-gray text-thick">일식</p>
                 <br>
                 <p class="text-gray">모든 일식 레시피</p>
             </div>
             <div @click="$router.push('/recipe/5?page=1')">
-                <img class="category-img" src="../../../public/img/main.png" alt="">
+                <img class="category-img" src="/img/breadfood.jpg" alt="">
                 <p class="text-gray text-thick">베이커리</p>
                 <br>
                 <p class="text-gray">모든 베이커리 레시피</p>
