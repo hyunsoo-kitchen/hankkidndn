@@ -58,7 +58,7 @@
                         
                         <!-- 내 정보 수정 모달 -->
                         <!-- 프로필 -->
-                        <div class="modal_overlay"  v-if="profileModalVisible" @click.self="profileCloseModal">
+                        <!-- <div class="modal_overlay"  v-if="profileModalVisible" @click.self="profileCloseModal">
                             <div class="profile_modal">
                                 <div>프로필 이미지 등록</div>
                                 <form action="" id="updateProfileForm">
@@ -71,34 +71,77 @@
                                     <button @click="profileCloseModal" class="cancle_btn" type="button">취소</button>
                                     <button @click="$store.dispatch('updateProfile')" class="update_btn" type="button">업로드</button>
                             </div>
-                        </div>
+                        </div> -->
+
+                        <div class="modal" v-if="profileModalVisible" @click.self="profileCloseModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">프로필 이미지 등록</h3>
+                                    <button @click="profileCloseModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" id="updateNicknameForm">
+                                        <img :src="preview" class="preview-image">
+                                        <div>
+                                        <label for="profile">이미지 업로드</label>
+                                        <input @change="setFile($event)" id="profile" type="file" name="profile" accept="image/*" >
+                                    </div>
+                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="profileCloseModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="$store.dispatch('updateProfile')">수정</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
 
                         <!-- 닉네임 -->
-                        <div class="modal_overlay"  v-if="nicknameModalVisible" @click.self="nicknameCloseModal">
-                            <div class="nickname_modal">
-                                <div>닉네임 변경</div>
-                                <form action="" id="updateNicknameForm">
+                        <div class="modal" v-if="nicknameModalVisible" @click.self="ninknameCloseModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">닉네임변경</h3>
+                                    <button @click="nicknameCloseModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" id="updateNicknameForm">
                                     <input type="text" autoComplete="off" id="u_nickname" name="u_nickname" v-model="formData.u_nickname">
                                     <button class="check" type="button">중복확인</button>
                                 </form>
-                                    <button @click="nicknameCloseModal" class="cancle_btn">취소</button>
-                                    <button class="update_btn" @click="$store.dispatch('updateNickname')">수정</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="nicknameCloseModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="$store.dispatch('updateNickname')">수정</button>
+                                </div>
+                                </div>
                             </div>
-                        </div>
+                            </div>
+
                         
-                        <!-- 휴대폰번호 -->
-                        <div class="modal_overlay"  v-if="phoneModalVisible" @click.self="phoneCloseModal">
-                            <div class="phone_modal">
-                                <div>휴대폰 번호 수정</div>
-                                <form action="" id="updatePhoneForm">
-                                    <input type="text" v-model="formData.u_phone_num" placeholder="010-1234-1234" id="u_phone_num" name="u_phone_num" autoComplete="off">
+                        <div class="modal" v-if="phoneModalVisible" @click.self="phoneCloseModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">휴대폰 번호 수정</h3>
+                                    <button @click="phoneCloseModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" id="updatePhoneForm">
+                                        <input type="text" v-model="formData.u_phone_num" placeholder="010-1234-1234" id="u_phone_num" name="u_phone_num" autoComplete="off">
+                                    <button class="check" type="button">중복확인</button>
                                 </form>
-                                    <button @click="phoneCloseModal" class="cancle_btn">취소</button>
-                                    <button class="update_btn" @click="$store.dispatch('updatePhonenum')">수정</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="phoneCloseModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="$store.dispatch('updatePhonenum')">수정</button>
+                                </div>
+                                </div>
                             </div>
-                        </div>
+                            </div>
                         <!-- 생년월일 -->
-                        <div class="modal_overlay" v-if="dateModalVisible" @click.self="dateCloseModal">
+                        <!-- <div class="modal_overlay" v-if="dateModalVisible" @click.self="dateCloseModal">
                             <div class="birth_modal">
                                 <div>생년월일</div>
                                     <form action="" id="updateBirthForm">
@@ -107,7 +150,26 @@
                                         <button @click="dateCloseModal" class="cancle_btn">취소</button>
                                         <button class="update_btn" @click="$store.dispatch('updateBirthat')">수정</button>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="modal" v-if="dateModalVisible" @click.self="dateCloseModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">생년월일 수정</h3>
+                                    <button @click="dateCloseModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" id="updatePhoneForm">
+                                        <input type="date" name="birth_at" id="birth_at" laceholder="2000-01-01" @input="chkBirth" v-model="formData.birth_at">
+                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="dateCloseModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="$store.dispatch('updateBirthat')">수정</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
                         <!-- 주소 -->
                         <div class="modal_overlay" v-if="addressModalVisible" @click.self="addressCloseModal">
                             <div class="address_modal">
