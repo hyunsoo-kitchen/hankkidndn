@@ -195,4 +195,174 @@ Route::get('/', function() {
 발생시켜 부모 컴포넌트와 자식컨테이너간에 이벤트를 수신 및 발신
 - 일반적으로 자식 컴포넌트에서 부모 컴포넌트의 데이터를 수정하고 싶을 때 사용
 
- -->
+
+--------------- Vue.js -----------------
+Vue.js란?
+사용자 인터페이스를 구축하기 위한 JavaScript 프레임워크
+
+Lifecycle Hooks
+
+Lifecycle 등록
+ -> 사용할 라이프사이클을 import 후, 해당 메소드를 정의 
+<template>
+ <br><br><br><br><br><br>
+ <h1>라이프 사이클</h1>
+</template>
+
+<script setup>
+import { onBeforeMount, onMounted} from 'vue';
+
+onBeforeMount(() => {
+ alert('마운트 전');
+ });
+
+ onMounted(() => {
+ alert('마운트 후');
+ });
+ </script>
+
+ <style>
+  #app {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+ </style>
+ ---------------------------------------------------------------
+ <template>
+    <img src="">
+    <div>카운트 : {{ state.cnt }}</div>
+    <button @click="incrementNum">1증가</button>
+    <br>
+    <br>
+    <div>{{ state.infoMsg }}</div>
+ </template>
+ <script setup>
+ import { onMounted, reactive } form 'vue';
+
+ const state = reactive({
+  cnt: 0,
+  infoMsg: '',
+ });
+ function incrementNum() {
+   state.cnt++;
+ }
+ onMounted(() => {
+  state.infoMsg = '버튼을 눌러 1씩 증가시키세요.';
+ })
+ </script>
+
+데이터 바인딩 (Data Binding)이란?
+- HTML 요소와 Vue 인스턴스의 데이터를 동적으로 연결하는 기능
+- 데이터의 변화에 따라 화면이 자동으로 업데이트되어 사용자에게 더 나은 상호작용을 제송
+- Options API에서는 data옵션을 사용
+
+
+????????????????????????????????
+ export default {
+ data() {
+   return {
+    cnt: 0
+   }
+},
+ methods: {
+  printCnt() {
+    console.log(this.cnt); //0
+    this.cnt++;
+    console.log(this.cnt); // 1
+    }
+ },
+ mounted() {
+   this.printCnt();
+ }
+
+ - Composition API에서는 ref()와 reactive() 함수를 사용
+
+ref()
+타입제한 없이 사용가능하나 일반적으로 string, number, boolean 과 같은 기본유형에
+대한 반응적 참조를 위해 사용
+기본 유형에 대해 더 나은 성능을 제공
+생성한 개체의 value 속성을 사용하여 값에 접근하고 업데이트
+
+import {ref} from 'vue';
+
+const cnt = ref(0);
+console.log(cnt.value); //0
+
+cnt.value++;
+console.log(cnt.value); //1
+
+reactive()
+객체 타입만 사용 가능하며, 해당 객체에 대한 반응적 참조를 위해 사용
+객체에 대해 더 나은 성능을 제공
+
+import {reactive} from 'vue';
+
+const info = reactive({
+    name: "홍길동"
+    ,age: 20
+});
+console.log(info.name); // 홍길동
+
+info.name = '김철수';
+console.log(info.name); // 김철수
+
+
+조건부 렌더링
+- 일반적으로 v-if는 전환 비용이 더 높고, v-show는 초기 렌더링 비용이 더 높다.
+- 자주 전환해야 하는 겨우 v-show, 자주 전환되지 않는 경우 v-if를 사용하는 것이 좋다.
+
+v-if
+<template>
+ <h1 v-if="flg === '0'">0 입니다.</h1>
+ <h1 v-else-if="flg === '1'">1 입니다.</h1>
+ <h1 v-else>기타 입니다.</h1>
+ <input v-modal="flg" type="text" name="flg" id="flg">
+</template>
+
+<script setup>
+import {ref} from 'vue';
+
+const flg = ref('0');
+
+</script>
+
+<style>
+  #app {
+   text-align: center;
+   color: #2c3e50;
+   margin-top: 60px;
+ }
+</style>
+
+리스트 렌더링(List Rendering)이란?
+- vue의 반복문으로 v-for 디렉티브를 사용하여 배열을 리스트로 렌더링
+- v-for="값 in 데이터" 또는  v-for="(값, 키) in 데이터"로 정의하여 사용
+- 반복하는 각 요소에 대한 고유 식별자를 제공해야 하므로, :key 디렉티브 작성 필요
+ -> :key 디렉티브에서의 key는 반복하는 데이터의 key와는 다른것이므로 주의
+
+
+ 리스트 렌더링 (List Rendering) 예제
+
+ <template>
+  <div v-for="val in 5" :key="val">
+   <p>{{ val }}</p>
+  </div>
+ </template>
+
+ <script setup>
+ </script>
+
+ <style>
+ #app {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+ }
+ </style>
+ 
+
+
+ 
+
+-->
