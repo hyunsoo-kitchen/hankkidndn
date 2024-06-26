@@ -13,7 +13,9 @@
                 <!-- 내 레시피 -->
                     <div class="main_my_page">
                         <!-- <img> -->
-                        <img :src="$store.state.mypageUserinfo.profile" alt="">
+                        <div class="profile_img_box">
+                            <img :src="$store.state.mypageUserinfo.profile" alt="">
+                        </div>
                         <h2>{{ $store.state.mypageUserinfo.u_nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
                             <p>내가 쓴 레시피 {{ $store.state.mypageUserinfo.recipe_count }}건</p>

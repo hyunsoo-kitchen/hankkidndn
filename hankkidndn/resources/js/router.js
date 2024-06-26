@@ -11,13 +11,14 @@ import BoardUpdateComponent from '../components/BoardPage/BoardUpdateComponent.v
 import BoardDetailComponent from '../components/BoardPage/BoardDetailComponent.vue';
 import RegistComponent from '../components/UserPage/RegistComponent.vue';
 import RegistAgreeComponent from '../components/UserPage/RegistAgreeComponent.vue';
-import RegistCompliteComponent from '../components/UserPage/RegistCompliteComponent.vue';
+import RegistCompliteComponent from '../components/UserPage/ConfirmationModal.vue';
 import MypageComponent from '../components/Mypage/MypageComponent.vue';
 import MypageCommentComponent from '../components/Mypage/MypageCommentComponent.vue';
 import MypageRecipeComponent from '../components/Mypage/MypageRecipeComponent.vue';
 import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeListComponent.vue'
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 import store from './store';
+import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
 
 const routes = [
     {
@@ -110,6 +111,10 @@ const routes = [
         path: '/search/board/:id/:search',
         component: SearchBoardListComponent,
         beforeEnter: chkSearchPageNum,
+    },
+    {
+        path: '/registrationcomplete',
+        component: RegistrationComplete,
     },
 ];
 
