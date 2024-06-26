@@ -68,6 +68,7 @@ class CommentController extends Controller
     public function commentInsert(Request $request, $id) {
         $user = Auth::user();
         $request['user_id'] = $user->id;
+        $request['board_id'] = $id;
 
         $requestData = $request->all();
 
@@ -130,6 +131,7 @@ class CommentController extends Controller
         $request['user_id'] = $user->id;
         $request['cocomment'] = $id;
 
+        Log::debug($request->board_id);
         $requestData = $request->all();
 
         $validator = Validator::make(
@@ -138,6 +140,8 @@ class CommentController extends Controller
                 'cocomment' => ['required', 'regex:/^[0-9]+$/']
                 ,'content' => ['required', 'max:500']
                 ,'user_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'board_id' => ['regex:/^[0-9]+$/']
+                ,'recipe_board_id' => ['regex:/^[0-9]+$/']
             ]
         );
 
@@ -150,6 +154,8 @@ class CommentController extends Controller
         $insertData = [
             'cocomment' => $id,
             'content' => $request->content,
+            'board_id' => $request->board_id,
+            'recipe_board_id' => $request->recipe_board_id,
             'user_id' => $user->id,
         ];
 

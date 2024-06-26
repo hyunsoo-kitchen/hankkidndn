@@ -169,7 +169,7 @@ const formatDate = (dateString) => {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
-    }).replace(/\.$/, '');  // 마지막 점제거
+    }).replace(/\.$/, ''); 
 };
 
 
