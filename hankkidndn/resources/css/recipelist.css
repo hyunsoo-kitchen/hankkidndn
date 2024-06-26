@@ -81,17 +81,16 @@
     padding: 20px 0;
 }
 
-.main-img {
-    width: 100%;
-    overflow: hidden;
-}
 
 .img-main {
     width: 100%;
-    height: auto;
-    min-width: 1200px;
     max-height: 450px;
-    object-fit: cover
+    object-fit: cover;
+    display: grid;
+    overflow: hidden;   
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 0;
 }
 
 .header input[type="text"] {
@@ -313,6 +312,9 @@ font-weight: 900;
         height: auto;
         max-height: 150px;
         object-fit: cover;  
+    }
+    .img-main{
+        max-height: 200px;
     }
 }
     
