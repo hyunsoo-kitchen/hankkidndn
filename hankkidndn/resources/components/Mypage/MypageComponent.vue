@@ -20,6 +20,9 @@
                 <div class="">
                     <p>개인정보 열람, 수정시 본인인증이 필요합니다.</p>
                     <p>로그인 중인 아이디의 비밀번호를 입력해주세요.</p>
+                </div>
+                <div class="">
+
                     <div>비밀번호</div>
                     <input type="password" v-model="u_password">
                 </div>

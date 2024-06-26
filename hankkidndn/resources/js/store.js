@@ -51,7 +51,7 @@ const store = createStore({
             myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
             isAuthenticated: false,
-
+            
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
