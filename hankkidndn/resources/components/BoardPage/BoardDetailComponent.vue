@@ -97,7 +97,7 @@
                                     </div>
                                     </div>
                                     <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
-                                    <p v-else>삭제된 댓글 입니다.</p>
+                                    <p v-else>삭제된 답글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
                                         <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                         <p>좋아요 수 : {{ item2.likes_num }}</p>
@@ -117,6 +117,7 @@
                         <!-- 대댓글 입력 칸 -->
                         <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
                             <form id="boardCocomment">
+                                <input type="hidden" name="board_id" :value="route.params.id">
                                 <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
                                 <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
                             </form>

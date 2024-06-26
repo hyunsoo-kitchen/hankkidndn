@@ -828,10 +828,14 @@ const store = createStore({
             const url ='/api/search/recipe?search=' + data.search + '&page=' + data.page;
             axios.get(url)
             .then(response => {
-                console.log(response.data);
-                context.commit('setSearchRecipeData', response.data.data);
-                // router.replace('/search/recipe?page=' + data.page);
-                router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
+                if(response.data.data.total !== 0) {
+                    console.log(response.data.data);
+                    context.commit('setSearchRecipeData', response.data.data);
+                    // router.replace('/search/recipe?page=' + data.page);
+                    router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
+                } else {
+                    alert('해당 레시피가 존재하지 않습니다')
+                }
             })
             .catch(error => {
                 console.log(error.response);
@@ -850,9 +854,13 @@ const store = createStore({
 
             axios.get(url)
                 .then(response => {
+                    if(response.data.data.total !== 0) {
                     console.log('searchBoards', response.data);
                     context.commit('setSearchBoardData', response.data.data);
                     router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
+                    } else {
+                        alert('해당 게시글이 존재하지 않습니다.')
+                    }
                 })
                 .catch(error => {
                     console.log(error);

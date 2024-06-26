@@ -51,8 +51,8 @@
                 <button>조회순</button> -->
             </div>
             <div class="main-list-content">
-                <div class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
-                    <img :src="item.thumbnail" @click="$store.dispatch('getRecipeDetail', item.id)">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                    <img :src="item.thumbnail">
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
@@ -169,7 +169,7 @@ const formatDate = (dateString) => {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
-    }).replace(/\.$/, '');  // 마지막 점제거
+    }).replace(/\.$/, ''); 
 };
 
 

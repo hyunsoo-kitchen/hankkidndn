@@ -182,7 +182,7 @@ class UserController extends Controller
     public function getRecieCommentList() {
         $user_id = Auth::id();
         
-        $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
+        $rcommentData = Comment::leftJoin('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
                           ->join('users', 'comments.user_id', '=', 'users.id')
                           ->select(
                               'comments.*', 
