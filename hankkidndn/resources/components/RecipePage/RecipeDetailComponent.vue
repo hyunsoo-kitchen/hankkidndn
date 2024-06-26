@@ -1,31 +1,24 @@
 <template>
-<!-- 모달 창 -->
-<div class="modal" v-show="modalFlg">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">알림</h3>
-          <button @click="closeModal" class="close">×</button>
-        </div>
-        <div class="modal-body">
-          <p>정말로 삭제 하시겠습니까?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" @click="deleteRecipe" class="btn btn-primary">삭제</button>
-          <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-        <!-- <div v-if="modalFlg" class="delete-modal">
-            <div class="modal-title">정말로 삭제 하시겠습니까?</div>
-            <div class="delete-btn">
-                <button type="button" @click="$store.dispatch('recipeDelete', $store.state.recipeData.id)">삭제</button>
-                <button type="button" @click="closeModal()">취소</button>
+    <!-- 모달 창 -->
+    <div class="modal" v-show="modalFlg">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">알림</h3>
+                    <button type="button" @click="closeModal" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>정말로 삭제 하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="$store.dispatch('recipeDelete', $store.state.recipeData.id)" class="btn btn-primary">삭제</button>
+                    <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
+                </div>
             </div>
-        </div> -->
+        </div>
+    </div>
+
+    <div class="container">
         <div class="header">
             <div class="header-img-wrapper">
                 <img class="header-img" :src="$store.state.recipeData.thumbnail">
