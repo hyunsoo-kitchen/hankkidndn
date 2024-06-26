@@ -3,6 +3,7 @@
         display: grid;
         place-items: center; 
         height: 100%;
+        font-family: "Jua", sans-serif;
     }
     .login_content {
         display: grid;

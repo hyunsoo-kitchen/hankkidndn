@@ -19,7 +19,8 @@
                   </button>
                 </div>
                 <div class="btn-group" v-if="$store.state.authFlg">
-                  <button @click="$router.push('/mypage')" class="header-btn">
+                  <button @click="$router.push('/mypage')" class="header-btn1" id="my_page">
+                    <img v-if="flgResizeSmaller1044" src="/img/my_page.png" alt="my_page">
                     <span v-if="!flgResizeSmaller1044" >내 정보</span>
                   </button>
                 </div>

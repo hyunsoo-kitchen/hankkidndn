@@ -84,6 +84,7 @@ button{
     .sub_title_content {
         padding: 10px 0;
         font-size: 20px;
+        cursor: pointer;
     }
     /* 내용 추가작업 */
     .contents_box {
