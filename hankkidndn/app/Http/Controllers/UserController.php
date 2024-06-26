@@ -182,7 +182,7 @@ class UserController extends Controller
     public function getRecieCommentList() {
         $user_id = Auth::id();
         
-        $rcommentData = Comment::leftJoin('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
+        $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
                           ->join('users', 'comments.user_id', '=', 'users.id')
                           ->select(
                               'comments.*', 
@@ -190,7 +190,6 @@ class UserController extends Controller
                               'users.u_nickname'
                           )
                           ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 
@@ -211,7 +210,6 @@ class UserController extends Controller
                           ->join('users', 'comments.user_id', '=', 'users.id')
                           ->select('comments.*', 'boards.title as title', 'users.u_nickname')
                           ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 

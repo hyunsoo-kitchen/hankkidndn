@@ -59,7 +59,7 @@
                                 <div class="my_list">
                                     <div>번호</div>
                                     <div>제목</div>
-                                    <div>조회수</div>
+                                    <div>원문제목</div>
                                     <div>작성일</div>
                                 </div>
                                 <hr>
