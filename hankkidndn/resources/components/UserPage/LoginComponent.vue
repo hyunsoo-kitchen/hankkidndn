@@ -24,14 +24,32 @@
             </div>
     </div>
     <!-- 모달창 -->
-    <div v-if="isModalVisible" class="modal-overlay">
+    <!-- <div v-if="isModalVisible" @click.self="closeModal" class="modal-overlay">
         <div class="kakao_modal">
             <p>카카오 로그인은 업데이트 예정입니다!</p>
             <p>2024년 7월 3차 발표에서 만나요!</p>
             <button @click="closeModal">닫기</button>
         </div>
-    </div>
+    </div> -->
     <!-- 엔터키 눌러서 로그인 처리 TODO -->
+    <div class="modal" v-if="isModalVisible" @click.self="closeModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="closeModal" class="close">×</button>
+          </div>
+          <div class="modal-body">
+            <p>카카오 로그인은 업데이트 예정입니다!</p>
+            <p>2024년 7월 3차 발표에서 만나요 !</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="closeModal" class="btn btn-primary">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </template>
 
 <script setup>
