@@ -30,9 +30,8 @@
                                 내가 쓴 게시판 댓글</button>
                         </div>
                         <div class="contents_list">
-
                             <div v-if="activeTab === 'recipe'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div>번호</div>
                                     <div>댓글</div>
                                     <div>원문제목</div>
@@ -48,7 +47,7 @@
                                     </div>
                                 </div>
                                 <!-- 레시피 댓글 페이지네이션 -->
-                                <div>
+                                <div v-if="activeTab === 'recipe'" class="page_btn_box">
                                     <button class="page_btn" @click="RprevPage()" :disabled="RcurrentPage === 1">이전</button>
                                     <span>{{ RcurrentPage }} / {{ RtotalPages }}</span>
                                     <button class="page_btn" @click="RnextPage()" :disabled="RcurrentPage === RtotalPages">다음</button>
@@ -56,23 +55,23 @@
                             </div>
 
                             <div v-if="activeTab === 'board'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div>번호</div>
-                                    <div>제목</div>
-                                    <div>조회수</div>
+                                    <div>댓글</div>
+                                    <div>원문제목</div>
                                     <div>작성일</div>
                                 </div>
                                 <hr>
-                                <div v-for="(item, index) in myBoardData" :key="index">
+                                <div @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.content }}</div>
-                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_title ellipsis">{{ item.content }}</div>
+                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)">{{ item.title }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
-                                <!-- 레시피 댓글 페이지네이션 -->
-                                <div>
+                                <!-- 게시판 댓글 페이지네이션 -->
+                                <div v-if="activeTab === 'board'" class="page_btn_box">
                                     <button class="page_btn" @click="BprevPage()" :disabled="BcurrentPage === 1">이전</button>
                                     <span>{{ BcurrentPage }} / {{ BtotalPages }}</span>
                                     <button class="page_btn" @click="BnextPage()" :disabled="BcurrentPage === BtotalPages">다음</button>
