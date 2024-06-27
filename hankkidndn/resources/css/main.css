@@ -78,8 +78,8 @@ h2 {
 /* 카테고리 영역 */
 
 .category {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    display: flex;
+    justify-content: center;
     padding: 4rem;
     gap: 1rem;
     text-align: center;
@@ -112,6 +112,8 @@ h2 {
 
 .new-recipe-card {
     position: relative;
+    max-height: 450px;
+    min-height: 450px;
 }
 
 .new-recipe-img {
@@ -119,6 +121,8 @@ h2 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    max-height: 450px;
+    min-height: 450px;
 }
 
 .new-recipe-header {
@@ -423,16 +427,16 @@ h2 {
         max-height: 200px;
     }
     .new-recipe {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
     .new-recipe-card {
-        width: 400px;
+        width: 300px;
         height: 200px;
     }
 
     .new-recipe-img {
-        width: 400px;
+        width: 300px;
         height: 200px;
         object-fit: cover;
     }
