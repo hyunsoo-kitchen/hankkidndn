@@ -132,8 +132,10 @@ body{
 
 .head-title {
     padding: 10px 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    /* display: grid;
+    grid-template-columns: 1fr auto; */
+    display: flex;
+    justify-content: space-between;
     align-items: center; 
 }
 
@@ -223,7 +225,7 @@ body{
     color: white;
   }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
     .header .ul-list ul {
         width: 100%;
         grid-template-columns: 1fr;
@@ -238,5 +240,13 @@ body{
 
     .header .ul-list ul li:last-child {
         border-bottom: none;
+    }
+
+    .main-list {
+        font-size: 0.7rem;
+    }
+
+    .head-title {
+        flex-direction: column;
     }
 }

@@ -15,6 +15,6 @@ class BoardImagesSeeder extends Seeder
      */
     public function run()
     {
-        BoardImages::factory()->count(50)->create();
+        BoardImages::factory()->count(450)->create();
     }
 }
