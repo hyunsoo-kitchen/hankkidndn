@@ -115,13 +115,31 @@
     </div>
 
 <!-- 가입확인 모달 -->
-<div v-if="isModalVisible" class="modal_overlay"  @click.self="closeModal">
+<!-- <div v-if="isModalVisible" class="modal_overlay"  @click.self="closeModal">
     <div>정말로 가입하시겠습니까?</div>
     <div>
         <p>입력하신 정보로 정말 가입하시겠습니까?</p>
     </div>
     <button @click="closeModal">취소</button>
     <button @click="submitRegistration">가입하기</button>
+</div> -->
+
+<div class="modal" v-if="isModalVisible">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="closeModal" class="close">×</button>
+        </div>
+        <div class="modal-body">
+            <p>입력하신 정보로 정말 가입하시겠습니까?</p>
+        </div>
+        <div class="modal-footer">
+            <button @click="closeModal" class="btn btn-primary1">취소</button>
+            <button class="btn btn-primary" @click="submitRegistration">가입</button>
+        </div>
+        </div>
+    </div>
 </div>
 </template>
 

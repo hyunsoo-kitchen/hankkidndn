@@ -5,15 +5,15 @@
                 <form id="loginForm">
                     <div class="id">
                         <label class="username" for="u_id">아이디</label>
-                        <input class="user-name" type="text" id="u_id" name="u_id" v-model="form.u_id">
+                        <input class="user-name" type="text" id="u_id" name="u_id">
                     </div>
                     <div class="pass">
                         <label class="userpass" for="u_password">비밀번호</label>
-                        <input class="user-pass" type="password" id="u_password" name="u_password" v-model="form.u_password">
+                        <input class="user-pass" type="password" id="u_password" name="u_password">
                     </div>
                     <div class="button">
-                        <button @click="handleLogin" class="login">로그인</button>
-                        <button @click="$router.push('/regist/agree')"class="register" type="button">회원가입</button>
+                        <button type="button" @click="$store.dispatch('login')" class="login">로그인</button>
+                        <button  @click="$router.push('/regist/agree')"class="register" type="button">회원가입</button>
                     </div>
                 </form>
                 <div class="kakao-btn">
@@ -53,17 +53,17 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+// import { useStore } from 'vuex';
+// import { useRouter } from 'vue-router';
 
-const form = reactive({
-  u_id: '',
-  u_password: ''
-});
+// const form = reactive({
+//   u_id: '',
+//   u_password: ''
+// });
 
-const store = useStore();
-const router = useRouter();
+// const store = useStore();
+// const router = useRouter();
 
 // 모달창 컨트롤
 const isModalVisible = ref(false);
@@ -77,14 +77,14 @@ const closeModal = () => {
 };
 
 
-const handleLogin = () => {
-  try {
-    store.dispatch('login', form);
-  } catch (error) {
-    console.error('Login failed', error);
-  }
+// const handleLogin = () => {
+//   try {
+//     store.dispatch('login', form);
+//   } catch (error) {
+//     console.error('Login failed', error);
+//   }
 
-};
+// };
 
 // const handleKakaoButtonClick = () => {
 //     // 알림창 출력

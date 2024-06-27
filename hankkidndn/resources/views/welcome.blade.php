@@ -17,5 +17,12 @@
     <div id = "app">
         <App-Component></App-Component>
     </div>
+    <script>
+        document.addEventListener('keydown', function(event) { // 키를 누를 때 이벤트를 실행함
+            if (event.keyCode === 13) { // 키 코드 13번은 엔터키
+                event.preventDefault(); // 해당 이벤트 취소
+            };
+        }, true);
+    </script>
 </body>
 </html>

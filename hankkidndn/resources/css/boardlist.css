@@ -1,8 +1,13 @@
 * {
-    font-family: "Jua", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Jua", sans-serif;
+
+}
+
+body{
+    font-family: "Jua", sans-serif;
 }
 
 .container {
@@ -127,8 +132,10 @@
 
 .head-title {
     padding: 10px 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    /* display: grid;
+    grid-template-columns: 1fr auto; */
+    display: flex;
+    justify-content: space-between;
     align-items: center; 
 }
 
@@ -176,7 +183,7 @@
 
 .btn-box {
     display: grid;
-    grid-template-columns: auto 0.1fr;
+    grid-template-columns: auto 100px;
     padding: 10px;
 }
 
@@ -218,7 +225,7 @@
     color: white;
   }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
     .header .ul-list ul {
         width: 100%;
         grid-template-columns: 1fr;
@@ -233,5 +240,13 @@
 
     .header .ul-list ul li:last-child {
         border-bottom: none;
+    }
+
+    .main-list {
+        font-size: 0.7rem;
+    }
+
+    .head-title {
+        flex-direction: column;
     }
 }
