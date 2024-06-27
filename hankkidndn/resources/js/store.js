@@ -757,23 +757,30 @@ const store = createStore({
         },
 
         // 프로필사진 변경
-        updateProfile(context) {
-            const data = new FormData(document.querySelector('#updateProfileForm'));
+        updateProfile(commit) {
+            const url = '/api/profile/update'
 
-            axios.post('/api/user/updateprofile', data)
+            const data = new FormData(document.querySelector('#profileForm'));
+            // formData.append('profile', file);
+
+            axios.post(url, data)
             .then(response => {
-                if (response.data.success) {
-                    alert('프로필이 성공적으로 변경되었습니다.');
-                } else {
-                    alert('프로필 변경에 실패했습니다.');
-                }
+                console.log(response.data)
             })
-            .catch(error => {
-                console.log(error.response.data);
-                alert('프로필사진 변경 중 오류가 발생했습니다.');
-            });
-
-        },
+            .catch();
+      
+            // return axios.post('/api/profile/update', formData, {
+            //   headers: {
+            //     'Content-Type': 'multipart/form-data',
+            //   },
+            // }).then(response => {
+            //   // handle success, e.g., update user profile in state
+            //   commit('setUserProfile', response.data);
+            // }).catch(error => {
+            //   // handle error
+            //   console.error(error);
+            // });
+          },
 
         // 생년월일 변경
         updateBirthat(context) {

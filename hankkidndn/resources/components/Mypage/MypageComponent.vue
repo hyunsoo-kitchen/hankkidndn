@@ -16,32 +16,48 @@
             <div class="auth_box" v-if="!isAuthenticated">
                 <div class="auth_title">
                     개인정보 열람, 수정
+                    <hr>
                 </div>
-                <div class="">
-                    <p>개인정보 열람, 수정시 본인인증이 필요합니다.</p>
-                    <p>로그인 중인 아이디의 비밀번호를 입력해주세요.</p>
+                <div class="auth_box_content">
+                    개인정보 열람, 수정시 본인인증이 필요합니다. <br>
+                    로그인 중인 아이디의 비밀번호를 입력해주세요.
                 </div>
-                <div class="">
-
-                    <div>비밀번호</div>
-                    <input type="password" v-model="u_password">
+                <div class="auth_password_box">
+                    <div>
+                        <label for="password">비밀번호 : </label>
+                        <input type="password" v-model="u_password" id="password">
+                        <button @click="authenticate">인증</button>
+                    </div>
                 </div>
-                <button @click="authenticate">인증</button>
             </div>
 
             <!-- 개인정보 수정 -->
             <div class="update_container" v-if="isAuthenticated">
-                <div class="user_container">
+                <div class="main_my_page">
+                        <!-- <img> -->
+                        <div class="profile_img_box">
+                            <img :src="$store.state.mypageUserinfo.profile" alt="">
+                        </div>
+                        <h2>{{ $store.state.mypageUserinfo.u_nickname }} 님 안녕하세요.</h2>
+                        <div class="main_comment">
+                            <p>내가 쓴 레시피 {{ $store.state.mypageUserinfo.recipe_count }}건</p>
+                            <p>내가 쓴 글 {{ $store.state.mypageUserinfo.boards_count }}건</p>
+                            <p>내가 쓴 댓글 {{ $store.state.mypageUserinfo.comments_count }}건</p>
+                        </div>
+                    </div>
+
+
+
+                <!-- <div class="user_container">
                     <div class="profile_img_box">
                         <img :src="$store.state.mypageUserinfo.profile" alt="">
                     </div>
                     <div class="user_nickname">
                         <h2>{{ $store.state.mypageUserinfo.u_nickname }}</h2>
                     </div>
-                    <div class="user_id">
-                        <h3>{{ $store.state.mypageUserinfo.u_id }}</h3>
-                    </div>
-                </div>
+                </div> -->
+
+
                 <!-- 내 프로필 -->
                 <div class="contents_head_box">
                     <button @click="activeTab = 'myprofile'" :class="{active: activeTab === 'myprofile', 
@@ -49,86 +65,90 @@
                     내 프로필</button>
                     <button @click="activeTab = 'security'" :class="{active: activeTab === 'security', 
                     title_select: activeTab === 'security', title_none_select: activeTab !== 'security' }, title_select">
-                    보안설정</button>
+                    개인정보 변경</button>
                 </div>
                 <div class="contents_container">
                     <div v-if="activeTab === 'myprofile'">
                         <div class="contents_title">내 프로필</div>
                         <hr>
+                        <div class="myprofile_container">
+                            <div>
+                                <p>이름 : {{ $store.state.mypageUserinfo.u_name }}</p>
+                            </div>
+                            <div>
+                                <p>아이디 : {{ $store.state.mypageUserinfo.u_id }}</p>
+                            </div>
+                            <div>
+                                <p>닉네임 : {{ $store.state.mypageUserinfo.u_nickname }}</p>
+                            </div>    
+                        </div>
+
+                    </div>
+
+
+                    <div v-if="activeTab === 'security'">
+                        <div class="contents_title">개인정보 변경</div>
+                        <hr>
                         <div class="myprofile_title" @click="profileOpenModal">프로필 등록</div>
 
                         <div class="myprofile_title" @click="nicknameOpenModal">닉네임 변경</div>
+
+                        <div class="myprofile_title" @click="passwordOpenModal">비밀번호 변경</div>
                             
                         <div class="myprofile_title" @click="phoneOpenModal">휴대폰 번호 수정</div>
                             
                         <div class="myprofile_title" @click="dateOpenModal">생년월일 수정</div>
 
                         <div class="myprofile_title" @click="addressOpenModal">주소 수정</div>
-                        
+
                         <!-- 내 정보 수정 모달 -->
                         <!-- 프로필 -->
-                        <!-- <div class="modal_overlay"  v-if="profileModalVisible" @click.self="profileCloseModal">
-                            <div class="profile_modal">
-                                <div>프로필 이미지 등록</div>
-                                <form action="" id="updateProfileForm">
-                                    <img :src="preview" class="preview-image">
-                                    <div>
-                                        <label for="profile">이미지 업로드</label>
-                                        <input @change="setFile($event)" id="profile" type="file" name="profile" accept="image/*" >
-                                    </div>
-                                </form>
-                                    <button @click="profileCloseModal" class="cancle_btn" type="button">취소</button>
-                                    <button @click="$store.dispatch('updateProfile')" class="update_btn" type="button">업로드</button>
-                            </div>
-                        </div> -->
-
                         <div class="modal" v-if="profileModalVisible" @click.self="profileCloseModal">
                             <div class="modal-dialog">
-                                <div class="modal-content">
+                            <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title">프로필 이미지 등록</h3>
-                                    <button @click="profileCloseModal" class="close">×</button>
+                                <h3 class="modal-title">프로필 이미지 등록</h3>
+                                <button @click="profileCloseModal" class="close">×</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="" id="updateNicknameForm">
-                                        <img :src="preview" class="preview-image">
-                                        <div>
-                                        <label for="profile">이미지 업로드</label>
-                                        <input @change="setFile($event)" id="profile" type="file" name="profile" accept="image/*" >
+                                <form id="profileForm">
+                                    <img :src="preview" class="preview-image">
+                                    <div>
+                                    <label for="profile">이미지 업로드</label>
+                                    <input @change="setFile($event)" id="profile" type="file" name="profile" accept="image/*" >
                                     </div>
                                 </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button @click="profileCloseModal" class="btn btn-primary1">취소</button>
-                                    <button class="btn btn-primary" @click="$store.dispatch('updateProfile')">수정</button>
-                                </div>
+                                <button type="button" @click="profileCloseModal" class="btn btn-primary1">취소</button>
+                                <button type="button" class="btn btn-primary" @click="showConfirmationModal">수정</button>
                                 </div>
                             </div>
                             </div>
+                        </div>
 
                         <!-- 닉네임 -->
-                        <div class="modal" v-if="nicknameModalVisible" @click.self="ninknameCloseModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title">닉네임변경</h3>
-                                    <button @click="nicknameCloseModal" class="close">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="" id="updateNicknameForm">
-                                    <input type="text" autoComplete="off" id="u_nickname" name="u_nickname" v-model="formData.u_nickname">
-                                    <button class="check" type="button">중복확인</button>
+                        <div class="modal" v-if="nicknameModalVisible" @click.self="nicknameCloseModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">닉네임변경</h3>
+                                <button @click="nicknameCloseModal" class="close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" id="updateNicknameForm">
+                                <input type="text" autoComplete="off" id="u_nickname" name="u_nickname" v-model="formData.u_nickname">
+                                <button class="check" type="button">중복확인</button>
                                 </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button @click="nicknameCloseModal" class="btn btn-primary1">취소</button>
-                                    <button class="btn btn-primary" @click="$store.dispatch('updateNickname')">수정</button>
-                                </div>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button @click="nicknameCloseModal" class="btn btn-primary1">취소</button>
+                                <button class="btn btn-primary" @click="showConfirmationModal">수정</button>
                             </div>
                             </div>
-
-                        
+                        </div>
+                        </div>
+                        <!-- 휴대폰 번호 수정 -->
                         <div class="modal" v-if="phoneModalVisible" @click.self="phoneCloseModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -149,17 +169,8 @@
                                 </div>
                             </div>
                             </div>
+
                         <!-- 생년월일 -->
-                        <!-- <div class="modal_overlay" v-if="dateModalVisible" @click.self="dateCloseModal">
-                            <div class="birth_modal">
-                                <div>생년월일</div>
-                                    <form action="" id="updateBirthForm">
-                                        <input type="date" name="birth_at" id="birth_at" laceholder="2000-01-01" @input="chkBirth" v-model="formData.birth_at">
-                                    </form>
-                                        <button @click="dateCloseModal" class="cancle_btn">취소</button>
-                                        <button class="update_btn" @click="$store.dispatch('updateBirthat')">수정</button>
-                            </div>
-                        </div> -->
                         <div class="modal" v-if="dateModalVisible" @click.self="dateCloseModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -195,26 +206,49 @@
                                         <button class="update_btn" @click="$store.dispatch('updateAddress')">수정</button>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div v-if="activeTab === 'security'">
-                        <div class="contents_title">보안설정</div>
-                        <hr>
-                        <form action="" id="updatePasswordForm">
-                            <div class="detail_container">
-                                <div class="detail_title">비밀번호 변경</div>
-                                    <div class="detail_box">
-                                        <label for="u_password">비밀번호</label>
-                                        <input type="password" id="u_password" name="u_password" autoComplete="off" v-model="formData.u_password">
-                                    </div>
-                                    <div class="detail_box">
-                                        <div class="password_chk">비밀번호 확인</div>
-                                        <input type="password" id="password_chk" name="password_chk" autoComplete="off" v-model="formData.password_chk">
-                                    </div>
+                        <!-- 비밀번호 -->
+                        <div class="modal_overlay" v-if="passwordModalVisible" @click.self="passwordCloseModal">
+                            <div class="address_modal">
+                                <div>내 비밀번호 수정</div>
+                                    <div>
+                                        <form action="" id="updatePasswordForm">
+                                            <div class="detail_box">
+                                            <label for="u_password">비밀번호</label>
+                                            <input type="password" id="u_password" name="u_password" autoComplete="off" v-model="formData.u_password">
+                                            </div>
+                                            <div class="detail_box">
+                                                <div class="password_chk">비밀번호 확인</div>
+                                                <input type="password" id="password_chk" name="password_chk" autoComplete="off" v-model="formData.password_chk">
+                                            </div>
                                 <button class="update_btn"  @click.prevent="$store.dispatch('updatePassword')">수정</button>
+                                        </form>
+                                    </div>
+                                        <button @click="passwordCloseModal" class="cancle_btn">취소</button>
+                                        <button class="update_btn" @click="$store.dispatch('updatePassword')">수정</button>
                             </div>
-                        </form>
+                        </div>
+
+                        <!-- 개인정보 업데이트 모달모음 -->
+                        <!-- 수정재확인 모달<닉네임> -->
+                        <div class="modal" v-if="confirmationModalVisible" @click.self="closeConfirmationModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConfirmationModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 수정하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConfirmationModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUpdateNickname">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
                     
@@ -244,30 +278,27 @@ const formData = ref({
     u_nickname: '',
 });
 
+// 유저 인증
+const authenticate = () => {
+  store.dispatch('authenticate', u_password.value);
+};
+
+onBeforeMount(() => {
+    store.dispatch('getMypageUserInfo');
+});
+
 // 유저 정보 인증
 const u_password = ref('');
 const isAuthenticated = computed(() => store.state.isAuthenticated);
 
 // 모달창 컨트롤
-const profileModalVisible = ref(false);
-const nicknameModalVisible = ref(false);
 const phoneModalVisible = ref(false);
 const dateModalVisible = ref(false);
 const addressModalVisible = ref(false);
-// 프로필사진
-const profileOpenModal = () => {
-    profileModalVisible.value = true;
-};
-const profileCloseModal = () => {
-    profileModalVisible.value = false;
-};
-// 닉네임
-const nicknameOpenModal= () => {
-    nicknameModalVisible.value = true;
-};
-const nicknameCloseModal= () => {
-    nicknameModalVisible.value = false;
-};
+const passwordModalVisible = ref(false);
+const profileModalVisible = ref(false);
+const selectedFile = ref(null);
+
 // 휴대전화
 const phoneOpenModal = () => {
     phoneModalVisible.value = true;
@@ -289,27 +320,84 @@ const addressOpenModal = () => {
 const addressCloseModal = () => {
     addressModalVisible.value = false;
 };
-
-
-// const profilePreview = ref(null);
-// 유저 인증
-const authenticate = () => {
-  store.dispatch('authenticate', u_password.value);
+// 비밀번호
+const passwordOpenModal = () => {
+    passwordModalVisible.value = true;
+};
+const passwordCloseModal = () => {
+    passwordModalVisible.value = false;
 };
 
-onBeforeMount(() => {
-    store.dispatch('getMypageUserInfo');
-});
-
-//프로필 이미지 셋파일
-function setFile(e) {
-    const file = e.target.files[0]; // 파일 객체를 직접 formData.profile에 할당
-
-    preview.value = URL.createObjectURL(file);
-    // preview.value = file;
+// 프로필 업데이트 //
+const profileOpenModal = () => {
+    profileModalVisible.value = true;
+};
+function setFile(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 150;
+        canvas.height = 150;
+        const size = Math.min(img.width, img.height);
+        const dx = (img.width - size) / 2;
+        const dy = (img.height - size) / 2;
+        ctx.beginPath();
+        ctx.arc(75, 75, 75, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(img, dx, dy, size, size, 0, 0, 150, 150);
+        preview.value = canvas.toDataURL('image/png');
+        selectedFile.value = file;
+      };
+    };
+    reader.readAsDataURL(file);
+  }
 }
+function profileCloseModal() {
+    profileModalVisible.value = false;
+    preview.value = null;
+    selectedFile.value = null;
+}
+function updateProfile() {
+  if (selectedFile.value) {
+    store.dispatch('updateProfile').then(() => {
+      profileCloseModal();
+    });
+  }
+}
+// 프로필 끝 //
+// 닉네임 업데이트 //
+const nicknameModalVisible = ref(false);
+const confirmationModalVisible = ref(false);
+const nicknameOpenModal= () => {
+    nicknameModalVisible.value = true;
+};
+const nicknameCloseModal= () => {
+    nicknameModalVisible.value = false;
+};
+const showConfirmationModal = () => {
+    confirmationModalVisible.value = true;
+};
+const closeConfirmationModal = () => {
+  confirmationModalVisible.value = false;
+};
+const confirmUpdateNickname = () => {
+  store.dispatch('updateNickname', formData.value.u_nickname)
+    .then(() => {
+      nicknameCloseModal();
+      closeConfirmationModal();
+    });
+};
 
-// 카카오 주소 API
+
+// 닉네임 업데이트 끝 //
+
+// 카카오 주소 API //
 function kakaoPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
