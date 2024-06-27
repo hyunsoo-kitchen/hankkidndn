@@ -52,8 +52,8 @@
             <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
                 <!-- 게시글 출력 -->
                 <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
-                <div class="list-title">{{ item.title }}</div>
-                <div class="list-ninkname">{{ item.u_nickname }}</div>
+                <div class="list-title">{{ substringTitle(item.title, 10) }}</div>
+                <div class="list-ninkname">{{ substringTitle(item.u_nickname, 5) }}</div>
                 <div class="list-day">{{ formatDate(item.created_at) }}</div>
             </div>
             <div class="btn-box">
@@ -177,8 +177,12 @@ const formatDate = (dateString) => {
     }).replace(/\.$/, '');  // 마지막 점제거
 };
 
-
-
+function substringTitle(text, max){
+    if (text.length > max) {
+        return text.substring(0, max) + '...';
+    }
+    return text;
+}
 </script>
 
 <style scoped src="../../css/boardlist.css">
