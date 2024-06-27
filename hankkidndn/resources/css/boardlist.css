@@ -176,7 +176,7 @@
 
 .btn-box {
     display: grid;
-    grid-template-columns: auto 0.1fr;
+    grid-template-columns: auto 100px;
     padding: 10px;
 }
 
