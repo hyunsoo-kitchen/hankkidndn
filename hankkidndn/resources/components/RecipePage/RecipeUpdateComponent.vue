@@ -14,7 +14,7 @@
                         <option value="5">베이커리게시판</option>
                     </select>
                     <label>
-                        <div>썸네일 이미지</div>
+                        <div class="thumbnail-btn">썸네일 이미지</div>
                         <input hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*" >
                     </label>
                     <img v-if="!thumbnail" :src="store.state.recipeData.thumbnail" class="img_thumb">
@@ -52,16 +52,18 @@
                 <div class="cook-btn">
                     <h3>요리순서</h3>
                 </div>
-                <div class="content_list" v-for="(item, index) in $store.state.recipeProgram" :key="index">
-                    <p> Step {{ index + 1 }}</p>
-                    <textarea class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
-                    <img v-if="item.img_path" :src="item.img_path" style="max-width: 200px; margin-bottom: 10px;">
-                    <label>
-                        <div>이미지 파일</div>
-                        <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
-                    </label>
-                    <button v-if="$store.state.recipeProgram.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
-                    <div v-if="item.program_content == '' || item.img_path[index] == ''" class="font-red">요리순서와 이미지를 넣어주세요.</div>
+                <div v-for="(item, index) in $store.state.recipeProgram" :key="index">
+                    <div v-if="item.program_content == '' || item.img_path[index] == ''" class="font-red program-aline">요리순서와 이미지를 넣어주세요.</div>
+                    <div class="content_list">
+                        <p> Step {{ index + 1 }}</p>
+                        <textarea class="text-list" :name="'list[]'" id="list" v-model="item.program_content" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                        <img v-if="item.img_path" :src="item.img_path" style="max-width: 200px; margin-bottom: 10px;">
+                        <label>
+                            <div>이미지 파일</div>
+                            <input hidden :name="'file' + (index + 1)" type="file" accept="image/*" @change="programImg($event, index)" >
+                        </label>
+                        <button v-if="$store.state.recipeProgram.length > 1" @click="removePrograms(index)" class="list-btn-start margin-botton" type="button">순서 제거</button>
+                    </div>
                 </div>
                 <!-- <input type="hidden" name="maxOrder" :value="$store.state.recipeProgram.length"> -->
                 <div class="list-input">

@@ -449,7 +449,7 @@ class RecipeBoardController extends Controller
     }
 
     public function recipeLike($id) {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         // like 검색
         $likeData = RecipeLikes::where('user_id', Auth::id())
                             ->where('recipe_board_id', $id)
@@ -472,7 +472,7 @@ class RecipeBoardController extends Controller
             $recipeData->likes_num -= 1;
         }
         $recipeData->save();
-        DB::commit();
+        // DB::commit();
 
         $responseData = [
             'code' => '0'

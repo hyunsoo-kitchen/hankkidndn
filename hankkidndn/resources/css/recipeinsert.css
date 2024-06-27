@@ -9,6 +9,14 @@
     color: red;
 }
 
+.thumbnail-btn {
+    cursor: pointer;
+}
+
+.program-aline {
+    padding-left: 13%;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -215,7 +223,9 @@ h3 {
     .container {
         padding: 10px;
     }
-
+    .margin-botton {
+        margin-bottom: 20%;
+    }
     .ingredient_row {
         grid-template-columns: 1fr;
         gap: 10px;
@@ -239,12 +249,23 @@ h3 {
         padding: 10px 0; 
     }
 }
+@media (max-width: 1025px) {
+    .program-aline {
+        padding: 0;
+        text-align: center;
+    }
+
+    .margin-botton {
+        margin-bottom: 10%;
+    }
+
+}
 
 @media (min-width: 1025px) {
     .container {
         padding: 20px;
     }
-
+    
     .ingredient_row {
         grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
     }

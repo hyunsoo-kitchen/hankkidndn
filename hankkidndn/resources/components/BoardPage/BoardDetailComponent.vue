@@ -4,7 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">알림</h3>
-          <button @click="closeModal" class="close">×</button>
+          <button type="button" @click="closeModal" class="close">×</button>
         </div>
         <div class="modal-body">
           <p>정말로 삭제 하시겠습니까?</p>
@@ -70,9 +70,11 @@
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
                             <div class="comment-actions" v-show="!item.deleted_at">
                                 <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
-                                <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
-                                <div class="like_grid">
+                                <div class="comment-like">
+                                    <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                    <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
+                                    <div class="like_grid">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -99,8 +101,10 @@
                                     <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
                                     <p v-else>삭제된 답글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
-                                        <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
-                                        <p>좋아요 수 : {{ item2.likes_num }}</p>
+                                        <div class="comment-like">
+                                            <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                            <p>좋아요 수 : {{ item2.likes_num }}</p>
+                                        </div>
                                     </div>
                                 </div>
 

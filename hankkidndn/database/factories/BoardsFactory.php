@@ -16,15 +16,31 @@ class BoardsFactory extends Factory
     public function definition()
     {
         $date = $this->faker->dateTimeBetween('-1 years'); // -1년 ~ 현재 랜덤 날짜 획득
-        $user_id = $this->faker->numberBetween(1, 50); // 1부터 50까지의 랜덤한 사용자 ID
+        $user_id = $this->faker->numberBetween(1, 5); // 1부터 50까지의 랜덤한 사용자 ID
         $boards_type_id = $this->faker->numberBetween(6, 9); // 1부터 5까지의 랜덤한 게시판 타입 ID
-        
+        $titles = [
+            '첫 번째 포스트 제목',
+            '두 번째 포스트 제목',
+            '세 번째 포스트 제목',
+            '네 번째 포스트 제목',
+            '다섯 번째 포스트 제목',
+        ];
+    
+        $contents = [
+            '첫 번째 포스트 내용',
+            '두 번째 포스트 내용',
+            '세 번째 포스트 내용',
+            '네 번째 포스트 내용',
+            '다섯 번째 포스트 내용',
+        ];
+
+        $index = rand(0, 4);
         return [
             'user_id' => $user_id,
             'boards_type_id' => $boards_type_id,
             'likes_num' => $this->faker->numberBetween(0, 100),
-            'title' => $this->faker->realText(rand(10, 15)),
-            'content' => $this->faker->realText(rand(10, 100)),
+            'title' => $titles[$index],
+            'content' => $contents[$index],
             'views' => $this->faker->numberBetween(0, 1000),
             'created_at' => $date,
             'updated_at' => $date,
