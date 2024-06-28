@@ -2,12 +2,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
-
-
-body{
   font-family: "Jua", sans-serif;
 }
+
 
 /* 모달 */
 .modal {

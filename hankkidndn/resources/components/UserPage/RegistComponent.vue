@@ -157,6 +157,9 @@ const address = ref('');
 const detailAddress = ref('');
 const postcode = ref('');
 
+
+//  formData -> 객체 
+//  각 필드는 사용자 입력 폼에서 제출되거나 수정될 데이터를 저장하는 데 사용된다.
 const formData = ref({
     u_name: '',
     birth_at: '',
@@ -208,11 +211,33 @@ function kakaoPostcode() {
     }).open();
 }
 
-function validateForm() {
+// 전화번호 합쳐서 데이터 전송
+function updatePhoneNumber() {
+            // 선택한 번호 가져오기
+            var selectedPrefix = document.getElementById("first_num").value;
+
+            // 입력한 번호 가져오기
+            var middleNumber = document.getElementById("middle_num").value;
+            var lastNumber = document.getElementById("last_num").value;
+
+            // 양식 조합
+            var formattedPhoneNumber = selectedPrefix + "-" + middleNumber + "-" + lastNumber;
+
+            // 결과를 입력 필드에 넣기
+            document.getElementById("phone_num").value = formattedPhoneNumber;
+        }
+
+        // 입력 필드의 변경을 감지하여 자동으로 전화번호를 업데이트
+        var inputs = document.querySelectorAll('.phone');
+        inputs.forEach(input => {
+            input.addEventListener('input', updatePhoneNumber);
+        });
+
+        function validateForm() {
     errors.value = {
         u_name: formData.value.u_name === '',
         birth_at: formData.value.birth_at === '',
-        u_id: formData.value.u_id === '',
+        : formData.value.u_id === '',
         u_password: formData.value.u_password === '',
         password_match: formData.value.u_password !== formData.value.password_chk,
         u_address: address.value === '',

@@ -113,7 +113,7 @@ Route::post('/api/user/updatenickname', [UserController::class, 'updateNickname'
 // 휴대폰번호 수정
 Route::post('/api/user/updatephonenum', [UserController::class, 'updatePhonenum']);
 // 프로필사진 등록
-Route::post('/api/user/updateprofile', [UserController::class, 'profileInsert']);
+Route::post('/api/profile/update', [UserController::class, 'updateProfile']);
 // 생년월일 수정
 Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat']);
 // 주소 수정
