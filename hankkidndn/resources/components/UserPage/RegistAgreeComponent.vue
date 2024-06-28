@@ -70,6 +70,7 @@ onMounted(() => {
 
     nextButton.addEventListener('click', function(event) {
         if (!agree1.checked && !agree2.checked) {
+            alert('약관 동의 후 회원가입이 가능합니다.')
             event.preventDefault();
         } else {
             window.location.href = '/regist';

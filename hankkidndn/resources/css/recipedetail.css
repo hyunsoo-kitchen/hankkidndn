@@ -599,6 +599,11 @@ button {
     .comment-input-btn {
         width: 15%;
     }
+
+    .header-actions {
+        gap: 10px;
+        flex-direction: column;
+    }
 }
 
 @media (min-width: 541px) and (max-width: 1000px) {
