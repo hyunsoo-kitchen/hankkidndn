@@ -87,6 +87,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    min-height: 730px;
 }
 .main-img {
     width: 100%;
@@ -107,6 +108,14 @@ button{
     border: none;
     background-color: transparent;
     cursor: pointer;
+  }
+
+  .auth_btn{
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    margin: 0 5px;
   }
 
 /* 화면 클때 개인정보 수정 css */
