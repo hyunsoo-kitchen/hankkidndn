@@ -30,7 +30,8 @@
                     </div>
                     <div class="content">
                         <input type="text" name="u_id" v-model="formData.u_id" autoComplete="off">
-                        <button class="check" type="button">중복확인</button>
+                        <button @click="$store.dispatch('idCheck', formData.u_id)" class="check" type="button">중복확인</button>
+                        <div v-if="$store.state.idFlg">사용가능한 아이디 입니다.</div>
                         <div class="error-message" v-if="errors.u_id">아이디를 입력해주세요.</div>
                     </div>
                 </div>
@@ -84,7 +85,8 @@
                     </div>
                     <div class="content">
                         <input type="text" name="u_nickname" v-model="formData.u_nickname" autoComplete="off">
-                        <button class="check" type="button">중복확인</button>
+                        <button @click="$store.dispatch('nicknameCheck', formData.u_nickname)" class="check" type="button">중복확인</button>
+                        <div v-if="$store.state.nicknameFlg">사용가능한 닉네임 입니다.</div>
                         <div class="error-message" v-if="errors.u_nickname">닉네임을 입력해주세요</div>
                     </div>
                 </div>

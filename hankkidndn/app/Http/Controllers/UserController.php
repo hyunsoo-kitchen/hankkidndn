@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use RuntimeException;
 
 class UserController extends Controller
 {
@@ -63,6 +64,46 @@ class UserController extends Controller
             'code' => '0'
             ,'msg' => '로그아웃 완료'
             ,'data' => $userInfo
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 아이디 체크
+    public function idCheck(Request $request) {
+        $userId = $request->u_id;
+        // Log::debug('유저아이디'.$userId);
+
+        $chkId = Users::where('u_id', '=', $userId)->first();
+        
+        if($chkId !== null) {
+            throw new RuntimeException();
+        } 
+
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '사용가능한 ID입니다.'
+            ,'data' => $chkId
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 닉네임 체크
+    public function nicknameCheck(Request $request) {
+        $userNickname = $request->u_nickname;
+
+        $chkNickname = Users::where('u_nickname', '=', $userNickname)->first();
+        
+        if($chkNickname !== null) {
+            throw new RuntimeException();
+        } 
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '사용가능한 ID입니다.'
+            ,'data' => $chkNickname
         ];
 
         return response()->json($responseData, 200);
