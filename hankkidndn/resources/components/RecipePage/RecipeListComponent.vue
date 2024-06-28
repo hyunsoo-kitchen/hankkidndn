@@ -81,7 +81,7 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
-const page = ref(route.query.page);
+const page = ref([]);
 const insertModal = ref(false);
 
 const data = {

@@ -104,13 +104,14 @@
                             <label for="female">여자</label>
                             <input type="radio" name="gender" id="female" value="1" v-model="formData.gender">
                         </div>
+                        <div class="error-message" v-if="errors.gender">성별을 선택해주세요.</div>
                     </div>
-                    <div class="error-message" v-if="errors.gender">성별을 선택해주세요.</div>
                 </div>
             
                 <div class="buttons">
                     <button class="cancel" type="button" @click="$router.back()">취소</button>
-                    <button class="complete" type="submit" @click="handleRegistModal">가입하기</button>
+                    <button v-if="$store.state.idFlg && $store.state.nicknameFlg" class="complete" type="submit" @click="handleRegistModal">가입하기</button>
+                    <button v-else class="complete" type="submit" @click="chkModal()">가입하기</button>
                 </div>
             </div>
         </form>
@@ -237,7 +238,7 @@ function updatePhoneNumber() {
     errors.value = {
         u_name: formData.value.u_name === '',
         birth_at: formData.value.birth_at === '',
-        : formData.value.u_id === '',
+        u_id: formData.value.u_id === '',
         u_password: formData.value.u_password === '',
         password_match: formData.value.u_password !== formData.value.password_chk,
         u_address: address.value === '',
@@ -272,6 +273,9 @@ function submitRegistration() {
         // });
 }
 
+function chkModal() {
+    alert('닉네임과 아이디 중복 체크 후 회원가입이 가능합니다.')
+}
 </script>
 
 <style scoped src="../../css/regist.css"></style>

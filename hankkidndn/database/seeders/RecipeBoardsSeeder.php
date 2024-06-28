@@ -15,6 +15,6 @@ class RecipeBoardsSeeder extends Seeder
      */
     public function run()
     {
-        RecipeBoards::factory()->count(50)->create();
+        RecipeBoards::factory()->count(200)->create();
     }
 }
