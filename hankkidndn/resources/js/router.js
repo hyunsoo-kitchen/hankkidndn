@@ -163,7 +163,7 @@ function chkBoardType(to, from, next) {
 
 // 레시피 게시판 타입 관리
 function chkRecipeType(to, from, next) {
-    if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100) {
+    if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100 || to.params.id == 99) {
         next();
     } else {
         alert('해당 게시판은 없는 게시판 입니다.');

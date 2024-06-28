@@ -58,8 +58,8 @@
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
-                <button v-if="$store.state.authFlg" @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
-                <button v-if="!$store.state.authFlg" @click="insertModalOn()" class="text-btn" type="button">글쓰기</button>
+                <button v-if="$store.state.authFlg && data.board_type != 6" @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-else-if="data.board_type != 6"  @click="insertModalOn()" class="text-btn" type="button">글쓰기</button>
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
