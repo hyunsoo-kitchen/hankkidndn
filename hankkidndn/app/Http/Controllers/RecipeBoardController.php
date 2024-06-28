@@ -200,7 +200,6 @@ class RecipeBoardController extends Controller
                                 ->withTrashed()
                                 ->get();
 
-        $recipeData->increment('views');
 
         $responseData = [
             'code' => '0'
@@ -215,6 +214,22 @@ class RecipeBoardController extends Controller
 
         return response()->json($responseData, 200);
 
+    }
+    
+    // view 증가
+    public function viewUp($id) {
+        $recipeData = RecipeBoards::find($id);
+
+        $recipeData->increment('views');
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $recipeData
+        ];
+
+
+        return response()->json($responseData, 200);
     }
 
     // 레시피 수정 정보 획득

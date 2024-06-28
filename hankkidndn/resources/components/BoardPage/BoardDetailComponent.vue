@@ -219,6 +219,7 @@ function likeToggle(commentData) {
 
 onBeforeMount(() => {
     store.dispatch('getBoardDetail', data.id)
+    store.dispatch('boardViewUp', data.id)
 });
 
 // 게시판 이름 설정

@@ -38,10 +38,6 @@ class BoardController extends Controller
                             ->select('boards.*', 'users.u_nickname')
                             ->where('boards.id', '=', $id)
                             ->first();
-
-        // 조회수 1  증가                    
-        $boardData->increment('views');
-
         // 이미지 획득
         $imgData = BoardImages::select('img_path')
                                 ->where('board_images.board_id', '=', $id)
@@ -87,6 +83,22 @@ class BoardController extends Controller
             ,'comment' => $commentData
             ,'cocomment' => $cocommentData
             // ,'data2' => $data
+        ];
+
+
+        return response()->json($responseData, 200);
+    }
+
+    // view 증가
+    public function viewUp($id) {
+        $boardData = Boards::find($id);
+
+        $boardData->increment('views');
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '게시글 획득 완료'
+            ,'data' => $boardData
         ];
 
 

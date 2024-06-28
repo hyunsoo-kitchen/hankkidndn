@@ -9,8 +9,9 @@
                         <div class="title_main">이름 <span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="text" name="u_name" v-model="formData.u_name" autoComplete="off">
-                        <div class="error-message" v-if="errors.u_name">이름을 입력해주세요.</div>
+                        <input type="text" name="u_name" v-model="formData.u_name" @blur="nameBlur(formData.u_name)" autoComplete="off">
+                        <div id="namechk" :class="errorStyle.u_name">{{ flgText.u_name }}</div>
+                        <!-- <div class="error-message" v-if="errors.u_name">이름을 입력해주세요.</div> -->
                     </div>
                 </div>
                 <!-- 생년월일 -->
@@ -31,7 +32,7 @@
                     <div class="content">
                         <input type="text" name="u_id" v-model="formData.u_id" autoComplete="off">
                         <button @click="$store.dispatch('idCheck', formData.u_id)" class="check" type="button">중복확인</button>
-                        <div v-if="$store.state.idFlg">사용가능한 아이디 입니다.</div>
+                        <div v-if="$store.state.idFlg && formData.u_id === $store.state.userId">사용가능한 아이디 입니다.</div>
                         <div class="error-message" v-if="errors.u_id">아이디를 입력해주세요.</div>
                     </div>
                 </div>
@@ -86,7 +87,7 @@
                     <div class="content">
                         <input type="text" name="u_nickname" v-model="formData.u_nickname" autoComplete="off">
                         <button @click="$store.dispatch('nicknameCheck', formData.u_nickname)" class="check" type="button">중복확인</button>
-                        <div v-if="$store.state.nicknameFlg">사용가능한 닉네임 입니다.</div>
+                        <div v-if="$store.state.nicknameFlg && formData.u_nickname === $store.state.userNickname">사용가능한 닉네임 입니다.</div>
                         <div class="error-message" v-if="errors.u_nickname">닉네임을 입력해주세요</div>
                     </div>
                 </div>
@@ -110,7 +111,7 @@
             
                 <div class="buttons">
                     <button class="cancel" type="button" @click="$router.back()">취소</button>
-                    <button v-if="$store.state.idFlg && $store.state.nicknameFlg" class="complete" type="submit" @click="handleRegistModal">가입하기</button>
+                    <button v-if="$store.state.idFlg && $store.state.nicknameFlg && formData.u_nickname == $store.state.userNickname && $store.state.userId == formData.u_id" class="complete" type="submit" @click="handleRegistModal">가입하기</button>
                     <button v-else class="complete" type="submit" @click="chkModal()">가입하기</button>
                 </div>
             </div>
@@ -147,7 +148,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -157,6 +158,28 @@ const router = useRouter();
 const address = ref('');
 const detailAddress = ref('');
 const postcode = ref('');
+
+// validator 체크용 텍스트
+const flgText = reactive({
+    u_name: '',
+    birth_at: '',
+    u_id: '',
+    u_password: '',
+    password_chk: '',
+    u_phone_num: '',
+    u_nickname: '',
+    gender: ''
+});
+
+function nameBlur(name) {
+    const chkName = /^[가-힣]{1,50}$/u;
+    console.log(name)
+    if(chkName.test(name)) {
+        flgText.u_name = '사용가능합니다.';
+    } else {
+        flgText.u_name = '사용불가능합니다.';
+    }
+}
 
 
 //  formData -> 객체 

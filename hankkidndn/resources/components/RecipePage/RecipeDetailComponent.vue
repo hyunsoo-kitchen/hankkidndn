@@ -229,6 +229,7 @@ function likeToggle(recipeData) {
 
 onBeforeMount(() => {
     store.dispatch('getRecipeDetail', route.params.id);
+    store.dispatch('recipeViewUp', route.params.id)
     // console.log(store.state.recipeStuff)
 })
 
