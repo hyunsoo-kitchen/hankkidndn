@@ -51,6 +51,9 @@ const store = createStore({
             myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
             isAuthenticated: false,
+
+            idFlg: false,
+            nicknameFlg: false,
             
             //-------------------------끝------------------------------
             
@@ -572,6 +575,40 @@ const store = createStore({
                 console.log(error.response.data);
                 alert('회원가입 중 오류가 발생했습니다.');
               });
+        },
+
+        idCheck(context, data) {
+            const url = '/api/regist/userid'
+            console.log(data)
+            const formData = new FormData();
+            formData.append('u_id', data);
+            axios.post(url, formData)
+            .then(response => {
+                console.log(response.data)
+                context.state.idFlg = true;
+
+            })
+            .catch(error => {
+                alert('사용불가능한 아이디 입니다.')
+                context.state.idFlg = false;
+            });
+        },
+
+        nicknameCheck(context, data) {
+            const url = '/api/regist/userNickname'
+            console.log(data)
+            const formData = new FormData();
+            formData.append('u_nickname', data);
+            axios.post(url, formData)
+            .then(response => {
+                console.log(response.data)
+                context.state.nicknameFlg = true;
+
+            })
+            .catch(error => {
+                alert('사용불가능한 닉네임 입니다.')
+                context.state.nicknameFlg = false;
+            });
         },
 
         //로그인 처리

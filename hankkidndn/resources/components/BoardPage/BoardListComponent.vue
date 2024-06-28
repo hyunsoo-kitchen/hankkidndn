@@ -177,6 +177,7 @@ const formatDate = (dateString) => {
     }).replace(/\.$/, '');  // 마지막 점제거
 };
 
+// 글자 많을 때 자르기용
 function substringTitle(text, max){
     if (text.length > max) {
         return text.substring(0, max) + '...';

@@ -73,8 +73,8 @@
                     </div>
                 </div>
                 <div class="best-recipe-content" >
-                    <p class="text-thick font-big">{{ item.title }}</p>
-                    <p class="text-gray">{{ item.content }}</p>
+                    <p class="text-thick font-big">{{ substringTitle(item.title, 20) }}</p>
+                    <p class="text-gray">{{ substringTitle(item.content, 20) }}</p>
                     </div>
                 <div class="info-line"></div>
                 <!-- <div class="best-recipe-footer"> -->
@@ -107,6 +107,14 @@ const formatDate = (dateString) => {
         day: '2-digit'
     }).replace(/\.$/, '');  // 마지막 점제거
 };
+
+// 글자 많을 때 자르기용
+function substringTitle(text, max){
+    if (text.length > max) {
+        return text.substring(0, max) + '...';
+    }
+    return text;
+}
 
 </script>
 
