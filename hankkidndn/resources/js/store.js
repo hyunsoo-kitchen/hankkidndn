@@ -51,6 +51,9 @@ const store = createStore({
             myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
             isAuthenticated: false,
+
+            idFlg: false,
+            nicknameFlg: false,
             
             //-------------------------끝------------------------------
             
@@ -79,9 +82,15 @@ const store = createStore({
             // console.log(state.mainBestData)
         },
         // 레시피 리스트 저장
+        // setRecipeData 함수 선언
         setRecipeData(state, data) {
+            // state 객체의 recipeListData 속성을 data 객체의 속성 값으로 설정합니다.
             state.recipeListData = data.data;
+
+            // state 객체의 pagination 속성을 data 객체로 설정합니다.
             state.pagination = data
+            
+            // localStorage에 'pagination'이라는 키로 data 객체를 JSON 문자열로 저장합니다.
             localStorage.setItem('pagination', JSON.stringify(data));
         },
         // 질문,자유 게시판 등 리스트 저장
@@ -566,6 +575,40 @@ const store = createStore({
                 console.log(error.response.data);
                 alert('회원가입 중 오류가 발생했습니다.');
               });
+        },
+
+        idCheck(context, data) {
+            const url = '/api/regist/userid'
+            console.log(data)
+            const formData = new FormData();
+            formData.append('u_id', data);
+            axios.post(url, formData)
+            .then(response => {
+                console.log(response.data)
+                context.state.idFlg = true;
+
+            })
+            .catch(error => {
+                alert('사용불가능한 아이디 입니다.')
+                context.state.idFlg = false;
+            });
+        },
+
+        nicknameCheck(context, data) {
+            const url = '/api/regist/userNickname'
+            console.log(data)
+            const formData = new FormData();
+            formData.append('u_nickname', data);
+            axios.post(url, formData)
+            .then(response => {
+                console.log(response.data)
+                context.state.nicknameFlg = true;
+
+            })
+            .catch(error => {
+                alert('사용불가능한 닉네임 입니다.')
+                context.state.nicknameFlg = false;
+            });
         },
 
         //로그인 처리

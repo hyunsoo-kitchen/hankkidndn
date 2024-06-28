@@ -84,6 +84,10 @@ Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentI
 
 // 회원가입
 Route::post('/api/registration', [UserController::class, 'registration']);
+// 회원가입 - id체크
+Route::post('/api/regist/userid', [UserController::class, 'idCheck']);
+// 회원가입 - nickname체크
+Route::post('/api/regist/userNickname', [UserController::class, 'nicknameCheck']);
 // 로그인
 Route::post('/api/login', [UserController::class, 'login']);
 // 로그아웃
