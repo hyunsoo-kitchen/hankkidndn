@@ -26,7 +26,7 @@
                     <div>
                         <label for="password">비밀번호 : </label>
                         <input type="password" v-model="u_password" id="password">
-                        <button @click="authenticate" class=" btn btn-primary auth_btn">인증</button>
+                        <button class="auth_btn" @click="authenticate">인증</button>
                     </div>
                 </div>
             </div>

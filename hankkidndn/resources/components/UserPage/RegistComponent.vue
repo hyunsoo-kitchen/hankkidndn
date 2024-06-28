@@ -234,16 +234,16 @@ function updatePhoneNumber() {
         });
 
         function validateForm() {
-            errors.value = {
-                u_name: formData.value.u_name === '',
-                birth_at: formData.value.birth_at === '',
-                u_id: formData.value.u_id === '',
-                u_password: formData.value.u_password === '',
-                password_match: formData.value.u_password !== formData.value.password_chk,
-                u_address: address.value === '',
-                u_phone: formData.value.u_phone_num === '',
-                u_nickname: formData.value.u_nickname === '',
-                gender: formData.value.gender === ''
+    errors.value = {
+        u_name: formData.value.u_name === '',
+        birth_at: formData.value.birth_at === '',
+        u_id : formData.value.u_id === '',
+        u_password: formData.value.u_password === '',
+        password_match: formData.value.u_password !== formData.value.password_chk,
+        u_address: address.value === '',
+        u_phone: formData.value.u_phone_num === '',
+        u_nickname: formData.value.u_nickname === '',
+        gender: formData.value.gender === ''
     };
 
     const hasErrors = Object.values(errors.value).some(error => error);
