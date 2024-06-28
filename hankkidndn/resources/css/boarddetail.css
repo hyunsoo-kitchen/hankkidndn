@@ -101,7 +101,7 @@ h2{
 .main_title_grid{
   padding: 5px 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 85px;
 }
 
 .main_view{
