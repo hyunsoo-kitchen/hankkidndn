@@ -1,19 +1,22 @@
 <template>
     <div class="container">
             <!-- 헤드 이미지 -->
-            <img class="main-img" src="../../../public/img/my_page.png">
+            <!-- <img class="main-img" src="../../../public/img/my_page.png"> -->
             <h2 class="page_title">마이페이지</h2>
+            <hr>
             <div class="main_container">
                 <div class="sub_title">
                     <div @click="$router.push('/mypage')" class="sub_title_content title_select">내 레시피</div>
                     <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select">내 댓글</div>
-                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보수정</div>
+                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보</div>
                 </div>
                 <div class="main_content">
                 <!-- 내 레시피 -->
                     <div class="main_my_page">
                         <!-- <img> -->
-                        <img :src="$store.state.mypageUserinfo.profile" alt="">
+                        <div class="profile_img_box">
+                            <img :src="$store.state.mypageUserinfo.profile" alt="">
+                        </div>
                         <h2>{{ $store.state.mypageUserinfo.u_nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
                             <p>내가 쓴 레시피 {{ $store.state.mypageUserinfo.recipe_count }}건</p>
@@ -30,7 +33,7 @@
                         </div>
                         <div class="contents_list">
                             <div v-if="activeTab === 'recipe'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div class="list_num">번호</div>
                                     <div class="list_title">제목</div>
                                     <div class="list_views">조회수</div>
@@ -40,7 +43,7 @@
                                 <div v-for="(item, index) in myRecipeData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRecipePagination.total - index) - (($store.state.myRecipePagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_title" @click="$store.dispatch('getRecipeDetail', item.id)">{{ item.title }}</div>
                                         <div class="list_views">{{ item.views }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
@@ -54,17 +57,17 @@
                             </div>
                             
                             <div v-if="activeTab === 'board'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div class="list_num">번호</div>
                                     <div class="list_title">제목</div>
                                     <div class="list_views">조회수</div>
                                     <div class="list_date">작성일</div>
                                 </div>
                                 <hr>
-                                <div  @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in myBoardData" :key="index">
+                                <div  v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBoardPagination.total - index) - (($store.state.myBoardPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.title }}</div>
+                                        <div class="list_title" @click="$store.dispatch('getBoardDetail', item.id)">{{ item.title }}</div>
                                         <div class="list_views">{{ item.views }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>

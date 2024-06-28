@@ -4,6 +4,84 @@
     margin: 0;
     box-sizing: border-box;
 }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    display: grid;
+    place-items: center; /* 화면 중앙 정렬 */
+    z-index: 1000;
+  }
+  
+  .modal-dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .modal-title {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .modal-body {
+    margin-bottom: 20px;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    margin: 0 10px;
+  }
+  form > input{
+    padding: 5px;
+    margin-right: 5px;
+  }
+  .check{
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn-primary1 {
+    background-color: #f5f5f5;
+    margin: 0 10px;
+  }
+  
+  .close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+  }
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -26,7 +104,7 @@
     margin: 20px 0px 20px 10px;  
 }
 button{
-    border: 0;
+    border: none;
     background-color: transparent;
     cursor: pointer;
   }
@@ -60,15 +138,18 @@ button{
     .user_container {
         display: grid;
         grid-template-columns: 150px 1fr;
-        grid-template-rows: 0.5fr 0.5fr;
         margin-bottom: 20px;
+        justify-items: center;
     }
-    .user_profile {
+    .profile_img_box {
+        justify-self: center;
         grid-row: 1 / 3;
-        justify-self: center;
+        object-fit: cover;
     }
-    .user_container > div {
-        justify-self: center;
+    .profile_img_box {
+        width: 100px;
+        height: 100px;
+        
     }
     /* content버튼 */
     .contents_head_box {
@@ -149,6 +230,73 @@ button{
     height: 50%;
     max-width: 80%;
     }
+
+    /* 내 정보 변경 전 본인인증 */
+    .auth_box {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 1fr 3fr 1fr;
+    }
+    .auth_title {
+        font-size: 20px;
+        align-self: center;
+    }
+    .auth_title > hr {
+        width: 65%;
+    }
+    .auth_box_content {
+        padding-top: 21px;
+    }
+    .auth_password_box {
+        display: grid;
+        grid-template-columns: 2.4fr 3fr;
+        align-items: center;
+    }
+    .auth_password_box > div > label, 
+    .auth_password_box > div > input  {
+        margin-right: 10px;
+    }
+
+    /*  */
+    .main_my_page{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 3fr 2fr;
+        border: 1px solid black;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .profile_img_box {
+        justify-self: center;
+        grid-row: 1 / 3;
+        object-fit: cover;
+    }
+    .profile_img_box {
+        width: 100px;
+        height: 100px;
+        
+    }
+    .main_my_page > h2 {
+        align-self: center;
+    }
+    .main_comment {
+        display: grid;
+        grid-column: 2 / 3;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .main_comment > p {
+        justify-self: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    /* 프로필 변경 */
+    .preview-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
 }
 /* 화면 제일 작을 때 */
 @media screen and (max-width: 600px) {

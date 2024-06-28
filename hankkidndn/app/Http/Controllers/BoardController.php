@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MyValidateException;
 use App\Models\BoardImages;
 use App\Models\Boards;
 use App\Models\Comment;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class BoardController extends Controller
 {
@@ -111,6 +113,24 @@ class BoardController extends Controller
         $user = Auth::user();
         $request['user_id'] = $user->id;
 
+        $requestData = $request->all();
+        
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'user_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:1000']
+                ,'title' => ['required', 'max:50']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
+
         $insertData = [
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -129,7 +149,19 @@ class BoardController extends Controller
         // 이미지 파일이 있는지 체크
         if($request->file('file')) {
             // 배열형태의 이미지를 foreach로 돌려서 따로 저장
-            foreach ($request->file('file') as $image) {
+            foreach ($request->file('file') as $index => $image) {
+
+                //유효성 검사
+                $validator = Validator::make(
+                    ['file_' . $index => $image],
+                    ['file_' . $index => 'required|mimes:jpeg,png,gif|max:102400']
+                );
+
+                // 유효성 검사 실패 체크
+                if($validator->fails()) {
+                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
                 $path = '/'.$image->store('img');
     
                 BoardImages::create([
@@ -172,6 +204,23 @@ class BoardController extends Controller
 
     // 보드 게시글 수정처리
     public function boardUpdate(Request $request) {
+
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:1000']
+                ,'title' => ['required', 'max:50']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
         
         $insertData = [
             'title' => $request->title,
@@ -191,7 +240,20 @@ class BoardController extends Controller
 
         if($request->file('file')) {
             // 배열형태의 이미지를 foreach로 돌려서 따로 저장
-            foreach ($request->file('file') as $image) {
+            foreach ($request->file('file') as $index => $image) {
+
+                //유효성 검사
+                $validator = Validator::make(
+                    ['file_' . $index => $image],
+                    ['file_' . $index => 'required|mimes:jpeg,png,gif|max:102400']
+                );
+
+                // 유효성 검사 실패 체크
+                if($validator->fails()) {
+                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
+
                 $path = '/'.$image->store('img');
     
                 BoardImages::create([

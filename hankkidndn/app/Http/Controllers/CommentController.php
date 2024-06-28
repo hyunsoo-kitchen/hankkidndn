@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MyValidateException;
 use App\Models\Comment;
 use App\Models\CommentsLikes;
 use App\Models\Users;
@@ -9,6 +10,8 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
@@ -16,6 +19,26 @@ class CommentController extends Controller
     // 레시피 게시글 댓글 작성
     public function commentRecipeInsert(Request $request, $id) {
         $user = Auth::user();
+        $request['user_id'] = $user->id;
+        $request['recipe_board_id'] = $id;
+
+        $requestData = $request->all();
+
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'recipe_board_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:500']
+                ,'user_id' => ['required', 'regex:/^[0-9]+$/']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
 
         $insertData = [
             'recipe_board_id' => $id,
@@ -44,6 +67,25 @@ class CommentController extends Controller
     // 보드 게시글 댓글 작성하기
     public function commentInsert(Request $request, $id) {
         $user = Auth::user();
+        $request['user_id'] = $user->id;
+        $request['board_id'] = $id;
+
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'board_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:500']
+                ,'user_id' => ['required', 'regex:/^[0-9]+$/']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
 
         $insertData = [
             'board_id' => $id,
@@ -86,10 +128,34 @@ class CommentController extends Controller
     // 보드 게시글 대댓글 작성하기
     public function cocommentInsert(Request $request, $id) {
         $user = Auth::user();
+        $request['user_id'] = $user->id;
+        $request['cocomment'] = $id;
+
+        Log::debug($request->board_id);
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'cocomment' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:500']
+                ,'user_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'board_id' => ['regex:/^[0-9]+$/']
+                ,'recipe_board_id' => ['regex:/^[0-9]+$/']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
 
         $insertData = [
             'cocomment' => $id,
             'content' => $request->content,
+            'board_id' => $request->board_id,
+            'recipe_board_id' => $request->recipe_board_id,
             'user_id' => $user->id,
         ];
 
@@ -113,6 +179,22 @@ class CommentController extends Controller
 
     // 댓글 수정 처리
     public function commentUpdate(Request $request, $id) {
+
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'content' => ['required', 'max:500']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
+
         $insertData = ['content' => $request->content];
 
         $commentData = Comment::find($id);

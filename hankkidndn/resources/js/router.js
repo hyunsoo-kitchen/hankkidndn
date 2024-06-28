@@ -11,13 +11,14 @@ import BoardUpdateComponent from '../components/BoardPage/BoardUpdateComponent.v
 import BoardDetailComponent from '../components/BoardPage/BoardDetailComponent.vue';
 import RegistComponent from '../components/UserPage/RegistComponent.vue';
 import RegistAgreeComponent from '../components/UserPage/RegistAgreeComponent.vue';
-import RegistCompliteComponent from '../components/UserPage/RegistCompliteComponent.vue';
+import RegistCompliteComponent from '../components/UserPage/ConfirmationModal.vue';
 import MypageComponent from '../components/Mypage/MypageComponent.vue';
 import MypageCommentComponent from '../components/Mypage/MypageCommentComponent.vue';
 import MypageRecipeComponent from '../components/Mypage/MypageRecipeComponent.vue';
 import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeListComponent.vue'
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 import store from './store';
+import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
 
 const routes = [
     {
@@ -104,12 +105,16 @@ const routes = [
     {
         path: '/search/recipe',
         component: SearchRecipeListComponent,
-        beforeEnter: chkSearchPageNum,
+        beforeEnter:  chkSearchPageNum
     },
     {
         path: '/search/board/:id/:search',
         component: SearchBoardListComponent,
-        beforeEnter: chkSearchPageNum,
+        beforeEnter:  [chkSearchPageNum, chkBoardType]
+    },
+    {
+        path: '/registrationcomplete',
+        component: RegistrationComplete,
     },
 ];
 
@@ -176,7 +181,7 @@ function chkPageNum(to, from, next) {
     }
 }
 
-// 게시글 페이지 초과시 처리
+// 게시글 검색 페이지 초과시 처리
 function chkSearchPageNum(to, from, next) {
     if(to.query.page > store.state.searchPagination.last_page || to.query.page < 1 ) {
         alert('해당 페이지는 없는 페이지 입니다.');
@@ -185,4 +190,13 @@ function chkSearchPageNum(to, from, next) {
         next();
     }
 }
+
+// function chkSearch(to, from, next) {
+//     if(to.params.search) {
+//         next('/recipe?search=' + to.params.search + '&page=1')
+//     } else {
+//         alert('해당 페이지는 없는 페이지 입니다.');
+//         router.back();
+//     }
+// }
 export default router;

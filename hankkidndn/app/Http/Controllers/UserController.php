@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -37,6 +39,7 @@ class UserController extends Controller
                 ,'password_chk' => ['same:u_password']
                 ,'u_post' => ['required', 'regex:/^\d{5}$/']
                 ,'u_address' => ['required']
+                ,'u_detail_address' => ['required']
                 ,'u_phone_num' =>['required','regex:/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/']
                 ,'u_nickname' =>['required']
                 ,'gender' => ['required']
@@ -121,9 +124,7 @@ class UserController extends Controller
         $user_id = Auth::id();
     
         $boardData = Users::select(
-                'users.profile',
-                'users.u_nickname',
-                'users.u_id',
+                'users.*',
                 DB::raw('(SELECT COUNT(rb.user_id) FROM recipe_boards AS rb WHERE users.id = rb.user_id AND deleted_at IS null) as recipe_count'),
                 DB::raw('(SELECT COUNT(boards.user_id) FROM boards WHERE users.id = boards.user_id AND boards.deleted_at IS null) as boards_count'),
                 DB::raw('(SELECT COUNT(cm.user_id) FROM comments AS cm WHERE users.id = cm.user_id AND cm.deleted_at IS null) as comments_count')
@@ -183,16 +184,15 @@ class UserController extends Controller
         $user_id = Auth::id();
         
         $rcommentData = Comment::join('recipe_boards', 'comments.recipe_board_id', '=', 'recipe_boards.id')
-                          ->join('users', 'comments.user_id', '=', 'users.id')
-                          ->select(
-                              'comments.*', 
-                              'recipe_boards.title as recipe_title', 
-                              'users.u_nickname'
-                          )
-                          ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
-                          ->orderBy('comments.created_at', 'DESC')
-                          ->paginate(10);
+                                ->join('users', 'comments.user_id', '=', 'users.id')
+                                ->select(
+                                    'comments.*', 
+                                    'recipe_boards.title as recipe_title', 
+                                    'users.u_nickname'
+                                )
+                                ->where('comments.user_id', $user_id)
+                                ->orderBy('comments.created_at', 'DESC')
+                                ->paginate(10);
 
     $responseData = [
         'code' => '0',
@@ -209,9 +209,8 @@ class UserController extends Controller
         
         $bcommentData = Comment::join('boards', 'comments.board_id', '=', 'boards.id')
                           ->join('users', 'comments.user_id', '=', 'users.id')
-                          ->select('comments.*', 'boards.title as title', 'users.u_nickname')
+                          ->select('comments.*', 'boards.title as title', 'users.u_nickname', 'boards.id as board_id')
                           ->where('comments.user_id', $user_id)
-                          ->whereNull('comments.deleted_at')
                           ->orderBy('comments.created_at', 'DESC')
                           ->paginate(10);
 
@@ -249,26 +248,31 @@ class UserController extends Controller
     }
 
     //프로필 사진 등록
-    // public function uploadProfilePicture(Request $request)
-    // {
-    //     $userId = Auth::id();
-    //     $user = Users::find($userId);
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        // $user = auth()->user();
+        // $imgData = $request->file('profile');
+        // $imageName = time().$request->file('profile')->getClientOriginalName();
+        // Log::debug('이미지 수정 전'.$imgData);
+        // $imageManager = Image::make($user->profile);
+        // $imageResized = $imageManager->resize(150, 150);
+        // $imageResized->save(public_path('img').$imageName);
 
-    //     if ($user) {
-    //         if ($request->hasFile('profile')) {
-    //             $file = $request->file('profile');
-    //             $path = $file->store('profiles', 'public');
-    //             $user->profile_picture = $path;
-    //             $user->save();
+        // Log::debug('이미지 수정 후', $imageResized);
+        // $user->profile = '/'.public_path('img').$imageName;
 
-    //             return response()->json(['success' => true, 'path' => $path]);
-    //         } else {
-    //             return response()->json(['success' => false, 'message' => '파일이 업로드되지 않았습니다.'], 400);
-    //         }
-    //     } else {
-    //         return response()->json(['success' => false, 'message' => '사용자를 찾을 수 없습니다.'], 404);
-    //     }
-    // }
+
+        $user->save();
+
+
+        return response()->json($user);
+    
+        
+    }
 
     // 비밀번호 수정
     public function updatePassword(Request $request)

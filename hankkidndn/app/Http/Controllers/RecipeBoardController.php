@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MyValidateException;
 use App\Models\Comment;
 use App\Models\RecipeBoards;
 use App\Models\RecipeLikes;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RecipeBoardController extends Controller
 {
@@ -50,6 +52,26 @@ class RecipeBoardController extends Controller
     // 레시피 페이지 작성 처리
     public function recipeInsert(Request $request) {
         $user = Auth::user();
+        $request['user_id'] = $user->id;
+
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'user_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:1000']
+                ,'title' => ['required', 'max:50']
+                ,'thumbnail' => ['required', 'mimes:jpeg,png,gif', 'max:2048']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
 
         $thumbnail = '/'.$request->file('thumbnail')->store('img');
 
@@ -74,6 +96,23 @@ class RecipeBoardController extends Controller
             // 배열형태의 이미지를 foreach로 돌려서 따로 저장
             foreach ($request->input('stuff') as $index => $stuff) {
 
+                //유효성 검사
+                $validator = Validator::make([
+                    'stuff' . $index => $stuff,
+                    'stuff_gram' . $index => $stuff_gram[$index]
+                ],
+                [
+                    'stuff' . $index => 'required|max:50',
+                    'stuff_gram' . $index => 'required|max:50'
+                ]
+                );
+                
+                // 유효성 검사 실패 체크
+                if($validator->fails()) {
+                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
+
                 RecipeStuffs::create([
                     'recipe_board_id' => $recipeId,
                     'stuff_gram' => $stuff_gram[$index],
@@ -81,7 +120,7 @@ class RecipeBoardController extends Controller
                 ]);
             }
         }
-        Log::debug('재료 완료');
+        // Log::debug('재료 완료');
         // 레시피 과정 내용과 이미지 함께 처리
         $texts = $request->input('list');
 
@@ -89,6 +128,24 @@ class RecipeBoardController extends Controller
     
         if ($request->file('file')) {
             foreach ($files as $index => $file) {
+
+                //유효성 검사
+                $validator = Validator::make([
+                    'file_' . $index => $file,
+                    'texts_' . $index => $texts[$index]
+                ],
+                [
+                    'file_' . $index => 'required|mimes:jpeg,png,gif|max:102400',
+                    'texts_' . $index => 'required|max:1000'
+                ]
+                );
+
+                // 유효성 검사 실패 체크
+                if($validator->fails()) {
+                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
+
                 $path = '/'.$file->store('img');
             
                 RecipePrograms::create([
@@ -195,6 +252,24 @@ class RecipeBoardController extends Controller
 
         $recipeData = RecipeBoards::find($id);
 
+        $requestData = $request->all();
+
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'content' => ['required', 'max:1000']
+                ,'title' => ['required', 'max:50']
+                ,'thumbnail' => ['nullable', 'mimes:jpeg,png,gif', 'max:2048']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
+
         if($request->hasFile('thumbnail')) {
             $thumbnail = '/'.$request->file('thumbnail')->store('img');
         } else {
@@ -222,6 +297,23 @@ class RecipeBoardController extends Controller
             // 배열형태의 이미지를 foreach로 돌려서 따로 저장
             foreach ($request->input('stuff') as $index => $stuff) {
 
+                //유효성 검사
+                $validator = Validator::make([
+                    'stuff' . $index => $stuff,
+                    'stuff_gram' . $index => $stuff_gram[$index]
+                ],
+                [
+                    'stuff' . $index => 'required|max:50',
+                    'stuff_gram' . $index => 'required|max:50'
+                ]
+                );
+                
+                // 유효성 검사 실패 체크
+                if($validator->fails()) {
+                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
+
                 RecipeStuffs::create([
                     'recipe_board_id' => $id,
                     'stuff_gram' => $stuff_gram[$index],
@@ -235,11 +327,30 @@ class RecipeBoardController extends Controller
         $updateData = json_decode($request->json);
 
         foreach($updateData as $key => $item) {
+
             $recipeData = new RecipePrograms();
             $recipeData->recipe_board_id = $id;
             $recipeData->img_path = $item->img_path;
             $recipeData->program_content = $item->program_content;
             $recipeData->order = $key + 1;
+
+            // 프로그램 내용 및 파일 업로드 유효성 검사
+            $validator = Validator::make(
+                [
+                    'program_content' => $item->program_content,
+                    'file' => $request->file('file' . ($key + 1)),
+                ],
+                [
+                    'program_content' => 'required|max:1000',
+                    'file' => 'nullable|mimes:jpeg,png,gif|max:102400',
+                ]
+            );
+
+            // 유효성 검사 실패 체크
+            if ($validator->fails()) {
+                Log::debug('프로그램 내용 또는 파일 업로드 유효성 검사 실패', $validator->errors()->toArray());
+                throw new MyValidateException('E01');
+            }
 
             if($request->has('file'.($key + 1))) {
                 $imgPath = $request->file('file'.($key + 1))->store('img');
@@ -338,7 +449,7 @@ class RecipeBoardController extends Controller
     }
 
     public function recipeLike($id) {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         // like 검색
         $likeData = RecipeLikes::where('user_id', Auth::id())
                             ->where('recipe_board_id', $id)
@@ -361,7 +472,7 @@ class RecipeBoardController extends Controller
             $recipeData->likes_num -= 1;
         }
         $recipeData->save();
-        DB::commit();
+        // DB::commit();
 
         $responseData = [
             'code' => '0'

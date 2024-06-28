@@ -14,7 +14,7 @@
                         <option value="5">베이커리게시판</option>
                     </select>
                     <label class="btn_label">
-                        <div>썸네일 이미지</div>
+                        <div class="thumbnail-btn">썸네일 이미지</div>
                         <input required hidden @change="thumbnailImg($event)" name="thumbnail" type="file" accept="image/*">
                     </label>
                     <div class="font-red" v-if="thumbnailFlg">썸네일 이미지를 골라주세요.</div>
@@ -55,16 +55,18 @@
                 <div class="cook-btn">
                     <h3>요리순서</h3>
                 </div>
-                <div class="content_list" v-for="(item, index) in programs" :key="index">
-                    <p> Step {{ index + 1 }}</p>
-                    <textarea required class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
-                    <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
-                    <label class="btn_label2">
-                        <div>이미지 파일</div>
-                        <input required hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
-                    </label>
-                    <button v-if="programs.length > 1" @click="removePrograms(index)" class="list-btn-start" type="button">순서 제거</button>
-                    <div v-if="item.program == '' || item.previewUrl == ''" class="font-red">요리순서와 이미지를 넣어주세요.</div>
+                <div v-for="(item, index) in programs" :key="index">
+                    <div v-if="item.program == '' || item.previewUrl == ''" class="font-red program-aline">요리순서와 이미지를 넣어주세요.</div>
+                    <div class="content_list">
+                        <p> Step {{ index + 1 }}</p>
+                        <textarea required class="text-list" name="list[]" id="list" v-model="item.program" placeholder="예 ) 소고기를 기름에 두른 팬에" rows="5"></textarea>
+                        <img v-if="item.previewUrl" :src="item.previewUrl" style="margin-bottom: 10px;" class="img_thumb">
+                        <label class="btn_label2">
+                            <div>이미지 파일</div>
+                            <input required hidden name="file[]" type="file" accept="image/*" @change="programImg($event, index)" >
+                        </label>
+                        <button v-if="programs.length > 1" @click="removePrograms(index)" class="list-btn-start margin-botton" type="button">순서 제거</button>
+                    </div>
                 </div>
                 <div class="list-input">
                     <button @click="addPrograms()" class="list-btn-remove" type="button">순서 추가</button>

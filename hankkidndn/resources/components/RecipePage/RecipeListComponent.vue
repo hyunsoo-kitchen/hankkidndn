@@ -18,7 +18,7 @@
     <div class="container">
         <div class="header">
             <div class="main-img">
-                <img class="img-main" src="../../../public/img/recipe.png">
+                <img class="img-main" :src="currentImage" alt="Recipe Image">
             </div>
             <div class="input-btn">
                 <div>
@@ -26,7 +26,7 @@
                 </div>
                 <div>
                     <button  @click="search" class="search" type="button">
-                        <img src="../../../public/img/search.png">
+                        <img src="/img/search.png">
                     </button>
                 </div>
             </div>
@@ -51,8 +51,8 @@
                 <button>조회순</button> -->
             </div>
             <div class="main-list-content">
-                <div class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
-                    <img :src="item.thumbnail" @click="$store.dispatch('getRecipeDetail', item.id)">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                    <img :src="item.thumbnail">
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
@@ -94,6 +94,7 @@ const data = {
 watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
     data.page = newPage;
     data.board_type = newId
+    currentImage.value = imageMap[newId] || imageMap[100];
     pagination(newPage);
     store.dispatch('getRecipeList', data);
 });
@@ -109,6 +110,16 @@ function pagination(nowPage) {
     }
 }
 
+const imageMap = {
+  100: '/img/recipe.png',
+  1: '/img/koreanfood.jpg',
+  2: '/img/chinesefood.jpg',
+  3: '/img/pastafood.jpg',
+  4: '/img/japanfood.jpg',
+  5: '/img/breadfood.jpg'
+};
+
+const currentImage = ref(imageMap[100]);
 
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
@@ -116,6 +127,7 @@ onBeforeMount(() => {
     // console.log(store.state.pagination)
     data.board_type = route.params.id;
     data.page = route.query.page;
+    currentImage.value = imageMap[data.board_type];
     store.dispatch('getRecipeList', data);
 });
 
@@ -157,7 +169,7 @@ const formatDate = (dateString) => {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
-    }).replace(/\.$/, '');  // 마지막 점제거
+    }).replace(/\.$/, ''); 
 };
 
 

@@ -51,7 +51,7 @@ const store = createStore({
             myBCommentPagination: localStorage.getItem('myBCommentPagination') ? JSON.parse(localStorage.getItem('myBCommentPagination')) : {current_page: '1'},
 
             isAuthenticated: false,
-
+            
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -174,6 +174,7 @@ const store = createStore({
             state.myBoardCommentList = data.data;
             state.myBCommentPagination = data;
             localStorage.setItem('myBCommentPagination', JSON.stringify(data));
+            console.log(state.myBoardCommentList)
         },
         setMyRCommentData(state,data) {
             state.myRecipeCommentList = data.data;
@@ -399,7 +400,10 @@ const store = createStore({
                 context.commit('setRecipeDetail', response.data)
                 router.replace('/recipe/detail/' + id)
             })
-            .catch();
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+            });
         },
 
         // 보드 수정페이지 게시글 수정 처리
@@ -413,7 +417,10 @@ const store = createStore({
                 context.commit('setBoardDetail', response.data)
                 router.replace('/board/detail/' + id)
             })
-            .catch();
+            .catch(error => {
+                console.log(error.response.data);
+                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+            });
         },
 
         // 레시피 게시글 댓글 작성 처리
@@ -554,22 +561,17 @@ const store = createStore({
         },
         //회원가입 처리 action
         registration(context) {
-            const url = '/api/registration';
-            const form = document.querySelector('#registrationForm');
-            const data = new FormData(form);
-            // const data = new FormData(document.querySelector('#registrationForm'));
-            console.log(data);
-            
-           // 0618 csrf 버그 수정완료. 기존 강제셋팅 삭제 - 노경호
-            axios.post(url, data)
+            const data = new FormData(document.querySelector('#registrationForm'));
+
+            axios.post('/api/registration', data)
             .then(response => {
-                console.log(response.data) //TODO
-                router.replace('/login');
-            })
-            .catch(error => {
-                console.log(error.response.data); //TODO
-                alert('회원가입에 실패했습니다 (' + error.response.data.code + ')');
-            });
+                  alert('회원가입이 완료되었습니다.');
+                  router.replace('/login');
+              })
+              .catch(error => {
+                console.log(error.response.data);
+                alert('회원가입 중 오류가 발생했습니다.');
+              });
         },
 
         //로그인 처리
@@ -590,7 +592,8 @@ const store = createStore({
                 router.back();
             })
             .catch(error => {
-                console.log(error.response); //TODO
+                // console.log(error.response); //TODO
+                // router.replace('/main');
                 alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
             });
         },
@@ -667,6 +670,7 @@ const store = createStore({
             console.log(url);
             axios.get(url)
             .then(response => {
+                // console.log(response.data.data)
                 context.commit('setMyRCommentData', response.data.data);
             })
             .catch()
@@ -759,23 +763,30 @@ const store = createStore({
         },
 
         // 프로필사진 변경
-        updateProfile(context) {
-            const data = new FormData(document.querySelector('#updateProfileForm'));
+        updateProfile(commit) {
+            const url = '/api/profile/update'
 
-            axios.post('/api/user/updateprofile', data)
+            const data = new FormData(document.querySelector('#profileForm'));
+            // formData.append('profile', file);
+
+            axios.post(url, data)
             .then(response => {
-                if (response.data.success) {
-                    alert('프로필이 성공적으로 변경되었습니다.');
-                } else {
-                    alert('프로필 변경에 실패했습니다.');
-                }
+                console.log(response.data)
             })
-            .catch(error => {
-                console.log(error.response.data);
-                alert('프로필사진 변경 중 오류가 발생했습니다.');
-            });
-
-        },
+            .catch();
+      
+            // return axios.post('/api/profile/update', formData, {
+            //   headers: {
+            //     'Content-Type': 'multipart/form-data',
+            //   },
+            // }).then(response => {
+            //   // handle success, e.g., update user profile in state
+            //   commit('setUserProfile', response.data);
+            // }).catch(error => {
+            //   // handle error
+            //   console.error(error);
+            // });
+          },
 
         // 생년월일 변경
         updateBirthat(context) {
@@ -833,9 +844,14 @@ const store = createStore({
             const url ='/api/search/recipe?search=' + data.search + '&page=' + data.page;
             axios.get(url)
             .then(response => {
-                console.log(response.data);
-                context.commit('setSearchRecipeData', response.data.data);
-                router.replace('/search/recipe?page=' + data.page);
+                if(response.data.data.total !== 0) {
+                    console.log(response.data.data);
+                    context.commit('setSearchRecipeData', response.data.data);
+                    // router.replace('/search/recipe?page=' + data.page);
+                    router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
+                } else {
+                    alert('해당 레시피가 존재하지 않습니다')
+                }
             })
             .catch(error => {
                 console.log(error.response);
@@ -854,9 +870,13 @@ const store = createStore({
 
             axios.get(url)
                 .then(response => {
-                    console.log('searchBoards', response.data);
+                    if(response.data.data.total !== 0) {
+                    // console.log('searchBoards', response.data);
                     context.commit('setSearchBoardData', response.data.data);
                     router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
+                    } else {
+                        alert('해당 게시글이 존재하지 않습니다.')
+                    }
                 })
                 .catch(error => {
                     console.log(error);

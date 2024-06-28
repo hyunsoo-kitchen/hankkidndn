@@ -1,18 +1,21 @@
 <template>
     <div class="container">
             <!-- 헤드 이미지 -->
-            <img class="main-img" src="../../../public/img/my_page.png">
+            <!-- <img class="main-img" src="../../../public/img/my_page.png"> -->
             <h2 class="page_title">마이페이지</h2>
+            <hr>
             <div class="main_container">
                 <div class="sub_title">
                     <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
                     <div @click="$router.push('/mypage/comments')" class="sub_title_content title_select">내 댓글</div>
-                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보수정</div>
+                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보</div>
                 </div>
                 <div class="main_content">
                     <!-- 내 레시피 -->
                     <div class="main_my_page">
-                        <img :src="$store.state.mypageUserinfo.profile">
+                        <div class="profile_img_box">
+                            <img :src="$store.state.mypageUserinfo.profile">
+                        </div>
                         <h2>{{ $store.state.mypageUserinfo.u_nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
                             <p>내가 쓴 레시피 {{ $store.state.mypageUserinfo.recipe_count }}건</p>
@@ -28,9 +31,8 @@
                                 내가 쓴 게시판 댓글</button>
                         </div>
                         <div class="contents_list">
-
                             <div v-if="activeTab === 'recipe'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div>번호</div>
                                     <div>댓글</div>
                                     <div>원문제목</div>
@@ -40,13 +42,13 @@
                                 <div v-for="(item, index) in myRecipeData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRCommentPagination.total - index) - (($store.state.myRCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.content }}</div>
-                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_title" >{{ item.content }}</div>
+                                        <div class="list_views" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ item.recipe_title }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
                                 <!-- 레시피 댓글 페이지네이션 -->
-                                <div>
+                                <div v-if="activeTab === 'recipe'" class="page_btn_box">
                                     <button class="page_btn" @click="RprevPage()" :disabled="RcurrentPage === 1">이전</button>
                                     <span>{{ RcurrentPage }} / {{ RtotalPages }}</span>
                                     <button class="page_btn" @click="RnextPage()" :disabled="RcurrentPage === RtotalPages">다음</button>
@@ -54,23 +56,23 @@
                             </div>
 
                             <div v-if="activeTab === 'board'">
-                                <div class="my_list">
+                                <div class="head_list">
                                     <div>번호</div>
-                                    <div>제목</div>
-                                    <div>조회수</div>
+                                    <div>댓글</div>
+                                    <div>원문제목</div>
                                     <div>작성일</div>
                                 </div>
                                 <hr>
                                 <div v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title">{{ item.content }}</div>
-                                        <div class="list_views">{{ item.views }}</div>
+                                        <div class="list_title ellipsis">{{ item.content }}</div>
+                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ item.title }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
-                                <!-- 레시피 댓글 페이지네이션 -->
-                                <div>
+                                <!-- 게시판 댓글 페이지네이션 -->
+                                <div v-if="activeTab === 'board'" class="page_btn_box">
                                     <button class="page_btn" @click="BprevPage()" :disabled="BcurrentPage === 1">이전</button>
                                     <span>{{ BcurrentPage }} / {{ BtotalPages }}</span>
                                     <button class="page_btn" @click="BnextPage()" :disabled="BcurrentPage === BtotalPages">다음</button>
