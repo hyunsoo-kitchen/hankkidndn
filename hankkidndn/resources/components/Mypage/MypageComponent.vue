@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button @click="phoneCloseModal" class="btn btn-primary1">취소</button>
-                                    <button class="btn btn-primary" @click="$store.dispatch('updatePhonenum')">수정</button>
+                                    <button class="btn btn-primary" @click="showConPhoneModal">수정</button>
                                 </div>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button @click="dateCloseModal" class="btn btn-primary1">취소</button>
-                                    <button class="btn btn-primary" @click="$store.dispatch('updateBirthat')">수정</button>
+                                    <button class="btn btn-primary" @click="showConDateModal">수정</button>
                                 </div>
                                 </div>
                             </div>
@@ -202,8 +202,8 @@
                                         <input type="text" class="input3" name="u_detail_address" id="u_detail_address" v-model="detailAddress" autoComplete="off">
                                         </form>
                                     </div>
-                                        <button @click="addressCloseModal" class="cancle_btn">취소</button>
-                                        <button class="update_btn" @click="$store.dispatch('updateAddress')">수정</button>
+                                        <button @click="addressCloseModal" class="btn btn-primary1">취소</button>
+                                        <button class="btn btn-primary" @click="showConAddressModal">수정</button>
                             </div>
                         </div>
                         <!-- 비밀번호 -->
@@ -220,11 +220,10 @@
                                                 <div class="password_chk">비밀번호 확인</div>
                                                 <input type="password" id="password_chk" name="password_chk" autoComplete="off" v-model="formData.password_chk">
                                             </div>
-                                <button class="update_btn"  @click.prevent="$store.dispatch('updatePassword')">수정</button>
                                         </form>
                                     </div>
-                                        <button @click="passwordCloseModal" class="cancle_btn">취소</button>
-                                        <button class="update_btn" @click="$store.dispatch('updatePassword')">수정</button>
+                                        <button @click="passwordCloseModal" class="btn btn-primary1">취소</button>
+                                        <button class="btn btn-primary" @click="showConPasswordModal">수정</button>
                             </div>
                         </div>
 
@@ -247,6 +246,79 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 수정재확인 모달<비밀번호> -->
+                        <div class="modal" v-if="conPasswodModalVisible" @click.self="closeConPasswordModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConPasswordModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 수정하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConPasswordModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUpdatePassword">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 수정재확인 모달<휴대폰번호> -->
+                        <div class="modal" v-if="conPhoneModalVisible" @click.self="closeConPhoneModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConPhoneModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 수정하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConPhoneModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUpdatePhone">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 수정재확인 모달<생년월일> -->
+                        <div class="modal" v-if="conDateModalVisible" @click.self="closeConDateModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConDateModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 수정하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConDateModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUpdateDate">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 수정재확인 모달<주소> -->
+                        <div class="modal" v-if="conAddressModalVisible" @click.self="closeConDateModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConDateModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 수정하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConDateModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUpdateAddress">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                     </div>
@@ -292,41 +364,8 @@ const u_password = ref('');
 const isAuthenticated = computed(() => store.state.isAuthenticated);
 
 // 모달창 컨트롤
-const phoneModalVisible = ref(false);
-const dateModalVisible = ref(false);
-const addressModalVisible = ref(false);
-const passwordModalVisible = ref(false);
 const profileModalVisible = ref(false);
 const selectedFile = ref(null);
-
-// 휴대전화
-const phoneOpenModal = () => {
-    phoneModalVisible.value = true;
-};
-const phoneCloseModal = () => {
-    phoneModalVisible.value = false;
-};
-// 생년월일
-const dateOpenModal = () => {
-    dateModalVisible.value = true;
-};
-const dateCloseModal = () => {
-    dateModalVisible.value = false;
-};
-// 주소
-const addressOpenModal = () => {
-    addressModalVisible.value = true;
-};
-const addressCloseModal = () => {
-    addressModalVisible.value = false;
-};
-// 비밀번호
-const passwordOpenModal = () => {
-    passwordModalVisible.value = true;
-};
-const passwordCloseModal = () => {
-    passwordModalVisible.value = false;
-};
 
 // 프로필 업데이트 //
 const profileOpenModal = () => {
@@ -371,6 +410,7 @@ function updateProfile() {
   }
 }
 // 프로필 끝 //
+//--------------------------------------------------------------------------------
 // 닉네임 업데이트 //
 const nicknameModalVisible = ref(false);
 const confirmationModalVisible = ref(false);
@@ -384,7 +424,7 @@ const showConfirmationModal = () => {
     confirmationModalVisible.value = true;
 };
 const closeConfirmationModal = () => {
-  confirmationModalVisible.value = false;
+    confirmationModalVisible.value = false;
 };
 const confirmUpdateNickname = () => {
   store.dispatch('updateNickname', formData.value.u_nickname)
@@ -393,9 +433,106 @@ const confirmUpdateNickname = () => {
       closeConfirmationModal();
     });
 };
-
-
 // 닉네임 업데이트 끝 //
+//----------------------------------------------------------------------------------
+// 비밀번호 업데이트 //
+const passwordModalVisible = ref(false);
+const conPasswodModalVisible = ref(false);
+const passwordOpenModal = () => {
+    passwordModalVisible.value = true;
+};
+const passwordCloseModal = () => {
+    passwordModalVisible.value = false;
+};
+const showConPasswordModal = () => {
+    conPasswodModalVisible.value = true;
+};
+const closeConPasswordModal = () => {
+    conPasswodModalVisible.value = false;
+};
+const confirmUpdatePassword = () => {
+  store.dispatch('updatePassword', formData.value.u_password)
+    .then(() => {
+        passwordCloseModal();
+        closeConPasswordModal();
+    });
+};
+// 비밀번호 끝 //
+//----------------------------------------------------------------------------------
+// 휴대폰번호 시작//
+const phoneModalVisible = ref(false);
+const conPhoneModalVisible = ref(false);
+const phoneOpenModal = () => {
+    phoneModalVisible.value = true;
+};
+const phoneCloseModal = () => {
+    phoneModalVisible.value = false;
+};
+const showConPhoneModal = () => {
+    conPhoneModalVisible.value = true;
+}
+const closeConPhoneModal = () => {
+    conPhoneModalVisible.value = false;
+}
+const confirmUpdatePhone = () => {
+  store.dispatch('updatePhonenum', formData.value.u_phone_num)
+    .then(() => {
+        phoneCloseModal();
+        closeConPhoneModal();
+    });
+};
+// 휴대폰번호 끝
+//----------------------------------------------------------------------------------
+// 생년월일 시작
+const dateModalVisible = ref(false);
+const conDateModalVisible = ref(false);
+const dateOpenModal = () => {
+    dateModalVisible.value = true;
+};
+const dateCloseModal = () => {
+    dateModalVisible.value = false;
+};
+const showConDateModal = () => {
+    conDateModalVisible.value = true;
+}
+const closeConDateModal = () => {
+    conDateModalVisible.value = false;
+}
+const confirmUpdateDate = () => {
+  store.dispatch('updateBirthat', formData.value.birth_at)
+    .then(() => {
+        dateCloseModal();
+        closeConDateModal();
+    });
+};
+// 생년월일 끝
+//----------------------------------------------------------------------------------
+// 주소 업데이트 시작
+const addressModalVisible = ref(false); 
+const conAddressModalVisible = ref(false);
+const addressOpenModal = () => {
+    addressModalVisible.value = true;
+};
+const addressCloseModal = () => {
+    addressModalVisible.value = false;
+};
+const showConAddressModal = () => {
+    conAddressModalVisible.value = true;
+}
+const closeConAddressModal = () => {
+    conAddressModalVisible.value = false;
+}
+const confirmUpdateAddress = () => {
+  store.dispatch('updateAddress', formData.value.u_post, formData.value.u_address, formData.value.u_detail_address)
+    .then(() => {
+        addressCloseModal();
+        closeConAddressModal();
+    });
+};
+
+
+
+
 
 // 카카오 주소 API //
 function kakaoPostcode() {
