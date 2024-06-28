@@ -116,7 +116,7 @@ import { useStore } from 'vuex';
 import { useRoute } form 'vue-router';
 
 const store = useStore();
-const route - useRoute();
+const route = useRoute();
 
 // 댓글 관련
 const comment = ref('');

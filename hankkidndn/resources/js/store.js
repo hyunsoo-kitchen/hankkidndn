@@ -79,9 +79,15 @@ const store = createStore({
             // console.log(state.mainBestData)
         },
         // 레시피 리스트 저장
+        // setRecipeData 함수 선언
         setRecipeData(state, data) {
+            // state 객체의 recipeListData 속성을 data 객체의 속성 값으로 설정합니다.
             state.recipeListData = data.data;
+
+            // state 객체의 pagination 속성을 data 객체로 설정합니다.
             state.pagination = data
+            
+            // localStorage에 'pagination'이라는 키로 data 객체를 JSON 문자열로 저장합니다.
             localStorage.setItem('pagination', JSON.stringify(data));
         },
         // 질문,자유 게시판 등 리스트 저장

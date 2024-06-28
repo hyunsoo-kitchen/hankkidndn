@@ -123,9 +123,13 @@
 
  // page 이동 버튼
  function pageMove(page) {
+   // 페이지가 1 이상이고 store의 상태에 있는 마지막 페이지 수 이하인지 확인
     if(page >=1 && page <= store.state.pagination.last_page) {
+      // 데이터 객체의 페이지 속성을 변경하여 새 페이지로 설정
         data.page = page;
+        // 스토어의 액션을 호출하여 새로운 페이지의 레시피 목록을 가져옴
         store.dispatch('getRecipeList', data)
+        // 페이지네이션  함수를 호출하여 라우트의 쿼리 페이지 업데이트
         pagination(route.query.page)
     }
  }
