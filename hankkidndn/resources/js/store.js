@@ -596,7 +596,7 @@ const store = createStore({
             axios.post('/api/registration', data)
             .then(response => {
                   alert('회원가입이 완료되었습니다.');
-                  router.replace('/login');
+                  router.replace('/main');
               })
               .catch(error => {
                 console.log(error.response.data);

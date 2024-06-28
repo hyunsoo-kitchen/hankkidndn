@@ -312,7 +312,7 @@ class UserController extends Controller
 
         // 원본 이미지 저장
         $request->file('profile')->move(public_path('img'), $profileName);
-        Log::debug('/img/'.$profileName);
+        // Log::debug('/img/'.$profileName);
         $user->profile = '/profile/'.$profileName;
         $user->save();
 
