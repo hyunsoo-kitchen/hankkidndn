@@ -68,7 +68,9 @@
     grid-template-columns: 150px 150px auto;
     min-height: 200px;
 }
-
+.profile_img_box > img {
+    border-radius: 50%;
+}
 button{
     border: 0;
     background-color: transparent;
@@ -92,6 +94,7 @@ button{
         padding: 10px 0;
         font-size: 20px;
         cursor: pointer;
+        width: 100px;
     }
     /* 내용 추가작업 */
     .contents_box {
