@@ -52,6 +52,11 @@ const store = createStore({
 
             isAuthenticated: false,
 
+            // 아이디, 닉네임 인증
+
+            userId: '',
+            userNickname: '',
+
             idFlg: false,
             nicknameFlg: false,
             
@@ -549,6 +554,28 @@ const store = createStore({
             })
             .catch();  
         },
+
+        // 게시글 조회 수 증가
+        recipeViewUp(context, id) {
+            const url = '/api/recipe/detail/view/' + id
+
+            axios.post(url)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        // 게시글 조회 수 증가
+        boardViewUp(context, id) {
+            const url = '/api/board/detail/view/' + id
+
+            axios.post(url)
+            .then(response => {
+
+            })
+            .catch();
+        },
         //---------------------끝---------------------------
 
         //---------------------노경호------------------------------
@@ -569,7 +596,7 @@ const store = createStore({
             axios.post('/api/registration', data)
             .then(response => {
                   alert('회원가입이 완료되었습니다.');
-                  router.replace('/login');
+                  router.replace('/main');
               })
               .catch(error => {
                 console.log(error.response.data);
@@ -577,14 +604,15 @@ const store = createStore({
               });
         },
 
+        // 유저 ID체크
         idCheck(context, data) {
             const url = '/api/regist/userid'
-            console.log(data)
+            // console.log(data)
             const formData = new FormData();
             formData.append('u_id', data);
             axios.post(url, formData)
             .then(response => {
-                console.log(response.data)
+                context.state.userId = data;
                 context.state.idFlg = true;
 
             })
@@ -594,6 +622,7 @@ const store = createStore({
             });
         },
 
+        // 유저 닉네임 체크
         nicknameCheck(context, data) {
             const url = '/api/regist/userNickname'
             console.log(data)
@@ -602,6 +631,7 @@ const store = createStore({
             axios.post(url, formData)
             .then(response => {
                 console.log(response.data)
+                context.state.userNickname = data;
                 context.state.nicknameFlg = true;
 
             })

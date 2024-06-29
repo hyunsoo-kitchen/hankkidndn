@@ -10,7 +10,7 @@
             <p>글 작성은 로그인 후 가능합니다.</p>
           </div>
           <div class="modal-footer">
-            <button @click="insertModalOff" class="btn btn-primary">확인</button>
+            <button @click="insertModalOff(); $router.push('/login')" class="btn btn-primary">확인</button>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
-const page = ref(route.query.page);
+const page = ref([]);
 const insertModal = ref(false);
 
 const data = {

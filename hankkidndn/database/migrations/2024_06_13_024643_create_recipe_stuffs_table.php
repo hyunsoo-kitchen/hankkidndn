@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('recipe_board_id')->unsigned();
             $table->string('stuff', 15);
-            $table->string('stuff_gram', 15);
+            $table->string('stuff_gram', 20);
             $table->timestamps();
             $table->softDeletes();
         });

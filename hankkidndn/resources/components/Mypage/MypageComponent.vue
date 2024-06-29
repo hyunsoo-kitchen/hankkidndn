@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" @click="profileCloseModal" class="btn btn-primary1">취소</button>
-                                <button type="button" class="btn btn-primary" @click="showConfirmationModal">수정</button>
+                                <button type="button" class="btn btn-primary" @click="updateProfile">수정</button>
                                 </div>
                             </div>
                             </div>

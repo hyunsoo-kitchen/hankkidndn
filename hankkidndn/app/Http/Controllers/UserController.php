@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Validator;
 use RuntimeException;
 use Illuminate\Support\Str;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 class UserController extends Controller
 {
     //회원가입 - 노경호
@@ -295,20 +298,23 @@ class UserController extends Controller
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         
-        // $user = auth()->user();
-        // $imgData = $request->file('profile');
-        // $imageName = time().$request->file('profile')->getClientOriginalName();
-        // Log::debug('이미지 수정 전'.$imgData);
-        // $imageManager = Image::make($user->profile);
-        // $imageResized = $imageManager->resize(150, 150);
-        // $imageResized->save(public_path('img').$imageName);
+        $user = auth()->user();
 
-        // Log::debug('이미지 수정 후', $imageResized);
-        // $user->profile = '/'.public_path('img').$imageName;
+        $profileName = Str::uuid().'.'.$request->file('profile')->getClientOriginalExtension();
+        $profilePath = public_path('profile') . '/' . $profileName;
 
+        $im = new ImageManager(new Driver());
+        $img = $im->read($request->file('profile')->path());
+        
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($profilePath);
 
+        // 원본 이미지 저장
+        $request->file('profile')->move(public_path('img'), $profileName);
+        // Log::debug('/img/'.$profileName);
+        $user->profile = '/profile/'.$profileName;
         $user->save();
-
 
         return response()->json($user);
     

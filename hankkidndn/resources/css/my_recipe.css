@@ -32,6 +32,9 @@ button{
     background-color: transparent;
     cursor: pointer;
   }
+.profile_img_box > img {
+    border-radius: 50%;
+}
 /* 화면 클때 개인정보 수정 css */
 @media screen and (min-width: 850px) {
     .main_container {
@@ -49,6 +52,7 @@ button{
         padding: 10px 0;
         font-size: 20px;
         cursor: pointer;
+        width: 100px;
     }
     /* 메인 컨테이너 */
     .main_content {
