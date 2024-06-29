@@ -452,6 +452,7 @@ class RecipeBoardController extends Controller
         $results = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
                                 ->select('recipe_boards.*', 'users.u_nickname')
                                 ->where('title', 'like', "%{$query}%")
+                                ->orWhere('content','like',"%{$query}%")
                                 ->paginate(16);
 
         $responseData = [
