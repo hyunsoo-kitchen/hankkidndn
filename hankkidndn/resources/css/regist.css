@@ -137,6 +137,15 @@ button {
     width: 100%; /* 부모 요소에 맞게 너비 설정 */
   }
   
+  .pass-message {
+    color: green;
+    font-size: 12px;
+    position: absolute;
+    top: 100%; /* 에러 메시지를 필드 아래에 위치하도록 조정 */
+    left: 0;
+    width: 100%; /* 부모 요소에 맞게 너비 설정 */
+  }
+  
   .radio-box {
     display: grid;
     grid-template-columns: 1fr 1fr;

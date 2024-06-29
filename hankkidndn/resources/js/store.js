@@ -614,6 +614,7 @@ const store = createStore({
             .then(response => {
                 context.state.userId = data;
                 context.state.idFlg = true;
+                alert('사용가능한 아이디 입니다.')
 
             })
             .catch(error => {
@@ -633,6 +634,7 @@ const store = createStore({
                 console.log(response.data)
                 context.state.userNickname = data;
                 context.state.nicknameFlg = true;
+                alert('사용가능한 닉네임 입니다.')
 
             })
             .catch(error => {
