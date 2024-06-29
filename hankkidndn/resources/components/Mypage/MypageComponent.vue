@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" @click="profileCloseModal" class="btn btn-primary1">취소</button>
-                                <button type="button" class="btn btn-primary" @click="updateProfile">수정</button>
+                                <button type="button" class="btn btn-primary" @click="showConProfileModal">수정</button>
                                 </div>
                             </div>
                             </div>
@@ -228,6 +228,24 @@
                         </div>
 
                         <!-- 개인정보 업데이트 모달모음 -->
+                         <!-- 수정재확인 모달<프로필사진> -->
+                        <div class="modal" v-if="conProfileModalVisivle" @click.self="closeConProfileModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">확인</h3>
+                                    <button @click="closeConProfileModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 등록하시겠습니까?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="closeConProfileModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="updateProfile">확인</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- 수정재확인 모달<닉네임> -->
                         <div class="modal" v-if="confirmationModalVisible" @click.self="closeConfirmationModal">
                             <div class="modal-dialog">
@@ -364,13 +382,39 @@ const u_password = ref('');
 const isAuthenticated = computed(() => store.state.isAuthenticated);
 
 // 모달창 컨트롤
-const profileModalVisible = ref(false);
 const selectedFile = ref(null);
-
+//--------------------------------------------------------------------------------
 // 프로필 업데이트 //
+const profileModalVisible = ref(false);
+const conProfileModalVisivle = ref(false);
+
 const profileOpenModal = () => {
     profileModalVisible.value = true;
 };
+function profileCloseModal() {
+    profileModalVisible.value = false;
+    preview.value = null;
+    selectedFile.value = null;
+};
+const showConProfileModal = () => {
+    conProfileModalVisivle.value = true;
+}
+const closeConProfileModal = () => {
+    conProfileModalVisivle.value = false;
+}
+
+function updateProfile() {
+  if (selectedFile.value) {
+    store.dispatch('updateProfile').then(() => {
+        profileCloseModal();
+        closeConProfileModal();  
+    });
+  }
+}
+
+
+
+
 function setFile(event) {
   const file = event.target.files[0];
   if (file) {
@@ -397,18 +441,7 @@ function setFile(event) {
     reader.readAsDataURL(file);
   }
 }
-function profileCloseModal() {
-    profileModalVisible.value = false;
-    preview.value = null;
-    selectedFile.value = null;
-}
-function updateProfile() {
-  if (selectedFile.value) {
-    store.dispatch('updateProfile').then(() => {
-      profileCloseModal();
-    });
-  }
-}
+
 // 프로필 끝 //
 //--------------------------------------------------------------------------------
 // 닉네임 업데이트 //
