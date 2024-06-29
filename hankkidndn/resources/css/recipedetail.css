@@ -357,7 +357,7 @@ button {
     
     .comment-actions {
     display: grid;
-    grid-template-columns: 2fr 0.2fr 0.2fr;
+    grid-template-columns: 2fr 0.2fr auto;
     align-items: center;
     justify-content: space-between;
     padding-top: 5px;
