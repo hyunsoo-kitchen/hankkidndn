@@ -112,12 +112,12 @@ button{
     }
     .head_list {
         display: grid;
-        grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
         margin: 10px 0;
     }
     .my_list {
         display: grid;
-        grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
         margin: 10px 0;
     }
     .list_title {
@@ -139,7 +139,7 @@ button{
     }
 }
 /* 화면 중간 사이즈일 때*/
-@media screen and (max-width: 849px) {
+/* @media screen and (max-width: 849px) {
     .main_container {
         grid-template-columns: 1fr;
     }
@@ -151,12 +151,9 @@ button{
         display: grid;
         margin-top: 20px;
     }
-    /* 화면 작을 때 개인정보수정 CSS */
-     /* 개인정보 수정 */
-     
-}
+} */
 /* 화면 제일 작을 때 */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 849px) {
     .main_container {
         grid-template-columns: 1fr;
     }
@@ -183,6 +180,8 @@ button{
     .sub_title{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+        width: 60%;
+        gap: 20px;
     }
     .sub-title-main {
         display: grid;
@@ -266,5 +265,55 @@ button{
     button.complete {
         background-color: #333;
         color: white;
+    }
+
+    .main_my_page {
+        display: grid;
+        border: 1px solid black;
+        padding: 10px;
+        margin: 10px 0;
+        justify-items: center;
+    }
+    .main_comment {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .main_comment > p {
+        justify-self: center;
+        font-size: 15px;
+    }
+    .contents_head_box > button {
+        padding-right: 20px;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .head_list {
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
+    }
+    .my_list {
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
+        margin: 3px 0 3px 0;
+    }
+    .my_list > div {
+        justify-self: center;
+        font-size: 17px;
+    }
+    .head_list > div {
+        justify-self: center;
+        font-size: 17px;
+    }
+    .list_title {
+        cursor: pointer;
+    }
+    .page_btn_box {
+        text-align: center;
+    }
+    .page_btn {
+        margin: 0 10px;
+    }
+    .page_btn_box {
+        margin-top: 10px;
     }
 }

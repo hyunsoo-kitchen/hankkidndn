@@ -24,61 +24,24 @@
     color: gray;
 }
 .page_title{
-    margin: 20px 0px 20px 10px;
+    margin: 20px 0px 20px 10px;  
 }
 
-.main_my_page{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 3fr 2fr;
-    border: 1px solid black;
-    padding: 10px;
-    margin: 10px 0;
-}
-
-.profile_img_box {
-    justify-self: center;
-    grid-row: 1 / 3;
-    object-fit: cover;
-}
-.profile_img_box {
-    width: 100px;
-    height: 100px;
-    
-}
-
-.main_my_page > h2 {
-    align-self: center;
-}
-
-.main_comment {
-    display: grid;
-    grid-column: 2 / 3;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.main_comment > p {
-    justify-self: center;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.my_comment{
-    display: grid;
-    grid-template-columns: 150px 150px auto;
-    min-height: 200px;
-}
-.profile_img_box > img {
-    border-radius: 50%;
-}
 button{
     border: 0;
     background-color: transparent;
     cursor: pointer;
   }
-/* 화면 클때 css */
+.profile_img_box > img {
+    border-radius: 50%;
+}
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+/* 화면 클때 개인정보 수정 css */
 @media screen and (min-width: 850px) {
-    /* 메인 컨테이너 */
     .main_container {
         display: grid;
         grid-template-columns: 1fr 3fr;
@@ -96,7 +59,47 @@ button{
         cursor: pointer;
         width: 100px;
     }
-    /* 내용 추가작업 */
+    /* 메인 컨테이너 */
+    .main_content {
+        grid-column: 2/3;
+        grid-row: 1/3;
+        margin-top: 20px;
+        display: grid;
+        grid-template-rows: 1fr 3fr;
+    }
+    /* 개인정보 수정 */
+    .main_my_page{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 3fr 2fr;
+        border: 1px solid black;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .profile_img_box {
+        justify-self: center;
+        grid-row: 1 / 3;
+        object-fit: cover;
+    }
+    .profile_img_box {
+        width: 100px;
+        height: 100px;
+        
+    }
+    .main_my_page > h2 {
+        align-self: center;
+    }
+    .main_comment {
+        display: grid;
+        grid-column: 2 / 3;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .main_comment > p {
+        justify-self: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    /* 추가 작업 */
     .contents_box {
         display: grid;
         grid-template-rows: 30px auto;
@@ -112,30 +115,26 @@ button{
         display: grid;
         grid-template-rows: repeat(10, 30px);
     }
-    .my_list {
-        display: grid;
-        grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
-        margin: 10px 0;
-    }
-    .ellipsis {
-        white-space: nowrap;      /* 텍스트를 한 줄로 표시 */
-        overflow: hidden;         /* 넘치는 텍스트 숨기기 */
-        text-overflow: ellipsis;  /* 말줄임표(...) 표시 */
-    }
     .head_list {
         display: grid;
-        grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
         margin: 10px 0;
+    }
+    .my_list {
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
+        margin: 10px 0;
+    }
+    .list_title {
+        cursor: pointer;
     }
     .my_list > div {
         justify-self: center;
         font-size: 17px;
-        cursor: pointer;
     }
     .head_list > div {
         justify-self: center;
         font-size: 17px;
-        cursor: pointer;
     }
     .page_btn_box {
         text-align: center;
@@ -144,27 +143,8 @@ button{
         margin: 0 10px;
     }
 }
-/* 화면 중간 사이즈일 때  */
-@media screen and (max-width: 849px) {
-    /* 메인 컨테이너 */
-    .main_container {
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-        grid-template-rows: 1fr 1fr ;
-        gap: 20px;
-    }
-    .sub_title {
-        grid-column: 1/2;
-        grid-row: 1/2;
-        margin: 20px 0px 0px 10px;
-    }
-    .sub_title_content {
-        padding: 10px 0;
-        font-size: 20px;
-    }
-}
-/* 화면 제일 작은 사이즈일 때  */
-@media screen and (max-width: 600px) {
+/* 화면 중간 사이즈일 때*/
+/* @media screen and (max-width: 849px) {
     .main_container {
         grid-template-columns: 1fr;
     }
@@ -172,8 +152,173 @@ button{
         padding: 10px 0;
         font-size: 20px;
     }
+    .main_content {
+        display: grid;
+        margin-top: 20px;
+    }
+} */
+/* 화면 제일 작을 때 */
+@media screen and (max-width: 849px) {
+    .main_container {
+        grid-template-columns: 1fr;
+    }
+    .sub_title_content {
+        padding: 10px 0;
+        font-size: 20px;
+    }
+    .main_content {
+        display: grid;
+        margin-top: 20px;
+    }
+    /* 화면 작을 때 개인정보수정 CSS */
+     /* 개인정보 수정 */
+     .main-box {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        align-items: center;
+        }
+    .title {
+        font-size: 1rem;
+        font-weight: bold;
+        padding: 10px 0;
+    }
     .sub_title{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+        width: 60%;
+        gap: 20px;
+    }
+    .sub-title-main {
+        display: grid;
+        grid-template-columns: 0.6fr 0.35fr;
+        align-items: center;
+        gap: 10px;
+    }
+    input[type="text"], input[type="password"], select {
+        padding: 7px;
+        margin: 5px;
+        font-size: 1rem;
+        width: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+    }
+    button.change {
+        padding: 10px 20px;
+        background-color: #ccc;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .sub-title-street {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .sub-title-street {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .input3 {
+        grid-column: 1 / 2;
+    }
+    
+    .input1 {
+        grid-column: 1 / 3;
+    }
+    
+    .input2 {
+        grid-column: 1 / 3;
+    }
+    
+    .phone-number {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    
+    .phone-number select, .phone-number input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+    }
+    
+    .phone-number {
+        grid-template-columns: 0.5fr 0.5fr 0.5fr 1fr;
+    }
+    
+    .buttons {
+        margin-top: 20px;
+        justify-self: center;   
+    }
+    
+    button.cancel, button.complete {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    
+    button.cancel {
+        background-color: #ccc;
+    }
+    
+    button.complete {
+        background-color: #333;
+        color: white;
+    }
+
+    .main_my_page {
+        display: grid;
+        border: 1px solid black;
+        padding: 10px;
+        margin: 10px 0;
+        justify-items: center;
+    }
+    .main_comment {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .main_comment > p {
+        justify-self: center;
+        font-size: 15px;
+    }
+    .contents_head_box > button {
+        padding-right: 20px;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .head_list {
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
+    }
+    .my_list {
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 0.5fr 1fr;
+        margin: 3px 0 3px 0;
+    }
+    .my_list > div {
+        justify-self: center;
+        font-size: 17px;
+    }
+    .head_list > div {
+        justify-self: center;
+        font-size: 17px;
+    }
+    .list_title {
+        cursor: pointer;
+    }
+    .page_btn_box {
+        text-align: center;
+    }
+    .page_btn {
+        margin: 0 10px;
+    }
+    .page_btn_box {
+        margin-top: 10px;
     }
 }

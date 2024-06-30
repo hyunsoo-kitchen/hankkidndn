@@ -42,8 +42,8 @@
                                 <div v-for="(item, index) in myRecipeData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRCommentPagination.total - index) - (($store.state.myRCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title" >{{ item.content }}</div>
-                                        <div class="list_views" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ item.recipe_title }}</div>
+                                        <div class="list_title ellipsis" >{{ truncateText(item.content, 10) }}</div>
+                                        <div class="list_views ellipsis" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ truncateText(item.recipe_title, 5) }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
@@ -66,8 +66,8 @@
                                 <div v-for="(item, index) in myBoardData" :key="index">
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
-                                        <div class="list_title ellipsis">{{ item.content }}</div>
-                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ item.title }}</div>
+                                        <div class="list_title ellipsis">{{ truncateText(item.content, 10) }}</div>
+                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ truncateText(item.title, 5) }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
@@ -143,6 +143,14 @@ const RtotalPages = computed(() => myRCommentPagination.value.last_page || 1);
 // 내가 쓴 게시글 현재 페이지와 총 페이지 수 계산
 const BcurrentPage = computed(() => myBCommentPagination.value.current_page || 1);
 const BtotalPages = computed(() => myBCommentPagination.value.last_page || 1);
+
+// 가져오는 댓글과 원문제목이 너무 길 경우 자르기
+const truncateText = (text, length) => {
+  if (text.length <= length) {
+    return text;
+  }
+  return text.slice(0, length) + '...';
+};
 
 
 

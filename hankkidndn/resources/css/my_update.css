@@ -191,7 +191,7 @@ button{
     }
     .detail_box {
         display: grid;
-        grid-template-columns: 1fr 1fr 3fr;
+        grid-template-columns: 1fr 3fr;
     }
     .detail_container {
         display: grid;
@@ -325,9 +325,17 @@ button{
     #profileForm {
         text-align: center;
     }
+    /* 비밀번호 변경 */
+    #updatePasswordForm {
+        padding: 45px 40px;
+    }
+    .btn_box {
+        text-align: center;
+        margin-top: 88px;
+    }
 }
 /* 화면 제일 작을 때 */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 849px) {
     .main_container {
         grid-template-columns: 1fr;
     }
@@ -438,4 +446,67 @@ button{
         background-color: #333;
         color: white;
     }
+
+    .auth_title {
+        margin: 5px 0px;
+        font-size: 20px;
+    }
+    hr {
+        margin: 5px 0;
+    }
+    .auth_box_content {
+        padding: 10vh;
+    }
+    .auth_password_box {
+        display: flex;
+        align-content: space-around;
+        align-items: center;
+    }
+    .auth_password_box > div {
+        margin: auto;
+    }
+    #password {
+        width: 56%;
+    }
+    .main_my_page {
+        display: grid;
+        border: 1px solid black;
+        padding: 10px;
+        margin: 10px 0;
+        justify-items: center;
+    }
+    .main_comment {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .main_comment > p {
+        justify-self: center;
+        font-size: 15px;
+    }
+    .contents_head_box > button {
+        padding-right: 20px;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .contents_title {
+        font-size: 22px;
+    }
+    .myprofile_container > div {
+        font-size: 17px;
+    }
+    .myprofile_title_box {
+        gap: 5px;
+    }
+    .myprofile_title {
+        font-size: 17px;
+        padding: 5px 0;
+        /* border: 1px solid;
+        border-radius: 5px; */
+        width: 26vw;
+        cursor: pointer;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+
 }

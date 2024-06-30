@@ -19,9 +19,9 @@
                         </div>
                         <h2>{{ $store.state.mypageUserinfo.u_nickname }} 님 안녕하세요.</h2>
                         <div class="main_comment">
-                            <p>내가 쓴 레시피 {{ $store.state.mypageUserinfo.recipe_count }}건</p>
-                            <p>내가 쓴 글 {{ $store.state.mypageUserinfo.boards_count }}건</p>
-                            <p>내가 쓴 댓글 {{ $store.state.mypageUserinfo.comments_count }}건</p>
+                            <p>내가 쓴 레시피 : {{ $store.state.mypageUserinfo.recipe_count }}건</p>
+                            <p>내가 쓴 글 : {{ $store.state.mypageUserinfo.boards_count }}건</p>
+                            <p>내가 쓴 댓글 : {{ $store.state.mypageUserinfo.comments_count }}건</p>
                         </div>
                     </div>
                     <div class="contents_box">

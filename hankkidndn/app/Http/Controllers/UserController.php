@@ -318,7 +318,7 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
         
         $user = auth()->user();
