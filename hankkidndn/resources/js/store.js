@@ -631,15 +631,14 @@ const store = createStore({
             formData.append('u_nickname', data);
             axios.post(url, formData)
             .then(response => {
-                console.log(response.data)
                 context.state.userNickname = data;
                 context.state.nicknameFlg = true;
                 alert('사용가능한 닉네임 입니다.')
 
             })
             .catch(error => {
-                alert('사용불가능한 닉네임 입니다.')
                 context.state.nicknameFlg = false;
+                alert('사용불가능한 닉네임 입니다.(' + error.response.data.code + ')');
             });
         },
 

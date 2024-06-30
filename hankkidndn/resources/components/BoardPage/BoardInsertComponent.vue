@@ -18,10 +18,10 @@
                 </label>
                 <input hidden @change="setFile" type="file" id="file" name="file[]" accept="image/*" multiple>
             </div>
-            <input autocomplete="off" name="title" type="text" placeholder="제목">
+            <input autocomplete="off" name="title" type="text" placeholder="제목. (최대 100자까지 작성 가능합니다.)">
             <div class="content-box">
                 <img v-for="(item, index) in preview" :key="index" :src="item">
-                <textarea autocomplete="off" name="content" rows="30" placeholder="내용을 입력해주세요"></textarea>
+                <textarea autocomplete="off" name="content" rows="30" placeholder="내용을 입력해주세요. (최대 1000자까지 작성 가능합니다.)"></textarea>
             </div>
             <div class="buttons">
                 <button type="button" @click="$store.dispatch('boardInsert')" class="complete">작성하기</button>

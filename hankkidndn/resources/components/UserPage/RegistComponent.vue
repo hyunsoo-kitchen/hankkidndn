@@ -30,7 +30,7 @@
                         <div class="title_main">아이디 <span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="text" name="u_id" v-model="formData.u_id" @blur="idBlur(formData.u_id)" autoComplete="off">
+                        <input type="text" name="u_id" v-model="formData.u_id" @blur="idBlur(formData.u_id)" placeholder="영어 대소문자와 숫자를 사용한 6~20글자로 만들어주세요." autoComplete="off">
                         <button @click="$store.dispatch('idCheck', formData.u_id)" class="check" type="button">중복확인</button>
                         <div v-if="formData.u_id === $store.state.userId" :class="errorStyle.u_id">{{ flgText.u_id }}</div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="title_main">비밀번호 <span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="password" name="u_password" @blur="passwordBlur(formData.u_password)" v-model="formData.u_password" autoComplete="off">
+                        <input type="password" name="u_password" @blur="passwordBlur(formData.u_password)" placeholder="영어 대소문자와 숫자, !@#$를 사용한 8~20글자로 만들어주세요." v-model="formData.u_password" autoComplete="off">
                         <div :class="errorStyle.u_password">{{ flgText.u_password }}</div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         <div class="title_main">닉네임 <span>*</span></div>
                     </div>
                     <div class="content">
-                        <input type="text" name="u_nickname" v-model="formData.u_nickname" @blur="nicknameBlur(formData.u_nickname)" autoComplete="off">
+                        <input type="text" name="u_nickname" v-model="formData.u_nickname" @blur="nicknameBlur(formData.u_nickname)" placeholder="한글,영어,숫자를 사용한 2~10글자로 만들어주세요." autoComplete="off">
                         <button @click="$store.dispatch('nicknameCheck', formData.u_nickname)" class="check" type="button">중복확인</button>
                         <div v-if="formData.u_nickname === $store.state.userNickname" :class="errorStyle.u_nickname">{{ flgText.u_nickname }}</div>
                     </div>
@@ -257,8 +257,20 @@ function birthBlur(birth) {
     const chkBirth = /^\d{4}-\d{2}-\d{2}$/;
     console.log(birth)
     if(chkBirth.test(birth)) {
-        flgText.birth_at = '';
-        errors.birth_at = true;
+
+        // 날짜 확인
+        const inputDate = new Date(birth);
+        const today = new Date();
+        
+        // 오늘 이후 날짜 입력시 체크
+        if (inputDate > today) {
+            flgText.birth_at = '생년월일은 오늘 날짜 이전이어야 합니다.';
+            errorStyle.birth_at = 'error-message';
+            errors.birth_at = false;
+        } else {
+            flgText.birth_at = '';
+            errors.birth_at = true;
+        }
     } else {
         flgText.birth_at = '생년월일을 정확히 입력해주세요.';
         errorStyle.birth_at = 'error-message';
@@ -297,13 +309,13 @@ function idBlur(id) {
 
 // 전화번호 정규표현식 체크
 function phoneBlur(phone) {
-    const chkPhone = /^\d{10,11}$/;
+    const chkPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
     console.log(phone)
     if(chkPhone.test(phone)) {
         flgText.u_phone_num = '';
         errors.u_phone = true;
     } else {
-        flgText.u_phone_num = '전화번호는 숫자 10~11자만 입력해주세요.';
+        flgText.u_phone_num = '전화번호 형식에 맞게 입력해주세요. (010-1234-5678)';
         errorStyle.u_phone_num = 'error-message';
         errors.u_phone = false;
     }
@@ -427,7 +439,7 @@ function handleRegistModal() {
             flgText.gender = '성별을 선택해주세요.';
             errorStyle.gender = 'error-message';
         }
-        if(address == '' || detailAddress == '') {
+        if(address.value == '' || detailAddress.value == '') {
             flgText.address = '주소를 입력해주세요';
             errorStyle.address = 'error-message';
         }

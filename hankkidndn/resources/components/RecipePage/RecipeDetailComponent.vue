@@ -112,7 +112,7 @@
                 <!-- 대댓글 불러오기 시작 -->
                 <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
                     <div v-if="item2.cocomment == item.id" class="comment">
-                        <div v-if="item2.id !== cocommentId">
+                        <div v-if="item2.id !== cocommentId" class="comment-margin">
                             <div v-if="!item2.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item2.u_nickname }}</p>
                                 <p class="comment-date">{{ item2.created_at }}</p>
@@ -141,9 +141,9 @@
 
                 <!-- 대댓글 입력 칸 -->
                 <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
-                    <form id="boardCocomment">
+                    <form id="boardCocomment" class="cocomment-box">
                         <input type="hidden" name="recipe_board_id" :value="route.params.id">
-                        <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
+                        <input name="content" autocomplete="off" type="text" placeholder="답글" class="comment-input" v-model="cocomment">
                         <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
                     </form>
                 </div>
@@ -163,7 +163,7 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -229,7 +229,7 @@ function likeToggle(recipeData) {
 
 onBeforeMount(() => {
     store.dispatch('getRecipeDetail', route.params.id);
-    store.dispatch('recipeViewUp', route.params.id)
+    // store.dispatch('recipeViewUp', route.params.id)
     // console.log(store.state.recipeStuff)
 })
 

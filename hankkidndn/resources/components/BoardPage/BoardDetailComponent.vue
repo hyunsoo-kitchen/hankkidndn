@@ -120,9 +120,9 @@
 
                         <!-- 대댓글 입력 칸 -->
                         <div v-if="cocomentFlg && item.id == cocommentId" class="comment-form">
-                            <form id="boardCocomment">
+                            <form id="boardCocomment" class="cocomment-box">
                                 <input type="hidden" name="board_id" :value="route.params.id">
-                                <input name="content" autocomplete="off" type="text" placeholder="댓글" class="comment-input" v-model="cocomment">
+                                <input name="content" autocomplete="off" type="text" placeholder="답글" class="comment-input" v-model="cocomment">
                                 <button type="button" @click="$store.dispatch('cocomentInsert', item.id), cocomment = '', cocomentOff()" class="comment-submit">답글</button>
                             </form>
                         </div>
@@ -219,7 +219,7 @@ function likeToggle(commentData) {
 
 onBeforeMount(() => {
     store.dispatch('getBoardDetail', data.id)
-    store.dispatch('boardViewUp', data.id)
+    // store.dispatch('boardViewUp', data.id)
 });
 
 // 게시판 이름 설정

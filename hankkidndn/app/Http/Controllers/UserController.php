@@ -38,7 +38,7 @@ class UserController extends Controller
             ,[
                 'u_name' => ['required', 'min:2','max:20', 'regex:/^[가-힣]+$/u']
                 ,'birth_at' => ['required']
-                ,'u_id' => ['required', 'min:4', 'max:20', 'unique:users']
+                ,'u_id' => ['required', 'min:6', 'max:20', 'unique:users']
                 ,'u_password' => ['required', 'min:4', 'max:20', 'regex:/^[a-zA-Z0-9!@#$%^]+$/u']
                 ,'password_chk' => ['same:u_password']
                 ,'u_post' => ['required', 'regex:/^\d{5}$/']
@@ -77,6 +77,18 @@ class UserController extends Controller
 
     // 아이디 체크
     public function idCheck(Request $request) {
+
+        // 유효성 검사
+        $validator = Validator::make($request->all(), [
+            'u_id' => 'required|string|min:6|max:20|regex:/^[a-zA-Z0-9]+$/u',
+        ]);
+        
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            throw new MyValidateException('E01');
+        }
+        
+
         $userId = $request->u_id;
         // Log::debug('유저아이디'.$userId);
 
@@ -98,6 +110,17 @@ class UserController extends Controller
 
     // 닉네임 체크
     public function nicknameCheck(Request $request) {
+
+        // 유효성 검사
+        $validator = Validator::make($request->all(), [
+            'u_nickname' => 'required|string|min:2|max:10|regex:/^[가-힣a-zA-Z0-9]+$/u',
+        ]);
+        
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            throw new MyValidateException('E01');
+        }
+
         $userNickname = $request->u_nickname;
 
         $chkNickname = Users::where('u_nickname', '=', $userNickname)->first();

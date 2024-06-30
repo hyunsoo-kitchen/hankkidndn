@@ -534,8 +534,18 @@ button {
     cursor: pointer;
     border-radius: 4px;
     }
-    
 
+    .cocomment-box {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+
+    .comment-margin {
+        margin-left: 50px;
+    }
 @media (max-width: 540px) {
     .header-info {
         font-size: 0.8rem;

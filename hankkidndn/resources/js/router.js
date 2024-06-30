@@ -67,6 +67,7 @@ const routes = [
     {
         path: '/recipe/detail/:id',
         component: RecipeDetailComponent,
+        beforeEnter: recipeViews,
     },
     {
         path: '/board/:id',
@@ -86,6 +87,7 @@ const routes = [
     {
         path: '/board/detail/:id',
         component: BoardDetailComponent,
+        beforeEnter: boardViews,
     },
     {
         path: '/mypage',
@@ -191,12 +193,13 @@ function chkSearchPageNum(to, from, next) {
     }
 }
 
-// function chkSearch(to, from, next) {
-//     if(to.params.search) {
-//         next('/recipe?search=' + to.params.search + '&page=1')
-//     } else {
-//         alert('해당 페이지는 없는 페이지 입니다.');
-//         router.back();
-//     }
-// }
+function boardViews(to, from, next) {
+    store.dispatch('boardViewUp', to.params.id)
+    next();
+}
+
+function recipeViews(to, from, next) {
+    store.dispatch('recipeViewUp', to.params.id)
+    next();
+}
 export default router;
