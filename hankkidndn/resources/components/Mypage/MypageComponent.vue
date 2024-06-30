@@ -89,17 +89,19 @@
                     <div v-if="activeTab === 'security'">
                         <div class="contents_title">개인정보 변경</div>
                         <hr>
-                        <div class="myprofile_title" @click="profileOpenModal">프로필 등록</div>
-
-                        <div class="myprofile_title" @click="nicknameOpenModal">닉네임 변경</div>
-
-                        <div class="myprofile_title" @click="passwordOpenModal">비밀번호 변경</div>
-                            
-                        <div class="myprofile_title" @click="phoneOpenModal">휴대폰 번호 수정</div>
-                            
-                        <div class="myprofile_title" @click="dateOpenModal">생년월일 수정</div>
-
-                        <div class="myprofile_title" @click="addressOpenModal">주소 수정</div>
+                        <div class="myprofile_title_box">
+                            <div class="myprofile_title" @click="profileOpenModal">프로필 등록</div>
+    
+                            <div class="myprofile_title" @click="nicknameOpenModal">닉네임 변경</div>
+    
+                            <div class="myprofile_title" @click="passwordOpenModal">비밀번호 변경</div>
+                                
+                            <div class="myprofile_title" @click="phoneOpenModal">휴대폰 번호 수정</div>
+                                
+                            <div class="myprofile_title" @click="dateOpenModal">생년월일 수정</div>
+    
+                            <div class="myprofile_title" @click="addressOpenModal">주소 수정</div>
+                        </div>
 
                         <!-- 내 정보 수정 모달 -->
                         <!-- 프로필 -->
@@ -222,8 +224,10 @@
                                             </div>
                                         </form>
                                     </div>
+                                    <div class="btn_box">
                                         <button @click="passwordCloseModal" class="btn btn-primary1">취소</button>
                                         <button class="btn btn-primary" @click="showConPasswordModal">수정</button>
+                                    </div>
                             </div>
                         </div>
 
