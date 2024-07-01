@@ -120,6 +120,9 @@ button{
 .profile_img_box > img {
     border-radius: 50%;
 }
+.cursor {
+    cursor: pointer;
+}
 /* 화면 클때 개인정보 수정 css */         
 @media screen and (min-width: 850px) {
     .main_container {
@@ -362,6 +365,8 @@ button{
     .sub_title{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+        width: 75%;
+        gap: 15px;
     }
     .sub-title-main {
         display: grid;
@@ -451,9 +456,9 @@ button{
         margin: 5px 0px;
         font-size: 20px;
     }
-    hr {
+    /* hr {
         margin: 5px 0;
-    }
+    } */
     .auth_box_content {
         padding: 10vh;
     }

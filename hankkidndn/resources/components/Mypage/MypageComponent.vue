@@ -6,9 +6,9 @@
     <hr>
     <div class="main_container">
         <div class="sub_title">
-            <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
-            <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select">내 댓글</div>
-            <div @click="$router.push('/mypage/update')" class="sub_title_content title_select">개인정보</div>
+            <div @click="$router.push('/mypage')" class="sub_title_content title_none_select cursor">내 레시피</div>
+            <div @click="$router.push('/mypage/comments')" class="sub_title_content title_none_select cursor">내 댓글</div>
+            <div @click="$router.push('/mypage/update')" class="sub_title_content title_select cursor">개인정보</div>
         </div>
         <div class="main_content">
 
@@ -191,10 +191,10 @@
                                 </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                         <!-- 주소 -->
-                        <div class="modal_overlay" v-if="addressModalVisible" @click.self="addressCloseModal">
-                            <div class="address_modal">
+                        <div class="modal" v-if="addressModalVisible" @click.self="addressCloseModal">
+                            <div class="modal-dialog">
                                 <div>내 주소 수정</div>
                                     <div>
                                         <form action="" id="updateBirthForm">
@@ -209,8 +209,8 @@
                             </div>
                         </div>
                         <!-- 비밀번호 -->
-                        <div class="modal_overlay" v-if="passwordModalVisible" @click.self="passwordCloseModal">
-                            <div class="address_modal">
+                        <div class="modal" v-if="passwordModalVisible" @click.self="passwordCloseModal">
+                            <div class="modal-dialog">
                                 <div>내 비밀번호 수정</div>
                                     <div>
                                         <form action="" id="updatePasswordForm">

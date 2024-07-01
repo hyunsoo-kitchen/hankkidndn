@@ -40,6 +40,9 @@ button{
     overflow: hidden;
     text-overflow: ellipsis;
   }
+.cursor {
+    cursor: pointer;
+}
 /* 화면 클때 개인정보 수정 css */
 @media screen and (min-width: 850px) {
     .main_container {
@@ -185,8 +188,8 @@ button{
     .sub_title{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        width: 60%;
-        gap: 20px;
+        width: 75%;
+        gap: 15px;
     }
     .sub-title-main {
         display: grid;
@@ -303,7 +306,7 @@ button{
     }
     .my_list > div {
         justify-self: center;
-        font-size: 17px;
+        font-size: 15px;
     }
     .head_list > div {
         justify-self: center;
