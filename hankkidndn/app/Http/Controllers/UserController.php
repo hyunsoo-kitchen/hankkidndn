@@ -150,10 +150,10 @@ class UserController extends Controller
         // 유저 정보 오류
         if(!isset($userInfo)) {
             // 유저 없음
-            throw new MyAutheException('존재하지 않는 아이디입니다.');
+            throw new MyAutheException('E20');
         } else if(!(Hash::check($request->u_password, $userInfo->u_password))) {
             // 비밀번호 오류
-            throw new MyAutheException('비밀번호가 올바르지 않습니다.');
+            throw new MyAutheException('E21');
         }
 
         // 로그인 처리

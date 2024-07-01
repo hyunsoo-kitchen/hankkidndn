@@ -666,7 +666,7 @@ const store = createStore({
             .catch(error => {
                 // console.log(error.response); //TODO
                 // router.replace('/main');
-                alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
+                alert(error.response.data.msg);
             });
         },
 
