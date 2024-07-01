@@ -350,9 +350,9 @@ h2 {
         height: auto;
         max-height: 250px;
     }
-    .new-recipe {
+    /* .new-recipe {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+    } */
 
     .new-recipe-card {
         width: 300px;
