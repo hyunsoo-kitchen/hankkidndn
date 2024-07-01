@@ -98,6 +98,10 @@ const store = createStore({
             // localStorage에 'pagination'이라는 키로 data 객체를 JSON 문자열로 저장합니다.
             localStorage.setItem('pagination', JSON.stringify(data));
         },
+        // 레시피 데이터 저장
+        setDetailRecipeData(state, data) {
+            state.recipeData = data;
+        },
         // 질문,자유 게시판 등 리스트 저장
         setBoardData(state, data) {
             state.boardListData = data.data;
@@ -539,7 +543,7 @@ const store = createStore({
             console.log(id)
             axios.put(url)
             .then(response => {
-                
+                context.commit('setDetailRecipeData', response.data.data)
             })
             .catch();  
         },

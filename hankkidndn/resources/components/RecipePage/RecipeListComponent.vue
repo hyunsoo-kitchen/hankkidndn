@@ -123,13 +123,21 @@ const currentImage = ref(imageMap[100]);
 
 // 최초~추가 게시글 획득
 onBeforeMount(() => {
-    pagination(route.query.page);
     // console.log(store.state.pagination)
     data.board_type = route.params.id;
     data.page = route.query.page;
     currentImage.value = imageMap[data.board_type];
     store.dispatch('getRecipeList', data);
+    const interval = setInterval(() => {
+        console.log('Interval');
+        pagination(route.query.page);
+        if(store.state.pagination.last_page) {
+            clearInterval(interval);
+        }
+    }, 500);
 });
+
+
 
 // page 이동 버튼
 function pageMove(page) {

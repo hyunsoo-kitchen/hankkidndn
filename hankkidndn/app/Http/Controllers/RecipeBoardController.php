@@ -479,21 +479,26 @@ class RecipeBoardController extends Controller
             $likeData->like_chk = '1';
         }
         $likeData->save();
-
-        // comments 갱신
+        // Log::debug('라이크', $likeData->toArray());
         $recipeData = RecipeBoards::find($id);
+
         if($likeData->like_chk == '1') {
             $recipeData->likes_num += 1;
         } else {
             $recipeData->likes_num -= 1;
         }
         $recipeData->save();
-        // DB::commit();
+
+        $data = RecipeBoards::join('users', 'users.id', '=', 'recipe_boards.user_id')
+                    ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
+                    ->where('recipe_boards.id', '=', $id)
+                    ->select('recipe_boards.*', 'users.u_nickname', 'users.profile','recipe_likes.like_chk')
+                    ->first();
 
         $responseData = [
             'code' => '0'
             ,'msg' => '좋아요 완료'
-            ,'data' => $likeData
+            ,'data' => $data
         ];
 
         return response()->json($responseData, 200);
