@@ -30,7 +30,8 @@
                 </div>
                 <div class="header-actions">
                     <div :class="{ 'like-btn': $store.state.authFlg }" class="like">
-                    <button v-if="$store.state.authFlg" @click="$store.dispatch('recipeLike', $route.params.id); likeToggle($store.state.recipeData)" class="header-like" type="button">
+                        <!-- $store.dispatch('recipeLike', $route.params.id); likeToggle($store.state.recipeData) -->
+                    <button v-if="$store.state.authFlg" @click="recipeLikeToggle($store.state.recipeData, 'recipeLike')" class="header-like" type="button">
                         <img src="../../../public/img/like.png" alt="">
                     </button>
                     <div class="like_text">좋아요 수 : {{ $store.state.recipeData.likes_num }}</div>
@@ -97,7 +98,7 @@
                     <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
                     <div class="comment-actions" v-show="!item.deleted_at">
                         <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id);" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
-                        <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                        <button v-if="$store.state.authFlg" @click="likeToggle(item, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                         <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
                         <div class="like_grid">
                         </div>
@@ -113,7 +114,7 @@
 
                 <!-- 대댓글 불러오기 시작 -->
                 <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
-                    <div v-if="item2.cocomment == item.id" class="comment">
+                    <div v-if="item2.cocomment == item.id" class="comment cocomment-padding">
                         <div v-if="item2.id !== cocommentId" class="comment-margin">
                             <div v-if="!item2.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item2.u_nickname }}</p>
@@ -126,7 +127,7 @@
                             <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
                             <p v-else>삭제된 댓글 입니다.</p>
                             <div v-if="!item2.deleted_at" class="comment-actions">
-                                <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                <button v-if="$store.state.authFlg" @click="likeToggle(item2, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                 <p>좋아요 수 : {{ item2.likes_num }}</p>
                             </div>
                         </div>
@@ -172,6 +173,7 @@ import { useRoute } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const modalFlg = ref(false);
+const likeFlg = ref(true);
 
 // 댓글 관련
 const comment = ref('');
@@ -218,15 +220,36 @@ function commentUpdateOff() {
 }
 
 // 좋아요 기능
-function likeToggle(recipeData) {
+function likeToggle(data, action) {
+    if(likeFlg.value) {
+        likeFlg.value = false;
+
+        store.dispatch(action, data.id)
     
-  if(recipeData.like_chk == 1) {
-    recipeData.like_chk = 0;
-    recipeData.likes_num--;
-  } else {
-    recipeData.like_chk = 1;
-    recipeData.likes_num++;
-  }
+        if(data.like_chk == 1) {
+            data.like_chk = 0;
+            data.likes_num--;
+        } else {
+            data.like_chk = 1;
+            data.likes_num++;
+        }
+
+        setTimeout(() => {
+                likeFlg.value = true;
+            }, 1000);
+    }
+}
+
+function recipeLikeToggle(data, action) {
+    if(likeFlg.value) {
+        likeFlg.value = false;
+
+        store.dispatch(action, data.id)
+
+        setTimeout(() => {
+                likeFlg.value = true;
+            }, 1000);
+    }
 }
 
 onBeforeMount(() => {
