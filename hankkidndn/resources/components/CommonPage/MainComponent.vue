@@ -66,7 +66,7 @@
             <div @click="$store.dispatch('getRecipeDetail', item.id)" class="best-recipe-card" v-for="(item, key) in $store.state.mainBestData" :key="key">
                 <img class="best-recipe-img" :src="item.thumbnail">
                 <div class="best-recipe-info">
-                    <img class="best-recipe-profile" :src="item.profile" alt="">
+                    <img class="best-recipe-profile" :src="item.profile">
                     <div class="best-recipe-title">
                         <p class="text-gray">{{ item.u_nickname }}</p>
                         <p class="text-gray">{{ formatDate(item.created_at) }}</p>

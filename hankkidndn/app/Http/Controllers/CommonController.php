@@ -12,26 +12,27 @@ class CommonController extends Controller
         $newList = RecipeBoards::select(
                                 'recipe_boards.*',
                                 'users.u_nickname',
-                                DB::raw('IFNULL((SELECT COUNT(comments.recipe_board_id) FROM comments WHERE comments.recipe_board_id = recipe_boards.id), 0) AS cnt'),
-                                DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
+                                DB::raw('IFNULL((SELECT COUNT(comments.recipe_board_id) FROM comments WHERE comments.recipe_board_id = recipe_boards.id), 0) AS cnt')
+                                // DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
                             )
                             ->orderBy('recipe_boards.created_at', 'DESC')
                             ->limit(4)
                             ->join('users', 'users.id', '=', 'recipe_boards.user_id')
-                            ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
+                            // ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
                             ->get();
 
         $bestData = RecipeBoards::select(
                                 'recipe_boards.*',
                                 'users.u_nickname',
                                 'users.profile',
-                                DB::raw('IFNULL((SELECT COUNT(comments.recipe_board_id) FROM comments WHERE comments.recipe_board_id = recipe_boards.id), 0) AS cnt'),
-                                DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
+                                DB::raw('IFNULL((SELECT COUNT(comments.recipe_board_id) FROM comments WHERE comments.recipe_board_id = recipe_boards.id), 0) AS cnt')
+                                // DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
                             )
+                            // ->groupBy('recipe_boards.id')
                             ->orderBy('recipe_boards.likes_num', 'DESC')
                             ->limit(3)
                             ->join('users', 'users.id', '=', 'recipe_boards.user_id')
-                            ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
+                            // ->leftJoin('recipe_likes', 'recipe_likes.recipe_board_id', '=', 'recipe_boards.id')
                             ->get();
         
         $responseData = [
