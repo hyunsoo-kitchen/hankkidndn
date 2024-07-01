@@ -6,9 +6,9 @@
             <hr>
             <div class="main_container">
                 <div class="sub_title">
-                    <div @click="$router.push('/mypage')" class="sub_title_content title_none_select">내 레시피</div>
-                    <div @click="$router.push('/mypage/comments')" class="sub_title_content title_select">내 댓글</div>
-                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select">개인정보</div>
+                    <div @click="$router.push('/mypage')" class="sub_title_content title_none_select cursor">내 레시피</div>
+                    <div @click="$router.push('/mypage/comments')" class="sub_title_content title_select cursor">내 댓글</div>
+                    <div @click="$router.push('/mypage/update')" class="sub_title_content title_none_select cursor">개인정보</div>
                 </div>
                 <div class="main_content">
                     <!-- 내 레시피 -->

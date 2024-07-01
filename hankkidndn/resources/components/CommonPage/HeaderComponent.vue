@@ -8,25 +8,25 @@
             </div>
                 <div class="btn-group" v-if="!$store.state.authFlg">
                   <button @click="$router.push('/login')" class="header-btn" id="login">
-                    <img v-if="flgResizeSmaller1044" src="/img/login.png" alt="login">
+                    <img v-if="flgResizeSmaller1044" src="/img/login.png" alt="login" class="img_size">
                     <span v-if="!flgResizeSmaller1044">로그인</span>
                   </button>
                 </div>
                 <div class="btn-group" v-if="!$store.state.authFlg">
                   <button @click="$router.push('/regist/agree')" class="header-btn" id="regist">
-                    <img v-if="flgResizeSmaller1044" src="/img/regist.png" alt="register">
+                    <img v-if="flgResizeSmaller1044" src="/img/regist.png" alt="register" class="img_size">
                     <span v-if="!flgResizeSmaller1044">가입하기</span>
                   </button>
                 </div>
                 <div class="btn-group" v-if="$store.state.authFlg">
                   <button @click="$router.push('/mypage')" class="header-btn1" id="my_page">
-                    <img v-if="flgResizeSmaller1044" src="/img/my_page.png" alt="my_page">
+                    <img v-if="flgResizeSmaller1044" src="/img/my_page.png" alt="my_page" class="img_size">
                     <span v-if="!flgResizeSmaller1044" >내 정보</span>
                   </button>
                 </div>
                 <div class="btn-group" v-if="$store.state.authFlg">
                   <button @click="$store.dispatch('logout')" class="header-btn" id="logout">
-                    <img v-if="flgResizeSmaller1044" src="/img/logout.png" alt="logout">
+                    <img v-if="flgResizeSmaller1044" src="/img/logout.png" alt="logout" class="img_size">
                     <span v-if="!flgResizeSmaller1044" >로그아웃</span>
                   </button>
                 </div>

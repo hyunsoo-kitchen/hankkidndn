@@ -98,4 +98,8 @@ button{
         background-size: cover;
         background-position: center;
     } */
+    .img_size {
+        width: 25px;
+        height: 25px;
+    }
 }
