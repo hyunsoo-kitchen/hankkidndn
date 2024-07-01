@@ -52,6 +52,7 @@
                     </div>
                     <p>{{ $store.state.boardDetail.content }}</p>
                 </div>
+                <h2>댓글</h2>
                 <div class="comment-section">
                     <!-- 댓글 불러오기 시작 -->
                     <div v-if="$store.state.commentData" v-for="(item, index) in $store.state.commentData" :key="index" class="comment">
