@@ -275,16 +275,15 @@ h2 {
         max-height: 250px;
     }
     .new-recipe {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
     .new-recipe-card {
-        width: 400px;
         height: 200px;
     }
 
     .new-recipe-img {
-        width: 400px;
+        width: 100%;
         height: 200px;
         object-fit: cover;
     }
@@ -425,9 +424,10 @@ h2 {
         width: 100%;
         height: auto;
         max-height: 200px;
+        min-height: 200px;
     }
     .new-recipe {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 
     .new-recipe-card {
@@ -436,7 +436,7 @@ h2 {
     }
 
     .new-recipe-img {
-        width: 300px;
+        width: 100%;
         height: 200px;
         object-fit: cover;
     }
