@@ -67,7 +67,7 @@
         </div>
 
         <div class="video">
-            <iframe v-if="$store.state.recipeData.embed_url !== null " width="560" height="315" :src="$store.state.recipeData.embed_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="youtube-video" v-if="$store.state.recipeData.embed_url !== null " width="80%" height="400" align :src="$store.state.recipeData.embed_url"></iframe>
             <div v-else>이 게시글은 동영상이 없습니다.</div>
         </div>
 
@@ -76,6 +76,8 @@
             <img :src="$store.state.recipeData.profile" class="profile-img">
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
         </div>
+
+        <h2>댓글</h2>
 
         <div class="comment-section">
             <!-- 댓글 불러오기 시작 -->
