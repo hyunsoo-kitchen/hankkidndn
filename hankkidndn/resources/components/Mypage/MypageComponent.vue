@@ -140,7 +140,7 @@
                             <div class="modal-body">
                                 <form action="" id="updateNicknameForm">
                                 <input type="text" autoComplete="off" id="u_nickname" name="u_nickname" v-model="formData.u_nickname">
-                                <button class="check" type="button">중복확인</button>
+                                <button class="check"  type="button">중복확인</button>
                                 </form>
                             </div>
                             <div class="modal-footer">

@@ -137,8 +137,6 @@ onBeforeMount(() => {
     }, 500);
 });
 
-
-
 // page 이동 버튼
 function pageMove(page) {
     if(page >= 1 && page <= store.state.pagination.last_page) {

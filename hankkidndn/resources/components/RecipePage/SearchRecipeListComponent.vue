@@ -1,4 +1,20 @@
 <template>
+    <div class="modal" v-show="insertModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="insertModalOff" class="close">×</button>
+          </div>
+          <div class="modal-body">
+            <p>글 작성은 로그인 후 가능합니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="insertModalOff(); $router.push('/login')" class="btn btn-primary">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
         <div class="header">
             <div class="main-img">
@@ -28,18 +44,18 @@
         <div class="main-list">
             <div class="main-list-title">
                 <h3>총 {{ $store.state.searchPagination.total }}개의 레시피가 있습니다.</h3>
-                <button @click="$router.push('/recipe/insert')">레시피 작성하기</button>
-                <button>최신순</button>
+                <button v-if="$store.state.authFlg" @click="$router.push('/recipe/insert')">레시피 작성하기</button>
+                <button v-if="!$store.state.authFlg" @click="insertModalOn()">레시피 작성하기</button>
                 <!-- <div>{{ $store.state.searchPagination.current_page }}</div> -->
             </div>
             <div class="main-list-content">
-                <div class="card" v-for="(item, index) in $store.state.searchRecipeListData" :key="index">
-                    <img :src="item.thumbnail" @click="$store.dispatch('getRecipeDetail', item.id)">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.searchRecipeListData" :key="index">
+                    <img :src="item.thumbnail">
                     <div class="card-title">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
-                        <div class="card-star">{{ item.created_at }}</div>
-                        <div class="card-view">{{ item.views }}</div>
+                        <div class="card-star">{{ formatDate(item.created_at) }}</div>
+                        <div class="card-view">조회수 : {{ item.views }}</div>
                     </div>
                 </div>
             </div>
@@ -64,6 +80,7 @@ import { useRoute } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const page = ref([]);
+const insertModal = ref(false);
 
 onBeforeMount(() => {
     pagination(route.query.page);
@@ -122,6 +139,23 @@ function search() {
     store.dispatch('searchRecipes', data);
 }
 
+// 비로그인시 작성 모달창
+function insertModalOn() {
+    insertModal.value = true;
+}
+
+function insertModalOff() {
+    insertModal.value = false;
+}
+
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, ''); 
+};
 
 </script>
 
