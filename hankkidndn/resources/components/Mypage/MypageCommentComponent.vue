@@ -43,7 +43,7 @@
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myRCommentPagination.total - index) - (($store.state.myRCommentPagination.current_page - 1) * 10) }}</div>
                                         <div class="list_title ellipsis" >{{ truncateText(item.content, 10) }}</div>
-                                        <div class="list_views ellipsis" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ truncateText(item.recipe_title, 5) }}</div>
+                                        <div class="list_views ellipsis cursor" @click="$store.dispatch('getRecipeDetail', item.recipe_board_id)">{{ truncateText(item.recipe_title, 5) }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                     <div class="my_list">
                                         <div class="list_num">{{ ($store.state.myBCommentPagination.total - index) - (($store.state.myBCommentPagination.current_page - 1) * 10) }}</div>
                                         <div class="list_title ellipsis">{{ truncateText(item.content, 10) }}</div>
-                                        <div class="list_views ellipsis" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ truncateText(item.title, 5) }}</div>
+                                        <div class="list_views ellipsis cursor" @click="$store.dispatch('getBoardDetail', item.board_id)" >{{ truncateText(item.title, 5) }}</div>
                                         <div class="list_date">{{ formatDate(item.created_at) }}</div>
                                     </div>
                                 </div>
