@@ -19,6 +19,8 @@ import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeList
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 import store from './store';
 import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
+import AdminLogin from '../components/AdminPage/AdminLogin.vue';
+import ContentControllComponent from '../components/AdminPage/ContentControllComponent.vue';
 
 const routes = [
     {
@@ -118,6 +120,15 @@ const routes = [
         path: '/registrationcomplete',
         component: RegistrationComplete,
     },
+    // 관리자 처리 --- 노경호
+    {
+        path: '/adminlogin',
+        component: AdminLogin,
+    },
+    {
+        path: '/admincontentcontroll',
+        component: ContentControllComponent,
+    }
 ];
 
 const router = createRouter({
