@@ -46,3 +46,45 @@ button{
     display: grid;
     grid-template-rows: 0.8fr 0.5fr 7fr;
 }
+.head_notice {
+    border: 1px solid black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.main_category {
+    width: 310px;
+    border: 1px solid black;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.main_content {
+    border: 1px solid black;
+}
+.recipe_report_list_head {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: 0 0 10px 0;
+}
+.report_list {
+    display: grid;
+    grid-template-rows: 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
+}
+.report {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    height: 25px;
+}
+.pagenation_box {
+    width: 60%;
+    margin: 20px auto 0;
+}
+.pagenation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;    
+}
+.pagenation > button {
+    width: 30px;
+}

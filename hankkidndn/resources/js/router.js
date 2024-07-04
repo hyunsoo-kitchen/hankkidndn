@@ -129,7 +129,7 @@ const routes = [
     {
         path: '/admincontentcontroll',
         component: ContentControllComponent,
-    }
+    },
     {
         path: '/kakaoLogin',
         component: KakaoLoginComponent,
