@@ -357,11 +357,13 @@ button {
     align-items: center;
     justify-content: space-between;
     padding-top: 5px;
+    text-align: right;
     }
     
     .comment-actions > p {
     font-size: 0.9rem;
     color: #555;
+    grid-column: 3/4;
     }
     
     .like-button {
@@ -379,7 +381,7 @@ button {
     
     .btn_grid{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-column: 2 / 2;
     }
     

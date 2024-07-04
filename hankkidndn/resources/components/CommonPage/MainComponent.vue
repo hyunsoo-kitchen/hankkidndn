@@ -1,7 +1,11 @@
 <template>
     <CategoryComponent/>
     <div class="header">
-        <img class="header-img" src="../../../public/img/main.png" alt="">
+        <swiper-container class="header-img">
+            <swiper-slide><img src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img src="../../../public/img/main.png"></swiper-slide>
+        </swiper-container>
     </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
     <div class="body-container">
@@ -92,6 +96,9 @@
 import { onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
 import CategoryComponent from './CategoryComponent.vue';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 const store = useStore();
 

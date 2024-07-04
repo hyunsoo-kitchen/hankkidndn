@@ -113,6 +113,8 @@
             </div>
         </form> 
     </div>
+
+    <!-- 게시글 불러오기 시작 -->
     <div class="container">
         <div class="header">
             <div class="header-img-wrapper">
@@ -139,7 +141,7 @@
 
         <div class="btn">
             <button v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/recipe/update/' + $store.state.recipeData.id)">수정</button>
-            <button v-if="$store.state.userInfo && $store.state.recipeData.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
+            <button v-if="deleteBtn($store.state.recipeData.user_id)" type="button" @click="openModal()" class="delete">삭제</button>
             <button type="button" v-if="$store.state.authFlg" @click="reportModalOn()">신고</button>
         </div>
         
@@ -185,7 +187,7 @@
                         <p class="comment-date">{{ item.created_at }}</p>
                         <div class="btn_grid">
                             <button @click="commentUpdateOn(item.id); cocomentOff()" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
-                            <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                            <button @click="$store.dispatch('commentDelete', item.id)" v-if="commentDeleteBtn(item.user_id)" type="button">삭제</button>
                             <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item.id)">신고</button>
                         </div>
                     </div>
@@ -194,7 +196,7 @@
 
                     <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
                     <div class="comment-actions" v-show="!item.deleted_at">
-                        <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id);" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
+                        <button v-if="$store.state.authFlg || $store.state.adminFlg " type="button" @click="cocomentOn(item.id);" class="comment_actions_btn">답글</button>
                         <button v-if="$store.state.authFlg" @click="likeToggle(item, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                         <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
                         <div class="like_grid">
@@ -218,7 +220,7 @@
                                 <p class="comment-date">{{ item2.created_at }}</p>
                                 <div class="btn_grid">
                                 <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
-                                <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                <button @click="$store.dispatch('commentDelete', item2.id)" v-if="commentDeleteBtn(item2.user_id)" type="button">삭제</button>
                                 <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item2.id)">신고</button>
                             </div>
                             </div>
@@ -252,7 +254,7 @@
             
             <!-- 댓글 입력창 -->
             <form id="boardComment">
-                <div v-if="$store.state.authFlg" class="comment-form">
+                <div v-if="$store.state.authFlg || $store.state.adminFlg " class="comment-form">
                     <input autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
                     <button type="button" @click="$store.dispatch('commentRecipeInsert', $route.params.id), comment = '';" class="comment-submit">댓글</button>
                 </div>
@@ -393,6 +395,28 @@ function commentReportModalOn(id) {
 function commentReportModalOff() {
     commentReportFlg.value = false;
     reportContent.value = '';
+}
+
+// 게시글 삭제버튼 if 검사
+function deleteBtn(id) {
+    if(store.state.userInfo && id == store.state.userInfo.id) {
+        return true;
+    } else if (store.state.adminFlg) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// 댓글 삭제버튼 if 검사
+function commentDeleteBtn(id) {
+    if(store.state.userInfo && store.state.userInfo.id == id) {
+        return true;
+    } else if (store.state.adminFlg) {
+        return true;
+    } else {
+        return false;
+    }
 }
 </script>
 

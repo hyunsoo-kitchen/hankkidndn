@@ -114,23 +114,17 @@
             </div>
         </form> 
     </div>
+
+    <!-- 게시글 불러오기 시작 -->
     <div class="container">
-         <!-- 삭제 모달 -->
-        <!-- <div v-if="modalFlg" class="delete-modal">
-            <div class="modal-title">정말로 삭제 하시겠습니까?</div>
-            <div class="delete-btn">
-                <button type="button" @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)">삭제</button>
-                <button type="button" @click="closeModal()">취소</button>
-            </div>
-        </div> -->
         <div class="main_list">
             <div class="main_title">
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
                 <div class="buttons">
                     <div class="btn_grid">
                         <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
-                        <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
-                        <button type="button" v-if="$store.state.authFlg" @click="reportModalOn()">신고</button>
+                        <button v-if="deleteBtn($store.state.boardDetail.user_id)" type="button" @click="openModal()" class="delete">삭제</button>
+                        <button type="button" v-if="$store.state.authFlg" class="report" @click="reportModalOn()">신고</button>
                     </div>
                 </div>
             </div>
@@ -161,7 +155,7 @@
                                 <p class="comment-date">{{ item.created_at }}</p>
                                 <div class="btn_grid">
                                 <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
-                                <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                                <button @click="$store.dispatch('commentDelete', item.id)" v-if="commentDeleteBtn(item.user_id)" type="button">삭제</button>
                                 <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item.id)">신고</button>
                             </div>
                             </div>
@@ -170,7 +164,7 @@
     
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
                             <div class="comment-actions" v-show="!item.deleted_at">
-                                <button v-if="$store.state.authFlg" type="button" @click="cocomentOn(item.id)" class="comment_actions_btn" v-show="$store.state.authFlg">답글</button>
+                                <button v-if="$store.state.authFlg || $store.state.adminFlg " type="button" @click="cocomentOn(item.id)" class="comment_actions_btn">답글</button>
                                 <div class="comment-like">
                                     <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                     <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
@@ -196,7 +190,7 @@
                                         <p class="comment-date">{{ item2.created_at }}</p>
                                         <div class="btn_grid">
                                             <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
-                                            <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                            <button @click="$store.dispatch('commentDelete', item2.id)" v-if="commentDeleteBtn(item2.user_id)" type="button">삭제</button>
                                             <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item2.id)">신고</button>
                                         </div>
                                     </div>
@@ -232,7 +226,7 @@
                     
                     <!-- 댓글 입력창 -->
                     <form id="boardComment">
-                        <div v-if="$store.state.authFlg" class="comment-form">
+                        <div v-if="$store.state.authFlg || $store.state.adminFlg" class="comment-form">
                             <input autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
                             <button type="button" @click="$store.dispatch('commentInsert', data.id), comment = '';" class="comment-submit">댓글</button>
                         </div>
@@ -327,7 +321,6 @@ function likeToggle(commentData) {
 
 onBeforeMount(() => {
     store.dispatch('getBoardDetail', data.id)
-    // store.dispatch('boardViewUp', data.id)
 });
 
 // 게시판 이름 설정
@@ -374,6 +367,29 @@ function commentReportModalOff() {
     commentReportFlg.value = false;
     reportContent.value = '';
 }
+
+// 게시글 삭제버튼 if 검사
+function deleteBtn(id) {
+    if(store.state.userInfo && id == store.state.userInfo.id) {
+        return true;
+    } else if (store.state.adminFlg) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// 댓글 삭제버튼 if 검사
+function commentDeleteBtn(id) {
+    if(store.state.userInfo && store.state.userInfo.id == id) {
+        return true;
+    } else if (store.state.adminFlg) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
