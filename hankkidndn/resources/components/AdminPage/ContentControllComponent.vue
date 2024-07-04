@@ -52,7 +52,7 @@
                             <div>이현수달달달</div>
                             <div>3</div>
                             <div>
-                                <button>상세보기</button>
+                                <button @click="showModal(report)" type="button">상세보기</button>
                             </div>
                         </div>
                         <div class="report">
@@ -150,6 +150,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 일반 게시판 신고 -->
+
+            <!-- 댓글 신고 -->
+
+            <!-- 문의 사항 -->
+
         </div>
 
 
@@ -160,10 +167,33 @@
 
 
 <!-- 레시피 신고 상세보기 모달 -->
+<div v-if="isModalVisible" class="detail_modal_container">
+    <div class="modal_content">
+        <h2>신고 상세보기</h2>
+        <p>제목: </p>
+        <p>작성자: </p>
+        <p>내용: </p>
+        <p>신고자: </p>
+        <p>신고사유: </p>
+        <button @click="closeModal">닫기</button>
+    </div>
+</div>
+
 
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const isModalVisible = ref(false);
+const showModal = () => {
+  isModalVisible.value = true;
+};
+
+const closeModal = () => {
+  isModalVisible.value = false;
+};
+
 
 </script>
 
