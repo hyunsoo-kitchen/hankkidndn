@@ -9,7 +9,7 @@
             <p>admin0001</p>    
         </div>
         <div>
-            <button>로그아웃</button>
+            <button @click="$store.dispatch('adminLogout')" type="button" >로그아웃</button>
         </div>
     </div>
 
