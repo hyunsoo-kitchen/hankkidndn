@@ -1,21 +1,119 @@
 <template>
+    <!-- 삭제 모달 창 -->
     <div class="modal" v-show="modalFlg">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">알림</h3>
-          <button type="button" @click="closeModal" class="close">×</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">알림</h3>
+                    <button type="button" @click="closeModal" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>정말로 삭제 하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)" class="btn btn-primary">삭제</button>
+                    <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>정말로 삭제 하시겠습니까?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" @click="$store.dispatch('boardDelete', $store.state.boardDetail.id)" class="btn btn-primary">삭제</button>
-          <button type="button" @click="closeModal" class="btn btn-primary1">취소</button>
-        </div>
-      </div>
     </div>
-  </div>
+
+    <!-- 중복신고 방지 모달 창 -->
+    <div class="modal" v-show="$store.state.reportModalFlg">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">알림</h3>
+                    <button type="button" @click="$store.state.reportModalFlg = false" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>신고는 한번만 가능합니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="$store.state.reportModalFlg = false" class="btn btn-primary1">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 신고 접수 모달 창 -->
+    <div class="modal" v-show="$store.state.reportSuccessFlg">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">알림</h3>
+                    <button type="button" @click="$store.state.reportSuccessFlg = false" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>신고가 접수되었습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="$store.state.reportSuccessFlg = false" class="btn btn-primary1">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 신고 모달 창 -->
+    <div class="modal" v-show="reportFlg">
+        <form id="boardReportForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">알림</h3>
+                        <button type="button" @click="reportModalOff()" class="close">×</button>
+                    </div>
+                    <select name="report_type">
+                        <option value="1">욕설, 비방, 차별, 혐오</option>
+                        <option value="2">홍보, 영리 목적</option>
+                        <option value="3">불법 정보</option>
+                        <option value="4">음란, 청소년 유해</option>
+                        <option value="5">개인 정보 노출, 유포, 거래</option>
+                        <option value="6">도배, 스팸</option>
+                        <option value="7">기타</option>
+                    </select>
+                    <div class="modal-body">
+                        <textarea name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" @click="$store.dispatch('boardReport', $store.state.boardDetail.id); reportModalOff() " class="btn btn-primary">신고</button>
+                        <button type="button" @click="reportModalOff()" class="btn btn-primary1">취소</button>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
+
+    <!-- 댓글 신고 모달 창 -->
+    <div class="modal" v-show="commentReportFlg">
+        <form id="commentReportForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">알림</h3>
+                        <button type="button" @click="commentReportModalOff()" class="close">×</button>
+                    </div>
+                    <select name="report_type">
+                        <option value="1">욕설, 비방, 차별, 혐오</option>
+                        <option value="2">홍보, 영리 목적</option>
+                        <option value="3">불법 정보</option>
+                        <option value="4">음란, 청소년 유해</option>
+                        <option value="5">개인 정보 노출, 유포, 거래</option>
+                        <option value="6">도배, 스팸</option>
+                        <option value="7">기타</option>
+                    </select>
+                    <div class="modal-body">
+                        <textarea name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" @click="$store.dispatch('commentReport', commentReportId); commentReportModalOff() " class="btn btn-primary">신고</button>
+                        <button type="button" @click="commentReportModalOff()" class="btn btn-primary1">취소</button>
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div>
     <div class="container">
          <!-- 삭제 모달 -->
         <!-- <div v-if="modalFlg" class="delete-modal">
@@ -30,9 +128,10 @@
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
                 <div class="buttons">
                     <div class="btn_grid">
-                    <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
-                    <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
-                </div>
+                        <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
+                        <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" @click="openModal()" class="delete">삭제</button>
+                        <button type="button" v-if="$store.state.authFlg" @click="reportModalOn()">신고</button>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -63,6 +162,7 @@
                                 <div class="btn_grid">
                                 <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
                                 <button @click="$store.dispatch('commentDelete', item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">삭제</button>
+                                <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item.id)">신고</button>
                             </div>
                             </div>
                             <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
@@ -97,6 +197,7 @@
                                         <div class="btn_grid">
                                             <button @click="commentUpdateOn(item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">수정</button>
                                             <button @click="$store.dispatch('commentDelete', item2.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item2.user_id" type="button">삭제</button>
+                                            <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item2.id)">신고</button>
                                         </div>
                                     </div>
                                     <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
@@ -160,6 +261,12 @@ const cocommentId = ref();
 const cocomment = ref('');
 const commentFlg = ref(true);
 const cocomentFlg = ref(false);
+
+// 신고 관련
+const reportFlg = ref(false);
+const commentReportFlg = ref(false);
+const commentReportId = ref('');
+const reportContent = ref('');
 
 // 댓글 수정
 const commentUpdateFlg = ref(false);
@@ -247,6 +354,26 @@ const formatDate = (dateString) => {
         hour12: false
     }).replace(/\.$/, '');  // 마지막 점 제거
 };
+
+// 신고 모달
+function reportModalOn() {
+    reportFlg.value = true;
+}
+
+function reportModalOff() {
+    reportFlg.value = false;
+}
+
+// 댓글 신고 모달
+function commentReportModalOn(id) {
+    commentReportFlg.value = true;
+    commentReportId.value = id
+}
+
+function commentReportModalOff() {
+    commentReportFlg.value = false;
+    reportContent.value = '';
+}
 </script>
 <style scoped src="../../css/boarddetail.css">
     @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');

@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\RecipeBoardController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Models\RecipeBoards;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,15 @@ Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentI
 Route::post('/api/recipe/detail/view/{num}', [RecipeBoardController::class, 'viewUp']);
 Route::post('/api/board/detail/view/{num}', [BoardController::class, 'viewUp']);
 
+// 카카오 로그인 관련
+Route::get('/api/login/kakao', [UserController::class, 'redirectToProvider']);
+Route::get('/api/login/kakao/callback', [UserController::class, 'handleProviderCallback']);
+Route::get('/api/kakaoLogin', [UserController::class, 'kakaoLogin']);
+
+// 신고 기능 관련
+Route::post('/api/board/report/{num}', [ReportController::class, 'boardReport']);
+Route::post('/api/recipe/report/{num}', [ReportController::class, 'recipeReport']);
+Route::post('/api/comment/report/{num}', [ReportController::class, 'commnetReport']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------

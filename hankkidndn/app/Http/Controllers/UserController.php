@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
@@ -461,5 +462,57 @@ class UserController extends Controller
     }
 
 
+    // 카카오 로그인 관련
+    public function redirectToProvider()
+    {
+        return Socialite::driver('kakao')->redirect();
+    }
+
+    public function handleProviderCallback()
+    {
+        try {
+            // Log::debug('로그인 안됨');
+            $kakaoUser = Socialite::driver('kakao')->user();
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect('/login');
+        }
+
+        // 사용자 정보를 이용해 로그인 처리를 합니다.
+        $user = $kakaoUser->getId();
+
+        if (isset($user)) {
+
+            session(['user' => $user]);
+
+            return redirect('/kakaoLogin');
+        } else {
+            // 사용자가 없다면 새로운 사용자 생성
+            $newUser = Users::create([
+                'u_nickname' => $kakaoUser->getNickname(),
+            ]);
+
+            Auth::login($newUser);
+        }
+        // return response()->json($response);
+    }
+
+    // 카카오 로그인 처리
+    public function kakaoLogin() {
+        $kakaoId = session('user');
+
+        $userData = Users::where('kakao_id', $kakaoId)->first();
+
+        Auth::login($userData);
+
+        // 레스폰스 데이터 생성
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '로그인 성공'
+            ,'data' => $userData
+        ];
+
+        return response() -> json($responseData, 200)->cookie('auth', '1', 120, null, null, false, false);
+    }
 }
 

@@ -17,9 +17,12 @@
                     </div>
                 </form>
                 <div class="kakao-btn">
-                    <button class="kakao" type="button" @click="handleKakaoButtonClick">
+                    <a href="/api/login/kakao">Kakao 로그인</a>
+                     <!-- <button type="button" @click="$store.dispatch('test')">카카오</button> -->
+                      <!-- 카카오 로그인 클릭시 모달창 생성 -->
+                    <!-- <button class="kakao" type="button" @click="handleKakaoButtonClick"> -->
                         <!-- <img class="btn-img" src="../../../public/img/kakao_login_medium_wide.png"> -->
-                    </button>
+                    <!-- </button> -->
                 </div>
             </div>
     </div>

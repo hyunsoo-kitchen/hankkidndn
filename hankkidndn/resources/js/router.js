@@ -19,6 +19,7 @@ import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeList
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 import store from './store';
 import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
+import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue';
 
 const routes = [
     {
@@ -117,6 +118,10 @@ const routes = [
     {
         path: '/registrationcomplete',
         component: RegistrationComplete,
+    },
+    {
+        path: '/kakaoLogin',
+        component: KakaoLoginComponent,
     },
 ];
 

@@ -33,6 +33,10 @@ const store = createStore({
             // 보드 디테일 페이지 댓글 데이터
             commentData: [],
             cocommentData: [],
+
+            // 중복 신고 방지 모달 플래그
+            reportFailFlg: false,
+            reportSuccessFlg: false,
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -577,6 +581,84 @@ const store = createStore({
             axios.post(url)
             .then(response => {
 
+            })
+            .catch();
+        },
+
+        // 보드 게시글 신고 기능
+        boardReport(context, id) {
+            const url ='/api/board/report/' + id
+            const data = new FormData(document.querySelector('#boardReportForm')); 
+
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data.code);
+                if(response.data.code == 1) {
+                    context.state.reportFailFlg = true;
+                } else {
+                    context.state.reportSuccessFlg = true;
+                }
+            })
+            .catch();
+        },
+
+        // 레시피 게시글 신고 기능
+        recipeReport(context, id) {
+            const url ='/api/recipe/report/' + id
+            const data = new FormData(document.querySelector('#recipeReportForm')); 
+
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data.code);
+                if(response.data.code == 1) {
+                    context.state.reportFailFlg = true;
+                } else {
+                    context.state.reportSuccessFlg = true;
+                }
+            })
+            .catch();
+        },
+        test(context) {
+            const url = '/api/login/kakao';
+
+            axios.get(url)
+            .then(response => {
+                localStorage.setItem('userInfo', JSON.stringify(response.data.data));
+                context.commit('setUserInfo', response.data.data);
+                context.commit('setAuthFlg', true);
+                router.back();
+            })
+            .catch(error => {
+                alert(error.response.data.msg);
+            });
+        },
+        // 댓글, 답글 게시글 신고 기능
+        commentReport(context, id) {
+            const url ='/api/comment/report/' + id
+            const data = new FormData(document.querySelector('#commentReportForm')); 
+
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data.code);
+                if(response.data.code == 1) {
+                    context.state.reportModalFlg = true;
+                } else {
+                    context.state.reportSuccessFlg = true;
+                }
+            })
+            .catch();
+        },
+
+        kakaoLogin(context) {
+            const url = '/api/kakaoLogin'
+
+            axios.get(url)
+            .then(response => {
+                localStorage.setItem('userInfo', JSON.stringify(response.data.data));
+                context.commit('setUserInfo', response.data.data);
+                context.commit('setAuthFlg', true);
+
+                router.replace('/main');
             })
             .catch();
         },
