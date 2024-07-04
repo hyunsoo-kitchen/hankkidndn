@@ -326,10 +326,10 @@ class UserController extends Controller
 
         $profileName = Str::uuid().'.'.$request->file('profile')->getClientOriginalExtension();
         $profilePath = public_path('profile') . '/' . $profileName;
-
+        Log::debug($profilePath);
         $im = new ImageManager(new Driver());
         $img = $im->read($request->file('profile')->path());
-        
+        // Log::debug($img);
         $img->resize(100, 100, function ($constraint) {
             $constraint->aspectRatio();
         })->save($profilePath);
