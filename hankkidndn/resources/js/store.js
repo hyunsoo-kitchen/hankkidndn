@@ -37,6 +37,10 @@ const store = createStore({
             // 중복 신고 방지 모달 플래그
             reportFailFlg: false,
             reportSuccessFlg: false,
+
+            // 관리자 정보, 플래그
+            adminFlg: document.cookie.indexOf('admin=') >= 0 ? true : false,
+            adminInfo: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo')) : null,
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -159,6 +163,15 @@ const store = createStore({
             // console.log(state.cocommentData[data.key]);
             state.cocommentData[data.key] = data.data;
             // console.log(state.cocommentData[data.key]);
+        },
+        
+        // 관리자 계정 플래그
+        setAdminFlg(state, flg) {
+            state.adminFlg = flg;
+        },
+        // 관리자 계정 저장
+        setAdminInfo(state, data) {
+            state.adminInfo = data;
         },
         //---------------------끝---------------------------
 
@@ -661,6 +674,47 @@ const store = createStore({
                 router.replace('/main');
             })
             .catch();
+        },
+
+        // 관리자 로그인 기능
+        adminLogin(context) {
+            const url = '/api/admin/login'
+            const data = new FormData(document.querySelector('#adminForm'))
+
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data); //TODO
+                localStorage.setItem('adminInfo', JSON.stringify(response.data.data));
+                context.commit('setAdminInfo', response.data.data);
+                context.commit('setAdminFlg', true);
+
+                // router.replace('/main');
+                router.replace('/admincontentcontroll');
+            })
+            .catch();
+        },
+
+        //로그아웃 처리
+        adminLogout(context) {
+            const url = '/api/admin/logout';
+
+            axios.post(url)
+            .then(response => {
+                console.log(response.data); // TODO
+            })
+            .catch(error => {
+                console.log(error.response); // TODO
+                alert('문제가 발생해 강제 로그아웃합니다. (' + error.response.data.code + ')');
+            })
+            .finally(() => {
+                localStorage.clear();
+
+                context.commit('setAdminFlg', false);
+                context.commit('setAdminInfo', null);
+
+                router.replace('/main');
+                // router.back();
+            });
         },
         //---------------------끝---------------------------
 

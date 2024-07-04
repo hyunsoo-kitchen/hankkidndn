@@ -129,7 +129,7 @@ const routes = [
     {
         path: '/admincontentcontroll',
         component: ContentControllComponent,
-    }
+    },
     {
         path: '/kakaoLogin',
         component: KakaoLoginComponent,
@@ -151,7 +151,7 @@ const router = createRouter({
 
 // 비로그인시 못가는 페이지 처리
 function chkAuth(to, from, next) {
-    if(store.state.authFlg) {
+    if(store.state.authFlg || store.state.adminFlg) {
         next();
     } else {
         alert('로그인이 필요한 서비스입니다.');

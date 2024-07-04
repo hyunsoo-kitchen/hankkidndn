@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommonController;
@@ -90,6 +91,10 @@ Route::get('/api/kakaoLogin', [UserController::class, 'kakaoLogin']);
 Route::post('/api/board/report/{num}', [ReportController::class, 'boardReport']);
 Route::post('/api/recipe/report/{num}', [ReportController::class, 'recipeReport']);
 Route::post('/api/comment/report/{num}', [ReportController::class, 'commnetReport']);
+
+// 관리자 로그인 관련
+Route::post('/api/admin/login', [AdminController::class, 'adminLogin']);
+Route::post('/api/admin/logout', [AdminController::class, 'adminLogout']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------
@@ -137,7 +142,7 @@ Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress'])
 // Route::put('/api/user', [MypageController::class, 'update']);
 
 //--------------------------------------------------
-// 보드디테일 조회수기능 이현수
+// 검색기능 이현수
 Route::get('/api/search/recipe', [RecipeBoardController::class, 'search']);
 Route::get('/api/search/board/{id}', [BoardController::class, 'search']);
 Route::get('/api/search/board/name/{id}', [BoardController::class, 'searchName']);

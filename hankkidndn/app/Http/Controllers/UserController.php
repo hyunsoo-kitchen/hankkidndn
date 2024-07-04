@@ -465,7 +465,7 @@ class UserController extends Controller
     // 카카오 로그인 관련
     public function redirectToProvider()
     {
-        return Socialite::driver('kakao')->redirect();
+        return Socialite::driver('kakao')->with(['prompt' => 'select_account'])->redirect();
     }
 
     public function handleProviderCallback()

@@ -129,7 +129,6 @@ onBeforeMount(() => {
     currentImage.value = imageMap[data.board_type];
     store.dispatch('getRecipeList', data);
     const interval = setInterval(() => {
-        console.log('Interval');
         pagination(route.query.page);
         if(store.state.pagination.last_page) {
             clearInterval(interval);
