@@ -4,7 +4,11 @@
     box-sizing: border-box;
     font-family: "Jua", sans-serif;
   }
-
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
 .head_container {
     display: grid;
     grid-template-columns: 0.6fr 0.8fr 5.6fr 1fr 1fr;;
@@ -35,7 +39,10 @@
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     border: 1px solid black;
     align-items: center;
+    width: 185px;
+    height: 288px;
 }
 .main_container {
-    
+    display: grid;
+    grid-template-rows: 0.8fr 0.5fr 7fr;
 }

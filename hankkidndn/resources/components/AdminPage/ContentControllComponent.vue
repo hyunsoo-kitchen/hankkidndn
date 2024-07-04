@@ -15,21 +15,26 @@
 
     <div class="body_container">
         <div class="category">
-            <button>대시보드</button>
-            <button>사용자 관리</button>
-            <button>컨텐츠 관리</button>
-            <button>광고, 캠페인 관리</button>
-            <button>통계</button>
+            <button class="category_btn">대시보드</button>
+            <button class="category_btn">사용자 관리</button>
+            <button class="category_btn">컨텐츠 관리</button>
+            <button class="category_btn">광고, 캠페인 관리</button>
+            <button class="category_btn">통계</button>
         </div>
         <div class="main_container">
             <div class="main_head">
-
-            </div>
-            <div class="main_category">
-                <button>레시피 게시판</button>
-                <button>일반 게시판</button>
-                <button>댓글 신고</button>
-                <button>문의 사항</button>
+                <div class="head_notice">
+                    <dvi>레시피 게시판 신고 :</dvi>
+                    <dvi>게시판 신고 :</dvi>
+                    <dvi>댓글 신고 :</dvi>
+                    <dvi>신규 문의 사항 :</dvi>
+                </div>
+                <div class="main_category">
+                    <button>레시피 게시판</button>
+                    <button>일반 게시판</button>
+                    <button>댓글 신고</button>
+                    <button>문의 사항</button>
+                </div>
             </div>
             <div class="main_content">
 
