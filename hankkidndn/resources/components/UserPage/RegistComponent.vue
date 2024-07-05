@@ -443,7 +443,8 @@ function handleRegistModal() {
             flgText.address = '주소를 입력해주세요';
             errorStyle.address = 'error-message';
         }
-        alert('회원 정보 입력란을 다시 확인해주세요.')
+        // alert('회원 정보 입력란을 다시 확인해주세요.')
+        store.commit('setModalMessage', '회원 정보 입력란을 다시 확인해주세요.');
     } else {
         isModalVisible.value = true;                                                                   
     }
@@ -458,7 +459,8 @@ function submitRegistration() {
 }
 
 function chkModal() {
-    alert('닉네임과 아이디 중복 체크 후 회원가입이 가능합니다.')
+    // alert('닉네임과 아이디 중복 체크 후 회원가입이 가능합니다.')
+    store.commit('setModalMessage', '닉네임과 아이디 중복 체크 후 회원가입이 가능합니다.');
 }
 
 </script>
