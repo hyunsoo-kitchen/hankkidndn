@@ -15,10 +15,10 @@
         :modules="modules"
         class="header-img-container">
             <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main55.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main5.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main444.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main4.jpg"></swiper-slide>
         </Swiper>
     </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
