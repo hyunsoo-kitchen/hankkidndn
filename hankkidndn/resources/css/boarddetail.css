@@ -113,22 +113,21 @@ justify-self: end;
   justify-self: end;
 }
 
-button.update, button.delete {
-  padding: 10px 20px;
+button.update, button.delete, button.report{
+  padding: 10px 10px;
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  margin: 0 5px;
 }
 
 button.update {
   background-color: #ccc;
-  margin: 0 5px;
 }
 
 button.delete {
   background-color: #333;
   color: white;
-  margin: 0 5px;
 }
 
 .main_title_content_title{
@@ -266,7 +265,7 @@ grid-column: 3 / 4;
 
 .btn_grid{
 display: grid;
-grid-template-columns: 1fr 1fr;
+grid-template-columns: 1fr 1fr 1fr;
 grid-column: 2 / 2;
 }
 

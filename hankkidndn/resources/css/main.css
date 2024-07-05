@@ -66,13 +66,16 @@ h2 {
     border-top: 1px solid black;
 }
 
-.header-img{
+.header-img-container{
+    max-width: 1000px;
+    margin: 20px auto;
+    max-height: 500px;
+}
+
+.header-img {
     width: 100%;
-    display: grid;
-    overflow: hidden;   
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 0;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* 카테고리 영역 */

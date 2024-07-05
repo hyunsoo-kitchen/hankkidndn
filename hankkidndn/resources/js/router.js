@@ -19,6 +19,11 @@ import SearchRecipeListComponent from '../components/RecipePage/SearchRecipeList
 import SearchBoardListComponent from '../components/BoardPage/SearchBoardListComponent.vue';
 import store from './store';
 import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
+import AdminLogin from '../components/AdminPage/AdminLogin.vue';
+import AdminAdComponent from '../components/AdminPage/AdminAdComponent.vue';
+import AdminNoticeComponent from '../components/AdminPage/AdminNoticeComponent.vue';
+import ContentControllComponent from '../components/AdminPage/ContentControllComponent.vue';
+import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue';
 
 const routes = [
     {
@@ -118,6 +123,27 @@ const routes = [
         path: '/registrationcomplete',
         component: RegistrationComplete,
     },
+    // 관리자 처리 --- 노경호
+    {
+        path: '/adminlogin',
+        component: AdminLogin,
+    },
+    {
+        path: '/admincontentcontroll',
+        component: ContentControllComponent,
+    },
+    {
+        path: '/adminnotice',
+        component: AdminNoticeComponent,
+    },
+    {
+        path: '/adminad',
+        component: AdminAdComponent,
+    },
+    {
+        path: '/kakaoLogin',
+        component: KakaoLoginComponent,
+    },
 ];
 
 const router = createRouter({
@@ -135,7 +161,7 @@ const router = createRouter({
 
 // 비로그인시 못가는 페이지 처리
 function chkAuth(to, from, next) {
-    if(store.state.authFlg) {
+    if(store.state.authFlg || store.state.adminFlg) {
         next();
     } else {
         alert('로그인이 필요한 서비스입니다.');

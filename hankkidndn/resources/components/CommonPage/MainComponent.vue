@@ -1,7 +1,25 @@
 <template>
     <CategoryComponent/>
     <div class="header">
-        <img class="header-img" src="../../../public/img/main.png" alt="">
+        <Swiper
+        :spaceBetween="30"
+        :centeredSlides="true"
+        :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+        }"
+        :pagination="{
+        clickable: true,
+        }"
+        :navigation="true"
+        :modules="modules"
+        class="header-img-container">
+            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
+        </Swiper>
     </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
     <div class="body-container">
@@ -93,6 +111,14 @@ import { onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
 import CategoryComponent from './CategoryComponent.vue';
 
+   // 스와이퍼
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+const modules = [Autoplay, Pagination, Navigation];
 const store = useStore();
 
 onBeforeMount(() => {

@@ -1,4 +1,21 @@
 <template>
+    <!-- 모달 창 -->
+    <div class="modal" v-show="insertModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">알림</h3>
+            <button @click="insertModalOff" class="close">×</button>
+          </div>
+          <div class="modal-body">
+            <p>글 작성은 로그인 후 가능합니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="insertModalOff; $router.push('/login')" class="btn btn-primary">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
         <div class="header">
             <img class="main-img" src="/img/recipe_order.png">
@@ -35,13 +52,14 @@
             <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.searchBoardListData" :key="index">
                 <!-- 게시글 출력 -->
                 <div class="list-number">{{ ($store.state.searchPagination.total - index) - (($store.state.searchPagination.current_page - 1) * 10) }}</div>
-                <div class="list-title">{{ item.title }}</div>
-                <div class="list-ninkname">{{ item.u_nickname }}</div>
-                <div class="list-day">{{ item.created_at }}</div>
+                <div class="list-title">{{ substringTitle(item.title, 10) }}</div>
+                <div class="list-ninkname">{{ substringTitle(item.u_nickname, 5) }}</div>
+                <div class="list-day">{{ formatDate(item.created_at) }}</div>
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->
-                <button @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-if="$store.state.authFlg && data.board_type != 6" @click="$router.push('/board/insert')" class="text-btn" type="button">글쓰기</button>
+                <button v-else-if="data.board_type != 6"  @click="insertModalOn()" class="text-btn" type="button">글쓰기</button>
             </div>
             <div class="btn-container">
                 <!-- 페이지 네이션 처리 -->
@@ -55,12 +73,13 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref, watch } from 'vue';
+import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
     
 const store = useStore();
 const route = useRoute();
+const insertModal = ref(false);
 let page = ref([]);
 const data = reactive({
     board_type: '',
@@ -134,6 +153,15 @@ function getBoardName(id) {
     }
 }
 
+// 비로그인시 작성 모달창
+function insertModalOn() {
+    insertModal.value = true;
+}
+
+function insertModalOff() {
+    insertModal.value = false;
+}
+
 
 // 검색 기준과 텍스트에 따라 검색을 수행하는 함수를 구현합니다.
 function search() {
@@ -143,6 +171,23 @@ function search() {
     store.dispatch('searchBoards', data);
 }
 
+// 날짜 표시 제어
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.$/, '');  // 마지막 점제거
+};
+
+
+// 글자 많을 때 자르기용
+function substringTitle(text, max){
+    if (text.length > max) {
+        return text.substring(0, max) + '...';
+    }
+    return text;
+}
 </script>
 
 <style scoped src="../../css/boardlist.css">

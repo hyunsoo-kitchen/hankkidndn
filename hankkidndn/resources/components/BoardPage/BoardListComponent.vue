@@ -116,6 +116,7 @@ onBeforeMount(() => {
     pagination(route.query.page);
     data.board_type = route.params.id;
     data.page = route.query.page;
+    // console.log(store.state.adminFlg)
     store.dispatch('getBoardList', data);
 });
 

@@ -1,6 +1,8 @@
 <template>
     <!-- Header -->
+    <div v-if="$route.path !== '/admincontentcontroll'">
         <HeaderComponent/>
+    </div>
     <!-- Main -->
      <!-- <div v-if="$store.state.modalMessage">
         <h1>테스트트ㅡㅌ</h1>
@@ -28,8 +30,9 @@
         </router-view>
     </main>
     <!-- Footer -->
+    <div v-if="$route.path !== '/admincontentcontroll'">
         <FooterComponent/>
-
+    </div>
 </template>
 
 <script setup>
