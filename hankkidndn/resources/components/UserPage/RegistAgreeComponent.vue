@@ -48,6 +48,8 @@
 <script setup>
 import { onMounted } from 'vue';
 
+const store = useStore();
+
 onMounted(() => {
     const agree1 = document.querySelector('#agreement_1');
     const agree2 = document.querySelector('#agreement_2');
@@ -70,7 +72,8 @@ onMounted(() => {
 
     nextButton.addEventListener('click', function(event) {
         if (!agree1.checked && !agree2.checked) {
-            alert('약관 동의 후 회원가입이 가능합니다.')
+            // alert('약관 동의 후 회원가입이 가능합니다.')
+            store.commit('setModalMessage', '닉네임과 아이디 중복 체크 후 회원가입이 가능합니다.');
             event.preventDefault();
         } else {
             window.location.href = '/regist';

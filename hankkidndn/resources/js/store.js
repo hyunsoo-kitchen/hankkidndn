@@ -76,6 +76,8 @@ const store = createStore({
             searchRecipeListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
             searchPagination: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')) : null,
             searchBoardListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
+
+            modalMessage: '',
             
             //-----------------------끝-------------------------------
         }
@@ -242,6 +244,9 @@ const store = createStore({
             state.searchPagination = data
             localStorage.setItem('searchPagination', JSON.stringify(data));
         },
+        setModalMessage(state, data) {
+            state.modalMessage = data;
+        }
         // -----------------------이현수 끝 ---------------------------
     },
     actions: {
@@ -314,7 +319,8 @@ const store = createStore({
                 router.push('/recipe/detail/' + response.data.data.id)
             })
             .catch(error => {
-                alert('존재하지않는 게시글 입니다.')
+                // alert('존재하지않는 게시글 입니다.')
+                context.commit('setModalMessage', '존재하지않는 게시글입니다.(' + error.response.data.code + ')');
                 router.back();
             })
         },
@@ -344,7 +350,8 @@ const store = createStore({
                 router.replace('/recipe/' + recipeType + '?page=1')
             })
             .catch(error => {
-                alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+                // alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+                context.commit('setModalMessage', '게시글 삭제에 실패했습니다.(' + error.response.data.code + ')');
             });
         },
 
@@ -360,7 +367,8 @@ const store = createStore({
                 router.replace('/board/' + recipeType + '?page=1')
             })
             .catch(error => {
-                alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+                // alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+                context.commit('setModalMessage', '게시글삭제에 실패했습니다. ( 게시글번호' + error.response.data.code + ')')
             });
         },
 
@@ -376,7 +384,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response.data);
-                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                // alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '글 작성에 실패했습니다. (' + error.response.data.code + ')');
             });
         },
 
@@ -392,7 +401,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response.data);
-                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                // alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '글 작성에 실패했습니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -431,7 +441,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response.data);
-                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                // alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '글 작성에 실패했습니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -448,7 +459,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response.data);
-                alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                // alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '글 작성에 실패했습니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -735,12 +747,14 @@ const store = createStore({
 
             axios.post('/api/registration', data)
             .then(response => {
-                  alert('회원가입이 완료되었습니다.');
+                //   alert('회원가입이 완료되었습니다.');
+                  context.commit('setModalMessage', '회원가입이 완료되었습니다.');
                   router.replace('/main');
               })
               .catch(error => {
                 console.log(error.response.data);
-                alert('회원가입 중 오류가 발생했습니다.');
+                // alert('회원가입 중 오류가 발생했습니다.');
+                context.commit('setModalMessage', '회원가입 중 오류가 발생했습니다. (' +  error.response.data.code + ')');
               });
         },
 
@@ -754,12 +768,14 @@ const store = createStore({
             .then(response => {
                 context.state.userId = data;
                 context.state.idFlg = true;
-                alert('사용가능한 아이디 입니다.')
+                // alert('사용가능한 아이디 입니다.')
+                context.commit('setModalMessage', '사용가능한 아이디입니다.');
 
             })
             .catch(error => {
-                alert('사용불가능한 아이디 입니다.')
+                // alert('사용불가능한 아이디 입니다.')
                 context.state.idFlg = false;
+                context.commit('setModalMessage', '사용불가능한 아이디입니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -773,12 +789,14 @@ const store = createStore({
             .then(response => {
                 context.state.userNickname = data;
                 context.state.nicknameFlg = true;
-                alert('사용가능한 닉네임 입니다.')
+                // alert('사용가능한 닉네임 입니다.')
+                context.commit('setModalMessage', '사용가능한 닉네임입니다.');
 
             })
             .catch(error => {
                 context.state.nicknameFlg = false;
-                alert('사용불가능한 닉네임 입니다.(' + error.response.data.code + ')');
+                // alert('사용불가능한 닉네임 입니다.(' + error.response.data.code + ')');
+                context.commit('setModalMessage', '사용불가능한 닉네임입니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -802,7 +820,8 @@ const store = createStore({
             .catch(error => {
                 // console.log(error.response); //TODO
                 // router.replace('/main');
-                alert(error.response.data.msg);
+                // alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
+                context.commit('setModalMessage', '로그인에 실패했습니다.(' + error.response.data.code + ')')
             });
         },
 
@@ -816,7 +835,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response); // TODO
-                alert('문제가 발생해 강제 로그아웃합니다. (' + error.response.data.code + ')');
+                // alert('문제가 발생해 강제 로그아웃합니다. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '문제가 발생해 강제 로그아웃합니다. (' +  error.response.data.code + ')');
             })
             .finally(() => {
                 localStorage.clear();
@@ -840,7 +860,8 @@ const store = createStore({
             })
             .catch(error => {
                 console.log(error.response); //TODO
-                alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+                // alert('게시글 습득에 실패했습니다.(' + error.response.data.code + ')')
+                context.commit('setModalMessage', '게시글 습득에 실패했습니다. (' +  error.response.data.code + ')');
             });
         },
 
@@ -907,12 +928,14 @@ const store = createStore({
                 if (response.data.success) {
                     commit('setAuthenticate', true);
                 } else {
-                    alert(response.data.message || '비밀번호가 틀렸습니다.');
+                    // alert(response.data.message || '비밀번호가 틀렸습니다.');
+                    context.commit('setModalMessage', '비밀번호가 틀렸습니다..');
                 }
             })
             .catch(error => {
                 console.error('인증 오류:', error.response ? error.response.data : error.message);
-                alert('비밀번호를 확인해주세요.');
+                // alert('비밀번호를 확인해주세요.');
+                context.commit('setModalMessage', '비밀번호를 확인해주세요');
             });
         },
         
@@ -923,14 +946,17 @@ const store = createStore({
             axios.post('/api/user/updatepassword', data)
               .then(response => {
                 if (response.data.success) {
-                  alert('비밀번호가 성공적으로 변경되었습니다.');
+                //   alert('비밀번호가 성공적으로 변경되었습니다.');
+                  context.commit('setModalMessage', '비밀번호가 성공적으로 변경되었습니다.');
                 } else {
-                  alert('비밀번호 변경에 실패했습니다.');
+                //   alert('비밀번호 변경에 실패했습니다.');
+                  context.commit('setModalMessage', '비밀번호 변경에 실패했습니다.');
                 }
               })
               .catch(error => {
                 console.log(error.response.data);
-                alert('비밀번호 변경 중 오류가 발생했습니다.');
+                // alert('비밀번호 변경 중 오류가 발생했습니다.');
+                context.commit('setModalMessage', '비밀번호 변경 중 오류가 발생했습니다.');
               });
         },
 
@@ -941,14 +967,17 @@ const store = createStore({
             axios.post('/api/user/updatenickname', data)
                 .then(response => {
                     if (response.data.success) {
-                        alert('닉네임이 성공적으로 변경되었습니다.');
+                        // alert('닉네임이 성공적으로 변경되었습니다.');
+                        context.commit('setModalMessage', '닉네임이 성공적으로 변경되었습니다.');
                     } else {
-                        alert('닉네임 변경에 실패했습니다.');
+                        // alert('닉네임 변경에 실패했습니다.');
+                        context.commit('setModalMessage', '닉네임 변경에 실패했습니다.');
                     }
                 })
                 .catch(error => {
                     console.log(error.response.data);
-                    alert('닉네임 변경 중 오류가 발생했습니다.');
+                    // alert('닉네임 변경 중 오류가 발생했습니다.');
+                    context.commit('setModalMessage', '닉네임 변경 중 오류가 발생했습니다.');
                 });
         },
 
@@ -959,14 +988,17 @@ const store = createStore({
             axios.post('/api/user/updatephonenum', data)
                 .then(response => {
                     if (response.data.success) {
-                        alert('휴대폰번호가 성공적으로 변경되었습니다.');
+                        // alert('휴대폰번호가 성공적으로 변경되었습니다.');
+                        context.commit('setModalMessage', '휴대폰번호가 성공적으로 변경되었습니다.');
                     } else {
-                        alert('휴대폰번호 변경에 실패했습니다.');
+                        // alert('휴대폰번호 변경에 실패했습니다.');
+                        context.commit('setModalMessage', '휴대폰번호 변경에 실패했습니다.');
                     }
                 })
                 .catch(error => {
                     console.log(error.response.data);
-                    alert('휴대폰번호 변경 중 오류가 발생했습니다.');
+                    // alert('휴대폰번호 변경 중 오류가 발생했습니다.');
+                    context.commit('setModalMessage', '휴대폰번호 변경 중 오류가 발생했습니다.');
                 });
         },
 
@@ -1003,14 +1035,17 @@ const store = createStore({
             axios.post('/api/user/updatebirthat', data)
                 .then(response => {
                     if (response.data.success) {
-                        alert('생년월일이 성공적으로 변경되었습니다.');
+                        // alert('생년월일이 성공적으로 변경되었습니다.');
+                        context.commit('setModalMessage', '생년월일이 성공적으로 변경되었습니다.');
                     } else {
-                        alert('생년월일 변경에 실패했습니다.');
+                        // alert('생년월일 변경에 실패했습니다.');
+                        context.commit('setModalMessage', '생년월일 변경에 실패했습니다.');
                     }
                 })
                 .catch(error => {
                     console.log(error.response.data);
-                    alert('생년월일 변경 중 오류가 발생했습니다.');
+                    // alert('생년월일 변경 중 오류가 발생했습니다.');
+                    context.commit('setModalMessage', '생년월일 변경 중 오류가 발생했습니다.');
                 });
         },
         
@@ -1021,14 +1056,17 @@ const store = createStore({
             axios.post('/api/user/updateaddress', data)
                 .then(response => {
                     if (response.data.success) {
-                        alert('주소가 성공적으로 변경되었습니다.');
+                        // alert('주소가 성공적으로 변경되었습니다.');
+                        context.commit('setModalMessage', '주소가 성공적으로 변경되었습니다.');
                     } else {
-                        alert('주소 변경에 실패했습니다.');
+                        // alert('주소 변경에 실패했습니다.');
+                        context.commit('setModalMessage', '주소 변경에 실패했습니다.');
                     }
                 })
                 .catch(error => {
                     console.log(error.response.data);
-                    alert('주소 변경 중 오류가 발생했습니다.');
+                    // alert('주소 변경 중 오류가 발생했습니다.');
+                    context.commit('setModalMessage', '주소 변경 중 오류가 발생했습니다.');
                 });
         },
 
@@ -1058,7 +1096,8 @@ const store = createStore({
                     // router.replace('/search/recipe?page=' + data.page);
                     router.replace('/search/recipe?search=' + data.search + '&page=' + data.page);
                 } else {
-                    alert('해당 레시피가 존재하지 않습니다')
+                    // alert('해당 레시피가 존재하지 않습니다')
+                    context.commit('setModalMessage', '해당 레시피가 존재하지 않습니다.');
                 }
             })
             .catch(error => {
@@ -1083,7 +1122,8 @@ const store = createStore({
                     context.commit('setSearchBoardData', response.data.data);
                     router.replace('/search/board/' + data.board_type + '/' + data.search + '?page=' + data.page);
                     } else {
-                        alert('해당 게시글이 존재하지 않습니다.')
+                        // alert('해당 게시글이 존재하지 않습니다.')
+                        context.commit('setModalMessage', '해당 게시글이 존재하지 않습니다.');
                     }
                 })
                 .catch(error => {

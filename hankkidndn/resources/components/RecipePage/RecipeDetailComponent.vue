@@ -196,7 +196,7 @@
 
                     <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
                     <div class="comment-actions" v-show="!item.deleted_at">
-                        <button v-if="$store.state.authFlg || $store.state.adminFlg " type="button" @click="cocomentOn(item.id);" class="comment_actions_btn">답글</button>
+                        <button v-if="$store.state.authFlg " type="button" @click="cocomentOn(item.id);" class="comment_actions_btn">답글</button>
                         <button v-if="$store.state.authFlg" @click="likeToggle(item, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                         <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
                         <div class="like_grid">
@@ -254,7 +254,7 @@
             
             <!-- 댓글 입력창 -->
             <form id="boardComment">
-                <div v-if="$store.state.authFlg || $store.state.adminFlg " class="comment-form">
+                <div v-if="$store.state.authFlg " class="comment-form">
                     <input autocomplete="off" @click="cocomentFlg = false" type="text" name="content" placeholder="댓글" class="comment-input" required v-model="comment">
                     <button type="button" @click="$store.dispatch('commentRecipeInsert', $route.params.id), comment = '';" class="comment-submit">댓글</button>
                 </div>
