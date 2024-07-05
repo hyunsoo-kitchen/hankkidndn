@@ -39,7 +39,8 @@ function setFile(e) {
     const file = e.target.files;
     const fileList = [];
     if(file.length > 5) {
-        alert('이미지 파일은 최대 5개까지 선택할 수 있습니다.')
+        // alert('이미지 파일은 최대 5개까지 선택할 수 있습니다.')
+        store.commit('setModalMessage', '이미지 파일은 최대 5개까지 선택할 수 있습니다.');
         e = null;
         return
     }

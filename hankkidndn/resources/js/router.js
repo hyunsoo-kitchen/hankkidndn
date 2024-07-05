@@ -20,6 +20,8 @@ import SearchBoardListComponent from '../components/BoardPage/SearchBoardListCom
 import store from './store';
 import RegistrationComplete from '../components/UserPage/RegistrationComplete.vue';
 import AdminLogin from '../components/AdminPage/AdminLogin.vue';
+import AdminAdComponent from '../components/AdminPage/AdminAdComponent.vue';
+import AdminNoticeComponent from '../components/AdminPage/AdminNoticeComponent.vue';
 import ContentControllComponent from '../components/AdminPage/ContentControllComponent.vue';
 import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue';
 
@@ -129,6 +131,14 @@ const routes = [
     {
         path: '/admincontentcontroll',
         component: ContentControllComponent,
+    },
+    {
+        path: '/adminnotice',
+        component: AdminNoticeComponent,
+    },
+    {
+        path: '/adminad',
+        component: AdminAdComponent,
     },
     {
         path: '/kakaoLogin',
