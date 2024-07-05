@@ -36,11 +36,12 @@ button{
 .category {
     grid-column: 1/2;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     border: 1px solid black;
     align-items: center;
     width: 185px;
     height: 288px;
+    margin: 0 auto;
 }
 .main_container {
     display: grid;
@@ -88,3 +89,25 @@ button{
 .pagenation > button {
     width: 30px;
 }
+
+/* 상세보기 모달 부분 */
+.detail_modal_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal_content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+  }
+/* ----------------- */
