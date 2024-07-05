@@ -74,7 +74,7 @@ class AdminController extends Controller
             'code' => '0',
             'msg' => '댓글 및 레시피 제목 획득 완료',
             
-        ]
+        ];
 
     }
 
