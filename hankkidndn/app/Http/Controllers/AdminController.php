@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -60,22 +61,55 @@ class AdminController extends Controller
                 null, null, false, false);
     }
 
-    //신고데이터 조회
-    public function recipeReportList() {
-        $reportData = Report::join('report_type', 'reports.report_type_id', '=', 'report_type.id' )
-                            ->select(
-                                'reports.*',
-                                'report_type.report_name'
-                            )
-                            ->orderBy('reporst.created_at', 'DESC')
-                            ->pagination(10);
+    // 노경호 ----------------------------------------------------------------------------------------------
+    //신고데이터 조회(레시피)
+    // public function recipeReportList() {
+    //     $reportData = Report::join('report_type', 'reports.report_type_id', '=', 'report_type.id' )
+    //                         ->select(
+    //                             'reports.*',
+    //                             'report_type.report_name'
+    //                         )
+    //                         ->whereNotNull('recipe_board_id')
+    //                         ->orderBy('reporst.created_at', 'DESC')
+    //                         ->paginate(10);
         
+    //     $responseData = [
+    //         'code' => '0',
+    //         'msg' => '댓글 및 레시피 제목 획득 완료',
+    //         'data' => $reportData->toArray()
+    //     ];
+
+    //     return response()->json($responseData, 200);
+    // }
+    public function recipeReportList() {
+        $reportData = DB::table('reports')
+                    ->join('recipe_boards', 'reports.recipe_board_id', '=', 'recipe_boards.id')
+                    ->join('users as report_users', 'recipe_boards.user_id', '=', 'report_users.id')
+                    ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
+                    ->join('report_types', 'reports.report_type_id', '=', 'report_types.id')
+                    ->select(
+                        // 'reports.*',
+                        'recipe_boards.title as recipe_title',
+                        'report_users.u_nickname as recipe_author',
+                        DB::raw('(SELECT COUNT(reports.recipe_board_id) FROM reports WHERE reports.recipe_board_id = recipe_boards.id GROUP BY reports.recipe_board_id) as report_count'),
+                        'report_author.u_nickname as reporter_nickname',
+                        'reports.content as report_reason',
+                        'reports.created_at as report_time'
+                    )
+                    ->whereNotNull('reports.recipe_board_id')
+                    ->groupBy('reports.id', 'recipe_boards.title', 'report_users.u_nickname', 'report_author.u_nickname', 'reports.content', 'reports.created_at', 'report_types.report_name')
+                    ->orderBy('reports.created_at', 'DESC')
+                    ->paginate(10);
+
+        $reportDataArray = $reportData->items();
+
         $responseData = [
-            'code' => '0',
-            'msg' => '댓글 및 레시피 제목 획득 완료',
-            
-        ];
-
+                    'code' => '0',
+                    'msg' => '리폿 리스트 획득 완료',
+                    'data' => $reportDataArray
+                ];
+        
+        return response()->json($responseData, 200);
     }
-
+    //------------------------------------------------------------------------------------------------------
 }

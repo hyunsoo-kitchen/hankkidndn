@@ -136,6 +136,8 @@ Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat'])
 // 주소 수정
 Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress']);
 
+// 신고받은 레시피 불러오기
+Route::get('/api/recipereports', [AdminController::class, 'recipeReportList']);
 
 //-----------------------끝--------------------------------
 // 마이페이지
