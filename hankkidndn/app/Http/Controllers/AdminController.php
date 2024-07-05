@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\MyAutheException;
 use App\Models\Admin;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
+    // 어드민 로그인
     public function adminLogin(Request $request) {
         // 유저 정보 획득
         $adminInfo = Admin::where('admin_id', $request->admin_id)
@@ -40,6 +42,7 @@ class AdminController extends Controller
         return response() -> json($responseData, 200)->cookie('admin', '1', 120, null, null, false, false);
     }
 
+    //어드민 로그아웃
     public function adminLogout() {
         Auth::logout();
         Session::invalidate(); // 기본 세션 파기하고 새로운 세션 생성
@@ -51,6 +54,28 @@ class AdminController extends Controller
         ];
         return response()
                 ->json($responseData, 200)
-                ->cookie('admin', '1', -1, null, null, false, false);
+                ->cookie('admin', '1', -1,
+                
+                
+                null, null, false, false);
     }
+
+    //신고데이터 조회
+    public function recipeReportList() {
+        $reportData = Report::join('report_type', 'reports.report_type_id', '=', 'report_type.id' )
+                            ->select(
+                                'reports.*',
+                                'report_type.report_name'
+                            )
+                            ->orderBy('reporst.created_at', 'DESC')
+                            ->pagination(10);
+        
+        $responseData = [
+            'code' => '0',
+            'msg' => '댓글 및 레시피 제목 획득 완료',
+            
+        ]
+
+    }
+
 }

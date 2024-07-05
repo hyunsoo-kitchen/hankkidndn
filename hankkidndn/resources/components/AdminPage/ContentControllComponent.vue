@@ -16,6 +16,7 @@
     <div class="body_container">
         <div class="category">
             <button class="category_btn">대시보드</button>
+            <button class="category_btn">공지사항</button>
             <button class="category_btn">사용자 관리</button>
             <button class="category_btn">컨텐츠 관리</button>
             <button class="category_btn">광고, 캠페인 관리</button>
@@ -55,87 +56,7 @@
                                 <button @click="showModal(report)" type="button">상세보기</button>
                             </div>
                         </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
-                        <div class="report">
-                            <div>1</div>
-                            <div>신고한 게시물</div>
-                            <div>이현수달달달</div>
-                            <div>3</div>
-                            <div>
-                                <button>상세보기</button>
-                            </div>
-                        </div>
+                    
                         <div class="pagenation_box">
                             <div class="pagenation">
                                 <button><<</button>
