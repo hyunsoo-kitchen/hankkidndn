@@ -95,6 +95,27 @@ Route::post('/api/comment/report/{num}', [ReportController::class, 'commnetRepor
 // 관리자 로그인 관련
 Route::post('/api/admin/login', [AdminController::class, 'adminLogin']);
 Route::post('/api/admin/logout', [AdminController::class, 'adminLogout']);
+
+// 관리자 공지사항 작성 관련
+Route::post('api/admin/notice', [AdminController::class, 'noticeInsert']);
+
+// 공지사항 리스트 획득
+Route::get('/api/notice/list', [AdminController::class, 'getList']);
+Route::get('/api/board/notice/list', [AdminController::class, 'getBoardNoticeList']);
+
+// 공지사항 상세 정보 획득
+Route::get('/api/notice/detail/{num}', [AdminController::class, 'getDetail']);
+
+// 공지사항 수정 처리
+Route::get('/api/notice/update/{num}', [AdminController::class, 'getUpdate']);
+Route::post('/api/notice/update/{num}', [AdminController::class, 'noticeUpdate']);
+
+// 공지사항 삭제처리
+Route::delete('/api/board/notice/delete/{num}', [AdminController::class, 'noticeDelete']);
+
+// 관리자 광고 처리
+Route::post('/api/admin/ad', [AdminController::class, 'adInsert']);
+Route::get('/api/admin/ad', [AdminController::class, 'getAdData']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------

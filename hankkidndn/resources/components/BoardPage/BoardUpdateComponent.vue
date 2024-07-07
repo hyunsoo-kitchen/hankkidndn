@@ -5,7 +5,7 @@
             <img class="main_img" src="../../../public/img/recipe_order.png">
         </div>
         <div class="main_list">
-            <h2>글 작성</h2>
+            <h2>글 수정</h2>
             <hr>
             <div class="select_why">
                 <select name="boards_type_id">
@@ -25,7 +25,7 @@
                 <textarea autocomplete="off" name="content" rows="30" placeholder="내용을 입력해주세요. (최대 1000자까지 작성 가능합니다.)">{{ $store.state.boardDetail.content }}</textarea>
             </div>
             <div class="buttons">
-                <button type="button" @click="$store.dispatch('boardUpdate', board_id)" class="complete">작성하기</button>
+                <button type="button" @click="$store.dispatch('boardUpdate', board_id)" class="complete">수정하기</button>
                 <button type="button" @click="$router.back()" class="cancel ">취소</button>
             </div>
         </div>
