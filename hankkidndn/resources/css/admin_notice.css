@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Jua", sans-serif;
+  }
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+.head_container {
+    display: grid;
+    grid-template-columns: 0.6fr 0.8fr 5.6fr 1fr 1fr;;
+    width: 96%;
+    height: 80px;
+    border: 1px solid black;
+    align-items: center;
+    margin: 0 auto;
+}
+.head_logo {
+    grid-column: 1/2;
+}
+.head_title {
+    grid-column: 2/3;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.body_container {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    width: 96%;
+    margin: 15px auto;
+}
+.category {
+    grid-column: 1/2;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    border: 1px solid black;
+    align-items: center;
+    width: 185px;
+    height: 288px;
+    margin: 0 auto;
+}
+.main_container {
+    display: grid;
+    grid-template-rows: 0.8fr 0.5fr 7fr;
+}
+.head_notice {
+    border: 1px solid black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.main_category {
+    width: 310px;
+    border: 1px solid black;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.main_content {
+    border: 1px solid black;
+}
+.recipe_report_list_head {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: 0 0 10px 0;
+}
+.report_list {
+    display: grid;
+    grid-template-rows: 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
+}
+.report {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    height: 25px;
+}
+/* ----------------- */
+
+/* 공지사항 리스트 부분 */
+
+.notice-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notice-body {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notice-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px;
+    cursor: pointer;
+}
+.notice-pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    align-items: center;
+    gap: 10px;
+}

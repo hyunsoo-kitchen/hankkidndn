@@ -14,11 +14,9 @@
         :navigation="true"
         :modules="modules"
         class="header-img-container">
-            <swiper-slide><img class="header-img" src="../../../public/img/main.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main55.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main5.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main444.png"></swiper-slide>
-            <swiper-slide><img class="header-img" src="../../../public/img/main4.jpg"></swiper-slide>
+            <swiper-slide v-for="(item, key) in $store.state.adImage" :key="key">
+                <img class="header-img" :src="item.img_path">
+            </swiper-slide>
         </Swiper>
     </div>
     <h1 class="text-center text-gray">한끼든든에 오신 분들 환영합니다</h1>
@@ -122,6 +120,7 @@ const modules = [Autoplay, Pagination, Navigation];
 const store = useStore();
 
 onBeforeMount(() => {
+    store.dispatch('getAdData');
     store.dispatch('getMainNewList');
 });
 
