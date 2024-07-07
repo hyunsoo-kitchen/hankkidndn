@@ -67,7 +67,17 @@ const store = createStore({
 
             idFlg: false,
             nicknameFlg: false,
-            
+
+            reportData: [],
+            rrpagination: {
+                last_page: 1,
+                current_page: 1
+            },
+
+            //0707 관리자 페이지네이션 연습
+            adminRecipeReportList: [],
+            adminRecipePagination: localStorage.getItem('adminRecipePagination') ? JSON.parse(localStorage.getItem('adminRecipePagination')) : {current_page: '1'},
+
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -220,6 +230,17 @@ const store = createStore({
         // 마이페이지 개인정보 인증 초기화
         resetAuthenticate(state) {
             state.isAuthenticated = false;
+        },
+        setReportData(state, { reports, totalPages, currentPage }) {
+            state.reportData = reports;
+            state.rrpagination = { last_page: totalPages, current_page: currentPage };
+        },
+
+        //0707 어드민 페이지네이션 연습
+        setAdminRecipeData(state, data) {
+            state.adminRecipeReportList = data.data;
+            state.adminRecipePagination = data;
+            localStorage.setItem('adminRecipePagination', JSON.stringify(data));
         },
 
         //-------------------------노경호 끝-------------------------- 
@@ -1069,7 +1090,33 @@ const store = createStore({
                     context.commit('setModalMessage', '주소 변경 중 오류가 발생했습니다.');
                 });
         },
+        // getRecipeReportList(context) {
 
+        //     const url = '/api/recipereports' 
+            
+        //     console.log(url);
+        //     axios.get(url)
+        //     .then(response => {
+        //         console.log(response.data)
+        //         context.commit('setAdminRecipeData', response.data.data);
+        //     })
+        //     .catch()
+        // },
+
+        getRecipeReportList(context, page = 1) {
+            const url = `/api/recipereports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminRecipeData', response.data.data);
+                context.commit('setAdminRecipePagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {
