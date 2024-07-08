@@ -18,7 +18,6 @@ h2{
 .main_box{
     display: grid;
     grid-template-columns: auto auto;
-    border: solid 1px black;
 }
 
 .period{

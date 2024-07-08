@@ -27,7 +27,7 @@
                 <li><button @click="$router.push('/board/9?page=1')">문의게시판</button></li>
               </ul>
             </li>
-            <li><button>이벤트</button></li>
+            <li><button type="button" @click="$router.push('/board/event/list?page=1')">이벤트</button></li>
           </ul>
         </nav>
       </div>
@@ -56,6 +56,7 @@
   <script setup>
   import { ref, onMounted, onBeforeUnmount } from 'vue';
   import { useStore } from 'vuex';
+import router from '../../js/router';
   
   const store = useStore();
   const isModalOpen = ref(false);
