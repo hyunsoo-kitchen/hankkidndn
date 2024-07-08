@@ -6,6 +6,7 @@ use App\Exceptions\MyValidateException;
 use App\Models\BoardImages;
 use App\Models\Boards;
 use App\Models\Comment;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;  
@@ -337,8 +338,9 @@ class BoardController extends Controller
     }
     public function event($id)
     {
-        $eventData = event::where('id', $id)
+        $eventData = Event::where('id', $id)
                             ->first(); 
+        Log::debug($eventData);
 
         $responseData = [
             'code' => '0'

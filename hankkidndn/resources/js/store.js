@@ -338,6 +338,7 @@ const store = createStore({
         },
         setEventDetail(state, data) {
             state.eventData = data.data;
+            console.log(state.eventData);
         }
         // -----------------------이현수 끝 ---------------------------
     },
