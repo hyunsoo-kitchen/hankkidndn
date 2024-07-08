@@ -22,8 +22,11 @@ import RegistrationComplete from '../components/UserPage/RegistrationComplete.vu
 import AdminLogin from '../components/AdminPage/AdminLogin.vue';
 import AdminAdComponent from '../components/AdminPage/AdminAdComponent.vue';
 import AdminNoticeComponent from '../components/AdminPage/AdminNoticeComponent.vue';
+import BoardNoticeListComponent from '../components/BoardPage/BoardNoticeListComponent.vue';
 import ContentControllComponent from '../components/AdminPage/ContentControllComponent.vue';
 import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue';
+import BoardNoticeDetailComponent from '../components/BoardPage/BoardNoticeDetailComponent.vue';
+import BoardNoticeUpdateComponent from '../components/BoardPage/BoardNoticeUpdateComponent.vue';
 
 const routes = [
     {
@@ -131,14 +134,30 @@ const routes = [
     {
         path: '/admincontentcontroll',
         component: ContentControllComponent,
+        beforeEnter: chkAdmin,
     },
     {
         path: '/adminnotice',
         component: AdminNoticeComponent,
+        beforeEnter: chkAdmin,
+    },
+    {
+        path: '/board/notice',
+        component: BoardNoticeListComponent,
+    },
+    {
+        path: '/board/notice/detail/:id',
+        component: BoardNoticeDetailComponent,
+    },
+    {
+        path: '/board/notice/update/:id',
+        component: BoardNoticeUpdateComponent,
+        beforeEnter: chkAdmin,
     },
     {
         path: '/adminad',
         component: AdminAdComponent,
+        beforeEnter: chkAdmin,
     },
     {
         path: '/kakaoLogin',
@@ -181,9 +200,18 @@ function chkAuthon(to, from, next) {
     }
 };
 
+// 관리자 로그인 상태가 아닐때 못가는 페이지 처리
+function chkAdmin(to, from, next) {
+    if(store.state.adminFlg) {
+        next();
+    } else {
+        next('/main');
+    }
+}
+
 // 보드 게시판 타입 관리
 function chkBoardType(to, from, next) {
-    if(to.params.id >= 10 || to.params.id <= 5) {
+    if(to.params.id >= 10 || to.params.id <= 6) {
         // alert('해당 게시판은 없는 게시판 입니다.');
         store.commit('setModalMessage', '해당 게시판은 없는 게시판 입니다.');
         router.back();

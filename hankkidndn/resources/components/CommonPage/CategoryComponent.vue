@@ -21,7 +21,7 @@
             <li class="dropdown">
               <button>게시판</button>
               <ul class="dropdown-content">
-                <li><button @click="$router.push('/board/6?page=1')">공지사항</button></li>
+                <li><button @click="$router.push('/board/notice?page=1')">공지사항</button></li>
                 <li><button @click="$router.push('/board/7?page=1')">자유게시판</button></li>
                 <li><button @click="$router.push('/board/8?page=1')">질문게시판</button></li>
                 <li><button @click="$router.push('/board/9?page=1')">문의게시판</button></li>
@@ -42,7 +42,7 @@
           <li @click="$router.push('/recipe/4?page=1')" class="dropdown-content-li">일식</li>
           <li @click="$router.push('/recipe/5?page=1')" class="dropdown-content-li">베이킹</li>
           <hr>
-          <li @click="$router.push('/board/6?page=1')" class="dropdown-content-li">공지사항</li>
+          <li @click="$router.push('/board/notice?page=1')" class="dropdown-content-li">공지사항</li>
           <li @click="$router.push('/board/7?page=1')" class="dropdown-content-li">자유게시판</li>
           <li @click="$router.push('/board/8?page=1')" class="dropdown-content-li">질문게시판</li>
           <li @click="$router.push('/board/9?page=1')" class="dropdown-content-li">문의게시판</li>

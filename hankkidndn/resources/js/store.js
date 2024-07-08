@@ -41,6 +41,16 @@ const store = createStore({
             // 관리자 정보, 플래그
             adminFlg: document.cookie.indexOf('admin=') >= 0 ? true : false,
             adminInfo: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo')) : null,
+
+            // 공지사항 리스트 페이지
+            noticePagination: localStorage.getItem('noticePagination') ? JSON.parse(localStorage.getItem('noticePagination')) : {current_page: '1'},
+            noticeListData: [],
+
+            // 공지사항 상세 정보
+            noticeDetail: [],
+            
+            // 광고 이미지
+            adImage:[],
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -67,7 +77,17 @@ const store = createStore({
 
             idFlg: false,
             nicknameFlg: false,
-            
+
+            reportData: [],
+            rrpagination: {
+                last_page: 1,
+                current_page: 1
+            },
+
+            //0707 관리자 페이지네이션 연습
+            adminRecipeReportList: [],
+            adminRecipePagination: localStorage.getItem('adminRecipePagination') ? JSON.parse(localStorage.getItem('adminRecipePagination')) : {current_page: '1'},
+
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -175,6 +195,22 @@ const store = createStore({
         setAdminInfo(state, data) {
             state.adminInfo = data;
         },
+        // 관리자 공지사항 리스트
+        setNoticeListData(state, data) {
+            state.noticeListData = data.data;
+            state.noticePagination = data;
+            localStorage.setItem('noticePagination', JSON.stringify(data));
+            // console.log(data)
+        },
+        // 관리자 공지사항 상세 페이지
+        setNoticeDetail(state, data) {
+            state.noticeDetail = data.data
+        },
+        // 광고 획득
+        setAdData(state, data) {
+            state.adImage = data
+            console.log(state.adImage)
+        },
         //---------------------끝---------------------------
 
         // 인증 플래그 저장
@@ -220,6 +256,17 @@ const store = createStore({
         // 마이페이지 개인정보 인증 초기화
         resetAuthenticate(state) {
             state.isAuthenticated = false;
+        },
+        setReportData(state, { reports, totalPages, currentPage }) {
+            state.reportData = reports;
+            state.rrpagination = { last_page: totalPages, current_page: currentPage };
+        },
+
+        //0707 어드민 페이지네이션 연습
+        setAdminRecipeData(state, data) {
+            state.adminRecipeReportList = data.data;
+            state.adminRecipePagination = data;
+            localStorage.setItem('adminRecipePagination', JSON.stringify(data));
         },
 
         //-------------------------노경호 끝-------------------------- 
@@ -706,7 +753,7 @@ const store = createStore({
             .catch();
         },
 
-        //로그아웃 처리
+        //관리자 로그아웃 처리
         adminLogout(context) {
             const url = '/api/admin/logout';
 
@@ -727,6 +774,127 @@ const store = createStore({
                 router.replace('/main');
                 // router.back();
             });
+        },
+
+        // 관리자 공지사항 작성 기능
+        noticeInsert(context) {
+            const url = '/api/admin/notice'
+            const data = new FormData(document.querySelector('#noticeForm'))
+
+            axios.post(url, data)
+            .then(response => {
+                
+            })
+            .catch();
+        },
+
+        // 공지사항 리스트 기능
+        getNoticeList(context, page) {
+            // console.log(page)
+            const url = '/api/notice/list?page=' + page
+
+            axios.get(url)
+            .then(response => {
+                // console.log(response.data.data)
+                context.commit('setNoticeListData', response.data.data);
+                router.push('/adminnotice?page=' + page );
+            })
+            .catch()
+        },
+
+        // 공지사항 보드리스트 기능
+        getBoardNoticeList(context, page) {
+            // console.log(page)
+            const url = '/api/board/notice/list?page=' + page
+
+            axios.get(url)
+            .then(response => {
+                // console.log(response.data.data)
+                context.commit('setNoticeListData', response.data.data);
+                router.push('/board/notice?page=' + page );
+            })
+            .catch()
+        },
+
+        // 공지사항 상세 페이지
+        getNoticeDetail(context, id) {
+            const url = '/api/notice/detail/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setNoticeDetail', response.data)
+                console.log(response.data)
+                router.push('/board/notice/detail/' + id);
+            })
+            .catch();
+        },
+
+        // 공지 수정페이지 게시글 수정 처리
+        noticeUpdate(context, id) {
+            const url = '/api/notice/update/' + id
+            const data = new FormData(document.querySelector('#noticeUpdateForm'));
+            
+            axios.post(url, data)
+            .then(response => {
+                // console.log(response.data)
+                context.commit('setNoticeDetail', response.data)
+                router.replace('/board/notice/detail/' + id)
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                // alert('글 작성에 실패했습니다.. (' + error.response.data.code + ')');
+                context.commit('setModalMessage', '글 작성에 실패했습니다. (' +  error.response.data.code + ')');
+            });
+        },
+
+        // 공지 수정페이지 게시글 획득처리
+        getNoticeUpdate(context, id) {
+            const url = '/api/notice/update/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setNoticeDetail', response.data)
+            })
+            .catch();
+        },
+
+        // 공지 삭제 처리
+        noticeDelete(context, id) {
+            const url = '/api/board/notice/delete/' + id
+            console.log(id)
+            axios.delete(url)
+            .then(response => {
+                router.replace('/board/notice?page=1')
+            })
+            .catch(error => {
+                // alert('게시글 삭제에 실패했습니다 ( 게시글번호' + error.response.data.data + ')');
+                context.commit('setModalMessage', '게시글삭제에 실패했습니다. ( 게시글번호' + error.response.data.code + ')')
+            });
+        },
+
+        // 광고 획득 처리
+        getAdData(context) {
+            const url = '/api/admin/ad'
+
+            axios.get(url)
+            .then(response => {
+                // console.log(response.data)
+                context.commit('setAdData', response.data.data)
+            })
+            .catch();
+        },
+
+        // 광고 저장 처리
+        adInsert(context) {
+            const url = '/api/admin/ad'
+            const data = new FormData(document.querySelector('#adDataForm'))
+            data.append('ad', JSON.stringify(context.state.adImage));
+            console.log(context.state.adImage)
+            axios.post(url, data)
+            .then(response => {
+                // context.commit('setAdData', response.data.data)
+            })
+            .catch
         },
         //---------------------끝---------------------------
 
@@ -1069,7 +1237,33 @@ const store = createStore({
                     context.commit('setModalMessage', '주소 변경 중 오류가 발생했습니다.');
                 });
         },
+        // getRecipeReportList(context) {
 
+        //     const url = '/api/recipereports' 
+            
+        //     console.log(url);
+        //     axios.get(url)
+        //     .then(response => {
+        //         console.log(response.data)
+        //         context.commit('setAdminRecipeData', response.data.data);
+        //     })
+        //     .catch()
+        // },
+
+        getRecipeReportList(context, page = 1) {
+            const url = `/api/recipereports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminRecipeData', response.data.data);
+                context.commit('setAdminRecipePagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {
