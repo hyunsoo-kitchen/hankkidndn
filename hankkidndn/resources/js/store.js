@@ -95,6 +95,14 @@ const store = createStore({
             adminRecipeReportList: [],
             adminRecipePagination: localStorage.getItem('adminRecipePagination') ? JSON.parse(localStorage.getItem('adminRecipePagination')) : {current_page: '1'},
 
+            adminBoardReportList: [],
+	        adminBoardPagination: localStorage.getItem('adminBoardPagination') ? JSON.parse(localStorage.getItem('adminBoardPagination')) : {current_page: '1'},
+
+            adminCommentReportList: [],
+	        adminCommentPagination: localStorage.getItem('adminCommentPagination') ? JSON.parse(localStorage.getItem('adminCommentPagination')) : {current_page: '1'},
+            
+            usersReportInfo: [],
+
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -285,6 +293,20 @@ const store = createStore({
             state.adminRecipeReportList = data.data;
             state.adminRecipePagination = data;
             localStorage.setItem('adminRecipePagination', JSON.stringify(data));
+        },
+        setAdminBoardData(state, data) {
+            state.adminBoardReportList = data.data;
+            state.adminBoardPagination = data;
+            localStorage.setItem('adminBoardPagination', JSON.stringify(data));
+        },
+        setAdminCommentData(state, data) {
+            state.adminCommentReportList = data.data;
+            state.adminCommentPagination = data;
+            localStorage.setItem('adminCommentPagination', JSON.stringify(data));
+        },
+        setUsersReportInfo(state, data) {
+            console.log(data)
+            state.usersReportInfo = data;
         },
 
         //-------------------------노경호 끝-------------------------- 
@@ -1300,12 +1322,56 @@ const store = createStore({
             .then(response => {
                 console.log(response.data)
                 context.commit('setAdminRecipeData', response.data.data);
-                context.commit('setAdminRecipePagination', response.data.pagination);
+                // context.commit('setAdminRecipePagination', response.data.pagination);
             })
             .catch(error => {
                 console.error("Error fetching recipe report list:", error);
             });
         },
+
+        getBoardReportList(context, page = 1) {
+            const url = `/api/boardreports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminBoardData', response.data.data);
+                // context.commit('setAdminBoardPagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
+
+        getCommentReportList(context, page = 1) {
+            const url = `/api/commentreports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminCommentData', response.data.data);
+                // context.commit('setAdminBoardPagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
+
+        getUsersReportInfo(context) {
+            const url ='/api/admin/usersreportinfo';
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setUsersReportInfo', response.data.data);
+            })
+            .catch(error => {
+                context.commit('setModalMessage', '카운트 습득에 실패했습니다. (' +  error.response.data.code + ')');
+            });
+        },
+
+
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

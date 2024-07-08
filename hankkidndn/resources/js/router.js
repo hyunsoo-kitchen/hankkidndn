@@ -191,7 +191,8 @@ function chkAuth(to, from, next) {
     if(store.state.authFlg || store.state.adminFlg) {
         next();
     } else {
-        alert('로그인이 필요한 서비스입니다.');
+        // alert('로그인이 필요한 서비스입니다.');
+        store.commit('setModalMessage', '로그인이 필요한 서비스입니다..');
         next('/login');
     }
 };
@@ -201,7 +202,8 @@ function chkAuthon(to, from, next) {
     if(!(store.state.authFlg)) {
         next();
     } else {
-        alert('로그인 상태에서는 접속 할 수 없습니다.');
+        // alert('로그인 상태에서는 접속 할 수 없습니다.');
+        store.commit('setModalMessage', '로그인 상태에서는 접속 할 수 없습니다.');
         next('/main');
     }
 };
@@ -239,7 +241,8 @@ function chkRecipeType(to, from, next) {
     if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100 || to.params.id == 99 || isNaN(to.params.id)) {
         next();
     } else {
-        alert('해당 게시판은 없는 게시판 입니다.');
+        // alert('해당 게시판은 없는 게시판 입니다.');
+        store.commit('setModalMessage', '해당 게시판은 없는 게시판 입니다.');
         router.back();
     }
 }

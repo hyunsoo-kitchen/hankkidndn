@@ -163,6 +163,12 @@ Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress'])
 
 // 신고받은 레시피 불러오기
 Route::get('/api/recipereports', [AdminController::class, 'recipeReportList']);
+// 신고받은 게시글 불러오기
+Route::get('/api/boardreports', [AdminController::class, 'boardReportList']);
+// 신고받은 댓글 불러오기
+Route::get('/api/commentreports', [AdminController::class, 'commentReportList']);
+// 신고갯수 불러오기
+Route::get('api/admin/usersreportinfo', [AdminController::class, 'countReport']);
 
 //-----------------------끝--------------------------------
 // 마이페이지
