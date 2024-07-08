@@ -36,6 +36,7 @@ Route::get('/api/main', [CommonController::class, 'getList']);
 // 각 게시판 정보 획득 - 권현수
 Route::get('/api/recipe/{num}', [RecipeBoardController::class, 'getList']);
 Route::get('/api/board/{num}', [BoardController::class, 'getList']);
+Route::get('/api/board/event/detail/{num}', [BoardController::class, 'event']);
 
 // 레시피 게시글 작성 처리 - 권현수
 Route::middleware('auth')->post('/api/recipe/insert', [RecipeBoardController::class, 'recipeInsert']);

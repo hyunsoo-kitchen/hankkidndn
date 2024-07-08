@@ -335,5 +335,17 @@ class BoardController extends Controller
 
         return response()->json($responseData, 200);
     }
-    
+    public function event($id)
+    {
+        $eventData = event::where('id', $id)
+                            ->first(); 
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '검색 게시글 획득 완료'
+            ,'data' => $eventData
+        ];
+        
+        return response()->json($responseData, 200);
+    }
 }
