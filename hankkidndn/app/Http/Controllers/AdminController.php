@@ -296,9 +296,11 @@ class AdminController extends Controller
         $nowDate = now();
 
         $progressEvent = Event::where('end_date', '>=', $nowDate)
+                        ->orderBy('created_at', 'DESC')
                         ->paginate(10);
 
         $finishEvent = Event::where('end_date', '<', $nowDate)
+                        ->orderBy('created_at', 'DESC')
                         ->paginate(10);
 
         $responseData = [
