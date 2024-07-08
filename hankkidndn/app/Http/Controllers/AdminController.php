@@ -325,6 +325,7 @@ class AdminController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 레시피신고 리스트
     public function recipeReportList() {
         $reportData = DB::table('reports')
             ->join('recipe_boards', 'reports.recipe_board_id', '=', 'recipe_boards.id')
@@ -354,13 +355,103 @@ class AdminController extends Controller
     
         $responseData = [
             'code' => '0',
-            'msg' => '리폿 리스트 획득 완료',
+            'msg' => '레시피 리폿 리스트 획득 완료',
             'data' => $reportData
         ];
         // log::info($reportData);
         return response()->json($responseData, 200);
     }
 
+    //게시글 신고 리스트
+    public function boardReportList() {
+        $reportData = DB::table('reports')
+            ->join('boards', 'reports.board_id', '=', 'boards.id')
+            ->join('users as report_users', 'boards.user_id', '=', 'report_users.id')
+            ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
+            ->select(
+                'boards.title as board_title',
+                'report_users.u_nickname as board_author',
+                DB::raw('COUNT(reports.board_id) as report_count'),
+                'report_author.u_nickname as reporter_nickname',
+                'reports.content as report_reason',
+                'reports.created_at as report_time'
+            )
+            ->whereNotNull('reports.board_id')
+            ->groupBy(
+                'boards.title', 
+                'report_users.u_nickname', 
+                'report_author.u_nickname', 
+                'reports.content', 
+                'reports.created_at', 
+                'reports.recipe_board_id'
+            )
+            ->orderBy('reports.created_at', 'DESC')
+            ->paginate(10);
+    
+        // $reportDataArray = $reportData->items();
+    
+        $responseData = [
+            'code' => '0',
+            'msg' => '게시글 리폿 리스트 획득 완료',
+            'data' => $reportData
+        ];
+        // log::info($reportData);
+        return response()->json($responseData, 200);
+    }
+
+    // 댓글신고 리스트
+    public function commentReportList() {
+        $reportData = DB::table('reports')
+            ->join('comments', 'reports.comment_id', '=', 'comments.id')
+            ->join('users as report_users', 'comments.user_id', '=', 'report_users.id')
+            ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
+            ->select(
+                'comments.content as comments_content',
+                'report_users.u_nickname as comment_author',
+                DB::raw('COUNT(reports.comment_id) as report_count'),
+                'report_author.u_nickname as reporter_nickname',
+                'reports.content as report_reason',
+                'reports.created_at as report_time'
+            )
+            ->whereNotNull('reports.comment_id')
+            ->groupBy(
+                'comments.content', 
+                'report_users.u_nickname', 
+                'report_author.u_nickname', 
+                'reports.content', 
+                'reports.created_at', 
+                'reports.recipe_board_id'
+            )
+            ->orderBy('reports.created_at', 'DESC')
+            ->paginate(10);
+    
+        // $reportDataArray = $reportData->items();
+    
+        $responseData = [
+            'code' => '0',
+            'msg' => '댓글리폿 리스트 획득 완료',
+            'data' => $reportData
+        ];
+        // log::info($reportData);
+        return response()->json($responseData, 200);
+    }
+
+    // 신고 갯수 받아오기
+    public function countReport() {
+        $reportData = DB::table('reports')
+        ->selectRaw('COUNT(board_id) AS board_report_count')
+        ->selectRaw('COUNT(recipe_board_id) AS recipe_board_report_count')
+        ->selectRaw('COUNT(comment_id) AS comment_report_count')
+        ->first();
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '신고 갯수 획득 완료',
+            'data' => $reportData
+        ];
+        // log::info($reportData);
+        return response()->json($responseData, 200);
+    }
 
     //------------------------------------------------------------------------------------------------------
 }
