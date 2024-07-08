@@ -7,6 +7,7 @@ use App\Exceptions\MyValidateException;
 use App\Models\adImg;
 use App\Models\Admin;
 use App\Models\Boards;
+use App\Models\Event;
 use App\Models\notice;
 use App\Models\Report;
 use Illuminate\Http\Request;
@@ -286,6 +287,72 @@ class AdminController extends Controller
         $responseData = [
             'code' => '0'
             ,'msg' => '광고 삽입 완료'
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    public function getEvent() {
+        $nowDate = now();
+
+        $progressEvent = Event::where('end_date', '>=', $nowDate)
+                        ->paginate(10);
+
+        $finishEvent = Event::where('end_date', '<', $nowDate)
+                        ->paginate(10);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '광고 삽입 완료'
+            ,'progressData' => $progressEvent
+            ,'finishData' => $finishEvent
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    public function eventInsert(Request $request) {
+        $user = Auth::user();
+        $request['admin_id'] = $user->id;
+
+        $requestData = $request->all();
+        
+        $validator = Validator::make(
+            $requestData
+            ,[
+                'admin_id' => ['required', 'regex:/^[0-9]+$/']
+                ,'title' => ['required', 'max:50']
+                ,'start_at' => ['required', 'date']
+                ,'end_at' => ['required', 'date', 'after:start_at']
+                ,'thumbnail' => ['required', 'mimes:jpeg,png', 'max:5000']
+                ,'file' => ['required', 'mimes:jpeg,png', 'max:5000']
+            ]
+        );
+
+        // 유효성 검사 실패 체크
+        if($validator->fails()) {
+            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+            throw new MyValidateException('E01');
+        }
+
+        $thumbnail = $request->file('thumbnail')->store('img');
+        $eventImg = $request->file('file')->store('img');
+
+        $insertData = [
+            'admin_id' => $user->id,
+            'title' => $request->title,
+            'start_date' => $request->start_at,
+            'end_date' => $request->end_at,
+            'thumb_img_path' => '/'.$thumbnail,
+            'img_path' => '/'.$eventImg
+        ];
+
+        $eventData = Event::create($insertData);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '광고 삽입 완료'
+            ,'data' => $eventData
         ];
 
         return response()->json($responseData, 200);

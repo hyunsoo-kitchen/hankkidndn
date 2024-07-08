@@ -116,6 +116,10 @@ Route::delete('/api/board/notice/delete/{num}', [AdminController::class, 'notice
 // 관리자 광고 처리
 Route::post('/api/admin/ad', [AdminController::class, 'adInsert']);
 Route::get('/api/admin/ad', [AdminController::class, 'getAdData']);
+
+// 관리자 이벤트 처리
+Route::get('/api/admin/event', [AdminController::class, 'getEvent']);
+Route::post('/api/admin/event', [AdminController::class, 'eventInsert']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------

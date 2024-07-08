@@ -51,6 +51,13 @@ const store = createStore({
             
             // 광고 이미지
             adImage:[],
+            
+            // 이벤트 게시글 및 페이지네이션
+            progressEvent:[],
+            finishEvent:[],
+
+            progressEventPagination: localStorage.getItem('progressEventPagination') ? JSON.parse(localStorage.getItem('progressEventPagination')) : {current_page: '1'},
+            finishEventPagination: localStorage.getItem('finishEventPagination') ? JSON.parse(localStorage.getItem('finishEventPagination')) : {current_page: '1'},
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -210,6 +217,17 @@ const store = createStore({
         setAdData(state, data) {
             state.adImage = data
             console.log(state.adImage)
+        },
+        // 이벤트 정보 저장
+        setEventListData(state, data) {
+            state.progressEvent = data.data
+            state.progressEventPagination = data
+            localStorage.setItem('progressEventPagination', JSON.stringify(data));
+        },
+        setFinishEventListData(state, data) {
+            state.finishEvent = data.data
+            state.finishEventPagination = data
+            localStorage.setItem('finishEventPagination', JSON.stringify(data));
         },
         //---------------------끝---------------------------
 
@@ -895,6 +913,30 @@ const store = createStore({
                 // context.commit('setAdData', response.data.data)
             })
             .catch
+        },
+
+        // 이벤트 획득 처리
+        getEventData(context) {
+            const url = '/api/admin/event'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setEventListData', response.data.progressData)
+                context.commit('setFinishEventListData', response.data.finishData)
+            })
+            .catch();
+        },
+
+        // 이벤트 작성 처리
+        eventInsert(context) {
+            const url = '/api/admin/event'
+            const data = new FormData(document.querySelector('#eventFormData'))
+
+            axios.post(url, data)
+            .then(response => {
+
+            })
+            .catch();
         },
         //---------------------끝---------------------------
 
