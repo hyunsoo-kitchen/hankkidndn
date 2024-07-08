@@ -27,6 +27,7 @@ import ContentControllComponent from '../components/AdminPage/ContentControllCom
 import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue';
 import BoardNoticeDetailComponent from '../components/BoardPage/BoardNoticeDetailComponent.vue';
 import BoardNoticeUpdateComponent from '../components/BoardPage/BoardNoticeUpdateComponent.vue';
+import AdminEventComponent from '../components/AdminPage/AdminEventComponent.vue';
 
 const routes = [
     {
@@ -130,6 +131,7 @@ const routes = [
     {
         path: '/adminlogin',
         component: AdminLogin,
+        beforeEnter: chkAdminOn,
     },
     {
         path: '/admincontentcontroll',
@@ -139,11 +141,17 @@ const routes = [
     {
         path: '/adminnotice',
         component: AdminNoticeComponent,
-        beforeEnter: chkAdmin,
+        beforeEnter: [chkAdmin, chkNoticePageNum]
     },
     {
         path: '/board/notice',
         component: BoardNoticeListComponent,
+        beforeEnter: chkNoticePageNum,
+    },
+    {
+        path: '/adminevent',
+        component: AdminEventComponent,
+        beforeEnter: chkAdmin,
     },
     {
         path: '/board/notice/detail/:id',
@@ -209,11 +217,19 @@ function chkAdmin(to, from, next) {
     }
 }
 
+// 관리자 로그인시 못가는 페이지 처리
+function chkAdminOn(to, from, next) {
+    if(!store.state.adminFlg) {
+        next();
+    } else {
+        next('/admincontentcontroll');
+    }
+}
+
 // 보드 게시판 타입 관리
 function chkBoardType(to, from, next) {
-    if(to.params.id >= 10 || to.params.id <= 6) {
-        // alert('해당 게시판은 없는 게시판 입니다.');
-        store.commit('setModalMessage', '해당 게시판은 없는 게시판 입니다.');
+    if(to.params.id >= 10 || to.params.id <= 6 || isNaN(to.params.id)) {
+        alert('해당 게시판은 없는 게시판 입니다.');
         router.back();
     } else {
         next();
@@ -222,7 +238,7 @@ function chkBoardType(to, from, next) {
 
 // 레시피 게시판 타입 관리
 function chkRecipeType(to, from, next) {
-    if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100 || to.params.id == 99) {
+    if(to.params.id >= 1 && to.params.id <= 5 || to.params.id == 100 || to.params.id == 99 || isNaN(to.params.id)) {
         next();
     } else {
         // alert('해당 게시판은 없는 게시판 입니다.');
@@ -233,9 +249,18 @@ function chkRecipeType(to, from, next) {
 
 // 게시글 페이지 초과시 처리
 function chkPageNum(to, from, next) {
-    if(to.query.page > store.state.pagination.last_page || to.query.page < 1 ) {
-        // alert('해당 페이지는 없는 페이지 입니다.');
-        store.commit('setModalMessage', '해당 페이지는 없는 페이지 입니다.');
+    if(to.query.page > store.state.pagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
+        alert('해당 페이지는 없는 페이지 입니다.');
+        router.back();
+    } else {
+        next();
+    }
+}
+
+// 관리자 공지사항 페이지 초과시 처리
+function chkNoticePageNum(to, from, next) {
+    if(to.query.page > store.state.noticePagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
+        alert('해당 페이지는 없는 페이지 입니다.');
         router.back();
     } else {
         next();
@@ -244,15 +269,15 @@ function chkPageNum(to, from, next) {
 
 // 게시글 검색 페이지 초과시 처리
 function chkSearchPageNum(to, from, next) {
-    if(to.query.page > store.state.searchPagination.last_page || to.query.page < 1 ) {
-        // alert('해당 페이지는 없는 페이지 입니다.');
-        store.commit('setModalMessage', '해당 페이지는 없는 페이지입니다.');
+    if(to.query.page > store.state.searchPagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
+        alert('해당 페이지는 없는 페이지 입니다.');
         router.back();
     } else {
         next();
     }
 }
 
+// 조회수 업데이트
 function boardViews(to, from, next) {
     store.dispatch('boardViewUp', to.params.id)
     next();

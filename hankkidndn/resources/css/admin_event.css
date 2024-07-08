@@ -3,7 +3,12 @@
     margin: 0;
     box-sizing: border-box;
     font-family: "Jua", sans-serif;
-  }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
 button{
     border: 0;
     background-color: transparent;
@@ -78,42 +83,36 @@ button{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     height: 25px;
 }
-/* ----------------- */
+.pagenation_box {
+    width: 60%;
+    margin: 20px auto 0;
+}
+.pagenation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;    
+}
+.pagenation > button {
+    width: 30px;
+}
 
-/* 공지사항 리스트 부분 */
+.error-message {
+    color: red;
+    font-size: 12px;
+    width: 100%; /* 부모 요소에 맞게 너비 설정 */
+}
 
-.notice-header {
+.event-header {
     display: flex;
     justify-content: space-between;
 }
 
-.notice-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    margin-top: 20px;
-}
-
-.notice-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    cursor: pointer;
-}
-.notice-pagination {
+.event-body-header {
     display: flex;
-    justify-content: center;
-    padding: 20px 0;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-evenly;
+    gap: 20px;
 }
 
-@media (max-width: 700px) {
-    .notice-content {
-        font-size: 0.7rem;
-    }
-
-    .category {
-        width: 100%;
-    }
+.event-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

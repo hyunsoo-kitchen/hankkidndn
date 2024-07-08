@@ -36,8 +36,8 @@
             </div>
             <div @click="$store.dispatch('getNoticeDetail', item.id)" class="notice-content" v-for="(item, index) in $store.state.noticeListData" :key="index">
                 <div>{{ ($store.state.noticePagination.total - index) - (($store.state.noticePagination.current_page - 1) * 10) }}</div>
-                <div>{{ substringTitle(item.title, 10) }}</div>
-                <div>{{ substringTitle(item.content, 10) }}</div>
+                <div>{{ substringTitle(item.title, 8) }}</div>
+                <div>{{ substringTitle(item.content, 8) }}</div>
                 <div>{{ formatDate(item.created_at) }}</div>
             </div>
             <div class="notice-pagination">
@@ -71,8 +71,8 @@ import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
     
-const store = useStore();
 const route = useRoute();
+const store = useStore();
 const noticeFlg = ref(false);
 const pages = ref([]);
 const page = ref();

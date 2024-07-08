@@ -51,6 +51,13 @@ const store = createStore({
             
             // 광고 이미지
             adImage:[],
+            
+            // 이벤트 게시글 및 페이지네이션
+            progressEvent:[],
+            finishEvent:[],
+
+            progressEventPagination: localStorage.getItem('progressEventPagination') ? JSON.parse(localStorage.getItem('progressEventPagination')) : {current_page: '1'},
+            finishEventPagination: localStorage.getItem('finishEventPagination') ? JSON.parse(localStorage.getItem('finishEventPagination')) : {current_page: '1'},
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -87,6 +94,14 @@ const store = createStore({
             //0707 관리자 페이지네이션 연습
             adminRecipeReportList: [],
             adminRecipePagination: localStorage.getItem('adminRecipePagination') ? JSON.parse(localStorage.getItem('adminRecipePagination')) : {current_page: '1'},
+
+            adminBoardReportList: [],
+	        adminBoardPagination: localStorage.getItem('adminBoardPagination') ? JSON.parse(localStorage.getItem('adminBoardPagination')) : {current_page: '1'},
+
+            adminCommentReportList: [],
+	        adminCommentPagination: localStorage.getItem('adminCommentPagination') ? JSON.parse(localStorage.getItem('adminCommentPagination')) : {current_page: '1'},
+            
+            usersReportInfo: [],
 
             //-------------------------끝------------------------------
             
@@ -213,6 +228,17 @@ const store = createStore({
             state.adImage = data
             console.log(state.adImage)
         },
+        // 이벤트 정보 저장
+        setEventListData(state, data) {
+            state.progressEvent = data.data
+            state.progressEventPagination = data
+            localStorage.setItem('progressEventPagination', JSON.stringify(data));
+        },
+        setFinishEventListData(state, data) {
+            state.finishEvent = data.data
+            state.finishEventPagination = data
+            localStorage.setItem('finishEventPagination', JSON.stringify(data));
+        },
         //---------------------끝---------------------------
 
         // 인증 플래그 저장
@@ -269,6 +295,20 @@ const store = createStore({
             state.adminRecipeReportList = data.data;
             state.adminRecipePagination = data;
             localStorage.setItem('adminRecipePagination', JSON.stringify(data));
+        },
+        setAdminBoardData(state, data) {
+            state.adminBoardReportList = data.data;
+            state.adminBoardPagination = data;
+            localStorage.setItem('adminBoardPagination', JSON.stringify(data));
+        },
+        setAdminCommentData(state, data) {
+            state.adminCommentReportList = data.data;
+            state.adminCommentPagination = data;
+            localStorage.setItem('adminCommentPagination', JSON.stringify(data));
+        },
+        setUsersReportInfo(state, data) {
+            console.log(data)
+            state.usersReportInfo = data;
         },
 
         //-------------------------노경호 끝-------------------------- 
@@ -901,6 +941,30 @@ const store = createStore({
             })
             .catch
         },
+
+        // 이벤트 획득 처리
+        getEventData(context) {
+            const url = '/api/admin/event'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setEventListData', response.data.progressData)
+                context.commit('setFinishEventListData', response.data.finishData)
+            })
+            .catch();
+        },
+
+        // 이벤트 작성 처리
+        eventInsert(context) {
+            const url = '/api/admin/event'
+            const data = new FormData(document.querySelector('#eventFormData'))
+
+            axios.post(url, data)
+            .then(response => {
+
+            })
+            .catch();
+        },
         //---------------------끝---------------------------
 
         //---------------------노경호------------------------------
@@ -1263,12 +1327,56 @@ const store = createStore({
             .then(response => {
                 console.log(response.data)
                 context.commit('setAdminRecipeData', response.data.data);
-                context.commit('setAdminRecipePagination', response.data.pagination);
+                // context.commit('setAdminRecipePagination', response.data.pagination);
             })
             .catch(error => {
                 console.error("Error fetching recipe report list:", error);
             });
         },
+
+        getBoardReportList(context, page = 1) {
+            const url = `/api/boardreports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminBoardData', response.data.data);
+                // context.commit('setAdminBoardPagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
+
+        getCommentReportList(context, page = 1) {
+            const url = `/api/commentreports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                console.log(response.data)
+                context.commit('setAdminCommentData', response.data.data);
+                // context.commit('setAdminBoardPagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
+
+        getUsersReportInfo(context) {
+            const url ='/api/admin/usersreportinfo';
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setUsersReportInfo', response.data.data);
+            })
+            .catch(error => {
+                context.commit('setModalMessage', '카운트 습득에 실패했습니다. (' +  error.response.data.code + ')');
+            });
+        },
+
+
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

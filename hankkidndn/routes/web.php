@@ -117,6 +117,10 @@ Route::delete('/api/board/notice/delete/{num}', [AdminController::class, 'notice
 // 관리자 광고 처리
 Route::post('/api/admin/ad', [AdminController::class, 'adInsert']);
 Route::get('/api/admin/ad', [AdminController::class, 'getAdData']);
+
+// 관리자 이벤트 처리
+Route::get('/api/admin/event', [AdminController::class, 'getEvent']);
+Route::post('/api/admin/event', [AdminController::class, 'eventInsert']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------
@@ -160,6 +164,12 @@ Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress'])
 
 // 신고받은 레시피 불러오기
 Route::get('/api/recipereports', [AdminController::class, 'recipeReportList']);
+// 신고받은 게시글 불러오기
+Route::get('/api/boardreports', [AdminController::class, 'boardReportList']);
+// 신고받은 댓글 불러오기
+Route::get('/api/commentreports', [AdminController::class, 'commentReportList']);
+// 신고갯수 불러오기
+Route::get('api/admin/usersreportinfo', [AdminController::class, 'countReport']);
 
 //-----------------------끝--------------------------------
 // 마이페이지

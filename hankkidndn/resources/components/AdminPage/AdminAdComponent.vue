@@ -114,7 +114,7 @@ function adImg(img, index) {
 
     // 선택한 파일의 URL 생성
     const imageUrl = URL.createObjectURL(file);
-    console.log(file);
+
     store.state.adImage[index].img_path = imageUrl;
 }
 
