@@ -1,15 +1,18 @@
 <template>
+    <div class="container">
     <h2>진행중인 이벤트</h2>
     <div class="main">
         <div class="main_box">
             <div class="title">{{ $store.state.eventData.title }}</div>
             <div class="period">
                 <div class="start">{{ $store.state.eventData.start_date }}</div>
+                ~
                 <div class="end">{{ $store.state.eventData.end_date }}</div>
             </div>
         </div>
     </div>
-    <img  :src="$store.state.eventData.img_path">   
+    <img  :src="$store.state.eventData.img_path">
+</div>
 </template>
 
 <script setup>
@@ -29,4 +32,5 @@ onBeforeMount(() => {
 </script>
 
 <style scoped src="../../css/eventdetail.css">
+    @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 </style>
