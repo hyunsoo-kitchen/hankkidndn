@@ -29,6 +29,7 @@ import BoardNoticeDetailComponent from '../components/BoardPage/BoardNoticeDetai
 import BoardNoticeUpdateComponent from '../components/BoardPage/BoardNoticeUpdateComponent.vue';
 import AdminEventComponent from '../components/AdminPage/AdminEventComponent.vue';
 import BoardEventDetailComponent from '../components/BoardPage/BoardEventDetailComponent.vue';
+import BoardEventListComponent from '../components/BoardPage/BoardEventListComponent.vue';
 
 const routes = [
     {
@@ -175,6 +176,10 @@ const routes = [
     {
         path: '/board/event/detail/:id',
         component: BoardEventDetailComponent,
+    },
+    {
+        path: '/board/event/list',
+        component: BoardEventListComponent,
     },
 ];
 
