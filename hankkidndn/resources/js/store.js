@@ -113,6 +113,8 @@ const store = createStore({
             searchBoardListData: localStorage.getItem('searchPagination') ? JSON.parse(localStorage.getItem('searchPagination')).data : [],
 
             modalMessage: '',
+
+            eventData : [],
             
             //-----------------------끝-------------------------------
         }
@@ -333,6 +335,10 @@ const store = createStore({
         },
         setModalMessage(state, data) {
             state.modalMessage = data;
+        },
+        setEventDetail(state, data) {
+            state.eventData = data.data;
+            console.log(state.eventData);
         }
         // -----------------------이현수 끝 ---------------------------
     },
@@ -1434,6 +1440,16 @@ const store = createStore({
                     console.log(error);
                 });
             },
+        eventdetail(context, data) {
+            const url = '/api/board/event/detail/' + data
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setEventDetail', response.data)
+            })
+            .catch();
+        },
+
 
 
     }

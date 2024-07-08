@@ -28,6 +28,7 @@ import KakaoLoginComponent from '../components/UserPage/KakaoLoginComponent.vue'
 import BoardNoticeDetailComponent from '../components/BoardPage/BoardNoticeDetailComponent.vue';
 import BoardNoticeUpdateComponent from '../components/BoardPage/BoardNoticeUpdateComponent.vue';
 import AdminEventComponent from '../components/AdminPage/AdminEventComponent.vue';
+import BoardEventDetailComponent from '../components/BoardPage/BoardEventDetailComponent.vue';
 
 const routes = [
     {
@@ -170,6 +171,10 @@ const routes = [
     {
         path: '/kakaoLogin',
         component: KakaoLoginComponent,
+    },
+    {
+        path: '/board/event/detail/:id',
+        component: BoardEventDetailComponent,
     },
 ];
 

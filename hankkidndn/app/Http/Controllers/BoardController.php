@@ -6,6 +6,7 @@ use App\Exceptions\MyValidateException;
 use App\Models\BoardImages;
 use App\Models\Boards;
 use App\Models\Comment;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;  
@@ -335,5 +336,18 @@ class BoardController extends Controller
 
         return response()->json($responseData, 200);
     }
-    
+    public function event($id)
+    {
+        $eventData = Event::where('id', $id)
+                            ->first(); 
+        Log::debug($eventData);
+
+        $responseData = [
+            'code' => '0'
+            ,'msg' => '검색 게시글 획득 완료'
+            ,'data' => $eventData
+        ];
+        
+        return response()->json($responseData, 200);
+    }
 }
