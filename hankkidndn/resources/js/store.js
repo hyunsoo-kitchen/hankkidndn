@@ -938,13 +938,15 @@ const store = createStore({
         },
 
         // 이벤트 획득 처리
-        getEventData(context) {
-            const url = '/api/admin/event'
+        getEventData(context, page) {
+            const url = '/api/admin/event?page=' + page
 
             axios.get(url)
             .then(response => {
                 context.commit('setEventListData', response.data.progressData)
                 context.commit('setFinishEventListData', response.data.finishData)
+
+                router.push('/adminevent?page=' + page );
             })
             .catch();
         },
