@@ -944,13 +944,29 @@ const store = createStore({
         },
 
         // 이벤트 획득 처리
-        getEventData(context) {
-            const url = '/api/admin/event'
+        getEventData(context, page) {
+            const url = '/api/admin/event?page=' + page
 
             axios.get(url)
             .then(response => {
                 context.commit('setEventListData', response.data.progressData)
                 context.commit('setFinishEventListData', response.data.finishData)
+
+                router.push('/adminevent?page=' + page );
+            })
+            .catch();
+        },
+
+        // 보드 이벤트 획득 처리
+        getBoardEventData(context, page) {
+            const url = '/api/admin/event?page=' + page
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setEventListData', response.data.progressData)
+                context.commit('setFinishEventListData', response.data.finishData)
+
+                router.push('/board/event/list?page=' + page );
             })
             .catch();
         },
@@ -1438,12 +1454,16 @@ const store = createStore({
                     console.log(error);
                 });
             },
+
+        // 이벤트 상세 확인 처리
         eventdetail(context, data) {
             const url = '/api/board/event/detail/' + data
 
             axios.get(url)
             .then(response => {
                 context.commit('setEventDetail', response.data)
+
+                router.push('/board/event/detail/' + data)
             })
             .catch();
         },

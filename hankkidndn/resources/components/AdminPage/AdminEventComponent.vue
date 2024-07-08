@@ -316,11 +316,13 @@ function eventEndBlur(date) {
 function progressEventOn() {
     progressFlg.value = true;
     finishFlg.value = false;
+    store.dispatch('getEventData', 1);
 }
 
 function finishEventOn() {
     progressFlg.value = false;
     finishFlg.value = true;
+    store.dispatch('getEventData', 1);
 }
 
 // 모달창
@@ -334,7 +336,7 @@ function closeModal() {
 
 onBeforeMount(() => {
     page.value = route.query.page;
-    store.dispatch('getEventData');
+    store.dispatch('getEventData', page.value);
     // 진행중인 이벤트 처리
     let interval = setInterval(() => {
         pagination(route.query.page);
