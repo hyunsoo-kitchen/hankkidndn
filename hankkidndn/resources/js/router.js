@@ -30,6 +30,7 @@ import BoardNoticeUpdateComponent from '../components/BoardPage/BoardNoticeUpdat
 import AdminEventComponent from '../components/AdminPage/AdminEventComponent.vue';
 import BoardEventDetailComponent from '../components/BoardPage/BoardEventDetailComponent.vue';
 import BoardEventListComponent from '../components/BoardPage/BoardEventListComponent.vue';
+import AdminDashBoard from '../components/AdminPage/AdminDashBoard.vue';
 
 const routes = [
     {
@@ -181,6 +182,11 @@ const routes = [
         path: '/board/event/list',
         component: BoardEventListComponent,
     },
+    {
+        path: '/admindashboard',
+        component: AdminDashBoard,
+        beforeEnter: chkAdmin,
+    }
 ];
 
 const router = createRouter({

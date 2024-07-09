@@ -1,0 +1,103 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Jua", sans-serif;
+}
+button{
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+hr {
+    width: 60%;
+}
+.head_container {
+    display: grid;
+    grid-template-columns: 0.6fr 0.8fr 5.6fr 1fr 1fr;;
+    width: 96%;
+    height: 80px;
+    border: 1px solid black;
+    align-items: center;
+    margin: 0 auto;
+}
+.head_logo {
+    grid-column: 1/2;
+}
+.head_title {
+    grid-column: 2/3;
+    font-size: 30px;
+    font-weight: bold;
+}
+.body_container {
+    display: grid;
+    grid-template-columns: 0.7fr 5fr;
+    width: 96%;
+    margin: 15px auto;
+}
+.category {
+    grid-column: 1/2;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    border: 1px solid black;
+    align-items: center;
+    width: 185px;
+    height: 288px;
+    /* margin: 0 auto; */
+}
+.main_container {
+    display: grid;
+    grid-template-rows: 0.8fr 5fr 7fr;
+}
+.head_notice {
+    border: 1px solid black;
+    height: 50px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.head_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+/* 신규 회원 컨테이너 */
+.new_member_container {
+    border: 1px solid black;
+    margin-top: 5px;
+}
+.n_m_head {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.n_m_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+/* 신규회원 컨테이너 종료 */
+/* 간략 통계 */
+.statistics {
+    border: 1px solid black;
+    margin-top: 10px;
+}
+.stats_head {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.stats_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+/* 간략통계 요약 */
+.stats_summary {
+    border: 1px solid black;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.week_summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.month_summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}

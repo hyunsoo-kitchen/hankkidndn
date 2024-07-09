@@ -163,14 +163,14 @@ class UserController extends Controller
         $approveData = ReportApprove::where('user_id', '=', $userInfo->id)
                                     ->get();
 
-        if(isset($approveData)) {
-            $nowDate = Carbon::now();
-            foreach($approveData as $item) {
-                if($item->end_date > $nowDate ) {
-                    throw new Exception('')
-                }
-            }
-        }
+        // if(isset($approveData)) {
+        //     $nowDate = Carbon::now();
+        //     foreach($approveData as $item) {
+        //         if($item->end_date > $nowDate ) {
+        //             throw new Exception('')
+        //         }
+        //     }
+        // }
         // 로그인 처리
         Auth::login($userInfo);
 
