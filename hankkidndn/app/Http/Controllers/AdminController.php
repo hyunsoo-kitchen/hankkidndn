@@ -10,6 +10,7 @@ use App\Models\Boards;
 use App\Models\Event;
 use App\Models\notice;
 use App\Models\Report;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -478,5 +479,267 @@ class AdminController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 대시보드 최근 가입자 받아오기
+    public function newMemberInfo() {
+        $data = DB::table('users')
+                    ->select(
+                        'created_at',
+                        'u_name',
+                        'u_nickname',
+                        'u_id',
+                        DB::raw("CASE WHEN gender = 0 THEN '남자' WHEN gender = 1 THEN '여자' END AS gender"),
+                        'birth_at'
+                    )
+                    ->orderBy('created_at', 'DESC')
+                    ->limit(10)
+                    ->get();
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '최근가입자 수 획득 완료',
+            'data' => $data
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 일자별 요약
+    public function getDailyStats(){
+        $startDate = Carbon::now()->subDays(7);
+
+        $dates = DB::table(DB::raw('(
+            SELECT CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY AS date
+            FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+            CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+            WHERE CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY >= CURDATE() - INTERVAL 7 DAY
+        ) AS dates'))
+        ->select(DB::raw('date'))
+        ->pluck('date');
+
+        $userCounts = DB::table('users')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as user_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
+            ->pluck('user_count', 'date');
+
+        $postCounts = DB::table('recipe_boards')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as post_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
+            ->pluck('post_count', 'date');
+
+        $commentCounts = DB::table('comments')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as comment_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
+            ->pluck('comment_count', 'date');
+
+        $withdrawalCounts = DB::table('users')
+            ->select(DB::raw('DATE(deleted_at) as date'), DB::raw('COUNT(*) as withdrawal_count'))
+            ->where('deleted_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE(deleted_at)'))
+            ->orderBy(DB::raw('DATE(deleted_at)'), 'DESC')
+            ->pluck('withdrawal_count', 'date');
+
+        $stats = $dates->map(function ($date) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+            return [
+                'date' => $date,
+                'user_count' => $userCounts->get($date, 0),
+                'post_count' => $postCounts->get($date, 0),
+                'comment_count' => $commentCounts->get($date, 0),
+                'withdrawal_count' => $withdrawalCounts->get($date, 0),
+            ];
+        });
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '최근 7일간의 통계 데이터 획득 완료',
+            'data' => $stats  // 이미 DESC로 정렬한 쿼리 결과를 역순으로 처리
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 주간 요약
+    public function getWeeklyStats(){
+        $startDate = Carbon::now()->subDays(7);
+
+        // 주간별 날짜 범위 생성
+        $weeks = DB::table(DB::raw('(
+            SELECT YEARWEEK(CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY, 1) AS week,
+                MIN(CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY) AS start_date,
+                MAX(CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY) AS end_date
+            FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+            CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+            WHERE CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY >= CURDATE() - INTERVAL 7 DAY
+            GROUP BY YEARWEEK(CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY, 1)
+        ) AS weeks'))
+        ->select('week', 'start_date', 'end_date')
+        ->pluck('week', 'start_date');
+
+        $userCounts = DB::table('users')
+            ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as user_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
+            ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
+            ->pluck('user_count', 'week');
+
+        $postCounts = DB::table('recipe_boards')
+            ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as post_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
+            ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
+            ->pluck('post_count', 'week');
+
+        $commentCounts = DB::table('comments')
+            ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as comment_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
+            ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
+            ->pluck('comment_count', 'week');
+
+        $withdrawalCounts = DB::table('users')
+            ->select(DB::raw('YEARWEEK(deleted_at, 1) as week'), DB::raw('COUNT(*) as withdrawal_count'))
+            ->where('deleted_at', '>=', $startDate)
+            ->groupBy(DB::raw('YEARWEEK(deleted_at, 1)'))
+            ->orderBy(DB::raw('YEARWEEK(deleted_at, 1)'), 'DESC')
+            ->pluck('withdrawal_count', 'week');
+
+        $stats = $weeks->map(function ($week, $startDate) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+            return [
+                'week' => $week,
+                'start_date' => $startDate,
+                'user_count' => $userCounts->get($week, 0),
+                'post_count' => $postCounts->get($week, 0),
+                'comment_count' => $commentCounts->get($week, 0),
+                'withdrawal_count' => $withdrawalCounts->get($week, 0),
+            ];
+        });
+
+        // 합계 계산
+        $weeklySummary = $stats->reduce(function ($carry, $item) {
+            $carry['user_count'] += $item['user_count'];
+            $carry['post_count'] += $item['post_count'];
+            $carry['comment_count'] += $item['comment_count'];
+            $carry['withdrawal_count'] += $item['withdrawal_count'];
+            return $carry;
+        }, [
+            'user_count' => 0,
+            'post_count' => 0,
+            'comment_count' => 0,
+            'withdrawal_count' => 0,
+        ]);
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '최근 7일간의 주간 통계 데이터 획득 완료',
+            'data' => [
+                'weekly_summary' => $weeklySummary,
+                'weekly_stats' => $stats->reverse()->values()
+            ]
+        ];
+
+        return response()->json($responseData, 200);
+    }
+    
+    // 월별요약
+    public function getMonthlyStats(){
+        $startDate = Carbon::now()->subMonths(1);
+
+        // 월별 날짜 범위 생성
+        $months = DB::table(DB::raw('(
+            SELECT DATE_FORMAT(CURDATE() - INTERVAL (a.a + (10 * b.a)) MONTH, "%Y-%m") AS month,
+                MIN(CURDATE() - INTERVAL (a.a + (10 * b.a)) MONTH) AS start_date,
+                MAX(CURDATE() - INTERVAL (a.a + (10 * b.a)) MONTH) AS end_date
+            FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+            CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+            WHERE CURDATE() - INTERVAL (a.a + (10 * b.a)) MONTH >= CURDATE() - INTERVAL 1 MONTH
+            GROUP BY DATE_FORMAT(CURDATE() - INTERVAL (a.a + (10 * b.a)) MONTH, "%Y-%m")
+        ) AS months'))
+        ->select('month', 'start_date', 'end_date')
+        ->pluck('month', 'start_date');
+
+        $userCounts = DB::table('users')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as user_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
+            ->pluck('user_count', 'month');
+
+        $postCounts = DB::table('recipe_boards')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as post_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
+            ->pluck('post_count', 'month');
+
+        $commentCounts = DB::table('comments')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as comment_count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
+            ->pluck('comment_count', 'month');
+
+        $withdrawalCounts = DB::table('users')
+            ->select(DB::raw('DATE_FORMAT(deleted_at, "%Y-%m") as month'), DB::raw('COUNT(*) as withdrawal_count'))
+            ->where('deleted_at', '>=', $startDate)
+            ->groupBy(DB::raw('DATE_FORMAT(deleted_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(deleted_at, "%Y-%m")'), 'DESC')
+            ->pluck('withdrawal_count', 'month');
+
+        $stats = $months->map(function ($month, $startDate) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+            return [
+                'month' => $month,
+                'start_date' => $startDate,
+                'user_count' => $userCounts->get($month, 0),
+                'post_count' => $postCounts->get($month, 0),
+                'comment_count' => $commentCounts->get($month, 0),
+                'withdrawal_count' => $withdrawalCounts->get($month, 0),
+            ];
+        });
+
+        // 합계 계산
+        $monthlySummary = $stats->reduce(function ($carry, $item) {
+            $carry['user_count'] += $item['user_count'];
+            $carry['post_count'] += $item['post_count'];
+            $carry['comment_count'] += $item['comment_count'];
+            $carry['withdrawal_count'] += $item['withdrawal_count'];
+            return $carry;
+        }, [
+            'user_count' => 0,
+            'post_count' => 0,
+            'comment_count' => 0,
+            'withdrawal_count' => 0,
+        ]);
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '최근 1개월간의 월간 통계 데이터 획득 완료',
+            'data' => [
+                'monthly_summary' => $monthlySummary,
+                'monthly_stats' => $stats->reverse()->values()
+            ]
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 신고처리해야할 신고건수
+    public function getApproveChkCount() {
+        $count = DB::table('reports')
+                    ->where('approve_chk', 0)
+                    ->count();
+            
+        $responseData = [
+            'code' => '0',
+            'msg' => '승인되지 않은 보고서 수 조회 완료',
+            'data' => $count
+        ];
+
+        return response()->json($responseData, 200);
+    }
     //------------------------------------------------------------------------------------------------------
 }

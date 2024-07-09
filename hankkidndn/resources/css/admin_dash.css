@@ -9,6 +9,9 @@ button{
     background-color: transparent;
     cursor: pointer;
 }
+hr {
+    width: 60%;
+}
 .head_container {
     display: grid;
     grid-template-columns: 0.6fr 0.8fr 5.6fr 1fr 1fr;;
@@ -28,7 +31,7 @@ button{
 }
 .body_container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 0.7fr 5fr;
     width: 96%;
     margin: 15px auto;
 }
@@ -49,6 +52,10 @@ button{
 .head_notice {
     border: 1px solid black;
     height: 50px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.head_info {
     display: flex;
     align-items: center;
     justify-content: space-evenly;

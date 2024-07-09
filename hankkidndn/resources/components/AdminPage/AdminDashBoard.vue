@@ -26,14 +26,26 @@
         <div class="main_container">
 
             <div class="head_notice">
-                <div>레시피 게시판 신고 : {{ $store.state.usersReportInfo.recipe_board_report_count }}</div>
-                <div>게시판 신고 : {{ $store.state.usersReportInfo.board_report_count }}</div>
-                <div>댓글 신고 : {{ $store.state.usersReportInfo.comment_report_count }}</div>
-                
+                <div class="head_report_count">
+                    <div>처리해야할 신고 수 : {{ approveChkCountData }}</div>
+                </div>
+                <div>
+                    <h3></h3>
+                </div>
+                <div class="head_info">
+                    <div>신규 가입자 : </div> 
+                    <div>탈퇴회원 : </div>
+                    <div>새 레시피 : </div>
+                    <div>새 게시글 : </div>
+                </div>
             </div>
 
             <!-- 신규 가입 추이 -->
             <div class="new_member_container">
+                <div>
+                    <h3>신규 가입자</h3>
+                    <hr>
+                </div>
                 <div class="n_m_head">
                     <div>가입일</div>
                     <div>이름</div>
@@ -43,19 +55,23 @@
                     <div>생일</div>
                 </div>
                 <div class="n_m_body">
-                    <div class="n_m_list">
-                        <div>2024.07.08</div>
-                        <div>노경호</div>
-                        <div>경호쓰</div>
-                        <div>simple0714</div>
-                        <div>남자</div>
-                        <div>1998.07.14</div>
+                    <div class="n_m_list" v-for="(item, index) in newMemberData" :key="index">
+                        <div>{{ item.created_at }}</div>
+                        <div>{{ item.u_name }}</div>
+                        <div>{{ item.u_nickname }}</div>
+                        <div>{{ item.u_id }}</div>
+                        <div>{{ item.gender }}</div>
+                        <div>{{ item.birth_at }}</div>
                     </div>
                 </div> 
             </div>
             
             <!-- 간략 통계 -->
             <div class="statistics">
+                <div>
+                    <h3>일자별 요약</h3>
+                    <hr>
+                </div>
                 <div class="stats_head">
                     <div>일자</div>
                     <div>신규가입</div>
@@ -64,28 +80,28 @@
                     <div>탈퇴회원</div>
                 </div>
                 <div class="stats_body">
-                    <div class="stats_list">
-                        <div>2024.07.09</div>
-                        <div>0</div>
-                        <div>1</div>
-                        <div>3</div>
-                        <div>1</div>
+                    <div class="stats_list" v-for="(item, index) in dailyStatsData" :key="index" >
+                        <div>{{ item.date }}</div>
+                        <div>{{ item.user_count }}</div>
+                        <div>{{ item.post_count }}</div>
+                        <div>{{ item.comment_count }}</div>
+                        <div>{{ item.withdrawal_count }}</div>
                     </div>
                 </div>
                 <div class="stats_summary">
                     <div class="week_summary">
                         <div>최근 7일 합계</div>
-                        <div>4</div>
-                        <div>2</div>
-                        <div>4</div>
-                        <div>1</div>
+                        <div>{{ weeklyStatsData.weekly_summary.user_count }}</div>
+                        <div>{{ weeklyStatsData.weekly_summary.post_count }}</div>
+                        <div>{{ weeklyStatsData.weekly_summary.comment_count }}</div>
+                        <div>{{ weeklyStatsData.weekly_summary.withdrawal_count }}</div>
                     </div>
                     <div class="month_summary">
-                        <div>이번달(N) 합계</div>
-                        <div>8</div>
-                        <div>7</div>
-                        <div>9</div>
-                        <div>11</div>
+                        <div>이번달({{ currentMonth }}) 합계</div>
+                        <div>{{ monthlyStatsData.monthly_summary.user_count }}</div>
+                        <div>{{ monthlyStatsData.monthly_summary.post_count }}</div>
+                        <div>{{ monthlyStatsData.monthly_summary.comment_count }}</div>
+                        <div>{{ monthlyStatsData.monthly_summary.withdrawal_count }}</div>
                     </div>
                 </div>
             </div>
@@ -97,7 +113,32 @@
 </template>
 
 <script setup>
+import { onBeforeMount, computed, ref } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
+onBeforeMount(() => {
+    store.dispatch('getNewMemberList');
+    store.dispatch('getDailyStatsList');
+    store.dispatch('getWeeklyStatsList');
+    store.dispatch('getMonthlyStatsList');
+    store.dispatch('getApproveChkCount')
+});
+
+const newMemberData = computed(() => store.state.newMemberListData);
+const dailyStatsData = computed(() => store.state.dailyStatsData);
+const weeklyStatsData = computed(() => store.state.weekStatsData);
+const monthlyStatsData = computed(() => store.state.monthStatsData);
+const approveChkCountData = computed(() => store.state.approvechkCountData);
+
+// 현재 달 계산
+const getCurrentMonth = () => {
+    const now = new Date();
+    const month = now.toLocaleString('default', { month: 'short' }); // 예: 'Jul' 또는 'July'
+    return `${month}`;
+};
+
+const currentMonth = ref(getCurrentMonth());
 
 </script>
 

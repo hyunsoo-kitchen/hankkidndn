@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import router from './router';
+import axios from 'axios';
 
 const store = createStore({
     state() {
@@ -108,6 +109,14 @@ const store = createStore({
             boardReportList: [],
             commentReportList: [],
 
+            // 대시보드 신규 가입자
+            newMemberListData: [],
+            // 대시보드 일자별 요약
+            dailyStatsData: [],
+            weekStatsData:[],
+            monthStatsData:[],
+            // 대시보드 미처리 신고갯수 가져오기
+            approvechkCountData:[],
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -324,6 +333,21 @@ const store = createStore({
         },
         setCommentReportData(state, data) {
             state.commentReportList = data
+        },
+        setNewMemberData(state, data) {
+            state.newMemberListData = data;
+        },
+        setDailyStatsData(state, data) {
+            state.dailyStatsData = data;
+        },
+        setWeekStatsData(state, data) {
+            state.weekStatsData = data;
+        },
+        setMonthStatsData(state, data) {
+            state.monthStatsData = data;
+        },
+        setApproveChkData(state, data) {
+            state.approvechkCountData = data;
         },
         //-------------------------노경호 끝-------------------------- 
 
@@ -1440,7 +1464,52 @@ const store = createStore({
             })
             .catch();
         },
+        // 대시보드 신규 가입자 정보 획득
+        getNewMemberList(context) {
+            const url = 'api/admin/newmembersinfo'
 
+            axios.get(url)
+            .then(response => {
+                context.commit('setNewMemberData', response.data.data)
+            })
+            .catch();
+        },
+        getDailyStatsList(context) {
+            const url = '/api/admin/dailystats'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setDailyStatsData', response.data.data)
+            })
+            .catch();
+        },
+        getWeeklyStatsList(context) {
+            const url = '/api/admin/weekstats'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setWeekStatsData', response.data.data)
+            })
+            .catch();
+        },
+        getMonthlyStatsList(context) {
+            const url = 'api/admin/monthstats'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setMonthStatsData', response.data.data)
+            })
+            .catch();
+        },
+        getApproveChkCount(context) {
+            const url = 'api/admin/approvechk'
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setApproveChkData', response.data.data)
+            })
+            .catch();
+        },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

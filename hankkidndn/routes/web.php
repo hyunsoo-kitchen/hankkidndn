@@ -176,6 +176,15 @@ Route::get('/api/commentreports', [AdminController::class, 'commentReportList'])
 // 신고갯수 불러오기
 Route::get('api/admin/usersreportinfo', [AdminController::class, 'countReport']);
 
+// 대시보드 신규 가입자 불러오기
+Route::get('api/admin/newmembersinfo', [AdminController::class, 'newMemberInfo']);
+// 대시보드 일자별 요약 데이터 가져오기
+Route::get('api/admin/dailystats', [AdminController::class, 'getDailyStats']);
+// 대시보드 주간,월간 요약 데이터 가져오기
+Route::get('api/admin/weekstats', [AdminController::class, 'getWeeklyStats']);
+Route::get('api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
+// 아직 미처리한 신고갯수 가져오기
+Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

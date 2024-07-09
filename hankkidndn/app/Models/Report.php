@@ -22,6 +22,9 @@ class Report extends Model
         'comment_id',
         'report_type_id',
         'content',
+        'approve_chk',
+        'created_at',
+        'updated_at'
     ];
 
     protected function serializeDate(\DateTimeInterface $date)
