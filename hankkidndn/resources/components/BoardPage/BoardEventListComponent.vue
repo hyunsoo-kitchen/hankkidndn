@@ -22,7 +22,7 @@
             <div class="notice-pagination">
                 <button v-if="$store.state.progressEventPagination.current_page !== 1" class="number" @click="pageMove($store.state.progressEventPagination.current_page - 1)">이전</button>
                 <div v-for="page_num in pages" :key="page_num">
-                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    <button :class="{ activePage: page_num === $store.state.progressEventPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
                 <button v-if="$store.state.progressEventPagination.current_page < $store.state.progressEventPagination.last_page" class="number" @click="pageMove($store.state.progressEventPagination.current_page + 1)">다음</button>
             </div>
@@ -41,7 +41,7 @@
             <div class="notice-pagination">
                 <button v-if="$store.state.finishEventPagination.current_page !== 1" class="number" @click="finishPageMove($store.state.finishEventPagination.current_page - 1)">이전</button>
                 <div v-for="page_num in pages" :key="page_num">
-                    <button class="number" @click="finishPageMove(page_num)">{{ page_num }}</button>
+                    <button :class="{ activePage: page_num === $store.state.finishEventPagination.current_page }" class="number" @click="finishPageMove(page_num)">{{ page_num }}</button>
                 </div>
                 <button v-if="$store.state.finishEventPagination.current_page < $store.state.finishEventPagination.last_page" class="number" @click="finishPageMove($store.state.finishEventPagination.current_page + 1)">다음</button>
             </div>
