@@ -121,6 +121,11 @@ Route::get('/api/admin/ad', [AdminController::class, 'getAdData']);
 // 관리자 이벤트 처리
 Route::get('/api/admin/event', [AdminController::class, 'getEvent']);
 Route::post('/api/admin/event', [AdminController::class, 'eventInsert']);
+
+// 신고 상세 페이지
+Route::get('/api/recipe/report/detail/{num}', [ReportController::class, 'getRecipeReport']);
+Route::get('/api/board/report/detail/{num}', [ReportController::class, 'getBoardReport']);
+Route::get('/api/comment/report/detail/{num}', [ReportController::class, 'getCommentReport']);
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------

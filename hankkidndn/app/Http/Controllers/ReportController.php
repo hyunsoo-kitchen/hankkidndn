@@ -182,4 +182,58 @@ class ReportController extends Controller
             return response()->json($responseData, 200);
         }
     }
+
+    // 레시피 신고내역 상세보기
+    public function getRecipeReport($id) {
+        $reportData = Report::where('recipe_board_id', $id)
+                            ->join('users as report_user', 'report_user.id', '=', 'reports.user_id')
+                            ->join('recipe_boards', 'recipe_boards.id', '=', 'reports.recipe_board_id')
+                            ->join('users', 'users.id', '=', 'recipe_boards.user_id') // 여기에서는 recipe_boards.user_id가 아닌 실제 컬럼명을 사용해야 합니다.
+                            ->select('report_user.u_nickname as report_user_nickname', 'users.u_nickname', 'reports.content', 'recipe_boards.title', 'recipe_boards.id as recipe_board_id', 'users.id')
+                            ->get();
+
+        $responseData = [
+            'code' => '1'
+            ,'msg' => '신고내역 획득.'
+            ,'data' => $reportData
+        ];
+              
+        return response()->json($responseData, 200);
+    }
+
+    // 보드 신고내역 상세보기
+    public function getBoardReport($id) {
+        $reportData = Report::where('board_id', $id)
+                            ->join('users as report_user', 'report_user.id', '=', 'reports.user_id')
+                            ->join('boards', 'boards.id', '=', 'reports.board_id')
+                            ->join('users', 'users.id', '=', 'boards.user_id')
+                            ->select('report_user.u_nickname as report_user_nickname', 'users.u_nickname', 'reports.content', 'boards.title', 'boards.id as board_id', 'users.id')
+                            ->get();
+
+        $responseData = [
+            'code' => '1'
+            ,'msg' => '신고내역 획득.'
+            ,'data' => $reportData
+        ];
+              
+        return response()->json($responseData, 200);
+    }
+
+    // 댓글 신고내역 상세보기
+    public function getCommentReport($id) {
+        $reportData = Report::where('comment_id', $id)
+                            ->join('users as report_user', 'report_user.id', '=', 'reports.user_id')
+                            ->join('comments', 'comments.id', '=', 'reports.comment_id')
+                            ->join('users', 'users.id', '=', 'comments.user_id')
+                            ->select('report_user.u_nickname as report_user_nickname', 'users.u_nickname', 'reports.content', 'comments.content', 'comments.id as comment_id', 'users.id')
+                            ->get();
+
+        $responseData = [
+            'code' => '1'
+            ,'msg' => '신고내역 획득.'
+            ,'data' => $reportData
+        ];
+              
+        return response()->json($responseData, 200);
+    }
 }

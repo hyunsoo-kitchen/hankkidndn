@@ -103,6 +103,11 @@ const store = createStore({
             
             usersReportInfo: [],
 
+            // 신고 리스트 상세보기
+            recipeReportList: [],
+            boardReportList: [],
+            commentReportList: [],
+
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -293,6 +298,7 @@ const store = createStore({
         //0707 어드민 페이지네이션 연습
         setAdminRecipeData(state, data) {
             state.adminRecipeReportList = data.data;
+            console.log(data.data)
             state.adminRecipePagination = data;
             localStorage.setItem('adminRecipePagination', JSON.stringify(data));
         },
@@ -307,10 +313,18 @@ const store = createStore({
             localStorage.setItem('adminCommentPagination', JSON.stringify(data));
         },
         setUsersReportInfo(state, data) {
-            console.log(data)
             state.usersReportInfo = data;
         },
-
+        // 신고내역 상세보기
+        setRecipeReportData(state, data) {
+            state.recipeReportList = data
+        },
+        setBoardReportData(state, data) {
+            state.boardReportList = data
+        },
+        setCommentReportData(state, data) {
+            state.commentReportList = data
+        },
         //-------------------------노경호 끝-------------------------- 
 
         //-------------------------이현수 시작------------------------
@@ -1342,7 +1356,7 @@ const store = createStore({
             console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 context.commit('setAdminRecipeData', response.data.data);
                 // context.commit('setAdminRecipePagination', response.data.pagination);
             })
@@ -1357,7 +1371,7 @@ const store = createStore({
             console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 context.commit('setAdminBoardData', response.data.data);
                 // context.commit('setAdminBoardPagination', response.data.pagination);
             })
@@ -1372,7 +1386,7 @@ const store = createStore({
             console.log(url);
             axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 context.commit('setAdminCommentData', response.data.data);
                 // context.commit('setAdminBoardPagination', response.data.pagination);
             })
@@ -1386,6 +1400,7 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
+                console.log('이거' + response.data.data)
                 context.commit('setUsersReportInfo', response.data.data);
             })
             .catch(error => {
@@ -1393,6 +1408,38 @@ const store = createStore({
             });
         },
 
+        // 레시피 신고 상세 페이지 획득
+        getRecipeReport(context, id) {
+            const url = '/api/recipe/report/detail/' + id
+            console.log(id)
+            axios.get(url)
+            .then(response => {
+                context.commit('setRecipeReportData', response.data.data)
+            })
+            .catch();
+        },
+
+        // 레시피 신고 상세 페이지 획득
+        getBoardReport(context, id) {
+            const url = '/api/board/report/detail/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setBoardReportData', response.data.data)
+            })
+            .catch();
+        },
+
+        // 레시피 신고 상세 페이지 획득
+        getCommentReport(context, id) {
+            const url = '/api/comment/report/detail/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setCommentReportData', response.data.data)
+            })
+            .catch();
+        },
 
         //-------------------------끝------------------------------
         // 이현수
