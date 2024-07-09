@@ -397,11 +397,12 @@ class AdminController extends Controller
     // 레시피신고 리스트
     public function recipeReportList() {
         $reportData = DB::table('reports')
-                    ->select('recipe_boards.id as recipe_board_id', DB::raw('COUNT(reports.recipe_board_id) as report_cnt'), 'recipe_boards.title', 'users.u_nickname')
+                    ->select('recipe_boards.id as recipe_board_id', DB::raw('COUNT(reports.recipe_board_id) as report_cnt'), 'recipe_boards.title', 'users.u_nickname' ,'users.id')
                     ->join('recipe_boards', 'reports.recipe_board_id', '=', 'recipe_boards.id')
                     ->join('users', 'recipe_boards.user_id', '=', 'users.id')
                     ->whereNotNull('reports.recipe_board_id')
-                    ->groupBy('recipe_boards.id', 'recipe_boards.title', 'users.u_nickname')
+                    ->where('reports.approve_chk', 0)
+                    ->groupBy('recipe_boards.id', 'recipe_boards.title', 'users.u_nickname', 'users.id')
                     ->orderBy('reports.created_at', 'DESC')
                     ->paginate(10);
     
@@ -420,11 +421,12 @@ class AdminController extends Controller
     //게시글 신고 리스트
     public function boardReportList() {
         $reportData = DB::table('reports')
-                    ->select('boards.id as board_id', DB::raw('COUNT(reports.board_id) as report_cnt'), 'boards.title', 'users.u_nickname')
+                    ->select('boards.id as board_id', DB::raw('COUNT(reports.board_id) as report_cnt'), 'boards.title', 'users.u_nickname' ,'users.id')
                     ->join('boards', 'reports.board_id', '=', 'boards.id')
                     ->join('users', 'boards.user_id', '=', 'users.id')
                     ->whereNotNull('reports.board_id')
-                    ->groupBy('boards.id', 'boards.title', 'users.u_nickname')
+                    ->where('reports.approve_chk', 0)
+                    ->groupBy('boards.id', 'boards.title', 'users.u_nickname' ,'users.id')
                     ->orderBy('reports.created_at', 'DESC')
                     ->paginate(10);
     
@@ -442,11 +444,12 @@ class AdminController extends Controller
     // 댓글신고 리스트
     public function commentReportList() {
         $reportData = DB::table('reports')
-                    ->select('comments.id as comments_id', DB::raw('COUNT(reports.comment_id) as report_cnt'), 'comments.content', 'users.u_nickname')
+                    ->select('comments.id as comments_id', DB::raw('COUNT(reports.comment_id) as report_cnt'), 'comments.content', 'users.u_nickname' ,'users.id')
                     ->join('comments', 'reports.comment_id', '=', 'comments.id')
                     ->join('users', 'comments.user_id', '=', 'users.id')
                     ->whereNotNull('reports.comment_id')
-                    ->groupBy('comments.id', 'comments.content', 'users.u_nickname')
+                    ->where('reports.approve_chk', 0)
+                    ->groupBy('comments.id', 'comments.content', 'users.u_nickname' ,'users.id')
                     ->orderBy('reports.created_at', 'DESC')
                     ->paginate(10);
     

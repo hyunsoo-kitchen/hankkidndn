@@ -58,6 +58,9 @@ const store = createStore({
 
             progressEventPagination: localStorage.getItem('progressEventPagination') ? JSON.parse(localStorage.getItem('progressEventPagination')) : {current_page: '1'},
             finishEventPagination: localStorage.getItem('finishEventPagination') ? JSON.parse(localStorage.getItem('finishEventPagination')) : {current_page: '1'},
+
+            // 신고당한 유저 데이터
+            approveUserInfo: [],
             //-------------------------끝------------------------------
 
             //---------------------노경호------------------------------
@@ -244,6 +247,10 @@ const store = createStore({
             state.finishEventPagination = data
             localStorage.setItem('finishEventPagination', JSON.stringify(data));
         },
+
+        setApproveUserInfo(state, data) {
+            state.approveUserInfo = data
+        },
         //---------------------끝---------------------------
 
         // 인증 플래그 저장
@@ -298,7 +305,7 @@ const store = createStore({
         //0707 어드민 페이지네이션 연습
         setAdminRecipeData(state, data) {
             state.adminRecipeReportList = data.data;
-            console.log(data.data)
+            console.log(state.adminRecipeReportList)
             state.adminRecipePagination = data;
             localStorage.setItem('adminRecipePagination', JSON.stringify(data));
         },
@@ -442,7 +449,11 @@ const store = createStore({
 
                 router.push('/board/detail/' + id);
             })
-            .catch();
+            .catch(error => {
+                // alert('존재하지않는 게시글 입니다.')
+                context.commit('setModalMessage', '존재하지않는 게시글입니다.(' + error.response.data.code + ')');
+                router.back();
+            });
         },
 
         // 레시피 게시글 삭제 처리
@@ -996,6 +1007,87 @@ const store = createStore({
             })
             .catch();
         },
+
+        // 레시피 게시글 블라인드 및 유저 제재 처리
+        recipeReportApprove(context) {
+            const url = '/api/recipe/approve'
+            const data = new FormData(document.querySelector('#recipeApproveForm'))
+            axios.post(url, data)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        // 게시글 블라인드 및 유저 제재 처리
+        boardReportApprove(context) {
+            const url = '/api/board/approve'
+            const data = new FormData(document.querySelector('#boardApproveForm'))
+            axios.post(url, data)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        // 댓글 블라인드 및 유저 제재 처리
+        commentReportApprove(context) {
+            const url = '/api/comment/approve'
+            const data = new FormData(document.querySelector('#commentApproveForm'))
+            axios.post(url, data)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        recipeReportReject(context, id) {
+            const url = '/api/recipe/reject/' + id
+
+            axios.post(url)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        boardReportReject(context, id) {
+            const url = '/api/board/reject/' + id
+
+            axios.post(url)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        commentReportReject(context, id) {
+            const url = '/api/comment/reject/' + id
+
+            axios.post(url)
+            .then(response => {
+
+            })
+            .catch();
+        },
+
+        async getApproveUserInfo(context, id) {
+            const url = '/api/approve/user/' + id
+
+            return axios.get(url)
+            .then(response => {
+                context.commit('setApproveUserInfo', response.data.data)
+            })
+            .catch();
+            // try {
+            //     const response = await axios.get(url);
+            //     context.commit('setApproveUserInfo', response.data.data);
+            // } catch (error) {
+            //     console.error(error);
+            // }
+
+            // return response;
+        },
         //---------------------끝---------------------------
 
         //---------------------노경호------------------------------
@@ -1412,7 +1504,7 @@ const store = createStore({
         getRecipeReport(context, id) {
             const url = '/api/recipe/report/detail/' + id
             console.log(id)
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 context.commit('setRecipeReportData', response.data.data)
             })

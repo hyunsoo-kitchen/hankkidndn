@@ -126,6 +126,20 @@ Route::post('/api/admin/event', [AdminController::class, 'eventInsert']);
 Route::get('/api/recipe/report/detail/{num}', [ReportController::class, 'getRecipeReport']);
 Route::get('/api/board/report/detail/{num}', [ReportController::class, 'getBoardReport']);
 Route::get('/api/comment/report/detail/{num}', [ReportController::class, 'getCommentReport']);
+
+// 신고 글 승인 처리
+Route::post('/api/recipe/approve', [ReportController::class, 'recipeApprove']);
+Route::post('/api/board/approve', [ReportController::class, 'boardApprove']);
+Route::post('/api/comment/approve', [ReportController::class, 'commentApprove']);
+
+// 신고 글 비승인 처리
+Route::post('/api/recipe/reject/{num}', [ReportController::class, 'recipeReject']);
+Route::post('/api/board/reject/{num}', [ReportController::class, 'boardReject']);
+Route::post('/api/comment/reject/{num}', [ReportController::class, 'commentReject']);
+
+// 유저 제재 기록 조회
+Route::get('/api/approve/user/{num}', [ReportController::class, 'getApproveUserInfo']);
+
 //-------------------------끝------------------------------
 
 //---------------------노경호------------------------------

@@ -7,7 +7,10 @@ use App\Exceptions\MyValidateException;
 use App\Models\Boards;
 use App\Models\Comment;
 use App\Models\RecipeBoards;
+use App\Models\ReportApprove;
 use App\Models\Users;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -157,6 +160,17 @@ class UserController extends Controller
             throw new MyAutheException('E21');
         }
 
+        $approveData = ReportApprove::where('user_id', '=', $userInfo->id)
+                                    ->get();
+
+        if(isset($approveData)) {
+            $nowDate = Carbon::now();
+            foreach($approveData as $item) {
+                if($item->end_date > $nowDate ) {
+                    throw new Exception('')
+                }
+            }
+        }
         // 로그인 처리
         Auth::login($userInfo);
 

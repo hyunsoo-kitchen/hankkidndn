@@ -143,23 +143,54 @@
     </div>
 
     <!-- 레시피 신고 상세보기 모달 -->
-    <div v-if="isModalVisible" class="detail_modal_container">
+    <div v-show="isModalVisible" class="detail_modal_container">
         <div class="modal_content">
             <div>
                 <h2>신고 상세보기</h2>
+            </div>
+            <form id="recipeApproveForm">
+              <div>
+                <select name="approve_date">
+                  <option value="1">3일정지</option>
+                  <option value="2">7일정지</option>
+                  <option value="3">30일정지</option>
+                  <option value="4">영구정지</option>
+                </select>
+                <br>
+                <textarea type="text" name="content" autocomplete="off"></textarea>
+                <input type="hidden" v-if="$store.state.recipeReportList.length > 0" :value="$store.state.recipeReportList[0].recipe_board_id" name="recipe_board_id">
+                <input type="hidden" v-if="$store.state.recipeReportList.length > 0" :value="$store.state.recipeReportList[0].id" name="user_id">
+              </div>
+              <div class="approve-container">
+                <button @click="closeModal(); $store.dispatch('recipeReportApprove')" type="button">승인</button>
+                <button @click="closeModal(); $store.dispatch('recipeReportReject', $store.state.recipeReportList[0].recipe_board_id)" type="button">비승인</button>
+              </div>
+            </form>
+            <div>
+              <div>해당 유저 제재 기록</div>
+              <div v-if="$store.state.approveUserInfo != ''">
+                <div class="approve-container">
+                  <div>유저 닉네임</div>
+                  <div>제재 사유</div>
+                  <div>제재 기간</div>
+                  <div>정지 종료 날짜</div>
+                </div>
+                <div class="approve-container" v-for="(item, index) in $store.state.approveUserInfo" :key="index">
+                  <div>{{ item.u_nickname }}</div>
+                  <div>{{ item.content }}</div>
+                  <div>{{ item.period }}</div>
+                  <div>{{ item.end_date }}</div>
+                </div>
+              </div>
+              <div v-else>해당 유저는 제재 기록이 없습니다.</div>
             </div>
             <div class="modal_head" v-for="(item, index) in $store.state.recipeReportList" :key="index">
                 <p>제목: {{ item.title }}</p>
                 <p>작성자: {{ item.u_nickname }}</p>
                 <p>신고자: {{ item.report_user_nickname }}</p>
                 <p>신고사유: {{ item.content }}</p>
-                <div class="approve-container">
-                  <button @click="$store.dispatch('recipeReportApprove', item.recipe_board_id)" type="button">승인</button>
-                  <button @click="$store.dispatch('recipeReportReject', item.recipe_board_id)" type="button">비승인</button>
-                  <button @click="approveModalOn()" type="button">유저제재</button>
-                </div>
             </div>
-            <button @click="closeModal">닫기</button>
+            <button type="button" @click="closeModal">닫기</button>
         </div>
     </div>
 
@@ -169,16 +200,47 @@
             <div>
                 <h2>신고 상세보기</h2>
             </div>
+            <form id="boardApproveForm">
+              <div>
+                <select name="approve_date">
+                  <option value="1">3일정지</option>
+                  <option value="2">7일정지</option>
+                  <option value="3">30일정지</option>
+                  <option value="4">영구정지</option>
+                </select>
+                <br>
+                <textarea type="text" name="content" autocomplete="off"></textarea>
+                <input type="hidden" :value="$store.state.boardReportList[0].board_id" name="board_id">
+                <input type="hidden" :value="$store.state.boardReportList[0].id" name="user_id">
+              </div>
+              <div class="approve-container">
+                <button @click="boardCloseModal(); $store.dispatch('boardReportApprove')" type="button">승인</button>
+                <button @click="boardCloseModal(); $store.dispatch('boardReportReject', $store.state.boardReportList[0].board_id)" type="button">비승인</button>
+              </div>
+            </form>
+            <div>
+              <div>해당 유저 제재 기록</div>
+              <div v-if="$store.state.approveUserInfo != ''">
+                <div class="approve-container">
+                  <div>유저 닉네임</div>
+                  <div>제재 사유</div>
+                  <div>제재 기간</div>
+                  <div>정지 종료 날짜</div>
+                </div>
+                <div class="approve-container" v-for="(item, index) in $store.state.approveUserInfo" :key="index">
+                  <div>{{ item.u_nickname }}</div>
+                  <div>{{ item.content }}</div>
+                  <div>{{ item.period }}</div>
+                  <div>{{ item.end_date }}</div>
+                </div>
+              </div>
+              <div v-else>해당 유저는 제재 기록이 없습니다.</div>
+            </div>
             <div class="modal_head" v-for="(item, index) in $store.state.boardReportList" :key="index">
                 <p>제목: {{ item.title }}</p>
                 <p>작성자: {{ item.u_nickname }}</p>
                 <p>신고자: {{ item.report_user_nickname }}</p>
                 <p>신고사유: {{ item.content }}</p>
-                <div class="approve-container">
-                  <button @click="$store.dispatch('boardReportApprove', item.recipe_board_id)" type="button">승인</button>
-                  <button @click="$store.dispatch('boardReportReject', item.recipe_board_id)" type="button">비승인</button>
-                  <button @click="approveModalOn()" type="button">유저제재</button>
-                </div>
             </div>
             <button @click="boardCloseModal">닫기</button>
         </div>
@@ -190,16 +252,47 @@
             <div>
                 <h2>신고 상세보기</h2>
             </div>
+            <form id="commentApproveForm">
+              <div>
+                <select name="approve_date">
+                  <option value="1">3일정지</option>
+                  <option value="2">7일정지</option>
+                  <option value="3">30일정지</option>
+                  <option value="4">영구정지</option>
+                </select>
+                <br>
+                <textarea type="text" name="content" autocomplete="off"></textarea>
+                <input type="hidden" :value="$store.state.commentReportList[0].comment_id" name="comment_id">
+                <input type="hidden" :value="$store.state.commentReportList[0].id" name="user_id">
+              </div>
+              <div class="approve-container">
+                <button @click="commentCloseModal(); $store.dispatch('commentReportApprove')" type="button">승인</button>
+                <button @click="commentCloseModal(); $store.dispatch('commentReportReject', $store.state.commentReportList[0].comments_id)" type="button">비승인</button>
+              </div>
+            </form>
+            <div>
+              <div>해당 유저 제재 기록</div>
+              <div v-if="$store.state.approveUserInfo != ''">
+                <div class="approve-container">
+                  <div>유저 닉네임</div>
+                  <div>제재 사유</div>
+                  <div>제재 기간</div>
+                  <div>정지 종료 날짜</div>
+                </div>
+                <div class="approve-container" v-for="(item, index) in $store.state.approveUserInfo" :key="index">
+                  <div>{{ item.u_nickname }}</div>
+                  <div>{{ item.content }}</div>
+                  <div>{{ item.period }}</div>
+                  <div>{{ item.end_date }}</div>
+                </div>
+              </div>
+              <div v-else>해당 유저는 제재 기록이 없습니다.</div>
+            </div>
             <div class="modal_head" v-for="(item, index) in $store.state.commentReportList" :key="index">
                 <p>내용: {{ item.content }}</p>
                 <p>작성자: {{ item.u_nickname }}</p>
                 <p>신고자: {{ item.report_user_nickname }}</p>
                 <p>신고사유: {{ item.content }}</p>
-                <div class="approve-container">
-                  <button @click="$store.dispatch('commentReportApprove', item.recipe_board_id)" type="button">승인</button>
-                  <button @click="$store.dispatch('commentReportReject', item.recipe_board_id)" type="button">비승인</button>
-                  <button @click="approveModalOn()" type="button">유저제재</button>
-                </div>
               </div>
             <button @click="commentCloseModal">닫기</button>
         </div>
@@ -219,8 +312,9 @@ const activeTab = ref('recipe');
 // 레시피모달
 const isModalVisible = ref(false);
 
-const showModal = (item) => {
-  store.dispatch('getRecipeReport', item.recipe_board_id)
+const showModal = async (item) => {
+  await store.dispatch('getApproveUserInfo', item.id);
+  await store.dispatch('getRecipeReport', item.recipe_board_id)
   isModalVisible.value = true;
 };
 const closeModal = () => {
@@ -231,6 +325,7 @@ const closeModal = () => {
 const boardModalVisible = ref(false);
 
 const boardShowModal = (item) => {
+  store.dispatch('getApproveUserInfo', item.id);
   store.dispatch('getBoardReport', item.board_id)
   boardModalVisible.value = true;
 };
@@ -242,6 +337,7 @@ const boardCloseModal = () => {
 const commentModalVisible = ref(false);
 
 const commentShowModal = (item) => {
+  store.dispatch('getApproveUserInfo', item.id);
   store.dispatch('getCommentReport', item.comments_id)
   commentModalVisible.value = true;
 };

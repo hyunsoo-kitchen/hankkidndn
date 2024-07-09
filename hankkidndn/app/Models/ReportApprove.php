@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Report extends Model
+class ReportApprove extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -17,12 +17,9 @@ class Report extends Model
      */
     protected $fillable = [
         'user_id',
-        'board_id',
-        'recipe_board_id',
-        'comment_id',
-        'report_type_id',
         'content',
-        'approve_chk',
+        'end_date',
+        'period',
     ];
 
     protected function serializeDate(\DateTimeInterface $date)

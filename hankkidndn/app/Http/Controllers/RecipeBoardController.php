@@ -200,6 +200,9 @@ class RecipeBoardController extends Controller
                                 ->withTrashed()
                                 ->get();
 
+        if (empty($recipeData)) {
+            throw new MyValidateException('E01');
+        }
 
         $responseData = [
             'code' => '0'

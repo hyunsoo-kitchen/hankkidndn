@@ -75,6 +75,10 @@ class BoardController extends Controller
         //         }
         //     }
         // }
+        if (empty($boardData)) {
+            throw new MyValidateException('E01');
+        }
+        
 
         $responseData = [
             'code' => '0'
