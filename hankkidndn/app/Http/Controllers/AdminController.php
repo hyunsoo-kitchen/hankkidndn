@@ -397,31 +397,17 @@ class AdminController extends Controller
     // 레시피신고 리스트
     public function recipeReportList() {
         $reportData = DB::table('reports')
-            ->join('recipe_boards', 'reports.recipe_board_id', '=', 'recipe_boards.id')
-            ->join('users as report_users', 'recipe_boards.user_id', '=', 'report_users.id')
-            ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
-            ->select(
-                'recipe_boards.title as recipe_title',
-                'report_users.u_nickname as recipe_author',
-                DB::raw('COUNT(reports.recipe_board_id) as report_count'),
-                'report_author.u_nickname as reporter_nickname',
-                'reports.content as report_reason',
-                'reports.created_at as report_time'
-            )
-            ->whereNotNull('reports.recipe_board_id')
-            ->groupBy(
-                'recipe_boards.title', 
-                'report_users.u_nickname', 
-                'report_author.u_nickname', 
-                'reports.content', 
-                'reports.created_at', 
-                'reports.recipe_board_id'
-            )
-            ->orderBy('reports.created_at', 'DESC')
-            ->paginate(10);
+                    ->select('recipe_boards.id as recipe_board_id', DB::raw('COUNT(reports.recipe_board_id) as report_cnt'), 'recipe_boards.title', 'users.u_nickname')
+                    ->join('recipe_boards', 'reports.recipe_board_id', '=', 'recipe_boards.id')
+                    ->join('users', 'recipe_boards.user_id', '=', 'users.id')
+                    ->whereNotNull('reports.recipe_board_id')
+                    ->groupBy('recipe_boards.id', 'recipe_boards.title', 'users.u_nickname')
+                    ->orderBy('reports.created_at', 'DESC')
+                    ->paginate(10);
     
+        
         // $reportDataArray = $reportData->items();
-    
+        // Log::debug('이거', $reportDataArray);
         $responseData = [
             'code' => '0',
             'msg' => '레시피 리폿 리스트 획득 완료',
@@ -434,28 +420,13 @@ class AdminController extends Controller
     //게시글 신고 리스트
     public function boardReportList() {
         $reportData = DB::table('reports')
-            ->join('boards', 'reports.board_id', '=', 'boards.id')
-            ->join('users as report_users', 'boards.user_id', '=', 'report_users.id')
-            ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
-            ->select(
-                'boards.title as board_title',
-                'report_users.u_nickname as board_author',
-                DB::raw('COUNT(reports.board_id) as report_count'),
-                'report_author.u_nickname as reporter_nickname',
-                'reports.content as report_reason',
-                'reports.created_at as report_time'
-            )
-            ->whereNotNull('reports.board_id')
-            ->groupBy(
-                'boards.title', 
-                'report_users.u_nickname', 
-                'report_author.u_nickname', 
-                'reports.content', 
-                'reports.created_at', 
-                'reports.recipe_board_id'
-            )
-            ->orderBy('reports.created_at', 'DESC')
-            ->paginate(10);
+                    ->select('boards.id as board_id', DB::raw('COUNT(reports.board_id) as report_cnt'), 'boards.title', 'users.u_nickname')
+                    ->join('boards', 'reports.board_id', '=', 'boards.id')
+                    ->join('users', 'boards.user_id', '=', 'users.id')
+                    ->whereNotNull('reports.board_id')
+                    ->groupBy('boards.id', 'boards.title', 'users.u_nickname')
+                    ->orderBy('reports.created_at', 'DESC')
+                    ->paginate(10);
     
         // $reportDataArray = $reportData->items();
     
@@ -471,28 +442,13 @@ class AdminController extends Controller
     // 댓글신고 리스트
     public function commentReportList() {
         $reportData = DB::table('reports')
-            ->join('comments', 'reports.comment_id', '=', 'comments.id')
-            ->join('users as report_users', 'comments.user_id', '=', 'report_users.id')
-            ->join('users as report_author', 'reports.user_id', '=', 'report_author.id')
-            ->select(
-                'comments.content as comments_content',
-                'report_users.u_nickname as comment_author',
-                DB::raw('COUNT(reports.comment_id) as report_count'),
-                'report_author.u_nickname as reporter_nickname',
-                'reports.content as report_reason',
-                'reports.created_at as report_time'
-            )
-            ->whereNotNull('reports.comment_id')
-            ->groupBy(
-                'comments.content', 
-                'report_users.u_nickname', 
-                'report_author.u_nickname', 
-                'reports.content', 
-                'reports.created_at', 
-                'reports.recipe_board_id'
-            )
-            ->orderBy('reports.created_at', 'DESC')
-            ->paginate(10);
+                    ->select('comments.id as comments_id', DB::raw('COUNT(reports.comment_id) as report_cnt'), 'comments.content', 'users.u_nickname')
+                    ->join('comments', 'reports.comment_id', '=', 'comments.id')
+                    ->join('users', 'comments.user_id', '=', 'users.id')
+                    ->whereNotNull('reports.comment_id')
+                    ->groupBy('comments.id', 'comments.content', 'users.u_nickname')
+                    ->orderBy('reports.created_at', 'DESC')
+                    ->paginate(10);
     
         // $reportDataArray = $reportData->items();
     

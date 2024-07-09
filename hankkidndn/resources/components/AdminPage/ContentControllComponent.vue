@@ -49,10 +49,10 @@
                 <div class="recipe_report_list">
                     <div class="report_list">
                         <div class="report" v-for="(item, index) in reportData" :key="index">
-                            <div>{{ ($store.state.adminRecipePagination.total - index) - (($store.state.adminRecipePagination.current_page - 1) * 10) }}</div>
-                            <div>{{ item.recipe_title }}</div>
-                            <div>{{ item.recipe_author }}</div>
-                            <div>{{ item.report_count }}</div>
+                            <div>{{ item.recipe_board_id }}</div>
+                            <div>{{ item.title }}</div>
+                            <div>{{ item.u_nickname }}</div>
+                            <div>{{ item.report_cnt }}</div>
                             <div>
                                 <button @click="showModal(item)" type="button">상세보기</button>
                             </div>
@@ -83,10 +83,10 @@
                 <div class="recipe_report_list">
                     <div class="report_list">
                         <div class="report" v-for="(item, index) in boardReportData" :key="index">
-                            <div>{{ ($store.state.adminBoardPagination.total - index) - (($store.state.adminBoardPagination.current_page - 1) * 10) }}</div>
-                            <div>{{ item.board_title }}</div>
-                            <div>{{ item.board_author }}</div>
-                            <div>{{ item.report_count }}</div>
+                            <div>{{ item.board_id }}</div>
+                            <div>{{ item.title }}</div>
+                            <div>{{ item.u_nickname }}</div>
+                            <div>{{ item.report_cnt }}</div>
                             <div>
                                 <button @click="boardShowModal(item)" type="button">상세보기</button>
                             </div>
@@ -116,10 +116,10 @@
                 <div class="recipe_report_list">
                     <div class="report_list">
                         <div class="report" v-for="(item, index) in commentReportData" :key="index">
-                            <div>{{ ($store.state.adminCommentPagination.total - index) - (($store.state.adminCommentPagination.current_page - 1) * 10) }}</div>
-                            <div>{{ truncateText(item.comments_content, 5) }}</div>
-                            <div>{{ item.comment_author }}</div>
-                            <div>{{ item.report_count }}</div>
+                            <div>{{ item.comments_id }}</div>
+                            <div>{{ truncateText(item.content, 5) }}</div>
+                            <div>{{ item.u_nickname }}</div>
+                            <div>{{ item.report_cnt }}</div>
                             <div>
                                 <button @click="commentShowModal(item)" type="button">상세보기</button>
                             </div>
@@ -146,54 +146,68 @@
     <div v-if="isModalVisible" class="detail_modal_container">
         <div class="modal_content">
             <div>
-              <h2>신고 상세보기</h2>
+                <h2>신고 상세보기</h2>
             </div>
-            <div class="modal_head">
-              <p>제목: {{ selectedReport.recipe_title }}</p>
-              <p>작성자: {{ selectedReport.recipe_author }}</p>
+            <div class="modal_head" v-for="(item, index) in $store.state.recipeReportList" :key="index">
+                <p>제목: {{ item.title }}</p>
+                <p>작성자: {{ item.u_nickname }}</p>
+                <p>신고자: {{ item.report_user_nickname }}</p>
+                <p>신고사유: {{ item.content }}</p>
+                <div class="approve-container">
+                  <button @click="$store.dispatch('recipeReportApprove', item.recipe_board_id)" type="button">승인</button>
+                  <button @click="$store.dispatch('recipeReportReject', item.recipe_board_id)" type="button">비승인</button>
+                  <button @click="approveModalOn()" type="button">유저제재</button>
+                </div>
             </div>
-            <div class="modal_body">
-              <p>신고자: {{ selectedReport.reporter_nickname }}</p>
-            </div>
-            <div>
-              <p>신고사유: {{ selectedReport.report_reason }}</p>
-            </div>
-            <div>
-              <button @click="closeModal">닫기</button>
-            </div>
+            <button @click="closeModal">닫기</button>
         </div>
     </div>
 
     <!-- 게시판 신고 상세보기 모달 -->
-    <div v-if="commentModalVisible" class="detail_modal_container">
+    <div v-if="boardModalVisible" class="detail_modal_container">
         <div class="modal_content">
             <div>
-              <h2>신고 상세보기</h2>
+                <h2>신고 상세보기</h2>
             </div>
-            <div class="modal_head">
-              <p>작성자: {{ commentSelectedReport.comment_author }}</p>
+            <div class="modal_head" v-for="(item, index) in $store.state.boardReportList" :key="index">
+                <p>제목: {{ item.title }}</p>
+                <p>작성자: {{ item.u_nickname }}</p>
+                <p>신고자: {{ item.report_user_nickname }}</p>
+                <p>신고사유: {{ item.content }}</p>
+                <div class="approve-container">
+                  <button @click="$store.dispatch('boardReportApprove', item.recipe_board_id)" type="button">승인</button>
+                  <button @click="$store.dispatch('boardReportReject', item.recipe_board_id)" type="button">비승인</button>
+                  <button @click="approveModalOn()" type="button">유저제재</button>
+                </div>
             </div>
-            <div>
-              <p>댓글: {{ commentSelectedReport.comments_content }}</p>
-            </div>
-            <div class="modal_body">
-              <p>신고자: {{ commentSelectedReport.reporter_nickname }}</p>
-            </div>
-            <div>
-              <p>신고사유: {{ commentSelectedReport.report_reason }}</p>
-            </div>
-            <div>
-              <button @click="commentCloseModal">닫기</button>
-            </div>
+            <button @click="boardCloseModal">닫기</button>
         </div>
     </div>
 
     <!-- 댓글 신고 상세보기 모달 -->
-    
+    <div v-if="commentModalVisible" class="detail_modal_container">
+        <div class="modal_content">
+            <div>
+                <h2>신고 상세보기</h2>
+            </div>
+            <div class="modal_head" v-for="(item, index) in $store.state.commentReportList" :key="index">
+                <p>내용: {{ item.content }}</p>
+                <p>작성자: {{ item.u_nickname }}</p>
+                <p>신고자: {{ item.report_user_nickname }}</p>
+                <p>신고사유: {{ item.content }}</p>
+                <div class="approve-container">
+                  <button @click="$store.dispatch('commentReportApprove', item.recipe_board_id)" type="button">승인</button>
+                  <button @click="$store.dispatch('commentReportReject', item.recipe_board_id)" type="button">비승인</button>
+                  <button @click="approveModalOn()" type="button">유저제재</button>
+                </div>
+              </div>
+            <button @click="commentCloseModal">닫기</button>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import { ref, reactive, onBeforeMount, computed, watch } from 'vue';
+import { ref, onBeforeMount, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -204,9 +218,9 @@ const activeTab = ref('recipe');
 
 // 레시피모달
 const isModalVisible = ref(false);
-const selectedReport = ref({});
+
 const showModal = (item) => {
-  selectedReport.value = item;
+  store.dispatch('getRecipeReport', item.recipe_board_id)
   isModalVisible.value = true;
 };
 const closeModal = () => {
@@ -215,9 +229,9 @@ const closeModal = () => {
 
 // 게시판모달
 const boardModalVisible = ref(false);
-const boardSelectedReport = ref({});
+
 const boardShowModal = (item) => {
-  boardSelectedReport.value = item;
+  store.dispatch('getBoardReport', item.board_id)
   boardModalVisible.value = true;
 };
 const boardCloseModal = () => {
@@ -226,9 +240,9 @@ const boardCloseModal = () => {
 
 // 댓글 모달
 const commentModalVisible = ref(false);
-const commentSelectedReport = ref({});
+
 const commentShowModal = (item) => {
-  commentSelectedReport.value = item;
+  store.dispatch('getCommentReport', item.comments_id)
   commentModalVisible.value = true;
 };
 const commentCloseModal = () => {
