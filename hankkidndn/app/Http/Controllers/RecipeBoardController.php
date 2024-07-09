@@ -37,7 +37,6 @@ class RecipeBoardController extends Controller
                                 ->where('boards_type_id', '=', $num)
                                 ->orderBy('recipe_boards.created_at', 'DESC')
                                 ->paginate(16);                       
-
         }
         
         $responseData = [

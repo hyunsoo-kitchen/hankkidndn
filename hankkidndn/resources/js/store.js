@@ -175,11 +175,11 @@ const store = createStore({
         },
         // 레시피 디테일 정보 저장
         setRecipeDetail(state, data){
-            // console.log(data)
             state.recipeData = data.data;
             state.recipeProgram = data.program;
             state.recipeStuff = data.stuff;
             state.commentData = data.comment;
+            console.log(state.commentData)
             state.cocommentData = data.cocomment;
             // console.log(state.commentData)
             // console.log(state.recipeData)
@@ -409,7 +409,7 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                // console.log(response.data)
+                console.log(response.data)
                 
                 context.commit('setRecipeData', response.data.data);
                 router.push('/recipe/' + data.board_type + '?page=' + data.page);
@@ -423,7 +423,6 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                // console.log(response.data.data)
                 context.commit('setBoardData', response.data.data);
                 router.push('/board/' + data.board_type + '?page=' + data.page);
             })
@@ -759,7 +758,7 @@ const store = createStore({
 
             axios.post(url, data)
             .then(response => {
-                // console.log(response.data.code);
+                console.log(response.data.code);
                 if(response.data.code == 1) {
                     context.state.reportFailFlg = true;
                 } else {
@@ -808,7 +807,7 @@ const store = createStore({
             .then(response => {
                 // console.log(response.data.code);
                 if(response.data.code == 1) {
-                    context.state.reportModalFlg = true;
+                    context.state.reportFailFlg = true;
                 } else {
                     context.state.reportSuccessFlg = true;
                 }
@@ -1205,7 +1204,8 @@ const store = createStore({
                 // console.log(error.response); //TODO
                 // router.replace('/main');
                 // alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
-                context.commit('setModalMessage', '로그인에 실패했습니다.(' + error.response.data.code + ')')
+                context.commit('setModalMessage', error.response.data.message )
+
             });
         },
 

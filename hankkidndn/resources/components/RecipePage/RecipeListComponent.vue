@@ -52,13 +52,16 @@
             </div>
             <div class="main-list-content">
                 <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
-                    <img :src="item.thumbnail">
-                    <div class="card-title">{{ item.title }}</div>
-                    <div class="card-name">{{ item.u_nickname }}</div>
-                    <div class="star-view">
-                        <div class="card-star">{{ formatDate(item.created_at) }}</div>
-                        <div class="card-view">조회수 : {{ item.views }}</div>
+                    <div v-if="item.blind_flg !== 1">
+                        <img :src="item.thumbnail">
+                        <div class="card-title">{{ item.title }}</div>
+                        <div class="card-name">{{ item.u_nickname }}</div>
+                        <div class="star-view">
+                            <div class="card-star">{{ formatDate(item.created_at) }}</div>
+                            <div class="card-view">조회수 : {{ item.views }}</div>
+                        </div>
                     </div>
+                    <div v-else>해당 게시글은 블라인드 된 상태입니다.</div>
                 </div>
             </div>
             <div class="btn-container">
