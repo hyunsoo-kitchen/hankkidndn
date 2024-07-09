@@ -163,21 +163,26 @@ class UserController extends Controller
         $approveData = ReportApprove::where('user_id', '=', $userInfo->id)
                                     ->get();
 
-        // if(isset($approveData)) {
-        //     $nowDate = Carbon::now();
-        //     foreach($approveData as $item) {
-        //         if($item->end_date > $nowDate ) {
-        //             throw new Exception('')
-        //         }
-        //     }
-        // }
+        if(isset($approveData)) {
+            $nowDate = Carbon::now();
+            foreach($approveData as $item) {
+                if($item->end_date > $nowDate ) {
+                    $errorMessage = '이 계정은 정지된 계정입니다. 정지 기간 : '.$item->end_date;
+                    $responseData = [
+                        'code' => '0'
+                        ,'msg' => $errorMessage
+                        ,'data' => $userInfo
+                    ];
+                    return response() -> json($responseData, 200);
+                }
+            }
+        }
         // 로그인 처리
         Auth::login($userInfo);
 
         // 레스폰스 데이터 생성
         $responseData = [
             'code' => '0'
-            ,'msg' => '로그인 성공'
             ,'data' => $userInfo
         ];
 

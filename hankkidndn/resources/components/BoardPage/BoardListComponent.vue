@@ -49,12 +49,15 @@
                 <div class="list-day">등록일</div>
             </div>
             <!-- 리스트 클릭시 해당 디테일 게시글로 이동 -->
-            <div @click="$store.dispatch('getBoardDetail', item.id)" class="text-box" v-for="(item, index) in $store.state.boardListData" :key="index">
+            <div @click="$store.dispatch('getBoardDetail', item.id)" v-for="(item, index) in $store.state.boardListData" :key="index">
                 <!-- 게시글 출력 -->
-                <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
-                <div class="list-title">{{ substringTitle(item.title, 10) }}</div>
-                <div class="list-ninkname">{{ substringTitle(item.u_nickname, 5) }}</div>
-                <div class="list-day">{{ formatDate(item.created_at) }}</div>
+                <div class="text-box">
+                    <div class="list-number">{{ ($store.state.pagination.total - index) - (($store.state.pagination.current_page - 1) * 10) }}</div>
+                    <div v-if="item.blind_flg !== 1" class="list-title">{{ substringTitle(item.title, 10) }}</div>
+                    <div v-else>해당 게시글은 블라인드 된 상태입니다.</div>
+                    <div class="list-ninkname">{{ substringTitle(item.u_nickname, 5) }}</div>
+                    <div class="list-day">{{ formatDate(item.created_at) }}</div>
+                </div>
             </div>
             <div class="btn-box">
                 <!-- 클릭시 글쓰기 페이지로 이동 -->

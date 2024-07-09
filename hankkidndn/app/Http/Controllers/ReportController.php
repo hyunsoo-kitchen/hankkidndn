@@ -55,10 +55,21 @@ class ReportController extends Controller
                 'board_id' => $request->board_id,
                 'report_type_id' => $request->report_type,
                 'content' => $request->content,
+                'approve_chk' => 0,
             ];
     
             $reportData = Report::create($insertData);
-    
+            
+            $reportCount = Report::where('board_id', '=', $id)
+                     ->count();
+            if($reportCount >= 10) {
+                $boardBlind = Boards::where('id', '=', $id)
+                            ->first();
+
+                $boardBlind->blind_flg = 1;
+                $boardBlind->save();
+            }
+
             // 레스폰스 처리
             $responseData = [
                 'code' => '0'
@@ -113,9 +124,20 @@ class ReportController extends Controller
                 'recipe_board_id' => $request->recipe_board_id,
                 'report_type_id' => $request->report_type,
                 'content' => $request->content,
+                'approve_chk' => 0,
             ];
     
             $reportData = Report::create($insertData);
+
+            $reportCount = Report::where('recipe_board_id', '=', $id)
+                     ->count();
+            if($reportCount >= 10) {
+                $recipeBoardBlind = RecipeBoards::where('id', '=', $id)
+                            ->first();
+
+                $recipeBoardBlind->blind_flg = 1;
+                $recipeBoardBlind->save();
+            }
     
             // 레스폰스 처리
             $responseData = [
@@ -171,9 +193,22 @@ class ReportController extends Controller
                 'comment_id' => $request->comment_id,
                 'report_type_id' => $request->report_type,
                 'content' => $request->content,
+                'approve_chk' => 0,
             ];
     
             $reportData = Report::create($insertData);
+
+            
+            $reportCount = Report::where('comment_id', '=', $id)
+                            ->count();
+
+            if($reportCount >= 10) {
+                $commentBlind = Comment::where('id', '=', $id)
+                            ->first();
+
+                $commentBlind->blind_flg = 1;
+                $commentBlind->save();
+            }
     
             // 레스폰스 처리
             $responseData = [

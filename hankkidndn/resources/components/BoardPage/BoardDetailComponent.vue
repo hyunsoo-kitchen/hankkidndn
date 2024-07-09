@@ -1,4 +1,13 @@
 <template>
+    <!-- 블라인드 처리 모달 창 -->
+    <div v-if="$store.state.boardDetail.blind_flg == 1">
+        <div>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</div>
+        <div>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</div>
+        <div>
+            <button type="button" @click="$store.state.boardDetail.blind_flg = 0">확인</button>
+            <button type="button" @click="$router.back()">취소</button>
+        </div>
+    </div>
     <!-- 삭제 모달 창 -->
     <div class="modal" v-show="modalFlg">
         <div class="modal-dialog">
@@ -19,18 +28,18 @@
     </div>
 
     <!-- 중복신고 방지 모달 창 -->
-    <div class="modal" v-show="$store.state.reportModalFlg">
+    <div class="modal" v-show="$store.state.reportFailFlg">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">알림</h3>
-                    <button type="button" @click="$store.state.reportModalFlg = false" class="close">×</button>
+                    <button type="button" @click="$store.state.reportFailFlg = false" class="close">×</button>
                 </div>
                 <div class="modal-body">
                     <p>신고는 한번만 가능합니다.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" @click="$store.state.reportModalFlg = false" class="btn btn-primary1">확인</button>
+                    <button type="button" @click="$store.state.reportFailFlg = false" class="btn btn-primary1">확인</button>
                 </div>
             </div>
         </div>
@@ -145,24 +154,29 @@
                     <p>{{ $store.state.boardDetail.content }}</p>
                 </div>
                 <h2>댓글</h2>
+
+                <!-- 댓글 불러오기 시작 -->
                 <div class="comment-section">
-                    <!-- 댓글 불러오기 시작 -->
                     <div v-if="$store.state.commentData" v-for="(item, index) in $store.state.commentData" :key="index" class="comment">
                         <div v-if="commentFlg || item.id !== commentId">
-                            <div v-if="!item.deleted_at" class="comment-header">
+                            <div class="comment-content" v-if="item.blind_flg == 1">
+                                <div>해당 댓글은 신고로인해 블라인드 처리 됐습니다.</div>
+                                <button type="button" @click="item.blind_flg = 0">확인하기</button>
+                            </div>
+                            <div v-else-if="!item.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item.u_nickname }}</p>
                                 <p class="comment-date">{{ item.created_at }}</p>
                                 <div class="btn_grid">
-                                <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
-                                <button @click="$store.dispatch('commentDelete', item.id)" v-if="commentDeleteBtn(item.user_id)" type="button">삭제</button>
-                                <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item.id)">신고</button>
+                                    <button @click="commentUpdateOn(item.id)" v-if="$store.state.userInfo && $store.state.userInfo.id == item.user_id" type="button">수정</button>
+                                    <button @click="$store.dispatch('commentDelete', item.id)" v-if="commentDeleteBtn(item.user_id)" type="button">삭제</button>
+                                    <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item.id)">신고</button>
+                                </div>
+                                <p class="comment-content">{{ item.content }}</p>
                             </div>
-                            </div>
-                            <p v-if="!item.deleted_at" class="comment-content">{{ item.content }}</p>
                             <p v-else>삭제된 댓글 입니다.</p>
     
                             <!-- 아래 답글 버튼 누를경우 해당 댓글 밑에 입력창 생성 -->
-                            <div class="comment-actions" v-show="!item.deleted_at">
+                            <div class="comment-actions" v-show="!item.deleted_at && item.blind_flg != 1">
                                 <button v-if="$store.state.authFlg " type="button" @click="cocomentOn(item.id)" class="comment_actions_btn">답글</button>
                                 <div class="comment-like">
                                     <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
@@ -184,7 +198,11 @@
                         <div v-for="(item2, index2) in $store.state.cocommentData" :key="index2">
                             <div v-if="item2.cocomment == item.id" class="comment cocomment-padding">
                                 <div v-if="item2.id !== cocommentId" class="comment_margin">
-                                    <div v-if="!item2.deleted_at" class="comment-header">
+                                    <div class="comment-content" v-if="item2.blind_flg == 1">
+                                        <div>해당 댓글은 신고로인해 블라인드 처리 됐습니다.</div>
+                                        <button type="button" @click="item2.blind_flg = 0">확인하기</button>
+                                    </div>
+                                    <div v-else-if="!item2.deleted_at" class="comment-header">
                                         <p class="comment-author">{{ item2.u_nickname }}</p>
                                         <p class="comment-date">{{ item2.created_at }}</p>
                                         <div class="btn_grid">
@@ -192,8 +210,8 @@
                                             <button @click="$store.dispatch('commentDelete', item2.id)" v-if="commentDeleteBtn(item2.user_id)" type="button">삭제</button>
                                             <button type="button" v-if="$store.state.authFlg" @click="commentReportModalOn(item2.id)">신고</button>
                                         </div>
+                                        <p class="comment-content">{{ item2.content }}</p>
                                     </div>
-                                    <p v-if="!item2.deleted_at" class="comment-content">{{ item2.content }}</p>
                                     <p v-else>삭제된 답글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
                                         <div class="comment-like">
