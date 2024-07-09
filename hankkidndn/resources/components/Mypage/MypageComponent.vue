@@ -101,6 +101,9 @@
                             <div class="myprofile_title" @click="dateOpenModal">생년월일 수정</div>
     
                             <div class="myprofile_title" @click="addressOpenModal">주소 수정</div>
+
+                            <!-- 회원탈퇴 이현수 -->
+                            <div class="myprofile_title" @click="unregisterOpenModal">회원 탈퇴</div>
                         </div>
 
                         <!-- 내 정보 수정 모달 -->
@@ -231,6 +234,7 @@
                             </div>
                         </div>
 
+
                         <!-- 개인정보 업데이트 모달모음 -->
                          <!-- 수정재확인 모달<프로필사진> -->
                         <div class="modal" v-if="conProfileModalVisivle" @click.self="closeConProfileModal">
@@ -341,6 +345,25 @@
                             </div>
                         </div>
 
+                        <!-- 회원탈퇴 모달 이현수 -->
+                        <div class="modal" v-if="unregisterModalVisible" @click.self="unregisterCloseModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h3 class="modal-title">회원 탈퇴</h3>
+                                    <button @click="unregisterCloseModal" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말로 회원 탈퇴를 진행하시겠습니까?</p>
+                                    <p>회원 탈퇴 시 모든 정보가 삭제됩니다.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="unregisterCloseModal" class="btn btn-primary1">취소</button>
+                                    <button class="btn btn-primary" @click="confirmUnregister">탈퇴</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -362,6 +385,8 @@ const address = ref('');
 const detailAddress = ref('');
 const postcode = ref('');
 const preview = ref('');
+//이현수
+const unregisterModalVisible = ref(false);
 
 const formData = ref({
     profile: null,
@@ -406,6 +431,14 @@ const showConProfileModal = () => {
 const closeConProfileModal = () => {
     conProfileModalVisivle.value = false;
 }
+// 이현수
+const unregisterOpenModal = () => {
+    unregisterModalVisible.value = true;
+};
+
+const unregisterCloseModal = () => {
+    unregisterModalVisible.value = false;
+};
 
 function updateProfile() {
   if (selectedFile.value) {
@@ -567,6 +600,13 @@ const confirmUpdateAddress = () => {
     });
 };
 
+// 회원 탈퇴 이현수
+const confirmUnregister = () => {
+    store.dispatch('unregister')
+        .then(() => {
+            unregisterCloseModal();
+        });
+};
 
 
 

@@ -528,5 +528,19 @@ class UserController extends Controller
 
         return response() -> json($responseData, 200)->cookie('auth', '1', 120, null, null, false, false);
     }
+
+    // 이현수 탈퇴 처리
+    public function updateUnregister(Request $request)
+    {
+        $user = Auth::user();
+
+        if($user) {
+            $user->delete();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => '사용자 정보를 찾을 수 없습니다.'], 404);
+        }
+    }
 }
 

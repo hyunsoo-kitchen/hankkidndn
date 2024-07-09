@@ -1677,6 +1677,23 @@ const store = createStore({
         },
 
 
+        // 이현수 마이페이지 탈퇴
+        updateUnregister(context) {
+            axios.delete('/api/user/updateunregister')
+                .then(response => {
+                    if (response.data.success) {
+                        context.commit('setModalMessage', '회원 탈퇴가 성공적으로 완료되었습니다.');
+                    } else {
+                        context.commit('setModalMessage', '회원 탈퇴에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    context.commit('setModalMessage', '회원 탈퇴 중 오류가 발생했습니다.');
+                });
+        },
+        
+        
 
     }
 });

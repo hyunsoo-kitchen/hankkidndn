@@ -180,6 +180,8 @@ Route::post('/api/profile/update', [UserController::class, 'updateProfile']);
 Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat']);
 // 주소 수정
 Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress']);
+// 이현수 탈퇴
+Route::post('/api/user/updateunregister', [UserController::class, 'updateunregister']);
 
 // 신고받은 레시피 불러오기
 Route::get('/api/recipereports', [AdminController::class, 'recipeReportList']);
