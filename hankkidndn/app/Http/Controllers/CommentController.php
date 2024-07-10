@@ -252,4 +252,33 @@ class CommentController extends Controller
         return response()->json($responseData, 200);
     }
 
+    // 댓글 갯수 가져오기
+    public function getBoardCountComment($id) {
+        $commentCount = Comment::where('board_id', '=', $id)
+                        ->withTrashed()
+                        ->count();
+
+        $responseData = [
+        'code' => '0'
+        ,'msg' => '신고 완료'
+        ,'data' => $commentCount
+        ];
+
+        return response()->json($responseData, 200);
+    }
+
+    // 댓글 갯수 가져오기
+    public function getRecipeCountComment($id) {
+        $commentCount = Comment::where('recipe_board_id', '=', $id)
+                        ->withTrashed()
+                        ->count();
+
+        $responseData = [
+        'code' => '0'
+        ,'msg' => '신고 완료'
+        ,'data' => $commentCount
+        ];
+
+        return response()->json($responseData, 200);
+    }
 }

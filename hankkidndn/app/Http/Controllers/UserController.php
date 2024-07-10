@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\MyAutheException;
+use App\Exceptions\MyReportException;
 use App\Exceptions\MyValidateException;
 use App\Models\Boards;
 use App\Models\Comment;
@@ -161,20 +162,14 @@ class UserController extends Controller
         }
 
         $approveData = ReportApprove::where('user_id', '=', $userInfo->id)
-                                    ->get();
+                                    ->orderBy('end_date', 'DESC')
+                                    ->first();
 
+        Log::debug('정지유저'.$approveData);
         if(isset($approveData)) {
             $nowDate = Carbon::now();
-            foreach($approveData as $item) {
-                if($item->end_date > $nowDate ) {
-                    $errorMessage = '이 계정은 정지된 계정입니다. 정지 기간 : '.$item->end_date;
-                    $responseData = [
-                        'code' => '0'
-                        ,'msg' => $errorMessage
-                        ,'data' => $userInfo
-                    ];
-                    return response() -> json($responseData, 200);
-                }
+            if($approveData->end_date > $nowDate ) {
+                throw new MyReportException('E30:'.$approveData->end_date);
             }
         }
         // 로그인 처리
@@ -535,12 +530,14 @@ class UserController extends Controller
     }
 
     // 이현수 탈퇴 처리
-    public function updateUnregister(Request $request)
+    public function updateUnregister()
     {
         $user = Auth::user();
 
-        if($user) {
-            $user->delete();
+        $userinfo = Users::find($user->id);
+
+        if($userinfo) {
+            $userinfo->delete();
 
             return response()->json(['success' => true]);
         } else {

@@ -1,13 +1,19 @@
 <template>
     <!-- 블라인드 처리 모달 창 -->
-    <div v-if="$store.state.boardDetail.blind_flg == 1">
-        <div>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</div>
-        <div>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</div>
-        <div>
+    <div class="modals" v-if="$store.state.boardDetail.blind_flg == 1">
+        <img src="../../../public/img/경냥이.png" class="cat-image">
+        <div class="modal-contents">
+        <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
+        <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
+        <div class="modal-buttons">
             <button type="button" @click="$store.state.boardDetail.blind_flg = 0">확인</button>
             <button type="button" @click="$router.back()">취소</button>
         </div>
+        </div>
     </div>
+
+    
+    
     <!-- 삭제 모달 창 -->
     <div class="modal" v-show="modalFlg">
         <div class="modal-dialog">
@@ -153,7 +159,7 @@
                     </div>
                     <p>{{ $store.state.boardDetail.content }}</p>
                 </div>
-                <h2>댓글</h2>
+                <h2>댓글 : {{ $store.state.commentCount }}</h2>
 
                 <!-- 댓글 불러오기 시작 -->
                 <div class="comment-section">
@@ -179,7 +185,7 @@
                             <div class="comment-actions" v-show="!item.deleted_at && item.blind_flg != 1">
                                 <button v-if="$store.state.authFlg " type="button" @click="cocomentOn(item.id)" class="comment_actions_btn">답글</button>
                                 <div class="comment-like">
-                                    <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item.id), likeToggle(item)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                    <button v-if="$store.state.authFlg" @click="likeToggle(item, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                     <p class="likes_num">좋아요 수 : {{ item.likes_num }}</p>
                                     <div class="like_grid">
                                     </div>
@@ -215,7 +221,7 @@
                                     <p v-else>삭제된 답글 입니다.</p>
                                     <div v-if="!item2.deleted_at" class="comment-actions">
                                         <div class="comment-like">
-                                            <button v-if="$store.state.authFlg" @click="$store.dispatch('boardCommentLike', item2.id), likeToggle(item2)" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
+                                            <button v-if="$store.state.authFlg" @click="likeToggle(item2, 'boardCommentLike')" type="button" class="like-button"><img src="../../../../hankkidndn/public/img/like.png"></button>
                                             <p>좋아요 수 : {{ item2.likes_num }}</p>
                                         </div>
                                     </div>
@@ -264,6 +270,8 @@ import { useRoute } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
+
+const likeFlg = ref(true);
 
 // 댓글 관련
 const comment = ref('');
@@ -324,20 +332,30 @@ function commentUpdateOff() {
 }
 
 // 좋아요 기능
-function likeToggle(commentData) {
-    console.log(commentData)
-  if(commentData.like_chk == 1) {
-    commentData.like_chk = 0;
-    commentData.likes_num--;
-  } else {
-    commentData.like_chk = 1;
-    commentData.likes_num++;
-  }
+function likeToggle(data, action) {
+    if(likeFlg.value) {
+        likeFlg.value = false;
+
+        store.dispatch(action, data.id)
+    
+        if(data.like_chk == 1) {
+            data.like_chk = 0;
+            data.likes_num--;
+        } else {
+            data.like_chk = 1;
+            data.likes_num++;
+        }
+
+        setTimeout(() => {
+                likeFlg.value = true;
+            }, 500);
+    }
 }
 
 
 onBeforeMount(() => {
     store.dispatch('getBoardDetail', data.id)
+    store.dispatch('getBoardCountComment', data.id)
 });
 
 // 게시판 이름 설정

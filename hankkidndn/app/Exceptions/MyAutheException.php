@@ -18,7 +18,7 @@ class MyAutheException extends Exception {
             'E24' => ['status' => 401, 'msg' => '토큰의 정보에 오류가 있습니다.'],
             'E25' => ['status' => 401, 'msg' => '유효한 토큰이 아닙니다.'],
             'E26' => ['status' => 401, 'msg' => '만료된 토큰입니다.'],
-            
+            'E27' => ['status' => 401, 'msg' => '이 계정은 정지된 계정입니다. 정지 기간 : '],
         ];
     }
 }

@@ -1,13 +1,17 @@
 <template>
     <!-- 블라인드 처리 모달 창 -->
-    <div v-if="$store.state.recipeData.blind_flg == 1">
-        <div>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</div>
-        <div>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</div>
-        <div>
+    <div class="modals" v-if="$store.state.recipeData.blind_flg == 1">
+    <img src="../../../public/img/경냥이.png" class="cat-image">
+    <div class="modal-contents">
+        <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
+        <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
+        <div class="modal-buttons">
             <button type="button" @click="$store.state.recipeData.blind_flg = 0">확인</button>
             <button type="button" @click="$router.back()">취소</button>
         </div>
     </div>
+</div>
+
     <!-- 모달 창 -->
     <div class="modal" v-show="modalFlg">
         <div class="modal-dialog">
@@ -185,7 +189,7 @@
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
         </div>
 
-        <h2>댓글</h2>
+        <h2>댓글 : {{ $store.state.commentCount }}</h2>
 
         <!-- 댓글 불러오기 시작 -->
         <div class="comment-section">
@@ -283,7 +287,7 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref} from 'vue';
+import { onBeforeMount, onUnmounted, ref} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -359,7 +363,7 @@ function likeToggle(data, action) {
 
         setTimeout(() => {
                 likeFlg.value = true;
-            }, 1000);
+            }, 500);
     }
 }
 
@@ -376,8 +380,9 @@ function recipeLikeToggle(data, action) {
     }
 }
 
-onBeforeMount(() => {
-    store.dispatch('getRecipeDetail', route.params.id);
+onBeforeMount( async () => {
+    await store.dispatch('getRecipeDetail', route.params.id);
+    await store.dispatch('getRecipeCountComment', route.params.id)
     // store.dispatch('recipeViewUp', route.params.id)
     // console.log(store.state.recipeStuff)
 })
@@ -393,6 +398,10 @@ const formatDate = (dateString) => {
         hour12: false
     }).replace(/\.$/, '');  // 마지막 점 제거
 };
+
+onUnmounted(() => {
+    store.commit('setRecipeDetail', {});
+});
 
 // 신고 모달
 function reportModalOn() {

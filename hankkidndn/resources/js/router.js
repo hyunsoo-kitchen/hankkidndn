@@ -79,6 +79,7 @@ const routes = [
     },
     {
         path: '/recipe/detail/:id',
+        name: 'recipeDetail',
         component: RecipeDetailComponent,
         beforeEnter: recipeViews,
     },
@@ -99,6 +100,7 @@ const routes = [
     },
     {
         path: '/board/detail/:id',
+        name: 'boardDetail',
         component: BoardDetailComponent,
         beforeEnter: boardViews,
     },
@@ -214,7 +216,7 @@ function chkAuth(to, from, next) {
         next();
     } else {
         // alert('로그인이 필요한 서비스입니다.');
-        store.commit('setModalMessage', '로그인이 필요한 서비스입니다..');
+        store.commit('setModalMessage', '로그인이 필요한 서비스입니다.');
         next('/login');
     }
 };
@@ -232,7 +234,7 @@ function chkAuthon(to, from, next) {
 
 // 관리자 로그인 상태가 아닐때 못가는 페이지 처리
 function chkAdmin(to, from, next) {
-    if(store.state.adminFlg) {
+    if(store.state.adminFlg && store.state.adminInfo.admin_permission == 1) {
         next();
     } else {
         next('/main');
@@ -251,7 +253,8 @@ function chkAdminOn(to, from, next) {
 // 보드 게시판 타입 관리
 function chkBoardType(to, from, next) {
     if(to.params.id >= 10 || to.params.id <= 6 || isNaN(to.params.id)) {
-        alert('해당 게시판은 없는 게시판 입니다.');
+        // alert('해당 게시판은 없는 게시판 입니다.');
+        store.commit('setModalMessage', '해당 게시판은 없는 게시판입니다.');
         router.back();
     } else {
         next();
@@ -264,7 +267,7 @@ function chkRecipeType(to, from, next) {
         next();
     } else {
         // alert('해당 게시판은 없는 게시판 입니다.');
-        store.commit('setModalMessage', '해당 게시판은 없는 게시판 입니다.');
+        store.commit('setModalMessage', '해당 게시판은 없는 게시판입니다.');
         router.back();
     }
 }
@@ -272,7 +275,8 @@ function chkRecipeType(to, from, next) {
 // 게시글 페이지 초과시 처리
 function chkPageNum(to, from, next) {
     if(to.query.page > store.state.pagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
-        alert('해당 페이지는 없는 페이지 입니다.');
+        // alert('해당 페이지는 없는 페이지 입니다.');
+        store.commit('setModalMessage', '해당 페이지는 없는 페이지입니다.');
         router.back();
     } else {
         next();
@@ -282,7 +286,8 @@ function chkPageNum(to, from, next) {
 // 관리자 공지사항 페이지 초과시 처리
 function chkNoticePageNum(to, from, next) {
     if(to.query.page > store.state.noticePagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
-        alert('해당 페이지는 없는 페이지 입니다.');
+        // alert('해당 페이지는 없는 페이지 입니다.');
+        store.commit('setModalMessage', '해당 페이지는 없는 페이지입니다.');
         router.back();
     } else {
         next();
@@ -292,7 +297,8 @@ function chkNoticePageNum(to, from, next) {
 // 게시글 검색 페이지 초과시 처리
 function chkSearchPageNum(to, from, next) {
     if(to.query.page > store.state.searchPagination.last_page || to.query.page < 1 || isNaN(to.query.page)) {
-        alert('해당 페이지는 없는 페이지 입니다.');
+        // alert('해당 페이지는 없는 페이지 입니다.');
+        store.commit('setModalMessage', '해당 페이지는 없는 페이지입니다.');
         router.back();
     } else {
         next();

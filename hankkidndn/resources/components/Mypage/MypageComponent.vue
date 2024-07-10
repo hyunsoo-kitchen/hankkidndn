@@ -359,7 +359,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button @click="unregisterCloseModal" class="btn btn-primary1">취소</button>
-                                    <button class="btn btn-primary" @click="confirmUnregister">탈퇴</button>
+                                    <button class="btn btn-primary" @click="confirmUnregister(); unregisterCloseModal()">탈퇴</button>
                                 </div>
                                 </div>
                             </div>
@@ -435,7 +435,6 @@ const closeConProfileModal = () => {
 const unregisterOpenModal = () => {
     unregisterModalVisible.value = true;
 };
-
 const unregisterCloseModal = () => {
     unregisterModalVisible.value = false;
 };
@@ -602,10 +601,8 @@ const confirmUpdateAddress = () => {
 
 // 회원 탈퇴 이현수
 const confirmUnregister = () => {
-    store.dispatch('unregister')
-        .then(() => {
-            unregisterCloseModal();
-        });
+    store.dispatch('unRegister');
+    store.dispatch('logout');
 };
 
 

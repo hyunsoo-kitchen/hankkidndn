@@ -119,9 +119,9 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 const modules = [Autoplay, Pagination, Navigation];
 const store = useStore();
 
-onBeforeMount(() => {
-    store.dispatch('getAdData');
-    store.dispatch('getMainNewList');
+onBeforeMount( async () => {
+    await store.dispatch('getAdData');
+    await store.dispatch('getMainNewList');
 });
 
 // 날짜 표시 제어

@@ -60,6 +60,9 @@ const store = createStore({
             progressEventPagination: localStorage.getItem('progressEventPagination') ? JSON.parse(localStorage.getItem('progressEventPagination')) : {current_page: '1'},
             finishEventPagination: localStorage.getItem('finishEventPagination') ? JSON.parse(localStorage.getItem('finishEventPagination')) : {current_page: '1'},
 
+            // 댓글 수 가져오기
+            commentCount: 0,
+
             // 신고당한 유저 데이터
             approveUserInfo: [],
             //-------------------------끝------------------------------
@@ -262,6 +265,9 @@ const store = createStore({
         setApproveUserInfo(state, data) {
             state.approveUserInfo = data
         },
+        setCountComment(state, data) {
+            state.commentCount = data
+        },
         //---------------------끝---------------------------
 
         // 인증 플래그 저장
@@ -403,10 +409,10 @@ const store = createStore({
         //---------------------권현수------------------------------
 
         // 메인페이지 게시글 획득
-        getMainNewList(context) {
+        async getMainNewList(context) {
             const url = '/api/main'
 
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 // console.log(response.data.bestData)
                 context.commit('setMainBoardData', response.data.newData)
@@ -442,10 +448,10 @@ const store = createStore({
         },
 
         // 리스트에서 레시피 디테일 페이지로 이동
-        getRecipeDetail(context, id) {
+        async getRecipeDetail(context, id) {
             const url = '/api/recipe/detail/' + id
 
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 // console.log(response.data.data)
                 if(response.data.data.video_link) {
@@ -465,12 +471,12 @@ const store = createStore({
                     response.data.data.embed_url = null;
                 }
                 context.commit('setRecipeDetail', response.data)
-                router.push('/recipe/detail/' + response.data.data.id)
+                // router.push('/recipe/detail/' + response.data.data.id)
             })
             .catch(error => {
                 // alert('존재하지않는 게시글 입니다.')
                 context.commit('setModalMessage', '존재하지않는 게시글입니다.(' + error.response.data.code + ')');
-                router.back();
+                // router.back();
             })
         },
 
@@ -487,7 +493,7 @@ const store = createStore({
             .catch(error => {
                 // alert('존재하지않는 게시글 입니다.')
                 context.commit('setModalMessage', '존재하지않는 게시글입니다.(' + error.response.data.code + ')');
-                router.back();
+                // router.back();
             });
         },
 
@@ -719,6 +725,28 @@ const store = createStore({
             .catch();
         },
 
+        // 댓글 수 가져오기
+        getBoardCountComment(context, id) {
+            const url = '/api/board/comment/count/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setCountComment', response.data.data);
+            })
+            .catch();
+        },
+
+        // 댓글 수 가져오기
+        getRecipeCountComment(context, id) {
+            const url = '/api/recipe/comment/count/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setCountComment', response.data.data);
+            })
+            .catch();
+        },
+
         // 레시피 좋아요 처리
         recipeLike(context, id) {
             const url = '/api/recipe/like/' + id
@@ -796,20 +824,7 @@ const store = createStore({
             })
             .catch();
         },
-        test(context) {
-            const url = '/api/login/kakao';
 
-            axios.get(url)
-            .then(response => {
-                localStorage.setItem('userInfo', JSON.stringify(response.data.data));
-                context.commit('setUserInfo', response.data.data);
-                context.commit('setAuthFlg', true);
-                router.back();
-            })
-            .catch(error => {
-                alert(error.response.data.msg);
-            });
-        },
         // 댓글, 답글 게시글 신고 기능
         commentReport(context, id) {
             const url ='/api/comment/report/' + id
@@ -827,10 +842,10 @@ const store = createStore({
             .catch();
         },
 
-        kakaoLogin(context) {
+        async kakaoLogin(context) {
             const url = '/api/kakaoLogin'
 
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 localStorage.setItem('userInfo', JSON.stringify(response.data.data));
                 context.commit('setUserInfo', response.data.data);
@@ -848,13 +863,19 @@ const store = createStore({
 
             axios.post(url, data)
             .then(response => {
+                const permission = response.data.data.admin_permission
                 // console.log(response.data); //TODO
                 localStorage.setItem('adminInfo', JSON.stringify(response.data.data));
                 context.commit('setAdminInfo', response.data.data);
                 context.commit('setAdminFlg', true);
 
+                if(permission == 1) {
+                    router.replace('/admindashboard');
+                } else {
+                    router.replace('/main');
+                }
+
                 // router.replace('/main');
-                router.replace('/admincontentcontroll');
             })
             .catch();
         },
@@ -979,10 +1000,10 @@ const store = createStore({
         },
 
         // 광고 획득 처리
-        getAdData(context) {
+        async getAdData(context) {
             const url = '/api/admin/ad'
 
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 // console.log(response.data)
                 context.commit('setAdData', response.data.data)
@@ -995,7 +1016,8 @@ const store = createStore({
             const url = '/api/admin/ad'
             const data = new FormData(document.querySelector('#adDataForm'))
             data.append('ad', JSON.stringify(context.state.adImage));
-            console.log(context.state.adImage)
+
+            // console.log(context.state.adImage)
             axios.post(url, data)
             .then(response => {
                 // context.commit('setAdData', response.data.data)
@@ -1213,10 +1235,7 @@ const store = createStore({
                 router.back();
             })
             .catch(error => {
-                // console.log(error.response); //TODO
-                // router.replace('/main');
-                // alert('로그인에 실패했습니다.(' + error.response.data.code + ')');
-                context.commit('setModalMessage', error.response.data.message )
+                context.commit('setModalMessage', error.response.data.msg )
 
             });
         },
@@ -1699,7 +1718,7 @@ const store = createStore({
 
 
         // 이현수 마이페이지 탈퇴
-        updateUnregister(context) {
+        unRegister(context) {
             axios.delete('/api/user/updateunregister')
                 .then(response => {
                     if (response.data.success) {

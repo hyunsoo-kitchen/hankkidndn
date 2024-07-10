@@ -61,12 +61,7 @@ class AdminController extends Controller
             'code' => '0'
             ,'msg' => '로그아웃 완료'
         ];
-        return response()
-                ->json($responseData, 200)
-                ->cookie('admin', '1', -1,
-                
-                
-                null, null, false, false);
+        return response()->json($responseData, 200)->cookie('admin', '1', -1, null, null, false, false);
     }
 
     // 공지사항 작성
@@ -258,24 +253,24 @@ class AdminController extends Controller
             $adData->admin_id = $user->id;
             $adData->img_path = $item->img_path;
 
-            // 프로그램 내용 및 파일 업로드 유효성 검사
-            // $validator = Validator::make(
-            //     [
-            //         'file' => $request->file('file' . ($key + 1)),
-            //     ],
-            //     [
-            //         'file' => 'image|mimes:jpeg,jpg,png',
-            //     ]
-            // );
-
-            // // 유효성 검사 실패 체크
-            // if ($validator->fails()) {
-            //     Log::debug('파일 업로드 유효성 검사 실패', $validator->errors()->toArray());
-            //     throw new MyValidateException('E01');
-            // }
-
+            
             if($request->has('file'.($key + 1))) {
-
+                // 프로그램 내용 및 파일 업로드 유효성 검사
+                $validator = Validator::make(
+                    [
+                        'file' => $request->file('file' . ($key + 1)),
+                    ],
+                    [
+                        'file' => 'image|mimes:jpeg,jpg,png',
+                    ]
+                );
+    
+                // 유효성 검사 실패 체크
+                if ($validator->fails()) {
+                    Log::debug('파일 업로드 유효성 검사 실패', $validator->errors()->toArray());
+                    throw new MyValidateException('E01');
+                }
+                
                 $imgPath = $request->file('file'.($key + 1))->store('img');
 
                 $adData->img_path = '/'.$imgPath;

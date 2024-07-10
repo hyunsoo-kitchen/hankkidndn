@@ -30,7 +30,7 @@
                     </button>
                 </div>
             </div>
-            <div class="ul-list">
+            <div v-if="$route.path != '/recipe/99'" class="ul-list">
                 <ul>
                     <li :class="{ 'active': $route.params.id == 100 }" @click="recipeTypeMove(100)" class="line">전체</li>
                     <li :class="{ 'active': $route.params.id == 1 }" @click="recipeTypeMove(1)" class="line">한식</li>
@@ -51,7 +51,8 @@
                 <button>조회순</button> -->
             </div>
             <div class="main-list-content">
-                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                <!-- <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
+                <div @click="$router.push('/recipe/detail/' + item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
                     <div v-if="item.blind_flg !== 1">
                         <img :src="item.thumbnail">
                         <div class="card-title">{{ item.title }}</div>
@@ -61,7 +62,7 @@
                             <div class="card-view">조회수 : {{ item.views }}</div>
                         </div>
                     </div>
-                    <div v-else>해당 게시글은 블라인드 된 상태입니다.</div>
+                    <div v-else >해당 게시글은 신고로인해 <br> 블라인드 처리된 게시글입니다.</div>
                 </div>
             </div>
             <div class="btn-container">
@@ -115,6 +116,7 @@ function pagination(nowPage) {
 
 const imageMap = {
   100: '/img/recipe.png',
+  99: '/img/best.png',
   1: '/img/koreanfood.jpg',
   2: '/img/chinesefood.jpg',
   3: '/img/pastafood.jpg',

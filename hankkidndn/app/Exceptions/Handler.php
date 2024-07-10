@@ -59,12 +59,17 @@ class Handler extends ExceptionHandler
             $errorMsgList = $exception->context();
         } else if($exception instanceof PDOException) {
             $errorCode = 'E80';
+        } else if($exception instanceof MyReportException) {
+            Log::debug($exception->getMessage());
+            $exceptionInfo = explode(':', $exception->getMessage());
+            $errorCode = $exceptionInfo[0];
+            $errorMsgList = $exception->context();
         }
-
+        
         // Response Data 생성
         $responseData = [
             'code' => $errorCode
-            , 'msg' => $errorMsgList[$errorCode]['msg']
+            , 'msg' => $errorMsgList[$errorCode]['msg'].(isset($exceptionInfo) ? $exceptionInfo[1] : '')
         ];
 
         // 에러로그

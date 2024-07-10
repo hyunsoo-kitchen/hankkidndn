@@ -32,7 +32,7 @@ body{
     list-style: none;
     padding: 10px 0;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, auto);
     width: 50%;
     border-radius: 30px;
     margin: 0 auto;
@@ -224,6 +224,12 @@ body{
     background-color: #F0D264;
     color: white;
   }
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 @media (max-width: 680px) {
     .header .ul-list ul {

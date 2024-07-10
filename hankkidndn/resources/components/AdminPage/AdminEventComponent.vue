@@ -51,20 +51,22 @@
             </div>
 
             <div v-show="progressFlg" class="event-container">
-                <div class="event-card" v-for="(item, index) in $store.state.progressEvent" :key="index">
-                    <img :src="item.thumb_img_path" class="event-card-img">
-                    <div class="event-card-text">
-                        <div>{{ item.title }}</div>
-                        <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
-                    </div>
+            <div class="grid-tem">
+            <div @click="$store.dispatch('eventdetail', item.id)" class="event-card" v-for="(item, index) in $store.state.progressEvent" :key="index">
+                <img :src="item.thumb_img_path" class="event-card-img">
+                <div class="event-card-text">
+                    <div>{{ item.title }}</div>
+                    <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
                 </div>
-                <div class="notice-pagination">
-                    <button v-if="$store.state.progressEventPagination.current_page !== 1" class="number" @click="pageMove($store.state.progressEventPagination.current_page - 1)">이전</button>
-                    <div v-for="page_num in pages" :key="page_num">
-                        <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
-                    </div>
-                    <button v-if="$store.state.progressEventPagination.current_page < $store.state.progressEventPagination.last_page" class="number" @click="pageMove($store.state.progressEventPagination.current_page + 1)">다음</button>
+            </div>
+            </div>
+            <div class="notice-pagination">
+                <button v-if="$store.state.progressEventPagination.current_page !== 1" class="number" @click="pageMove($store.state.progressEventPagination.current_page - 1)">이전</button>
+                <div v-for="page_num in pages" :key="page_num">
+                    <button :class="{ activePage: page_num === $store.state.progressEventPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
                 </div>
+                <button v-if="$store.state.progressEventPagination.current_page < $store.state.progressEventPagination.last_page" class="number" @click="pageMove($store.state.progressEventPagination.current_page + 1)">다음</button>
+            </div>
             </div>
             <div v-show="finishFlg" class="event-container">
                 <div class="event-card" v-for="(item, index) in $store.state.finishEvent" :key="index">

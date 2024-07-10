@@ -4,6 +4,74 @@
     box-sizing: border-box;
     font-family: "Jua", sans-serif;
 }
+
+.modals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(182, 180, 180);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cat-image {
+    position: fixed;
+    top: 84px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    padding: 10px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.modal-contents {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+    width: 80%;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-buttons button:hover {
+    background-color: #ddd;
+}
+
+@media (max-width: 360px) and (max-height: 740px) {
+    .cat-image {
+      width: 60%;
+      top: 70px;
+      left: auto;
+      transform: none;
+      margin: 0 auto 20px auto;
+    }
+  
+    .modal-contents {
+      max-width: 90%; 
+      padding: 10px; 
+    }
+  }
+  
+
+
 .modal {
     position: fixed;
     top: 0;
