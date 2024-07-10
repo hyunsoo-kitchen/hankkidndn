@@ -61,7 +61,7 @@ const store = createStore({
             finishEventPagination: localStorage.getItem('finishEventPagination') ? JSON.parse(localStorage.getItem('finishEventPagination')) : {current_page: '1'},
 
             // 댓글 수 가져오기
-            commentCount: [],
+            commentCount: 0,
 
             // 신고당한 유저 데이터
             approveUserInfo: [],
@@ -736,6 +736,17 @@ const store = createStore({
             .catch();
         },
 
+        // 댓글 수 가져오기
+        getRecipeCountComment(context, id) {
+            const url = '/api/recipe/comment/count/' + id
+
+            axios.get(url)
+            .then(response => {
+                context.commit('setCountComment', response.data.data);
+            })
+            .catch();
+        },
+
         // 레시피 좋아요 처리
         recipeLike(context, id) {
             const url = '/api/recipe/like/' + id
@@ -1005,7 +1016,8 @@ const store = createStore({
             const url = '/api/admin/ad'
             const data = new FormData(document.querySelector('#adDataForm'))
             data.append('ad', JSON.stringify(context.state.adImage));
-            console.log(context.state.adImage)
+
+            // console.log(context.state.adImage)
             axios.post(url, data)
             .then(response => {
                 // context.commit('setAdData', response.data.data)

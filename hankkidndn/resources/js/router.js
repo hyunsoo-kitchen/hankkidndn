@@ -31,6 +31,7 @@ import AdminEventComponent from '../components/AdminPage/AdminEventComponent.vue
 import BoardEventDetailComponent from '../components/BoardPage/BoardEventDetailComponent.vue';
 import BoardEventListComponent from '../components/BoardPage/BoardEventListComponent.vue';
 import AdminDashBoard from '../components/AdminPage/AdminDashBoard.vue';
+import AdminUsers from '../components/AdminPage/AdminUsers.vue';
 
 const routes = [
     {
@@ -188,7 +189,12 @@ const routes = [
         path: '/admindashboard',
         component: AdminDashBoard,
         beforeEnter: chkAdmin,
-    }
+    },
+    {
+        path: '/adminduserfind',
+        component: AdminUsers,
+        beforeEnter: chkAdmin,
+    },
 ];
 
 const router = createRouter({

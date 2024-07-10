@@ -81,6 +81,7 @@ Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentI
 
 // 댓글 갯수 가져오기 
 Route::get('/api/board/comment/count/{num}', [CommentController::class, 'getBoardCountComment']);
+Route::get('/api/recipe/comment/count/{num}', [CommentController::class, 'getRecipeCountComment']);
 
 // view 증가
 Route::post('/api/recipe/detail/view/{num}', [RecipeBoardController::class, 'viewUp']);

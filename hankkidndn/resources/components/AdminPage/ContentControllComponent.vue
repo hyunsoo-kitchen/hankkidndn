@@ -15,7 +15,7 @@
 
     <div class="body_container">
         <div class="category">
-            <button class="category_btn">대시보드</button>
+            <button class="category_btn" @click="router.push('/adminduserfind')">대시보드</button>
             <button class="category_btn" @click="router.push('/adminnotice?page=1')">공지사항</button>
             <button class="category_btn">사용자 관리</button>
             <button class="category_btn">컨텐츠 관리</button>

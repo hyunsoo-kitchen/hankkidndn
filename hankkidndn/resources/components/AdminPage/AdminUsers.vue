@@ -43,7 +43,7 @@
             <!-- 신규 가입 추이 -->
             <div class="new_member_container">
                 <div>
-                    <h3>신규 가입자</h3>
+                    <h3>유저 조회</h3>
                     <hr>
                 </div>
                 <div class="n_m_head">
@@ -54,6 +54,7 @@
                     <div>성별</div>
                     <div>생일</div>
                 </div>
+                <hr>
                 <div class="n_m_body">
                     <div class="n_m_list" v-for="(item, index) in newMemberData" :key="index">
                         <div>{{ item.created_at }}</div>
@@ -64,46 +65,6 @@
                         <div>{{ item.birth_at }}</div>
                     </div>
                 </div> 
-            </div>
-            
-            <!-- 간략 통계 -->
-            <div class="statistics">
-                <div>
-                    <h3>일자별 요약</h3>
-                    <hr>
-                </div>
-                <div class="stats_head">
-                    <div>일자</div>
-                    <div>신규가입</div>
-                    <div>새 레시피</div>
-                    <div>새 게시글</div>
-                    <div>탈퇴회원</div>
-                </div>
-                <div class="stats_body">
-                    <div class="stats_list" v-for="(item, index) in dailyStatsData" :key="index" >
-                        <div>{{ item.date }}</div>
-                        <div>{{ item.user_count }}</div>
-                        <div>{{ item.recipe_count }}</div>
-                        <div>{{ item.post_count }}</div>
-                        <div>{{ item.withdrawal_count }}</div>
-                    </div>
-                </div>
-                <div class="stats_summary">
-                    <div class="week_summary">
-                        <div>최근 7일 합계</div>
-                        <div>{{ weeklyStatsData.weekly_summary.user_count }}</div>
-                        <div>{{ weeklyStatsData.weekly_summary.recipe_count }}</div>
-                        <div>{{ weeklyStatsData.weekly_summary.post_count }}</div>
-                        <div>{{ weeklyStatsData.weekly_summary.withdrawal_count }}</div>
-                    </div>
-                    <div class="month_summary">
-                        <div>이번달({{ currentMonth }}) 합계</div>
-                        <div>{{ monthlyStatsData.monthly_summary.user_count }}</div>
-                        <div>{{ monthlyStatsData.monthly_summary.recipe_count }}</div>
-                        <div>{{ monthlyStatsData.monthly_summary.post_count }}</div>
-                        <div>{{ monthlyStatsData.monthly_summary.withdrawal_count }}</div>
-                    </div>
-                </div>
             </div>
 
         </div>

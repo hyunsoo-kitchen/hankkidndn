@@ -24,7 +24,7 @@
                 <li><button @click="$router.push('/board/notice?page=1')">공지사항</button></li>
                 <li><button @click="$router.push('/board/7?page=1')">자유게시판</button></li>
                 <li><button @click="$router.push('/board/8?page=1')">질문게시판</button></li>
-                <li><button @click="$router.push('/board/9?page=1')">문의게시판</button></li>
+                <!-- <li><button @click="$router.push('/board/9?page=1')">문의게시판</button></li> -->
               </ul>
             </li>
             <li><button type="button" @click="$router.push('/board/event/list?page=1')">이벤트</button></li>
@@ -45,7 +45,7 @@
           <li @click="$router.push('/board/notice?page=1')" class="dropdown-content-li">공지사항</li>
           <li @click="$router.push('/board/7?page=1')" class="dropdown-content-li">자유게시판</li>
           <li @click="$router.push('/board/8?page=1')" class="dropdown-content-li">질문게시판</li>
-          <li @click="$router.push('/board/9?page=1')" class="dropdown-content-li">문의게시판</li>
+          <!-- <li @click="$router.push('/board/9?page=1')" class="dropdown-content-li">문의게시판</li> -->
           <hr>
           <li class="dropdown-content-li">이벤트</li>
         </ul>
@@ -56,7 +56,7 @@
   <script setup>
   import { ref, onMounted, onBeforeUnmount } from 'vue';
   import { useStore } from 'vuex';
-import router from '../../js/router';
+// import router from '../../js/router';
   
   const store = useStore();
   const isModalOpen = ref(false);
