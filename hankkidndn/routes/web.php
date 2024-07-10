@@ -184,7 +184,7 @@ Route::post('/api/user/updatebirthat', [UserController::class, 'updateBirthat'])
 // 주소 수정
 Route::post('/api/user/updateaddress', [UserController::class, 'updateAddress']);
 // 이현수 탈퇴
-Route::post('/api/user/updateunregister', [UserController::class, 'updateunregister']);
+Route::delete('/api/user/updateunregister', [UserController::class, 'updateUnregister']);
 
 // 신고받은 레시피 불러오기
 Route::get('/api/recipereports', [AdminController::class, 'recipeReportList']);
@@ -204,6 +204,8 @@ Route::get('api/admin/weekstats', [AdminController::class, 'getWeeklyStats']);
 Route::get('api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
 // 아직 미처리한 신고갯수 가져오기
 Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
+// 오늘의 간략 통계 불러오기
+Route::get('/api/getDailyStats', [AdminController::class, 'getDailyStats']);
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

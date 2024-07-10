@@ -33,10 +33,10 @@
                     <h3></h3>
                 </div>
                 <div class="head_info">
-                    <div>신규 가입자 : </div> 
-                    <div>탈퇴회원 : </div>
-                    <div>새 레시피 : </div>
-                    <div>새 게시글 : </div>
+                    <div>신규 가입자 : {{ todayStats.user_count }}</div> 
+                    <div>탈퇴회원 : {{ todayStats.withdrawal_count }}</div>
+                    <div>새 레시피 : {{ todayStats.recipe_count }}</div>
+                    <div>새 게시글 : {{ todayStats.post_count }}</div>
                 </div>
             </div>
 
@@ -83,8 +83,8 @@
                     <div class="stats_list" v-for="(item, index) in dailyStatsData" :key="index" >
                         <div>{{ item.date }}</div>
                         <div>{{ item.user_count }}</div>
+                        <div>{{ item.recipe_count }}</div>
                         <div>{{ item.post_count }}</div>
-                        <div>{{ item.comment_count }}</div>
                         <div>{{ item.withdrawal_count }}</div>
                     </div>
                 </div>
@@ -92,15 +92,15 @@
                     <div class="week_summary">
                         <div>최근 7일 합계</div>
                         <div>{{ weeklyStatsData.weekly_summary.user_count }}</div>
+                        <div>{{ weeklyStatsData.weekly_summary.recipe_count }}</div>
                         <div>{{ weeklyStatsData.weekly_summary.post_count }}</div>
-                        <div>{{ weeklyStatsData.weekly_summary.comment_count }}</div>
                         <div>{{ weeklyStatsData.weekly_summary.withdrawal_count }}</div>
                     </div>
                     <div class="month_summary">
                         <div>이번달({{ currentMonth }}) 합계</div>
                         <div>{{ monthlyStatsData.monthly_summary.user_count }}</div>
+                        <div>{{ monthlyStatsData.monthly_summary.recipe_count }}</div>
                         <div>{{ monthlyStatsData.monthly_summary.post_count }}</div>
-                        <div>{{ monthlyStatsData.monthly_summary.comment_count }}</div>
                         <div>{{ monthlyStatsData.monthly_summary.withdrawal_count }}</div>
                     </div>
                 </div>
@@ -127,6 +127,7 @@ onBeforeMount(() => {
 
 const newMemberData = computed(() => store.state.newMemberListData);
 const dailyStatsData = computed(() => store.state.dailyStatsData);
+const todayStats = computed(() => store.state.todayStats);
 const weeklyStatsData = computed(() => store.state.weekStatsData);
 const monthlyStatsData = computed(() => store.state.monthStatsData);
 const approveChkCountData = computed(() => store.state.approvechkCountData);

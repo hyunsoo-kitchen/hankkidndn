@@ -521,19 +521,19 @@ class AdminController extends Controller
             ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
             ->pluck('user_count', 'date');
 
-        $postCounts = DB::table('recipe_boards')
+        $postCounts = DB::table('boards')
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as post_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('DATE(created_at)'))
             ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
             ->pluck('post_count', 'date');
 
-        $commentCounts = DB::table('comments')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as comment_count'))
+        $recipeCounts = DB::table('recipe_boards')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as recipe_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('DATE(created_at)'))
             ->orderBy(DB::raw('DATE(created_at)'), 'DESC')
-            ->pluck('comment_count', 'date');
+            ->pluck('recipe_count', 'date');
 
         $withdrawalCounts = DB::table('users')
             ->select(DB::raw('DATE(deleted_at) as date'), DB::raw('COUNT(*) as withdrawal_count'))
@@ -542,12 +542,12 @@ class AdminController extends Controller
             ->orderBy(DB::raw('DATE(deleted_at)'), 'DESC')
             ->pluck('withdrawal_count', 'date');
 
-        $stats = $dates->map(function ($date) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+        $stats = $dates->map(function ($date) use ($userCounts, $postCounts, $recipeCounts, $withdrawalCounts) {
             return [
                 'date' => $date,
                 'user_count' => $userCounts->get($date, 0),
                 'post_count' => $postCounts->get($date, 0),
-                'comment_count' => $commentCounts->get($date, 0),
+                'recipe_count' => $recipeCounts->get($date, 0),
                 'withdrawal_count' => $withdrawalCounts->get($date, 0),
             ];
         });
@@ -585,19 +585,19 @@ class AdminController extends Controller
             ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
             ->pluck('user_count', 'week');
 
-        $postCounts = DB::table('recipe_boards')
+        $postCounts = DB::table('boards')
             ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as post_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
             ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
             ->pluck('post_count', 'week');
 
-        $commentCounts = DB::table('comments')
-            ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as comment_count'))
+        $recipeCounts = DB::table('recipe_boards')
+            ->select(DB::raw('YEARWEEK(created_at, 1) as week'), DB::raw('COUNT(*) as recipe_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('YEARWEEK(created_at, 1)'))
             ->orderBy(DB::raw('YEARWEEK(created_at, 1)'), 'DESC')
-            ->pluck('comment_count', 'week');
+            ->pluck('recipe_count', 'week');
 
         $withdrawalCounts = DB::table('users')
             ->select(DB::raw('YEARWEEK(deleted_at, 1) as week'), DB::raw('COUNT(*) as withdrawal_count'))
@@ -606,13 +606,13 @@ class AdminController extends Controller
             ->orderBy(DB::raw('YEARWEEK(deleted_at, 1)'), 'DESC')
             ->pluck('withdrawal_count', 'week');
 
-        $stats = $weeks->map(function ($week, $startDate) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+        $stats = $weeks->map(function ($week, $startDate) use ($userCounts, $postCounts, $recipeCounts, $withdrawalCounts) {
             return [
                 'week' => $week,
                 'start_date' => $startDate,
                 'user_count' => $userCounts->get($week, 0),
                 'post_count' => $postCounts->get($week, 0),
-                'comment_count' => $commentCounts->get($week, 0),
+                'recipe_count' => $recipeCounts->get($week, 0),
                 'withdrawal_count' => $withdrawalCounts->get($week, 0),
             ];
         });
@@ -621,13 +621,13 @@ class AdminController extends Controller
         $weeklySummary = $stats->reduce(function ($carry, $item) {
             $carry['user_count'] += $item['user_count'];
             $carry['post_count'] += $item['post_count'];
-            $carry['comment_count'] += $item['comment_count'];
+            $carry['recipe_count'] += $item['recipe_count'];
             $carry['withdrawal_count'] += $item['withdrawal_count'];
             return $carry;
         }, [
             'user_count' => 0,
             'post_count' => 0,
-            'comment_count' => 0,
+            'recipe_count' => 0,
             'withdrawal_count' => 0,
         ]);
 
@@ -667,19 +667,19 @@ class AdminController extends Controller
             ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
             ->pluck('user_count', 'month');
 
-        $postCounts = DB::table('recipe_boards')
+        $postCounts = DB::table('boards')
             ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as post_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
             ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
             ->pluck('post_count', 'month');
 
-        $commentCounts = DB::table('comments')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as comment_count'))
+        $recipeCounts = DB::table('recipe_boards')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('COUNT(*) as recipe_count'))
             ->where('created_at', '>=', $startDate)
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'))
             ->orderBy(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), 'DESC')
-            ->pluck('comment_count', 'month');
+            ->pluck('recipe_count', 'month');
 
         $withdrawalCounts = DB::table('users')
             ->select(DB::raw('DATE_FORMAT(deleted_at, "%Y-%m") as month'), DB::raw('COUNT(*) as withdrawal_count'))
@@ -688,13 +688,13 @@ class AdminController extends Controller
             ->orderBy(DB::raw('DATE_FORMAT(deleted_at, "%Y-%m")'), 'DESC')
             ->pluck('withdrawal_count', 'month');
 
-        $stats = $months->map(function ($month, $startDate) use ($userCounts, $postCounts, $commentCounts, $withdrawalCounts) {
+        $stats = $months->map(function ($month, $startDate) use ($userCounts, $postCounts, $recipeCounts, $withdrawalCounts) {
             return [
                 'month' => $month,
                 'start_date' => $startDate,
                 'user_count' => $userCounts->get($month, 0),
                 'post_count' => $postCounts->get($month, 0),
-                'comment_count' => $commentCounts->get($month, 0),
+                'recipe_count' => $recipeCounts->get($month, 0),
                 'withdrawal_count' => $withdrawalCounts->get($month, 0),
             ];
         });
@@ -703,13 +703,13 @@ class AdminController extends Controller
         $monthlySummary = $stats->reduce(function ($carry, $item) {
             $carry['user_count'] += $item['user_count'];
             $carry['post_count'] += $item['post_count'];
-            $carry['comment_count'] += $item['comment_count'];
+            $carry['recipe_count'] += $item['recipe_count'];
             $carry['withdrawal_count'] += $item['withdrawal_count'];
             return $carry;
         }, [
             'user_count' => 0,
             'post_count' => 0,
-            'comment_count' => 0,
+            'recipe_count' => 0,
             'withdrawal_count' => 0,
         ]);
 

@@ -1,13 +1,17 @@
 <template>
     <!-- 블라인드 처리 모달 창 -->
-    <div v-if="$store.state.recipeData.blind_flg == 1">
-        <div>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</div>
-        <div>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</div>
-        <div>
+    <div class="modals" v-if="$store.state.recipeData.blind_flg == 1">
+    <img src="../../../public/img/경냥이.png" class="cat-image">
+    <div class="modal-contents">
+        <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
+        <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
+        <div class="modal-buttons">
             <button type="button" @click="$store.state.recipeData.blind_flg = 0">확인</button>
             <button type="button" @click="$router.back()">취소</button>
         </div>
     </div>
+</div>
+
     <!-- 모달 창 -->
     <div class="modal" v-show="modalFlg">
         <div class="modal-dialog">

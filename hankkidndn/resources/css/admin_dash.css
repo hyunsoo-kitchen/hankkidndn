@@ -9,8 +9,11 @@ button{
     background-color: transparent;
     cursor: pointer;
 }
-hr {
+/* hr {
     width: 60%;
+} */
+h3 {
+    margin: 3px 0 3px 5px;
 }
 .head_container {
     display: grid;
@@ -44,6 +47,7 @@ hr {
     width: 185px;
     height: 288px;
     /* margin: 0 auto; */
+    margin-right: 5px;
 }
 .main_container {
     display: grid;
