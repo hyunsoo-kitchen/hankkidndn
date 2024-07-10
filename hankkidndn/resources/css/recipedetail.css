@@ -55,6 +55,22 @@
     background-color: #ddd;
 }
 
+@media (max-width: 360px) and (max-height: 740px) {
+    .cat-image {
+      width: 60%;
+      top: 70px;
+      left: auto;
+      transform: none;
+      margin: 0 auto 20px auto;
+    }
+  
+    .modal-contents {
+      max-width: 90%; 
+      padding: 10px; 
+    }
+  }
+  
+
 
 .modal {
     position: fixed;

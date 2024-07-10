@@ -11,6 +11,8 @@
         </div>
         </div>
     </div>
+
+    
     
     <!-- 삭제 모달 창 -->
     <div class="modal" v-show="modalFlg">

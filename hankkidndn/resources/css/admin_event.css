@@ -114,5 +114,71 @@ button{
 
 .event-container {
     display: grid;
+}
+
+/* 이현수 css 수정 */
+
+.event-header {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.event-body-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.event-body-header .pointer {
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.grid-tem {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.event-card {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.event-card-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.event-card-text {
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.notice-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.notice-pagination .number {
+    margin: 0 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.number.activePage {
+    background-color: #3f8899;
+    color: white;
 }
