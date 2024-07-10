@@ -120,6 +120,8 @@ const store = createStore({
             monthStatsData:[],
             // 대시보드 미처리 신고갯수 가져오기
             approvechkCountData:[],
+            // 오늘의 간략 통계
+            todayStats: {},
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -356,6 +358,16 @@ const store = createStore({
         setApproveChkData(state, data) {
             state.approvechkCountData = data;
         },
+        setDailyStats(state, data) {
+            state.dailyStatsData = data;
+            const today = new Date().toISOString().split('T')[0];
+            state.todayStats = data.find(item => item.date === today) || {
+              user_count: 0,
+              withdrawal_count: 0,
+              post_count: 0,
+              comment_count: 0,
+            };
+          },
         //-------------------------노경호 끝-------------------------- 
 
         //-------------------------이현수 시작------------------------
@@ -1602,6 +1614,15 @@ const store = createStore({
             })
             .catch();
         },
+        getDailyStatsList(context) {
+            axios.get('/api/getDailyStats')
+              .then(response => {
+                context.commit('setDailyStats', response.data.data);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

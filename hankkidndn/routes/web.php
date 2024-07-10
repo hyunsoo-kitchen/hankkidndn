@@ -201,6 +201,8 @@ Route::get('api/admin/weekstats', [AdminController::class, 'getWeeklyStats']);
 Route::get('api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
 // 아직 미처리한 신고갯수 가져오기
 Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
+// 오늘의 간략 통계 불러오기
+Route::get('/api/getDailyStats', [AdminController::class, 'getDailyStats']);
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);
