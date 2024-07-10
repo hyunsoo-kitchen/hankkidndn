@@ -535,12 +535,14 @@ class UserController extends Controller
     }
 
     // 이현수 탈퇴 처리
-    public function updateUnregister(Request $request)
+    public function updateUnregister()
     {
         $user = Auth::user();
 
-        if($user) {
-            $user->delete();
+        $userinfo = Users::find($user->id);
+
+        if($userinfo) {
+            $userinfo->delete();
 
             return response()->json(['success' => true]);
         } else {

@@ -1678,7 +1678,7 @@ const store = createStore({
 
 
         // 이현수 마이페이지 탈퇴
-        updateUnregister(context) {
+        unRegister(context) {
             axios.delete('/api/user/updateunregister')
                 .then(response => {
                     if (response.data.success) {
