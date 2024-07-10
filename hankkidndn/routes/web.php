@@ -79,6 +79,9 @@ Route::put('/api/board/comment/like/{num}', [CommentController::class, 'commentL
 // 보드 대댓글 처리 - 권현수
 Route::post('/api/board/cocomment/{num}', [CommentController::class, 'cocommentInsert']);
 
+// 댓글 갯수 가져오기 
+Route::get('/api/board/comment/count/{num}', [CommentController::class, 'getBoardCountComment']);
+
 // view 증가
 Route::post('/api/recipe/detail/view/{num}', [RecipeBoardController::class, 'viewUp']);
 Route::post('/api/board/detail/view/{num}', [BoardController::class, 'viewUp']);

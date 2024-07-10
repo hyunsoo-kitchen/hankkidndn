@@ -20,7 +20,8 @@
                 {{ $store.state.modalMessage }}
             </div>
             <div class="modal-footer">
-                <button @click="$store.commit('setModalMessage', '')"class="btn btn-primary">확인</button>
+                <button v-if="$route.name == 'recipeDetail' || $route.name == 'boardDetail'" @click="$store.commit('setModalMessage', ''); $router.back();"  class="btn btn-primary">확인</button>
+                <button v-else @click="$store.commit('setModalMessage', '')"class="btn btn-primary">확인</button>
             </div>
         </div>
     </div>

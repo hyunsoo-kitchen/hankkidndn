@@ -61,12 +61,7 @@ class AdminController extends Controller
             'code' => '0'
             ,'msg' => '로그아웃 완료'
         ];
-        return response()
-                ->json($responseData, 200)
-                ->cookie('admin', '1', -1,
-                
-                
-                null, null, false, false);
+        return response()->json($responseData, 200)->cookie('admin', '1', -1, null, null, false, false);
     }
 
     // 공지사항 작성

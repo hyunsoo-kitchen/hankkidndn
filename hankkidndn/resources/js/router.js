@@ -78,6 +78,7 @@ const routes = [
     },
     {
         path: '/recipe/detail/:id',
+        name: 'recipeDetail',
         component: RecipeDetailComponent,
         beforeEnter: recipeViews,
     },
@@ -98,6 +99,7 @@ const routes = [
     },
     {
         path: '/board/detail/:id',
+        name: 'boardDetail',
         component: BoardDetailComponent,
         beforeEnter: boardViews,
     },
@@ -226,7 +228,7 @@ function chkAuthon(to, from, next) {
 
 // 관리자 로그인 상태가 아닐때 못가는 페이지 처리
 function chkAdmin(to, from, next) {
-    if(store.state.adminFlg) {
+    if(store.state.adminFlg && store.state.adminInfo.admin_permission == 1) {
         next();
     } else {
         next('/main');

@@ -283,7 +283,7 @@
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref} from 'vue';
+import { onBeforeMount, onUnmounted, ref} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -359,7 +359,7 @@ function likeToggle(data, action) {
 
         setTimeout(() => {
                 likeFlg.value = true;
-            }, 1000);
+            }, 500);
     }
 }
 
@@ -376,8 +376,8 @@ function recipeLikeToggle(data, action) {
     }
 }
 
-onBeforeMount(() => {
-    store.dispatch('getRecipeDetail', route.params.id);
+onBeforeMount( async () => {
+    await store.dispatch('getRecipeDetail', route.params.id);
     // store.dispatch('recipeViewUp', route.params.id)
     // console.log(store.state.recipeStuff)
 })
@@ -393,6 +393,10 @@ const formatDate = (dateString) => {
         hour12: false
     }).replace(/\.$/, '');  // 마지막 점 제거
 };
+
+onUnmounted(() => {
+    store.commit('setRecipeDetail', {});
+});
 
 // 신고 모달
 function reportModalOn() {
