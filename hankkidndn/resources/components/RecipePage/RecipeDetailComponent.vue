@@ -189,7 +189,7 @@
             <div class="profile-name">{{ $store.state.recipeData.u_nickname }}</div>
         </div>
 
-        <h2>댓글</h2>
+        <h2>댓글 : {{ $store.state.commentCount }}</h2>
 
         <!-- 댓글 불러오기 시작 -->
         <div class="comment-section">
@@ -382,6 +382,7 @@ function recipeLikeToggle(data, action) {
 
 onBeforeMount( async () => {
     await store.dispatch('getRecipeDetail', route.params.id);
+    await store.dispatch('getRecipeCountComment', route.params.id)
     // store.dispatch('recipeViewUp', route.params.id)
     // console.log(store.state.recipeStuff)
 })

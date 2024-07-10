@@ -11,6 +11,12 @@
     margin: 0 auto;
 }
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .modal {
     position: fixed;
     top: 0;
