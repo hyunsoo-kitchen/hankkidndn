@@ -51,8 +51,8 @@
                 <button>조회순</button> -->
             </div>
             <div class="main-list-content">
-                <!-- <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
-                <div @click="$router.push('/recipe/detail/' + item.id)" :class="{ card: true, blind_card: item.blind_flg === 1 }" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                <!-- <div @click="$router.push('/recipe/detail/' + item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
                     <div v-if="item.blind_flg !== 1">
                         <img :src="item.thumbnail">
                         <div class="card-title">{{ item.title }}</div>

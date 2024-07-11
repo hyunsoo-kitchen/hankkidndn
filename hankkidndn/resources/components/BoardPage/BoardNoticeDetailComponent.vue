@@ -24,10 +24,10 @@
             <div class="main_title">
                 <h2 class="title_name">공지사항</h2>
                 <div class="buttons">
-                    <div class="btn_grid">
+                    <!-- <div class="btn_grid">
                         <button v-if="$store.state.adminInfo.id == 1" type="button" class="update" @click="$router.push('/board/notice/update/' + $store.state.noticeDetail.id)">수정</button>
                         <button v-if="$store.state.adminInfo.id == 1" type="button" @click="openModal()" class="delete">삭제</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <hr>

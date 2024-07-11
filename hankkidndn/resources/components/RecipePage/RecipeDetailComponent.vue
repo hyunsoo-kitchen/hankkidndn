@@ -1,16 +1,16 @@
 <template>
     <!-- 블라인드 처리 모달 창 -->
-    <div class="modals" v-if="$store.state.recipeData.blind_flg == 1">
-    <img src="../../../public/img/경냥이.png" class="cat-image">
-    <div class="modal-contents">
-        <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
-        <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
-        <div class="modal-buttons">
-            <button type="button" @click="$store.state.recipeData.blind_flg = 0">확인</button>
-            <button type="button" @click="$router.back()">취소</button>
+    <div class="modals" v-if="$store.state.recipeData.blind_flg === 1">
+        <img src="../../../public/img/경냥이.png" class="cat-image">
+        <div class="modal-contents">
+            <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
+            <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
+            <div class="modal-buttons">
+                <button type="button" @click="$store.state.recipeData.blind_flg = 0">확인</button>
+                <button type="button" @click="$router.back()">취소</button>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- 모달 창 -->
     <div class="modal" v-show="modalFlg">
@@ -197,7 +197,7 @@
                 <div v-if="commentFlg || item.id !== commentId">
                     <div class="comment-content" v-if="item.blind_flg == 1">
                         <div>해당 댓글은 신고로인해 블라인드 처리 됐습니다.</div>
-                        <button type="button" @click="item.blind_flg = 0">확인하기</button>
+                        <button type="button" class="comment_actions_btn" @click="item.blind_flg = 0">확인하기</button>
                     </div>
                     <div v-else-if="!item.deleted_at" class="comment-header">
                         <p class="comment-author">{{ item.u_nickname }}</p>
@@ -234,7 +234,7 @@
                         <div v-if="item2.id !== cocommentId" class="comment-margin">
                             <div class="comment-content" v-if="item2.blind_flg == 1">
                                 <div>해당 댓글은 신고로인해 블라인드 처리 됐습니다.</div>
-                                <button type="button" @click="item2.blind_flg = 0">확인하기</button>
+                                <button type="button" class="comment_actions_btn" @click="item2.blind_flg = 0">확인하기</button>
                             </div>
                             <div v-else-if="!item2.deleted_at" class="comment-header">
                                 <p class="comment-author">{{ item2.u_nickname }}</p>
@@ -381,10 +381,12 @@ function recipeLikeToggle(data, action) {
 }
 
 onBeforeMount( async () => {
-    await store.dispatch('getRecipeDetail', route.params.id);
+    if(store.state.recipeData.length < 1) {
+        store.dispatch('getRecipeDetail', route.params.id);
+    }
     await store.dispatch('getRecipeCountComment', route.params.id)
     // store.dispatch('recipeViewUp', route.params.id)
-    // console.log(store.state.recipeStuff)
+    
 })
 
 // 시간 표시 제어
@@ -399,7 +401,7 @@ const formatDate = (dateString) => {
     }).replace(/\.$/, '');  // 마지막 점 제거
 };
 
-onUnmounted(() => {
+onUnmounted( () => {
     store.commit('setRecipeDetail', {});
 });
 

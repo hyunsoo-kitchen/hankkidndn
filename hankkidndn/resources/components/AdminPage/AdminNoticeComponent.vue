@@ -15,18 +15,17 @@
 
     <div class="body_container">
         <div class="category">
-            <button class="category_btn">대시보드</button>
-            <button class="category_btn">공지사항</button>
-            <button class="category_btn">사용자 관리</button>
-            <button class="category_btn">컨텐츠 관리</button>
-            <button class="category_btn">광고, 캠페인 관리</button>
-            <button class="category_btn">통계</button>
+            <button class="category_btn" @click="$router.push('/admindashboard')">대시보드</button>
+            <button class="category_btn" @click="$router.push('/adminnotice?page=1')">공지사항</button>
+            <button class="category_btn" @click="$router.push('/adminuserfind')">사용자 관리</button>
+            <button class="category_btn" @click="$router.push('/admincontentcontroll')">컨텐츠 관리</button>
+            <button class="category_btn" @click="$router.push('/adminad')">광고, 캠페인 관리</button>
         </div>
 
         <div v-if="!noticeFlg" class="notice-container">
             <div class="notice-header">
                 <h2>공지사항</h2>
-                <button type="button" @click="openNotice()">글 쓰기</button>
+                <button type="button" class="notice-write-btn" @click="openNotice()">글 쓰기</button>
             </div>
             <div class="notice-body">
                 <div>공지 번호</div>
@@ -111,7 +110,7 @@ function pageMove(nowPage) {
     }
 }
 
-onBeforeMount(() => {
+onBeforeMount( async () => {
     page.value = route.query.page;
     store.dispatch('getNoticeList', page.value);
     const interval = setInterval(() => {
@@ -119,7 +118,7 @@ onBeforeMount(() => {
         if(store.state.noticePagination.last_page) {
             clearInterval(interval);
         }
-    }, 500);
+    }, 100);
 });
 
 // 날짜 표시 제어

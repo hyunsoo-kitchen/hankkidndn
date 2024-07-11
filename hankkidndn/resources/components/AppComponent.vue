@@ -1,6 +1,6 @@
 <template>
     <!-- Header -->
-    <div v-if="$route.path !== '/admincontentcontroll' && $route.path !== '/admindashboard'">
+    <div v-if="!$route.path.startsWith('/admin')">
         <HeaderComponent/>
     </div>
     <!-- Main -->
@@ -31,7 +31,7 @@
         </router-view>
     </main>
     <!-- Footer -->
-    <div v-if="$route.path !== '/admincontentcontroll' && $route.path !== '/admindashboard'">
+    <div v-if="!$route.path.startsWith('/admin')">
         <FooterComponent/>
     </div>
 </template>

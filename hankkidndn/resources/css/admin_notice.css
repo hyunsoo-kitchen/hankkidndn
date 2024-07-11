@@ -108,6 +108,16 @@ button{
     gap: 10px;
 }
 
+.notice-write-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    grid-column: auto;
+    background-color: #7fccde;
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
 @media (max-width: 700px) {
     .notice-content {
         font-size: 0.7rem;
