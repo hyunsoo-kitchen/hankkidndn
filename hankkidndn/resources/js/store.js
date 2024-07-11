@@ -125,6 +125,9 @@ const store = createStore({
             approvechkCountData:[],
             // 오늘의 간략 통계
             todayStats: {},
+            // 관리자 페이지에서 유저 리스트 조회
+            adminPageUserList: [],
+            adminPageUserPagination: localStorage.getItem('adminPageUserPagination') ? JSON.parse(localStorage.getItem('adminPageUserPagination')) : {current_page: '1'},
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -374,6 +377,11 @@ const store = createStore({
               comment_count: 0,
             };
           },
+        setUsersListData(state, data) {
+            state.adminPageUserList = data.data;
+            state.adminPageUserPagination = data;
+            localStorage.setItem('adminPageUserPagination', JSON.stringify(data));
+        },
         //-------------------------노경호 끝-------------------------- 
 
         //-------------------------이현수 시작------------------------
@@ -1642,6 +1650,32 @@ const store = createStore({
                 console.error(error);
               });
           },
+        getAllUsersList(context, page = 1) {
+            const url = `/api/alluserlist?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                context.commit('setUsersListData', response.data.data);
+            })
+            .catch();
+        },
+        getRecipeReportList(context, page = 1) {
+            const url = `/api/recipereports?page=${page}`;
+            
+            console.log(url);
+            axios.get(url)
+            .then(response => {
+                // console.log(response.data)
+                context.commit('setAdminRecipeData', response.data.data);
+                // context.commit('setAdminRecipePagination', response.data.pagination);
+            })
+            .catch(error => {
+                console.error("Error fetching recipe report list:", error);
+            });
+        },
+
+
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

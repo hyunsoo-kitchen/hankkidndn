@@ -56,13 +56,22 @@
                 </div>
                 <hr>
                 <div class="n_m_body">
-                    <div class="n_m_list" v-for="(item, index) in newMemberData" :key="index">
+                    <div class="n_m_list" v-for="(item, index) in AllUserData" :key="index">
                         <div>{{ item.created_at }}</div>
                         <div>{{ item.u_name }}</div>
                         <div>{{ item.u_nickname }}</div>
                         <div>{{ item.u_id }}</div>
                         <div>{{ item.gender }}</div>
                         <div>{{ item.birth_at }}</div>
+                    </div>
+                    <div class="pagenation_box">
+                        <div class="pagenation">
+                            <button v-if="currentPage !== 1" class="number" @click="pageMove(currentPage - 1)">이전</button>
+                            <div v-for="page_num in pageNumbers" :key="page_num">
+                                <button :class="{ activePage: page_num === currentPage }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                            </div>
+                            <button v-if="currentPage < totalPages" class="number" @click="pageMove(currentPage + 1)">다음</button>
+                        </div>
                     </div>
                 </div> 
             </div>
@@ -74,24 +83,58 @@
 </template>
 
 <script setup>
-import { onBeforeMount, computed, ref } from 'vue';
+import { onBeforeMount, computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
+const route = useRoute();
+const router = useRouter();
+
 onBeforeMount(() => {
-    store.dispatch('getNewMemberList');
+    const initialPage = route.query.page ? parseInt(route.query.page) : 1;
     store.dispatch('getDailyStatsList');
-    store.dispatch('getWeeklyStatsList');
-    store.dispatch('getMonthlyStatsList');
-    store.dispatch('getApproveChkCount')
+    store.dispatch('getApproveChkCount');
+    store.dispatch('getAllUsersList', initialPage);
 });
 
-const newMemberData = computed(() => store.state.newMemberListData);
-const dailyStatsData = computed(() => store.state.dailyStatsData);
 const todayStats = computed(() => store.state.todayStats);
-const weeklyStatsData = computed(() => store.state.weekStatsData);
-const monthlyStatsData = computed(() => store.state.monthStatsData);
 const approveChkCountData = computed(() => store.state.approvechkCountData);
+
+
+const AllUserData = computed(() => store.state.adminPageUserPagination.data);
+const adminPageUserPagination = computed(() => store.state.adminPageUserPagination);
+const currentPage = computed(() => adminPageUserPagination.value.current_page);
+const totalPages = computed(() => adminPageUserPagination.value.last_page);
+
+const pageNumbers = computed(() => {
+  const startPage = Math.floor((currentPage.value - 1) / 5) * 5 + 1;
+  const endPage = Math.min(startPage + 4, totalPages.value);
+  const pages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+  return pages;
+});
+const pageMove = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    store.dispatch('getAllUsersList', page).then(() => {
+      router.push({ query: { page } });
+    });
+  }
+};
+
+// 워치
+watch(() => route.query.page, (newPage) => {
+  const pageNumber = parseInt(newPage) || 1;
+  store.dispatch('getAllUsersList', pageNumber);
+});
+
+
+
+
+
+
 
 // 현재 달 계산
 const getCurrentMonth = () => {
@@ -104,6 +147,6 @@ const currentMonth = ref(getCurrentMonth());
 
 </script>
 
-<style scoped src="../../css/admin_dash.css">
+<style scoped src="../../css/admin_users.css">
 
 </style>

@@ -207,6 +207,8 @@ Route::get('api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
 Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
 // 오늘의 간략 통계 불러오기
 Route::get('/api/getDailyStats', [AdminController::class, 'getDailyStats']);
+// 관리자 페이지에서 유저 정보 전부 불러오기
+Route::get('/api/alluserlist', [AdminController::class, 'getAllUserInfo']);
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

@@ -20,15 +20,20 @@ class Users extends Authenticatable
      */
     protected $fillable = [
         'u_name',
-        'birth_at',
         'u_id',
         'u_password',
+        'u_nickname',
+        'gender',
+        'u_phone_num',
+        'kakao_id',
         'u_post',
         'u_address',
         'u_address_detail',
-        'u_phone_num',
-        'u_nickname',
-        'gender',
+        'birth_at',
+        'nickname_update_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
         'profile'
 
     ];
