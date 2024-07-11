@@ -170,6 +170,7 @@ const store = createStore({
         // 레시피 데이터 저장
         setDetailRecipeData(state, data) {
             state.recipeData = data;
+            // console.log(state.recipeData);
         },
         // 질문,자유 게시판 등 리스트 저장
         setBoardData(state, data) {
@@ -471,7 +472,7 @@ const store = createStore({
                     response.data.data.embed_url = null;
                 }
                 context.commit('setRecipeDetail', response.data)
-                // router.push('/recipe/detail/' + response.data.data.id)
+                router.push('/recipe/detail/' + response.data.data.id)
             })
             .catch(error => {
                 // alert('존재하지않는 게시글 입니다.')
