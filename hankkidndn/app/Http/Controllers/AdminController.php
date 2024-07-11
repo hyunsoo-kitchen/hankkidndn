@@ -10,6 +10,7 @@ use App\Models\Boards;
 use App\Models\Event;
 use App\Models\notice;
 use App\Models\Report;
+use App\Models\Users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -738,6 +739,25 @@ class AdminController extends Controller
         ];
 
         return response()->json($responseData, 200);
+    }
+
+    // 유저관리페이지 페이지네이션
+    public function getAllUserInfo() {
+        // $data = Users::select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
+        //             ->paginate(10);
+
+        $data = DB::table('users')
+                    ->select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
+                    ->orderBy('created_at', 'DESC')
+                    ->paginate(10);
+                    
+        $responseData = [
+            'code' => '0',
+            'msg' => '전체 유저 정보 조회',
+            'data' => $data
+        ];
+
+        return response()->json($responseData,200);
     }
     //------------------------------------------------------------------------------------------------------
 }

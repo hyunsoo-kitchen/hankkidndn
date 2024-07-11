@@ -191,7 +191,7 @@ const routes = [
         beforeEnter: chkAdmin,
     },
     {
-        path: '/adminduserfind',
+        path: '/adminuserfind',
         component: AdminUsers,
         beforeEnter: chkAdmin,
     },
