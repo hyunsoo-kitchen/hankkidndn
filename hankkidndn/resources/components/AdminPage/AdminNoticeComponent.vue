@@ -33,7 +33,7 @@
                 <div>공지 내용</div>
                 <div>공지 작성일</div>
             </div>
-            <div @click="$store.dispatch('getNoticeDetail', item.id)" class="notice-content" v-for="(item, index) in $store.state.noticeListData" :key="index">
+            <div @click="$store.dispatch('getNoticeDetail', item.id)" class="notice-list" v-for="(item, index) in $store.state.noticeListData" :key="index">
                 <div>{{ ($store.state.noticePagination.total - index) - (($store.state.noticePagination.current_page - 1) * 10) }}</div>
                 <div>{{ substringTitle(item.title, 8) }}</div>
                 <div>{{ substringTitle(item.content, 8) }}</div>
@@ -52,13 +52,13 @@
         <div v-if="noticeFlg" class="notice-write">
             <form id="noticeForm">
                 <h2>공지사항 작성</h2>
-                <input autocomplete="off" name="title" type="text" placeholder="제목. (최대 100자까지 작성 가능합니다.)">
+                <input autocomplete="off" class="notice-title" name="title" type="text" placeholder="제목. (최대 100자까지 작성 가능합니다.)">
                 <div class="content-box">
-                    <textarea autocomplete="off" name="content" rows="30" placeholder="내용을 입력해주세요. (최대 1000자까지 작성 가능합니다.)"></textarea>
+                    <textarea autocomplete="off" class="notice-content" name="content" rows="30" placeholder="내용을 입력해주세요. (최대 1000자까지 작성 가능합니다.)"></textarea>
                 </div>
                 <div class="buttons">
-                    <button type="button" @click="$store.dispatch('noticeInsert'); closeNotice()" class="complete">작성하기</button>
-                    <button type="button" @click="closeNotice()" class="cancel ">취소</button>
+                    <button type="button" @click="$store.dispatch('noticeInsert'); closeNotice()" class="insert-btn">작성하기</button>
+                    <button type="button" @click="closeNotice()" class="cancel-btn">취소</button>
                 </div>
             </form>
         </div>

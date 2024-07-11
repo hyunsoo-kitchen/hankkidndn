@@ -94,7 +94,7 @@ button{
     margin-top: 20px;
 }
 
-.notice-content {
+.notice-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
@@ -118,6 +118,41 @@ button{
     border-radius: 10px;
 }
 
+.notice-title {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.notice-content {
+    width: 100%;
+    padding: 5px;
+    resize: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.insert-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    margin: 0 10px;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #ccc;
+    margin: 0 10px;
+}
 @media (max-width: 700px) {
     .notice-content {
         font-size: 0.7rem;

@@ -878,7 +878,9 @@ const store = createStore({
 
                 // router.replace('/main');
             })
-            .catch();
+            .catch(error => {
+                context.commit('setModalMessage', error.response.data.msg )
+            });
         },
 
         //관리자 로그아웃 처리
