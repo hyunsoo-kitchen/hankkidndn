@@ -25,7 +25,7 @@
 
         <div v-if="!noticeFlg" class="notice-container">
             <div class="notice-header">
-                <h2>공지사항</h2>
+                <h2 class="notice-title">공지사항</h2>
                 <button type="button" class="notice-write-btn" @click="openNotice()">글 쓰기</button>
             </div>
             <div class="notice-body">
