@@ -13,7 +13,7 @@ button{
     width: 60%;
 } */
 h3 {
-    margin: 3px 0 3px 5px;
+    margin: 5px 0 5px 5px;
 }
 .head_container {
     display: grid;
@@ -51,13 +51,14 @@ h3 {
 }
 .main_container {
     display: grid;
-    grid-template-rows: 0.8fr 5fr 7fr;
+    grid-template-rows: 60px 4fr
 }
 .head_notice {
     border: 1px solid black;
     height: 50px;
     display: grid;
     grid-template-rows: 1fr 1fr;
+    margin-bottom: 10px;
 }
 .head_info {
     display: flex;
@@ -72,10 +73,24 @@ h3 {
 .n_m_head {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 5px 0;
+}
+.n_m_head > div {
+    text-align: center;
 }
 .n_m_list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 10px 0;
+}
+.n_m_list > div {
+    text-align: center;
+}
+.n_m_body > div {
+    border-bottom: 1px solid;
+}
+.n_m_body > div:last-child {
+    border-bottom: none;
 }
 /* 신규회원 컨테이너 종료 */
 /* 간략 통계 */
@@ -87,21 +102,121 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+.stats_head > div {
+    text-align: center;
+}
 .stats_list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin: 10px 0;
+}
+.stats_list > div {
+    text-align: center;
 }
 /* 간략통계 요약 */
 .stats_summary {
-    border: 1px solid black;
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
 .week_summary {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid;
 }
 .month_summary {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding: 10px 0 10px 0;
+}
+.week_summary > div {
+    text-align: center;
+}
+.month_summary > div {
+    text-align: center;
+}
+.prograsbar_container {
+    border: 1px solid black;
+    display: grid;
+    grid-template-rows: 40px 40px 40px 100px;
+    height: 180px;
+}
+.total_gauge {
+    width: 95%;
+    height: 25px;
+    background-color: #949494;
+    justify-self: center;
+    margin: 10px 0;
+    display: flex;
+}
+.under_ten {
+    width: 0;
+    height: 25px;
+    background-color: #f04141; 
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.teenager {
+    width: 0;
+    height: 25px;
+    background-color: #ffa136; /* 빨간색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.twenties {
+    width: 0;
+    height: 25px;
+    background-color: #ffd82a; /* 빨간색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.thirties {
+    width: 0;
+    height: 25px;
+    background-color: #96eb48; /* 파랑색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.forties {
+    width: 0;
+    height: 25px;
+    background-color: #3f7cff; /* 노란색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.fifties {
+    width: 0;
+    height: 25px;
+    background-color: #3335d6; /* 녹색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.sixties {
+    width: 0;
+    height: 25px;
+    background-color: #ec5bff; /* 파란색 */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+}
+.gauge_info {
+    display: flex;
+    justify-content: space-evenly;
+}
+.PPcount_box {
+    display: flex;
+    justify-content: space-evenly;
 }

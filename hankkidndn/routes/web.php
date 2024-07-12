@@ -209,6 +209,11 @@ Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount'
 Route::get('/api/getDailyStats', [AdminController::class, 'getDailyStats']);
 // 관리자 페이지에서 유저 정보 전부 불러오기
 Route::get('/api/alluserlist', [AdminController::class, 'getAllUserInfo']);
+// 대시보드에서 전체유저 카운트
+Route::get('/api/usercount', [AdminController::class, 'getAllUserCount']);
+// 대시보드에서 연령대별 카운트
+Route::get('/api/agerange', [AdminController::class, 'getUserAgeRange']);
+
 //-----------------------끝--------------------------------
 // 마이페이지
 // Route::put('/api/user', [MypageController::class, 'update']);

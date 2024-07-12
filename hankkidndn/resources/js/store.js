@@ -128,6 +128,11 @@ const store = createStore({
             // 관리자 페이지에서 유저 리스트 조회
             adminPageUserList: [],
             adminPageUserPagination: localStorage.getItem('adminPageUserPagination') ? JSON.parse(localStorage.getItem('adminPageUserPagination')) : {current_page: '1'},
+
+            // 전체 유저 수
+            allUserCount:[],
+            // 연령대 별 유저수
+            userAgeRange:[],
             //-------------------------끝------------------------------
             
             //------------------------이현수---------------------------
@@ -382,6 +387,13 @@ const store = createStore({
             state.adminPageUserList = data.data;
             state.adminPageUserPagination = data;
             localStorage.setItem('adminPageUserPagination', JSON.stringify(data));
+        },
+        setAllUsersCount(state, data) {
+            state.allUserCount = data;
+        },
+        setUsersAgeRange(state, data) {
+            state.userAgeRange = data;
+            console.log(state.userAgeRange);
         },
         //-------------------------노경호 끝-------------------------- 
 
@@ -1642,7 +1654,7 @@ const store = createStore({
             })
             .catch();
         },
-        getDailyStatsList(context) {
+        getDailyStatsListData(context) {
             axios.get('/api/getDailyStats')
               .then(response => {
                 context.commit('setDailyStats', response.data.data);
@@ -1675,8 +1687,25 @@ const store = createStore({
                 console.error("Error fetching recipe report list:", error);
             });
         },
+        getAllUsersCount(context) {
+            const url = '/api/usercount';
 
+            axios.get(url)
+            .then(response => {
+                context.commit('setAllUsersCount', response.data.data);
+                // console.log('스토어카운트',response.data.data)
+            })
+            .catch();
+        },
+        getUsersAgeRange(context) {
+            const url = '/api/agerange';
 
+            axios.get(url)
+            .then(response => {
+                context.commit('setUsersAgeRange', response.data.data);
+            })
+            .catch();
+        },
         //-------------------------끝------------------------------
         // 이현수
         // getBoardViewCount(context) {

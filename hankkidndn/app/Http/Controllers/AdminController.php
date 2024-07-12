@@ -743,13 +743,14 @@ class AdminController extends Controller
 
     // 유저관리페이지 페이지네이션
     public function getAllUserInfo() {
-        // $data = Users::select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
-        //             ->paginate(10);
-
-        $data = DB::table('users')
-                    ->select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
+        $data = Users::select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
                     ->orderBy('created_at', 'DESC')
                     ->paginate(10);
+
+        // $data = DB::table('users')
+        //             ->select('created_at', 'u_name', 'u_nickname', 'u_id', 'gender', 'birth_at')
+        //             ->orderBy('created_at', 'DESC')
+        //             ->paginate(10);
                     
         $responseData = [
             'code' => '0',
@@ -759,5 +760,64 @@ class AdminController extends Controller
 
         return response()->json($responseData,200);
     }
+
+    //
+    public function getAllUserCount() {
+        $data = Users::count();
+
+        $responseData = [
+            'code' => '0',
+            'msg' => '전체 유저 정보 조회',
+            'data' => $data
+        ];
+
+        return response()->json($responseData,200);
+    }
+
+    // 관리자 페이지 유저 연령대 통계 불러오기
+    public function getUserAgeRange(){
+        $adminUserAgeRangeData = Users::selectRaw('CASE
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 0 AND 9 THEN "10대 미만"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 10 AND 19 THEN "10대"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 20 AND 29 THEN "20대"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 30 AND 39 THEN "30대"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 40 AND 49 THEN "40대"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 50 AND 59 THEN "50대"
+                                                WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) >= 60 THEN "60대 이상"
+                                                END AS age_group,
+                                                COUNT(*) AS user_count')
+                                        ->groupBy(DB::raw('age_group'))
+                                        ->orderBy(DB::raw('FIELD(age_group, "10대 미만", "10대", "20대", "30대", "40대", "50대", "60대 이상")'))
+                                        ->get();
+                                
+        Log::debug('유저나이', $adminUserAgeRangeData->toArray());
+        $responseData = [
+            'code' => '0',
+            'msg' => '신규 가입자 획득 완료',
+            'data' => $adminUserAgeRangeData->toArray()
+        ];
+        
+        return response()->json($responseData, 200);
+    }
+    // public function getUserAgeRange(){
+    //     $adminUserAgeRangeData = Users::selectRaw('CASE
+    //                                             WHEN TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) BETWEEN 20 AND 29 THEN "20대"
+    //                                             COUNT(*) AS user_count')
+    //                                     ->whereRaw('TIMESTAMPDIFF(YEAR, birth_at, CURDATE()) >= 20')
+    //                                     ->groupBy(DB::raw('age_group'))
+    //                                     ->orderBy(DB::raw('FIELD(age_group, "10대 미만", "10대", "20대", "30대", "40대", "50대", "60대 이상")'))
+    //                                     ->get();
+                                
+    //     Log::debug('유저나이', $adminUserAgeRangeData->toArray());
+    //     $responseData = [
+    //         'code' => '0',
+    //         'msg' => '신규 가입자 획득 완료',
+    //         'data' => $adminUserAgeRangeData->toArray()
+    //     ];
+        
+    //     return response()->json($responseData, 200);
+    // }
+
+
     //------------------------------------------------------------------------------------------------------
 }
