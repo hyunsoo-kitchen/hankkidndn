@@ -27,3 +27,7 @@ h2{
     grid-template-columns: auto auto auto;
     justify-content: end;
 }
+
+.main-img {
+    width: 100%;
+}
