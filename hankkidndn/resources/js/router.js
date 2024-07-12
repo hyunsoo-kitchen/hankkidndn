@@ -32,6 +32,7 @@ import BoardEventDetailComponent from '../components/BoardPage/BoardEventDetailC
 import BoardEventListComponent from '../components/BoardPage/BoardEventListComponent.vue';
 import AdminDashBoard from '../components/AdminPage/AdminDashBoard.vue';
 import AdminUsers from '../components/AdminPage/AdminUsers.vue';
+import RecommendComponent from '../components/BoardPage/RecommendComponent.vue';
 
 const routes = [
     {
@@ -194,6 +195,10 @@ const routes = [
         path: '/adminuserfind',
         component: AdminUsers,
         beforeEnter: chkAdmin,
+    },
+    {
+        path: '/recommend',
+        component: RecommendComponent,
     },
 ];
 

@@ -6,7 +6,7 @@
         <div @click="closeModal" id="close-hambuger" class="close-hambuger"></div>
         <nav v-if="!isMobileView" id="nav-list">
           <ul>
-            <li><button @click="$router.push('/recipe/99?page=1')">추천</button></li>
+            <li><button @click="$router.push('/recommend')">추천</button></li>
             <li class="dropdown">
               <button>레시피</button>
               <ul class="dropdown-content">
@@ -33,7 +33,7 @@
       </div>
       <nav v-if="isModalOpen" class="hambuger-nav-list" @click.self="closeModal">
         <ul class="dropdown-content">
-          <li @click="$router.push('/recipe/99?page=1')" class="dropdown-content-li">추천</li>
+          <li @click="$router.push('/recommend')" class="dropdown-content-li">추천</li>
           <hr>
           <li @click="$router.push('/recipe/100?page=1')" class="dropdown-content-li">전체</li>
           <li @click="$router.push('/recipe/1?page=1')" class="dropdown-content-li">한식</li>

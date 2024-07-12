@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\RecipeBoardController;
+use App\Http\Controllers\RecommendController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Models\RecipeBoards;
@@ -194,17 +195,17 @@ Route::get('/api/boardreports', [AdminController::class, 'boardReportList']);
 // 신고받은 댓글 불러오기
 Route::get('/api/commentreports', [AdminController::class, 'commentReportList']);
 // 신고갯수 불러오기
-Route::get('api/admin/usersreportinfo', [AdminController::class, 'countReport']);
+Route::get('/api/admin/usersreportinfo', [AdminController::class, 'countReport']);
 
 // 대시보드 신규 가입자 불러오기
-Route::get('api/admin/newmembersinfo', [AdminController::class, 'newMemberInfo']);
+Route::get('/api/admin/newmembersinfo', [AdminController::class, 'newMemberInfo']);
 // 대시보드 일자별 요약 데이터 가져오기
-Route::get('api/admin/dailystats', [AdminController::class, 'getDailyStats']);
+Route::get('/api/admin/dailystats', [AdminController::class, 'getDailyStats']);
 // 대시보드 주간,월간 요약 데이터 가져오기
-Route::get('api/admin/weekstats', [AdminController::class, 'getWeeklyStats']);
-Route::get('api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
+Route::get('/api/admin/weekstats', [AdminController::class, 'getWeeklyStats']);
+Route::get('/api/admin/monthstats', [AdminController::class, 'getMonthlyStats']);
 // 아직 미처리한 신고갯수 가져오기
-Route::get('api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
+Route::get('/api/admin/approvechk', [AdminController::class, 'getApproveChkCount']);
 // 오늘의 간략 통계 불러오기
 Route::get('/api/getDailyStats', [AdminController::class, 'getDailyStats']);
 // 관리자 페이지에서 유저 정보 전부 불러오기
@@ -224,4 +225,10 @@ Route::get('/api/search/recipe', [RecipeBoardController::class, 'search']);
 Route::get('/api/search/board/{id}', [BoardController::class, 'search']);
 Route::get('/api/search/board/name/{id}', [BoardController::class, 'searchName']);
 // ------------------- 끝 -----------------------------
+
+//------------------------------ 주은혜 ----------------------------------
+Route::get('/api/recommend/season', [RecommendController::class, 'getSeason']);
+Route::get('/api/recommend/frige', [RecommendController::class, 'getFrige']);
+Route::get('/api/recommend/weeklybest', [RecommendController::class, 'getWeeklyBest']);
+// ------------------------------ 끝 -----------------------------------
 

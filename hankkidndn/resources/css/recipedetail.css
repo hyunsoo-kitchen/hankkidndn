@@ -379,243 +379,250 @@ button {
     padding: 20px;
     border-top: 1px solid #ddd;
     margin-top: 20px;
-    }
+}
     
     
-    .comment {
-    padding: 15px 10px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    }
-    
-    .comment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    }
-    
-    .comment-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    margin-bottom: 5px;
-    }
-    
-    .comment-author {
-    font-size: 1rem;
-    font-weight: 600;
-    }
-    
-    .comment-date {
-    font-size: 0.85rem;
-    color: #999;
-    }
-    
-    
-    .comment-content {
-    font-size: 1.1rem;
-    margin: 10px 0;
-    }
-    
-    
-    .comment-actions {
-    display: grid;
-    grid-template-columns: 2fr 0.2fr auto;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 5px;
-    text-align: right;
-    }
-    
-    .comment-actions > p {
-    font-size: 0.9rem;
-    color: #555;
-    grid-column: 3/4;
-    }
-    
-    .like-button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: #ff4d4d;
-    cursor: pointer;
-    grid-column: 2 / 3;
-    }
-    
-    .likes_num {
-    grid-column: 3 / 4;
-    }
-    
-    .btn_grid{
-    display: flex;
-    justify-content: flex-end;
-    grid-column: 2 / 2;
-    }
-    
-    
-    .comment-form {
+.comment {
+padding: 15px 10px;
+border-bottom: 1px solid #eee;
+margin-bottom: 10px;
+border-radius: 5px;
+background-color: #f9f9f9;
+}
+
+.comment:last-child {
+border-bottom: none;
+margin-bottom: 0;
+}
+
+.comment-header {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+margin-bottom: 5px;
+}
+
+.comment-author {
+font-size: 1rem;
+font-weight: 600;
+}
+
+.comment-date {
+font-size: 0.85rem;
+color: #999;
+}
+
+
+.comment-content {
+font-size: 1.1rem;
+margin: 10px 0;
+}
+
+
+.comment-actions {
+display: grid;
+grid-template-columns: 2fr 0.2fr auto;
+align-items: center;
+justify-content: space-between;
+padding-top: 5px;
+text-align: right;
+}
+
+.comment-actions > p {
+font-size: 0.9rem;
+color: #555;
+grid-column: 3/4;
+}
+
+.like-button {
+background: none;
+border: none;
+font-size: 1rem;
+color: #ff4d4d;
+cursor: pointer;
+grid-column: 2 / 3;
+}
+
+.likes_num {
+grid-column: 3 / 4;
+}
+
+.btn_grid{
+display: flex;
+justify-content: flex-end;
+grid-column: 2 / 2;
+}
+
+
+.comment-form {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+margin-top: 20px;
+border-top: 1px solid #eee;
+padding-top: 10px;
+}
+
+.comment-input {
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 4px;
+font-size: 1rem;
+}
+
+.comment-submit {
+padding: 10px 20px;
+margin-left: 10px;
+border: none;
+background-color: #333;
+color: #fff;
+cursor: pointer;
+border-radius: 4px;
+}
+
+
+.cocomment {
+padding: 15px 20px;
+border-bottom: 1px solid #eee;
+margin-bottom: 10px;
+border-radius: 5px;
+background-color: #e6f7ff; 
+margin-left: 40px; 
+}
+
+.cocomment:last-child {
+border-bottom: none;
+margin-bottom: 0;
+}
+
+
+.cocomment-header {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+margin-bottom: 5px;
+}
+
+.cocomment-author {
+font-size: 0.95rem;
+font-weight: 600;
+}
+
+.cocomment-date {
+font-size: 0.8rem;
+color: #999;
+}
+
+
+.cocomment-content {
+font-size: 1rem;
+margin: 10px 0;
+}
+
+.like_grid{
+display: grid;
+grid-template-columns: auto auto;
+gap: 5px;
+align-items: center;
+justify-self: end;
+grid-column: 2/3;
+}
+
+.cocomment-actions {
+display: grid;
+grid-template-columns: auto auto;
+justify-content: end;
+gap: 10px;
+}
+
+.comment-actions .comment_actions_btn {
+margin-right: auto;
+}
+.cocomment-actions > p {
+font-size: 0.85rem;
+color: #555;
+}
+
+.cocomment-like-button {
+background: none;
+border: none;
+font-size: 1rem;
+color: #ff4d4d;
+cursor: pointer;
+}
+
+.comment_actions_btn{
+grid-column: 1/2;
+}
+
+.comment_actions_btn,
+.comment-header button,
+.cocomment-header button {
+background-color: #aba6a6;
+border: none;
+padding: 5px 10px;
+font-size: 0.8rem;
+color: #fff;
+cursor: pointer;
+border-radius: 4px;
+margin-left: 5px;
+}
+
+.comment-header button:hover,
+.cocomment-header button:hover {
+background-color: #ddd;
+}
+
+/* 대댓글 폼 스타일 */
+.cocomment-form {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+margin-top: 20px;
+border-top: 1px solid #eee;
+padding-top: 10px;
+margin-left: 60px; /* 대댓글 폼 들여쓰기 */
+}
+
+.cocomment-input {
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 4px;
+font-size: 1rem;
+}
+
+.cocomment-submit {
+padding: 10px 20px;
+margin-left: 10px;
+border: none;
+background-color: #333;
+color: #fff;
+cursor: pointer;
+border-radius: 4px;
+}
+
+.cocomment-box {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
     margin-top: 20px;
-    border-top: 1px solid #eee;
     padding-top: 10px;
-    }
-    
-    .comment-input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    }
-    
-    .comment-submit {
-    padding: 10px 20px;
-    margin-left: 10px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    }
-    
-    
-    .cocomment {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #e6f7ff; 
-    margin-left: 40px; 
-    }
-    
-    .cocomment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    }
-    
-    
-    .cocomment-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    margin-bottom: 5px;
-    }
-    
-    .cocomment-author {
-    font-size: 0.95rem;
-    font-weight: 600;
-    }
-    
-    .cocomment-date {
-    font-size: 0.8rem;
-    color: #999;
-    }
-    
-    
-    .cocomment-content {
-    font-size: 1rem;
-    margin: 10px 0;
-    }
-    
-    .like_grid{
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 5px;
-    align-items: center;
-    justify-self: end;
-    grid-column: 2/3;
-    }
-    
-    .cocomment-actions {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: end;
-    gap: 10px;
-    }
-    
-    .comment-actions .comment_actions_btn {
-    margin-right: auto;
-    }
-    .cocomment-actions > p {
-    font-size: 0.85rem;
-    color: #555;
-    }
-    
-    .cocomment-like-button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: #ff4d4d;
-    cursor: pointer;
-    }
-    
-    .comment_actions_btn{
-    grid-column: 1/2;
-    }
-    
-    .comment_actions_btn,
-    .comment-header button,
-    .cocomment-header button {
-    background-color: #aba6a6;
-    border: none;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-left: 5px;
-    }
-    
-    .comment-header button:hover,
-    .cocomment-header button:hover {
-    background-color: #ddd;
-    }
-    
-    /* 대댓글 폼 스타일 */
-    .cocomment-form {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    margin-top: 20px;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-    margin-left: 60px; /* 대댓글 폼 들여쓰기 */
-    }
-    
-    .cocomment-input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    }
-    
-    .cocomment-submit {
-    padding: 10px 20px;
-    margin-left: 10px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    }
+}
 
-    .cocomment-box {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        margin-top: 20px;
-        padding-top: 10px;
-    }
+.comment-margin {
+    margin-left: 50px;
+}
 
-    .comment-margin {
-        margin-left: 50px;
-    }
+.cocomment-padding {
+    padding-right: 0;
+}
 
-    .cocomment-padding {
-        padding-right: 0;
-    }
+.report-content {
+    width: 250px;
+    height: 250px;
+    margin: 20px 0px;
+    resize: none;
+}
 @media (max-width: 540px) {
     .header-info {
         font-size: 0.8rem;

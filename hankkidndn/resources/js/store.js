@@ -147,6 +147,11 @@ const store = createStore({
             eventData : [],
             
             //-----------------------끝-------------------------------
+            // ---------------------- 주은혜 ----------------------------
+            seasonRecommendInfo: [],
+            frigeRecommendInfo: [],
+            weeklybestRecommendInfo: [],
+            //-----------------------끝-------------------------------
         }
     },
     mutations: {
@@ -393,7 +398,7 @@ const store = createStore({
         },
         setUsersAgeRange(state, data) {
             state.userAgeRange = data;
-            console.log(state.userAgeRange);
+            // console.log(state.userAgeRange);
         },
         //-------------------------노경호 끝-------------------------- 
 
@@ -423,8 +428,19 @@ const store = createStore({
         setEventDetail(state, data) {
             state.eventData = data.data;
             console.log(state.eventData);
-        }
+        },
         // -----------------------이현수 끝 ---------------------------
+        // ---------------------- 주은혜 ----------------------------
+        setSeasonRecommendInfo(state, data) {
+            state.seasonRecommendInfo = data;
+        },
+        setFrigeRecommendInfo(state, data) {
+            state.frigeRecommendInfo = data;
+        },
+        weeklybestRecommendInfo(state, data) {
+            state.weeklybestRecommendInfo = data; 
+        },
+        //-----------------------끝-------------------------------
     },
     actions: {
         //---------------------권현수------------------------------
@@ -1638,8 +1654,8 @@ const store = createStore({
             })
             .catch();
         },
-        getMonthlyStatsList(context) {
-            const url = 'api/admin/monthstats'
+        async getMonthlyStatsList(context) {
+            const url = '/api/admin/monthstats'
 
             axios.get(url)
             .then(response => {
@@ -1648,7 +1664,7 @@ const store = createStore({
             .catch();
         },
         getApproveChkCount(context) {
-            const url = 'api/admin/approvechk'
+            const url = '/api/admin/approvechk'
 
             axios.get(url)
             .then(response => {
@@ -1799,7 +1815,41 @@ const store = createStore({
                 });
         },
         
-        
+        // ------------------- 주은혜 --------------------
+        getSeasonRecommendInfo(context) {
+            const url = '/api/recommend/season';
+
+            axios.get(url)
+            .then( response => {
+                context.commit('setSeasonRecommendInfo', response.data.data);
+            })
+            .catch( error => {
+                console.log(error);
+            });
+        },
+        getFrigeRecommendInfo(context) {
+            const url = '/api/recommend/frige';
+
+            axios.get(url)
+            .then( response => {
+                context.commit('setFrigeRecommendInfo', response.data.data);
+            })
+            .catch( error => {
+                console.log(error);
+            });
+        },
+        weeklybestRecommendInfo(context) {
+            const url = '/api/recommend/weeklybest';
+
+            axios.get(url)
+            .then( response => {
+                context.commit('weeklybestRecommendInfo', response.data.data);
+            })
+            .catch( error => {
+                console.log(error);
+            });
+        },
+        // ------------------- 끝 -------------------------
 
     }
 });

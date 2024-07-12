@@ -86,7 +86,7 @@
                         <option value="7">기타</option>
                     </select>
                     <div class="modal-body">
-                        <textarea name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
+                        <textarea class="report-content" name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" @click="$store.dispatch('recipeReport', $store.state.recipeData.id); reportModalOff() " class="btn btn-primary">신고</button>
@@ -116,7 +116,7 @@
                         <option value="7">기타</option>
                     </select>
                     <div class="modal-body">
-                        <textarea name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
+                        <textarea class="report-content" name="content" v-model="reportContent" required placeholder="신고내용을 100자 이내로 작성해주세요."></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" @click="$store.dispatch('commentReport', commentReportId); commentReportModalOff() " class="btn btn-primary">신고</button>
