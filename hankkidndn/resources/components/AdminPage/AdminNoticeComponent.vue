@@ -20,7 +20,7 @@
             <button class="category_btn" @click="$router.push('/adminuserfind')">사용자 관리</button>
             <button class="category_btn" @click="$router.push('/admincontentcontroll')">컨텐츠 관리</button>
             <button class="category_btn" @click="$router.push('/adminad')">광고 관리</button>
-            <button class="category_btn" @click="$router.push('/adminevent')">이벤트 관리</button>
+            <button class="category_btn" @click="$router.push('/adminevent?page=1')">이벤트 관리</button>
         </div>
 
         <div v-if="!noticeFlg" class="notice-container">
