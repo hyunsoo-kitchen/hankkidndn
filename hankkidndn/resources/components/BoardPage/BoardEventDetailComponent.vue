@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <img  :src="$store.state.eventData.img_path">
+    <img class="main-img" :src="$store.state.eventData.img_path">
 </div>
 </template>
 

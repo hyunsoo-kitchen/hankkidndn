@@ -36,7 +36,8 @@
             <button class="category_btn" @click="$router.push('/adminnotice?page=1')">공지사항</button>
             <button class="category_btn" @click="$router.push('/adminuserfind')">사용자 관리</button>
             <button class="category_btn" @click="$router.push('/admincontentcontroll')">컨텐츠 관리</button>
-            <button class="category_btn" @click="$router.push('/adminad')">광고, 캠페인 관리</button>
+            <button class="category_btn" @click="$router.push('/adminad')">광고 관리</button>
+            <button class="category_btn" @click="$router.push('/adminevent?page=1')">이벤트 관리</button>
         </div>
         <div v-if="!createFlg">
             <div class="event-header">
@@ -50,29 +51,31 @@
             </div>
 
             <div v-show="progressFlg" class="event-container">
-            <div class="grid-tem">
-            <div @click="$store.dispatch('eventdetail', item.id)" class="event-card" v-for="(item, index) in $store.state.progressEvent" :key="index">
-                <img :src="item.thumb_img_path" class="event-card-img">
-                <div class="event-card-text">
-                    <div>{{ item.title }}</div>
-                    <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
+                <div class="grid-tem">
+                    <div @click="$store.dispatch('eventdetail', item.id)" class="event-card" v-for="(item, index) in $store.state.progressEvent" :key="index">
+                        <img :src="item.thumb_img_path" class="event-card-img">
+                        <div class="event-card-text">
+                            <div>{{ item.title }}</div>
+                            <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <div class="notice-pagination">
-                <button v-if="$store.state.progressEventPagination.current_page !== 1" class="number" @click="pageMove($store.state.progressEventPagination.current_page - 1)">이전</button>
-                <div v-for="page_num in pages" :key="page_num">
-                    <button :class="{ activePage: page_num === $store.state.progressEventPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                <div class="notice-pagination">
+                    <button v-if="$store.state.progressEventPagination.current_page !== 1" class="number" @click="pageMove($store.state.progressEventPagination.current_page - 1)">이전</button>
+                    <div v-for="page_num in pages" :key="page_num">
+                        <button :class="{ activePage: page_num === $store.state.progressEventPagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                    </div>
+                    <button v-if="$store.state.progressEventPagination.current_page < $store.state.progressEventPagination.last_page" class="number" @click="pageMove($store.state.progressEventPagination.current_page + 1)">다음</button>
                 </div>
-                <button v-if="$store.state.progressEventPagination.current_page < $store.state.progressEventPagination.last_page" class="number" @click="pageMove($store.state.progressEventPagination.current_page + 1)">다음</button>
-            </div>
             </div>
             <div v-show="finishFlg" class="event-container">
-                <div class="event-card" v-for="(item, index) in $store.state.finishEvent" :key="index">
-                    <img :src="item.thumb_img_path" class="event-card-img">
-                    <div class="event-card-text">
-                        <div>{{ item.title }}</div>
-                        <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
+                <div class="grid-tem">
+                    <div class="event-card" v-for="(item, index) in $store.state.finishEvent" :key="index">
+                        <img :src="item.thumb_img_path" class="event-card-img">
+                        <div class="event-card-text">
+                            <div>{{ item.title }}</div>
+                            <div>{{ item.start_date }} ~ {{ item.end_date }}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="notice-pagination">
@@ -131,7 +134,7 @@
                     </div>
                 </div>
                 <div>
-                    <button v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff()" type="button">저장</button>
+                    <button v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff(); " type="button">저장</button>
                     <button v-else @click="openModal()">저장</button>
                     <button @click="createFlgOff()" type="button" id="cancel">취소</button>
                 </div>

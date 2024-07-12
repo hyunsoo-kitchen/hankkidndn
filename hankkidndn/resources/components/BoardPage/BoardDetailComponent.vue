@@ -135,7 +135,7 @@
             <div class="main_title">
                 <h2 class="title_name">{{ getBoardName($store.state.boardDetail.boards_type_id) }}</h2>
                 <div class="buttons">
-                    <div class="btn_grid">
+                    <div>
                         <button v-if="$store.state.userInfo && $store.state.boardDetail.user_id == $store.state.userInfo.id" type="button" class="update" @click="$router.push('/board/update/' + $store.state.boardDetail.id)">수정</button>
                         <button v-if="deleteBtn($store.state.boardDetail.user_id)" type="button" @click="openModal()" class="delete">삭제</button>
                         <button type="button" v-if="$store.state.authFlg" class="report" @click="reportModalOn()">신고</button>
