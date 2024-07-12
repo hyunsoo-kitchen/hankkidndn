@@ -24,8 +24,8 @@
         </div>
         <div class="main_container">
             <div class="head_notice">
-                <div class="head_report_count">
-                    <div>처리해야할 신고 수 : {{ approveChkCountData }}</div>
+                <div>
+                    <div class="head_report_count">처리해야할 신고 수 : {{ approveChkCountData }}</div>
                 </div>
                 <div></div>
                 <div class="head_info">
