@@ -261,4 +261,4 @@ const formatDate = (dateString) => {
 // });
 
 </script>
-<style src="../../css/recommend.css"></style>
+<style scoped src="../../css/recommend.css"></style>
