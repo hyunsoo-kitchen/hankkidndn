@@ -220,3 +220,6 @@ h3 {
     display: flex;
     justify-content: space-evenly;
 }
+.head_report_count {
+    text-align: center;
+}
