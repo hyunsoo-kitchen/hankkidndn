@@ -23,7 +23,7 @@ const store = createStore({
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
 
             // 레시피 디테일 페이지
-            recipeData: [],
+            recipeData: {},
             recipeProgram: [],
             recipeStuff: [],
 
@@ -197,10 +197,10 @@ const store = createStore({
             state.recipeProgram = data.program;
             state.recipeStuff = data.stuff;
             state.commentData = data.comment;
-            console.log(state.commentData)
+            // console.log(state.commentData)
             state.cocommentData = data.cocomment;
             // console.log(state.commentData)
-            // console.log(state.recipeData)
+            // console.log('setRecipeDetail', state.recipeData)
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -208,6 +208,7 @@ const store = createStore({
             state.boardImg = data.img;
             state.commentData = data.comment;
             state.cocommentData = data.cocomment;
+            // console.log(state.boardDetail)
         },
         setMoreComment(state, data){
             state.commentData.push(data)
@@ -261,7 +262,7 @@ const store = createStore({
         // 광고 획득
         setAdData(state, data) {
             state.adImage = data
-            console.log(state.adImage)
+            // console.log(state.adImage)
         },
         // 이벤트 정보 저장
         setEventListData(state, data) {
@@ -463,7 +464,7 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 
                 context.commit('setRecipeData', response.data.data);
                 router.push('/recipe/' + data.board_type + '?page=' + data.page);
@@ -508,6 +509,7 @@ const store = createStore({
                 }
                 context.commit('setRecipeDetail', response.data)
                 router.push('/recipe/detail/' + response.data.data.id)
+                // console.log('번호' + response.data.data.id)
             })
             .catch(error => {
                 // alert('존재하지않는 게시글 입니다.')
@@ -775,7 +777,7 @@ const store = createStore({
         // 댓글 수 가져오기
         getRecipeCountComment(context, id) {
             const url = '/api/recipe/comment/count/' + id
-
+            // console.log('getRecipeCountComment'); // TODO
             axios.get(url)
             .then(response => {
                 context.commit('setCountComment', response.data.data);
@@ -811,7 +813,7 @@ const store = createStore({
 
             axios.post(url)
             .then(response => {
-                context.commit('setRecipeDetail', response.data.data)
+                context.commit('setRecipeDetail', response.data)
             })
             .catch();
         },
@@ -822,7 +824,7 @@ const store = createStore({
 
             axios.post(url)
             .then(response => {
-                context.commit('setBoardDetail', response.data.data)
+                // context.commit('setBoardDetail', response.data)
             })
             .catch();
         },
@@ -1585,7 +1587,7 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
-                console.log('이거' + response.data.data)
+                // console.log('이거' + response.data.data)
                 context.commit('setUsersReportInfo', response.data.data);
             })
             .catch(error => {

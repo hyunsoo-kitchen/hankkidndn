@@ -59,19 +59,22 @@
         <h2 class="text-center text-gray">최신 레시피</h2>
         <div class="new-recipe" >
             <!-- 새로운 레시피 돌릴거 -->
-            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="new-recipe-card" v-for="(item, key) in $store.state.mainNewData" :key="key">
-                <img class="new-recipe-img" :src="item.thumbnail">
-                <div class="new-recipe-header">
-                    <p class="text-white">{{ item.u_nickname }}</p>
-                    <p class="text-white">{{ formatDate(item.created_at) }}</p>
+            <div @click="$store.dispatch('getRecipeDetail', item.id)" :class="{ 'flex-text': item.blind_flg == 1 }" class="new-recipe-card" v-for="(item, key) in $store.state.mainNewData" :key="key">
+                <div v-if="item.blind_flg !== 1">
+                    <img class="new-recipe-img" :src="item.thumbnail">
+                    <div class="new-recipe-header">
+                        <p class="text-white">{{ item.u_nickname }}</p>
+                        <p class="text-white">{{ formatDate(item.created_at) }}</p>
+                    </div>
+                    <div class="new-recipe-body">
+                        <p class="new-recipe-title text-white">{{ substringTitle(item.title, 15) }}</p>
+                        <div class=""></div>
+                        <p class="text-left text-white new-recipe-content"> 조회수 : {{ item.views }}</p>
+                        <!-- <p class="text-left text-white">{{ item.cnt }}</p> -->
+                        <!-- <p class="text-right text-white">{{ item.like_chk }}</p> -->
+                    </div>
                 </div>
-                <div class="new-recipe-body">
-                    <p class="new-recipe-title text-white">{{ substringTitle(item.title, 15) }}</p>
-                    <div class=""></div>
-                    <p class="text-left text-white new-recipe-content"> 조회수 : {{ item.views }}</p>
-                    <!-- <p class="text-left text-white">{{ item.cnt }}</p> -->
-                    <!-- <p class="text-right text-white">{{ item.like_chk }}</p> -->
-                </div>
+                <div v-else >해당 게시글은 신고로인해 <br> 블라인드 처리된 게시글입니다.</div>
             </div>
         </div>
         <div class="line"></div>

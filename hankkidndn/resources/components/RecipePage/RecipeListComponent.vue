@@ -51,7 +51,7 @@
                 <button>조회순</button> -->
             </div>
             <div class="main-list-content">
-                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" :class="{ 'flex-text': item.blind_flg == 1 }" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index">
                 <!-- <div @click="$router.push('/recipe/detail/' + item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
                     <div v-if="item.blind_flg !== 1">
                         <img :src="item.thumbnail">

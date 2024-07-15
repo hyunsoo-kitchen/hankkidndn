@@ -239,6 +239,11 @@ font-weight: 900;
     font-size: 0.7rem;
 }
 
+.flex-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .number-container {
     display: grid;

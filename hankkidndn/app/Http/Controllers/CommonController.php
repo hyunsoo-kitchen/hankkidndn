@@ -29,6 +29,7 @@ class CommonController extends Controller
                                 // DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
                             )
                             // ->groupBy('recipe_boards.id')
+                            ->where('recipe_boards.blind_flg', '<>', 1)
                             ->orderBy('recipe_boards.likes_num', 'DESC')
                             ->limit(3)
                             ->join('users', 'users.id', '=', 'recipe_boards.user_id')

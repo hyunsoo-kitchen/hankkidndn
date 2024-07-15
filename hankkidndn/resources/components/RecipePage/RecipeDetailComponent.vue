@@ -1,12 +1,12 @@
 <template>
     <!-- 블라인드 처리 모달 창 -->
-    <div class="modals" v-if="$store.state.recipeData.blind_flg === 1">
+    <div class="modals" v-show="($store.state.recipeData ? $store.state.recipeData.blind_flg : 0) === 1">
         <img src="../../../public/img/경냥이.png" class="cat-image">
         <div class="modal-contents">
             <p>해당 게시물은 신고로 인해 블라인드 처리 됐습니다.</p>
             <p>게시물을 확인하시려면 확인 아니면 취소를 눌러주세요.</p>
             <div class="modal-buttons">
-                <button type="button" @click="$store.state.recipeData.blind_flg = 0">확인</button>
+                <button type="button" @click="updateBlindFlg(0);">확인</button>
                 <button type="button" @click="$router.back()">취소</button>
             </div>
         </div>
@@ -381,12 +381,13 @@ function recipeLikeToggle(data, action) {
 }
 
 onBeforeMount( async () => {
-    if(store.state.recipeData.length < 1) {
+    // console.log('이동후')
+    if(!store.state.recipeData) {
         store.dispatch('getRecipeDetail', route.params.id);
     }
+    // store.dispatch('getRecipeDetail', route.params.id);
     await store.dispatch('getRecipeCountComment', route.params.id)
     // store.dispatch('recipeViewUp', route.params.id)
-    
 })
 
 // 시간 표시 제어
@@ -445,6 +446,15 @@ function commentDeleteBtn(id) {
     } else {
         return false;
     }
+}
+
+function updateBlindFlg(flg) {
+    const recipeData = {
+        data: {...store.state.recipeData}
+    };
+    recipeData.data.blind_flg = 0;
+    // console.log('updateBlindFlg', recipeData);
+    store.commit('setRecipeDetail', recipeData);
 }
 </script>
 
