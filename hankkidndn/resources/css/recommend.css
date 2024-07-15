@@ -188,11 +188,10 @@ body {
 
 
 .recommend_main_img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    /* height: 500px; */
     display: block;
-    margin: auto;
+    margin: 0 auto;
 }
 .main_title {
     text-align: center;
@@ -264,7 +263,6 @@ body {
 
 main {
     border: 2px solid rgb(255, 255, 255);
-    height: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
