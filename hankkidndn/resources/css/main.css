@@ -97,7 +97,9 @@ h2 {
     cursor: pointer;
 }
 
-
+.body-container {
+    padding: 0 20vw;
+}
 
 /* 새로운 레시피 */
 
