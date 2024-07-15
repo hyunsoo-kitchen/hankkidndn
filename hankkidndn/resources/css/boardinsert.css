@@ -52,7 +52,6 @@ textarea {
     margin: 5px 0;
     resize: none;
     outline: none;
-    border: none;
 }
 
 .content-box > img {
@@ -87,13 +86,17 @@ button.cancel {
 }
 
 button.complete {
-    background-color: #333;
+    background-color: #84c18f;
     color: white;
     margin: 0 10px;
 }
 
 .img-file {
-    cursor: pointer;
+  padding: 6px 25px;
+  background-color: #84c18f;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
