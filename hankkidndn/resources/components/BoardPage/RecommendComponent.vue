@@ -6,45 +6,65 @@
         <img src="/img/img.ppg.jpg" class="recommend_main_img">
     </div>
     <main>
-      <div>
-        <CategoryComponent/>
-      </div>
-    <div class="card">
-       <img class="logo" src="../../../public/img/logo.png" alt="">
-         <p class="title-line"><span class="side-title">HOT 여름 추천 레시피</span></p>
-        <div class="recommend_grid season-container">
-            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center season_img_box" v-for="(item, index) in $store.state.seasonRecommendInfo" :key="index">
-                 <div class="image-container"><img class="item-image" :src="item.thumbnail"></div>
-                <div class="data-box">
-                    <div class="card-title">{{ item.title }}</div>
-                    <div class="card-name">{{ item.u_nickname }}</div>
-                    <div class="star-view">
-                        <div class="card-star">{{ formatDate(item.created_at) }}</div>
-                        <div class="card-view">조회수 : {{ item.views }}</div>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <CategoryComponent/>
         </div>
-    </div>
-    <hr> 
-        <div class="slider">
-          <Swiper
-            :spaceBetween="30"
-            :centeredSlides="true"
-            :autoplay="{
-            delay: 2500,
-            disableOnInteraction: false,
-            }"
-            :pagination="{
-            clickable: true,
-            }"
-            :navigation="true"
-            :modules="modules"
-            class="header-img-container">
+        <div v-if="isMobileView" class="slider">
+            <Swiper
+                :spaceBetween="30"
+                :centeredSlides="true"
+                :autoplay="{
+                delay: 2500,
+                disableOnInteraction: false,
+                }"
+                :pagination="{
+                clickable: true,
+                }"
+                :navigation="true"
+                :modules="modules"
+                class="header-img-container">
                 <swiper-slide v-for="(item, key) in $store.state.adImage" :key="key">
                     <img class="header-img" :src="item.img_path">
                 </swiper-slide>
-          </Swiper>
+            </Swiper>
+        </div>
+        <div class="card">
+            <img class="logo" src="../../../public/img/logo.png" alt="">
+            <p class="title-line"><span class="side-title">HOT 여름 추천 레시피</span></p>
+            <div class="recommend_grid season-container">
+                <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center season_img_box data-box" v-for="(item, index) in $store.state.seasonRecommendInfo" :key="index">
+                    <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
+                    <img class="item-image" :src="item.thumbnail">
+                    <!-- <div class="data-box"> -->
+                        <div class="card-title">{{ item.title }}</div>
+                        <div class="card-name">{{ item.u_nickname }}</div>
+                        <div class="star-view">
+                            <div class="card-star">{{ formatDate(item.created_at) }}</div>
+                            <div class="card-view">조회수 : {{ item.views }}</div>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+        <div v-if="isWebView" class="slider">
+            <hr> 
+            <Swiper
+                :spaceBetween="30"
+                :centeredSlides="true"
+                :autoplay="{
+                delay: 2500,
+                disableOnInteraction: false,
+                }"
+                :pagination="{
+                clickable: true,
+                }"
+                :navigation="true"
+                :modules="modules"
+                class="header-img-container">
+                <swiper-slide v-for="(item, key) in $store.state.adImage" :key="key">
+                    <img class="header-img" :src="item.img_path">
+                </swiper-slide>
+            </Swiper>
             <!-- <div class="slide-container">
                 <div class="slides">
                     <div class="slide"><img class="slide-img" src="../../../public/img/ad7.png" alt=""></div>
@@ -59,22 +79,23 @@
                     <span class="dot" data-slide-index="2"></span>
                 </div>
             </div> -->
+            <hr>
         </div>
-        <hr>
       <div class="card">  
         <img class="logo" src="../../../public/img/logo.png" alt="">
         <p class="title-line"><span class="side-title">냉장고 털기 추천 레시피</span></p>
         <div class="recommend_grid frige-container">
-            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center frige_img_box" v-for="(item, index) in $store.state.frigeRecommendInfo" :key="index">
-                 <div class="image-container"><img class="item-image" :src="item.thumbnail"></div>
-                <div class="data-box">
+            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center frige_img_box data-box" v-for="(item, index) in $store.state.frigeRecommendInfo" :key="index">
+                 <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
+                 <img class="item-image" :src="item.thumbnail">
+                <!-- <div class="data-box"> -->
                     <div class="card-title2">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ formatDate(item.created_at) }}</div>
                         <div class="card-view">조회수 : {{ item.views }}</div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
       </div>
@@ -83,16 +104,17 @@
         <img class="logo" src="../../../public/img/logo.png" alt="">
         <p class="title-line"><span class="side-title">주간 베스트 레시피</span></p>
         <div class="recommend_grid weeklybest-container">
-            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center season_img_box" v-for="(item, index) in $store.state.weeklybestRecommendInfo" :key="index">
-                 <div class="image-container"><img class="item-image" :src="item.thumbnail"></div>
-                <div class="data-box">
+            <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center season_img_box data-box" v-for="(item, index) in $store.state.weeklybestRecommendInfo" :key="index">
+                 <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
+                <img class="item-image" :src="item.thumbnail">
+                <!-- <div class="data-box"> -->
                     <div class="card-title3">{{ item.title }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ formatDate(item.created_at) }}</div>
                         <div class="card-view">조회수 : {{ item.views }}</div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
       </div>  
@@ -114,6 +136,7 @@ const modules = [Autoplay, Pagination, Navigation];
   const store = useStore(); // Vuex 스토어 사용  
   const isModalOpen = ref(false);
   const isMobileView = ref(window.innerWidth <= 1044);
+  const isWebView = ref(window.innerWidth > 1044);
   
   // function openModal() {
   //   const hambuger = document.querySelector('#hambuger');
@@ -133,6 +156,7 @@ const modules = [Autoplay, Pagination, Navigation];
   
   function handleResize() {
     isMobileView.value = window.innerWidth <= 1044;
+    isWebView.value = window.innerWidth > 1044;
     if (!isMobileView.value) {
       closeModal();
     }
