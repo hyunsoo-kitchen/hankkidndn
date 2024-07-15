@@ -22,7 +22,7 @@
             <img class="main-img" src="../../../public/img/recipe_order.png">
             <div class="ul-list">
                 <ul>
-                    <!-- <li :class="{ 'active': activeType == 6}" @click="boardTypeMove(6)" class="line">공지게시판</li> -->
+                    <li @click=" $router.push('/board/notice?page=1') " class="line">공지게시판</li>
                     <li :class="{ 'active': activeType == 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
                     <li :class="{ 'active': activeType == 8}" @click="boardTypeMove(8)">질문게시판</li>
                     <!-- <li :class="{ 'active': activeType == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li> -->
@@ -92,7 +92,7 @@ const data = reactive({
     searchCriteria: 'title', // 기본 검색 기준
     search: '' // 검색어 입력
 });
-const activeType = ref(6);
+const activeType = ref(route.params.id);
 
 // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
 watch(() => [route.query.page, route.params.id], ([newPage, newId]) => {
@@ -142,7 +142,9 @@ function boardTypeMove(type) {
     activeType.value = type;
     data.board_type = type
     data.page = 1
-    store.dispatch('getBoardList', data)
+    if(type !== 6) {
+        store.dispatch('getBoardList', data)
+    }
 }
 
 // 게시판 이름 획득

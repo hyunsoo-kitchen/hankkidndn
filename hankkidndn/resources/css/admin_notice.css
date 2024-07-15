@@ -29,6 +29,11 @@ button{
     font-size: 30px;
     font-weight: bold;
 }
+.active {
+    color: #874c00; 
+    font-weight: 900;
+    }
+
 
 .body_container {
     display: grid;
@@ -168,9 +173,6 @@ button{
     border-radius: 4px;
     background-color: #ccc;
     margin: 0 10px;
-}
-.n_list_container {
-    
 }
 @media (max-width: 700px) {
     .notice-content {

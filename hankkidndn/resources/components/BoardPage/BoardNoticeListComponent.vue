@@ -3,6 +3,14 @@
     <div class="container">
         <div class="header">
             <img class="main-img" src="../../../public/img/recipe_order.png">
+            <div class="ul-list">
+                <ul>
+                    <li :class="{ 'active': $route.path.startsWith('/board/notice')}" @click="$router.push('/board/notice?page=1')" class="line">공지게시판</li>
+                    <li @click="$router.push('/board/7?page=1')" class="line">자유게시판</li>
+                    <li @click="$router.push('/board/8?page=1')">질문게시판</li>
+                    <!-- <li :class="{ 'active': activeType == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li> -->
+                </ul>
+            </div>
         </div>
         <div class="main-list">
             <div class="head-title">
@@ -44,7 +52,7 @@ const store = useStore();
 const route = useRoute();
 const pages = ref([]);
 const page = ref();
-
+const activeType = ref(route.params.id);
 // watch로 route.query.page(router.js의 현재페이지) 가 바뀔때마다 안에 함수들을 실행
 watch(() => route.query.page, (newPage) => {
     page.value = newPage;
