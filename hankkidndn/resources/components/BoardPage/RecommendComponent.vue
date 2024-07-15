@@ -3,20 +3,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <main>
-    <div class="main_title">
-        <img src="../../../public/img/candy.jpg" class="recommend_main_img">
-    </div>
-        <div>
-            <CategoryComponent/>
-        </div>
-        <div v-if="isMobileView" class="slider">
-            <Swiper
-                :spaceBetween="30"
-                :centeredSlides="true"
+    <CategoryComponent/>
+    <div v-if="isMobileView" class="slider">
+        <Swiper
+        :spaceBetween="30"
+        :centeredSlides="true"
                 :autoplay="{
-                delay: 2500,
+                    delay: 2500,
                 disableOnInteraction: false,
-                }"
+            }"
                 :pagination="{
                 clickable: true,
                 }"
@@ -27,6 +22,9 @@
                     <img class="header-img" :src="item.img_path">
                 </swiper-slide>
             </Swiper>
+        </div>
+        <div class="main_title">
+            <img src="../../../public/img/추천게시판.jpg" class="recommend_main_img">
         </div>
         <div class="card">
             <img class="logo" src="../../../public/img/logo.png" alt="">
