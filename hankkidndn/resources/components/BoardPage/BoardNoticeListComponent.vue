@@ -1,4 +1,5 @@
 <template>
+    <CategoryComponent/>
     <div class="container">
         <div class="header">
             <img class="main-img" src="../../../public/img/recipe_order.png">
@@ -36,6 +37,7 @@
 import { ref, onBeforeMount, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import CategoryComponent from '../CommonPage/CategoryComponent.vue';
 
     
 const store = useStore();

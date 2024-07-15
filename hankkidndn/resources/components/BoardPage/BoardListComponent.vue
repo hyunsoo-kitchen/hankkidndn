@@ -1,4 +1,5 @@
 <template>
+    <CategoryComponent/>
     <!-- 모달 창 -->
     <div class="modal" v-show="insertModal">
       <div class="modal-dialog">
@@ -79,7 +80,7 @@
 import { onBeforeMount, reactive, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-
+import CategoryComponent from '../CommonPage/CategoryComponent.vue';
     
 const store = useStore();
 const route = useRoute();
