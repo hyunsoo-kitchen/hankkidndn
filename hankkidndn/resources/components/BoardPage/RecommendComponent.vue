@@ -35,14 +35,16 @@
                 <div @click="$store.dispatch('getRecipeDetail', item.id)" class="center season_img_box data-box" v-for="(item, index) in $store.state.seasonRecommendInfo" :key="index">
                     <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
                     <img class="item-image" :src="item.thumbnail">
-                    <!-- <div class="data-box"> -->
+                    <div class="hi">
                         <div class="card-title">{{ item.title }}</div>
+                        <div class="under-title">
                         <div class="card-name">{{ item.u_nickname }}</div>
                         <div class="star-view">
                             <div class="card-star">{{ formatDate(item.created_at) }}</div>
                             <div class="card-view">조회수 : {{ item.views }}</div>
                         </div>
-                    <!-- </div> -->
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,11 +92,13 @@
                  <img class="item-image" :src="item.thumbnail">
                 <!-- <div class="data-box"> -->
                     <div class="card-title2">{{ item.title }}</div>
+                    <div class="under-title">
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ formatDate(item.created_at) }}</div>
                         <div class="card-view">조회수 : {{ item.views }}</div>
                     </div>
+                  </div>
                 <!-- </div> -->
             </div>
         </div>
