@@ -1,4 +1,5 @@
 <template>
+    <CategoryComponent/>
     <div class="body_container">
         <div class="event-header">
             <div>이벤트 페이지</div>
@@ -54,7 +55,7 @@
 import { onBeforeMount, ref, reactive, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-
+import CategoryComponent from '../CommonPage/CategoryComponent.vue'
     
 const route = useRoute();
 const store = useStore();
