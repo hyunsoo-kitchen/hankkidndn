@@ -55,7 +55,7 @@
                 <!-- <div @click="$router.push('/recipe/detail/' + item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
                     <div v-if="item.blind_flg !== 1">
                         <img :src="item.thumbnail">
-                        <div class="card-title">{{ substringTitle(item.title, 15) }}</div>
+                        <div class="card-title">{{ substringTitle(item.title, 20) }}</div>
                         <div class="card-name">{{ item.u_nickname }}</div>
                         <div class="star-view">
                             <div class="card-star">{{ formatDate(item.created_at) }}</div>
