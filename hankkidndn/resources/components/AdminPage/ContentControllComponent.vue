@@ -161,8 +161,10 @@
                 <input type="hidden" v-if="$store.state.recipeReportList.length > 0" :value="$store.state.recipeReportList[0].id" name="user_id">
               </div>
               <div class="approve-container">
-                <button @click="closeModal(); $store.dispatch('recipeReportApprove')" type="button">승인</button>
-                <button @click="closeModal(); $store.dispatch('recipeReportReject', $store.state.recipeReportList[0].recipe_board_id)" type="button">비승인</button>
+                <div>
+                  <button class="btn" @click="closeModal(); $store.dispatch('recipeReportApprove')" type="button">승인</button>
+                  <button class="btn" @click="closeModal(); $store.dispatch('recipeReportReject', $store.state.recipeReportList[0].recipe_board_id)" type="button">비승인</button>
+                </div>
               </div>
             </form>
             <div>
@@ -183,13 +185,18 @@
               </div>
               <div v-else>해당 유저는 제재 기록이 없습니다.</div>
             </div>
+            <hr>
             <div class="modal_head" v-for="(item, index) in $store.state.recipeReportList" :key="index">
-                <p>제목: {{ item.title }}</p>
-                <p>작성자: {{ item.u_nickname }}</p>
+                <!-- <p>제목: {{ item.title }}</p>
+                <p>작성자: {{ item.u_nickname }}</p> -->
+                <p>신고번호 : {{ index + 1 }}</p>
                 <p>신고자: {{ item.report_user_nickname }}</p>
                 <p>신고사유: {{ item.content }}</p>
+                <hr>
             </div>
-            <button type="button" @click="closeModal">닫기</button>
+            <div class="close_btn_box">
+              <button class="btn" type="button" @click="closeModal">닫기</button>
+            </div>
         </div>
     </div>
 
@@ -213,8 +220,10 @@
                 <input type="hidden" :value="$store.state.boardReportList[0].id" name="user_id">
               </div>
               <div class="approve-container">
-                <button @click="boardCloseModal(); $store.dispatch('boardReportApprove')" type="button">승인</button>
-                <button @click="boardCloseModal(); $store.dispatch('boardReportReject', $store.state.boardReportList[0].board_id)" type="button">비승인</button>
+                <div>
+                  <button class="btn" @click="boardCloseModal(); $store.dispatch('boardReportApprove')" type="button">승인</button>
+                  <button class="btn" @click="boardCloseModal(); $store.dispatch('boardReportReject', $store.state.boardReportList[0].board_id)" type="button">비승인</button>
+                </div>
               </div>
             </form>
             <div>
@@ -235,13 +244,18 @@
               </div>
               <div v-else>해당 유저는 제재 기록이 없습니다.</div>
             </div>
+            <hr>
             <div class="modal_head" v-for="(item, index) in $store.state.boardReportList" :key="index">
-                <p>제목: {{ item.title }}</p>
-                <p>작성자: {{ item.u_nickname }}</p>
+                <!-- <p>제목: {{ item.title }}</p>
+                <p>작성자: {{ item.u_nickname }}</p> -->
+                <p>신고번호 : {{ index + 1 }}</p>
                 <p>신고자: {{ item.report_user_nickname }}</p>
                 <p>신고사유: {{ item.content }}</p>
+                <hr>
             </div>
-            <button @click="boardCloseModal">닫기</button>
+            <div class="close_btn_box">
+              <button class="btn" @click="boardCloseModal">닫기</button>
+            </div>
         </div>
     </div>
 
@@ -265,8 +279,10 @@
                 <input type="hidden" :value="$store.state.commentReportList[0].id" name="user_id">
               </div>
               <div class="approve-container">
-                <button @click="commentCloseModal(); $store.dispatch('commentReportApprove')" type="button">승인</button>
-                <button @click="commentCloseModal(); $store.dispatch('commentReportReject', $store.state.commentReportList[0].comments_id)" type="button">비승인</button>
+                <div>
+                  <button class="btn" @click="commentCloseModal(); $store.dispatch('commentReportApprove')" type="button">승인</button>
+                  <button class="btn"  @click="commentCloseModal(); $store.dispatch('commentReportReject', $store.state.commentReportList[0].comments_id)" type="button">비승인</button>
+                </div>
               </div>
             </form>
             <div>
@@ -287,13 +303,18 @@
               </div>
               <div v-else>해당 유저는 제재 기록이 없습니다.</div>
             </div>
+            <hr>
             <div class="modal_head" v-for="(item, index) in $store.state.commentReportList" :key="index">
-                <p>내용: {{ item.content }}</p>
-                <p>작성자: {{ item.u_nickname }}</p>
-                <p>신고자: {{ item.report_user_nickname }}</p>
-                <p>신고사유: {{ item.content }}</p>
+                <!-- <p>내용: {{ item.content }}</p>
+                <p>작성자: {{ item.u_nickname }}</p> -->
+                <p>신고번호 : {{ index + 1 }}</p>
+                <p>신고자 : {{ item.report_user_nickname }}</p>
+                <p>신고사유 : {{ item.content }}</p>
+                <hr>
               </div>
-            <button @click="commentCloseModal">닫기</button>
+            <div class="close_btn_box">
+              <button class="btn" @click="commentCloseModal">닫기</button>
+            </div>
         </div>
     </div>
 </template>
