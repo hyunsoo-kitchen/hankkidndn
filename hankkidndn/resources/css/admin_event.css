@@ -182,3 +182,36 @@ button{
     background-color: #3f8899;
     color: white;
 }
+
+/* ----------------- */
+.cook-btn {
+    padding: 10px 0 10px 0;
+}
+.content_box {
+    margin-top: 15px;
+}
+.event_title {
+    width: 700px;
+    height: 30px;
+}
+.cursor {
+    cursor: pointer;
+}
+.event_box {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+}
+.input_box {
+    width: 250px;
+    height: 20px;
+}
+.ad-img-btn {
+    border-radius: 1px solid;
+}
+.btn{
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    margin: 0 5px;
+}

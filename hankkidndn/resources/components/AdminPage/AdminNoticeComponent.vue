@@ -28,25 +28,30 @@
                 <h2 class="notice-title">공지사항</h2>
                 <button type="button" class="notice-write-btn" @click="openNotice()">글 쓰기</button>
             </div>
-            <div class="notice-body">
-                <div>공지 번호</div>
-                <div>공지 제목</div>
-                <div>공지 내용</div>
-                <div>공지 작성일</div>
-            </div>
-            <div @click="$store.dispatch('getNoticeDetail', item.id)" class="notice-list" v-for="(item, index) in $store.state.noticeListData" :key="index">
-                <div>{{ ($store.state.noticePagination.total - index) - (($store.state.noticePagination.current_page - 1) * 10) }}</div>
-                <div>{{ substringTitle(item.title, 8) }}</div>
-                <div>{{ substringTitle(item.content, 8) }}</div>
-                <div>{{ formatDate(item.created_at) }}</div>
-            </div>
-            <div class="notice-pagination">
-                <button v-if="$store.state.noticePagination.current_page !== 1" class="number" @click="pageMove($store.state.noticePagination.current_page - 1)">이전</button>
-                <div v-for="page_num in pages" :key="page_num">
-                    <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
-                    <!-- <button :class="{ activePage: page_num === $store.state.noticePagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button> -->
+            <div class="notice_container">
+                <div class="notice-body">
+                    <div>공지 번호</div>
+                    <div>공지 제목</div>
+                    <div>공지 내용</div>
+                    <div>공지 작성일</div>
                 </div>
-                <button v-if="$store.state.noticePagination.current_page < $store.state.noticePagination.last_page" class="number" @click="pageMove($store.state.noticePagination.current_page + 1)">다음</button>
+                    <hr>
+                    <div class="n_list_container">
+                        <div @click="$store.dispatch('getNoticeDetail', item.id)" class="notice-list" v-for="(item, index) in $store.state.noticeListData" :key="index">
+                            <div>{{ ($store.state.noticePagination.total - index) - (($store.state.noticePagination.current_page - 1) * 10) }}</div>
+                            <div>{{ substringTitle(item.title, 8) }}</div>
+                            <div>{{ substringTitle(item.content, 8) }}</div>
+                            <div>{{ formatDate(item.created_at) }}</div>
+                        </div>
+                    </div>
+                    <div class="notice-pagination">
+                        <button v-if="$store.state.noticePagination.current_page !== 1" class="number" @click="pageMove($store.state.noticePagination.current_page - 1)">이전</button>
+                    <div v-for="page_num in pages" :key="page_num">
+                        <button class="number" @click="pageMove(page_num)">{{ page_num }}</button>
+                        <!-- <button :class="{ activePage: page_num === $store.state.noticePagination.current_page }" class="number" @click="pageMove(page_num)">{{ page_num }}</button> -->
+                    </div>
+                    <button v-if="$store.state.noticePagination.current_page < $store.state.noticePagination.last_page" class="number" @click="pageMove($store.state.noticePagination.current_page + 1)">다음</button>
+                    </div>
             </div>
         </div>
 

@@ -18,6 +18,9 @@ button{
     align-items: center;
     margin: 0 auto;
 }
+.notice_container {
+    border: 1px solid black;
+}
 .head_logo {
     grid-column: 1/2;
 }
@@ -95,7 +98,8 @@ button{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    padding: 7px 0 7px 0;
 }
 
 .notice-list {
@@ -103,6 +107,9 @@ button{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
     cursor: pointer;
+    /* margin-top: 10px; */
+    border-bottom: 1px solid;
+    padding: 6px 0 6px 0;;
 }
 .notice-pagination {
     display: flex;
@@ -161,6 +168,9 @@ button{
     border-radius: 4px;
     background-color: #ccc;
     margin: 0 10px;
+}
+.n_list_container {
+    
 }
 @media (max-width: 700px) {
     .notice-content {

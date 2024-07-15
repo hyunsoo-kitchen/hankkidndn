@@ -90,53 +90,60 @@
         <div v-if="createFlg" class="cook_list">
             <form id="eventFormData">
                 <div class="cook-btn">
-                    <h3>이벤트 작성</h3>
+                    <h2>이벤트 작성</h2>
                 </div>
                 <div class="title_content">
-                    <input autocomplete="off" name="title" type="text" placeholder="제목. (최대 100자까지 작성 가능합니다.)">
-                    <div class="title">
-                        <div class="title_main">이벤트 시작일<span>*</span></div>
-                    </div>
-                    <div class="content">
-                        <input type="date" v-model="formData.start_at" @blur="eventStartBlur(formData.start_at)" name="start_at">
-                        <div :class="errorStyle.start_at" >{{ flgText.start_at }}</div>
-                    </div>
-                    <div class="title">
-                        <div class="title_main">이벤트 종료일<span>*</span></div>
-                    </div>
-                    <div class="content">
-                        <input type="date" v-model="formData.end_at" @blur="eventEndBlur(formData.end_at)" name="end_at">
-                        <div :class="errorStyle.end_at" >{{ flgText.end_at }}</div>
-                    </div>
-                </div>
-                <div>
-                    <div v-if="thumbImg == ''" class="font-red program-aline">썸네일 이미지를 넣어주세요.</div>
-                    <div class="content_list">
-                        <div class="header-box">
-                            <label>
-                                <div class="ad-img-btn">이미지 파일</div>
-                                <input required hidden name="thumbnail" type="file" accept="image/*" @change="eventThumbImg($event)" >
-                            </label>
+                    <input autocomplete="off" name="title" class="event_title" type="text" placeholder="제목. (최대 100자까지 작성 가능합니다.)">
+                    <div class="content_box">
+                        <div class="event_box">
+                            <div class="title">
+                                <div class="title_main">이벤트 시작일<span>*</span></div>
+                            </div>
+                            <div class="content">
+                                <input class="input_box" type="date" v-model="formData.start_at" @blur="eventStartBlur(formData.start_at)" name="start_at">
+                                <div :class="errorStyle.start_at" >{{ flgText.start_at }}</div>
+                            </div>
                         </div>
-                        <img :src="thumbImg">
-                    </div>
-                </div>
-                <div>
-                    <div v-if="imagePreview == ''" class="font-red program-aline">이벤트 이미지를 넣어주세요.</div>
-                    <div class="content_list">
-                        <div class="header-box">
-                            <label>
-                                <div class="ad-img-btn">이미지 파일</div>
-                                <input required hidden name="file" type="file" accept="image/*" @change="eventImg($event)" >
-                            </label>
+                        <div class="event_box">
+                            <div class="title">
+                            <div class="title_main">이벤트 종료일<span>*</span></div>
+                            </div>
+                            <div class="content">
+                                <input class="input_box" type="date" v-model="formData.end_at" @blur="eventEndBlur(formData.end_at)" name="end_at">
+                                <div :class="errorStyle.end_at" >{{ flgText.end_at }}</div>
+                            </div>
                         </div>
-                        <img :src="imagePreview">
                     </div>
-                </div>
-                <div>
-                    <button v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff(); " type="button">저장</button>
-                    <button v-else @click="openModal()">저장</button>
-                    <button @click="createFlgOff()" type="button" id="cancel">취소</button>
+                    <br>
+                    <div>
+                        <div v-if="thumbImg == ''" class="font-red program-aline">썸네일 이미지를 넣어주세요.</div>
+                        <div class="content_list">
+                            <div class="header-box">
+                                <label>
+                                    <div class="ad-img-btn cursor">이미지 파일 선택</div>
+                                    <input required hidden name="thumbnail" type="file" accept="image/*" @change="eventThumbImg($event)" >
+                                </label>
+                            </div>
+                            <img :src="thumbImg">
+                        </div>
+                    </div>
+                    <div>
+                        <div v-if="imagePreview == ''" class="font-red program-aline">이벤트 이미지를 넣어주세요.</div>
+                        <div class="content_list">
+                            <div class="header-box">
+                                <label>
+                                    <div class="ad-img-btn cursor" >이미지 파일 선택</div>
+                                    <input required hidden name="file" type="file" accept="image/*" @change="eventImg($event)" >
+                                </label>
+                            </div>
+                            <img :src="imagePreview">
+                        </div>
+                    </div>
+                    <div>
+                        <button v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff(); " type="button">저장</button>
+                        <button class="btn" v-else @click="openModal()">저장</button>
+                        <button class="btn" @click="createFlgOff()" type="button" id="cancel">취소</button>
+                    </div>
                 </div>
             </form>
         </div>

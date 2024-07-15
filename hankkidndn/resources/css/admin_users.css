@@ -76,6 +76,7 @@ h3 {
 .n_m_list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 7px 0;
 }
 /* 신규회원 컨테이너 종료 */
 /* 간략 통계 */
