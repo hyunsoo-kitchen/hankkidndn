@@ -381,9 +381,9 @@ function recipeLikeToggle(data, action) {
 }
 
 onBeforeMount( async () => {
-    if(store.state.recipeData.length < 1) {
-        store.dispatch('getRecipeDetail', route.params.id);
-    }
+
+    await store.dispatch('getRecipeDetail', route.params.id);
+
     await store.dispatch('getRecipeCountComment', route.params.id)
     // store.dispatch('recipeViewUp', route.params.id)
     

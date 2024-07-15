@@ -812,7 +812,7 @@ const store = createStore({
 
             axios.post(url)
             .then(response => {
-
+                context.commit('setRecipeDetail', response.data.data)
             })
             .catch();
         },
@@ -823,7 +823,7 @@ const store = createStore({
 
             axios.post(url)
             .then(response => {
-
+                context.commit('setBoardDetail', response.data.data)
             })
             .catch();
         },
