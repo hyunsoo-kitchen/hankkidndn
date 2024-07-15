@@ -215,7 +215,7 @@ h2 {
 
     .new-recipe {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
     .best-recipe {
@@ -240,10 +240,10 @@ h2 {
     .media-display {
         display: none;
     }
-    .new-recipe {
+    /* .new-recipe {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
+    } */
     .best-recipe {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -266,10 +266,10 @@ h2 {
     .media-display {
         display: none;
     }
-    .new-recipe {
+    /* .new-recipe {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    }
+    } */
     .best-recipe {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

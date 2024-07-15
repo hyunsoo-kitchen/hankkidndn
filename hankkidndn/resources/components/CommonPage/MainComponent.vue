@@ -66,9 +66,9 @@
                     <p class="text-white">{{ formatDate(item.created_at) }}</p>
                 </div>
                 <div class="new-recipe-body">
-                    <p class="new-recipe-title text-white">{{ item.title }}</p>
+                    <p class="new-recipe-title text-white">{{ substringTitle(item.title, 15) }}</p>
                     <div class=""></div>
-                    <p class="text-left text-white"> 조회수 : {{ item.views }}</p>
+                    <p class="text-left text-white new-recipe-content"> 조회수 : {{ item.views }}</p>
                     <!-- <p class="text-left text-white">{{ item.cnt }}</p> -->
                     <!-- <p class="text-right text-white">{{ item.like_chk }}</p> -->
                 </div>
@@ -89,8 +89,8 @@
                     </div>
                 </div>
                 <div class="best-recipe-content" >
-                    <p class="text-thick font-big">{{ substringTitle(item.title, 20) }}</p>
-                    <p class="text-gray">{{ substringTitle(item.content, 20) }}</p>
+                    <p class="text-thick font-big">{{ substringTitle(item.title, 10) }}</p>
+                    <p class="text-gray">{{ substringTitle(item.content, 10) }}</p>
                     </div>
                 <div class="info-line"></div>
                 <!-- <div class="best-recipe-footer"> -->
