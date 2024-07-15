@@ -55,7 +55,7 @@
                 <!-- <div @click="$router.push('/recipe/detail/' + item.id)" class="card" v-for="(item, index) in $store.state.recipeListData" :key="index"> -->
                     <div v-if="item.blind_flg !== 1">
                         <img :src="item.thumbnail">
-                        <div class="card-title">{{ item.title }}</div>
+                        <div class="card-title">{{ substringTitle(item.title, 15) }}</div>
                         <div class="card-name">{{ item.u_nickname }}</div>
                         <div class="star-view">
                             <div class="card-star">{{ formatDate(item.created_at) }}</div>
@@ -182,7 +182,13 @@ const formatDate = (dateString) => {
     }).replace(/\.$/, ''); 
 };
 
-
+// 글자 많을 때 자르기용
+function substringTitle(text, max){
+    if (text.length > max) {
+        return text.substring(0, max) + '...';
+    }
+    return text;
+}
 </script>
 
 <style scoped src="../../css/recipelist.css">

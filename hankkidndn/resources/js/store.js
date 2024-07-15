@@ -183,7 +183,6 @@ const store = createStore({
         // 레시피 데이터 저장
         setDetailRecipeData(state, data) {
             state.recipeData = data;
-            // console.log(state.recipeData);
         },
         // 질문,자유 게시판 등 리스트 저장
         setBoardData(state, data) {
