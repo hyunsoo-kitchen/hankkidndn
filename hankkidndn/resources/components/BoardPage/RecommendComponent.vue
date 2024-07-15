@@ -24,7 +24,7 @@
             </Swiper>
         </div>
         <div class="main_title">
-            <img src="../../../public/img/추천게시판.jpg" class="recommend_main_img">
+            <img src="../../../public/img/spring.jpg" class="recommend_main_img">
         </div>
         <div class="card">
             <img class="logo" src="../../../public/img/logo.png" alt="">

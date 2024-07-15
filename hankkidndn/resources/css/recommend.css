@@ -195,6 +195,7 @@ body {
     max-height: 450px;
     max-width: 1200px;
     padding: 10px 0px;
+    object-fit: cover
 }
 .main_title {
     text-align: center;
