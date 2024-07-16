@@ -382,7 +382,7 @@ function recipeLikeToggle(data, action) {
 
 onBeforeMount( async () => {
     // console.log('이동후')
-    if(store.state.recipeData.length < 1) {
+    if(Object.keys(store.state.recipeData).length < 1) {
         store.dispatch('getRecipeDetail', route.params.id);
     }
     // store.dispatch('getRecipeDetail', route.params.id);
@@ -454,8 +454,8 @@ function updateBlindFlg(flg) {
         data: {...store.state.recipeData}
     };
     recipeData.data.blind_flg = 0;
-    // console.log('updateBlindFlg', recipeData);
-    store.commit('setRecipeDetail', recipeData);
+    console.log('updateBlindFlg', recipeData);
+    store.commit('setRecipeDetailData', recipeData.data);
 }
 </script>
 

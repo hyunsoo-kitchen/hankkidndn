@@ -23,7 +23,7 @@ const store = createStore({
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
 
             // 레시피 디테일 페이지
-            recipeData: [],
+            recipeData: {},
             recipeProgram: [],
             recipeStuff: [],
 
@@ -202,7 +202,11 @@ const store = createStore({
             // console.log(state.commentData)
             state.cocommentData = data.cocomment;
             // console.log(state.commentData)
-            // console.log('setRecipeDetail', state.recipeData)
+            console.log('setRecipeDetail', state.recipeStuff)
+        },
+        // 레시피 블라인드 모달창 닫기
+        setRecipeDetailData(state, data) {
+            state.recipeData = data
         },
         // 보드 디테일 정보 저장
         setBoardDetail(state, data){
@@ -514,6 +518,7 @@ const store = createStore({
                 } else {
                     response.data.data.embed_url = null;
                 }
+                console.log(response.data.data)
                 context.commit('setRecipeDetail', response.data)
                 router.push('/recipe/detail/' + response.data.data.id)
                 // console.log('번호' + response.data.data.id)
@@ -820,7 +825,7 @@ const store = createStore({
 
             axios.post(url)
             .then(response => {
-                context.commit('setRecipeDetail', response.data)
+                // context.commit('setRecipeDetail', response.data)
             })
             .catch();
         },
