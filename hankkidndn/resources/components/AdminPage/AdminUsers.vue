@@ -60,7 +60,7 @@
                         <div>{{ item.u_name }}</div>
                         <div>{{ item.u_nickname }}</div>
                         <div>{{ item.u_id }}</div>
-                        <div>{{ item.gender }}</div>
+                        <div>{{ item.gender === '0' ? '남자' : '여자' }}</div>
                         <div>{{ item.birth_at }}</div>
                     </div>
                     <div class="pagenation_box">
