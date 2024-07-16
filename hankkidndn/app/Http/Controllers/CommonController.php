@@ -15,6 +15,7 @@ class CommonController extends Controller
                                 DB::raw('IFNULL((SELECT COUNT(comments.recipe_board_id) FROM comments WHERE comments.recipe_board_id = recipe_boards.id), 0) AS cnt')
                                 // DB::raw('IFNULL(recipe_likes.like_chk, \'0\') AS like_chk')
                             )
+                            ->where('recipe_boards.blind_flg', '<>', 1)
                             ->orderBy('recipe_boards.created_at', 'DESC')
                             ->limit(4)
                             ->join('users', 'users.id', '=', 'recipe_boards.user_id')
