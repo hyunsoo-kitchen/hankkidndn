@@ -63,7 +63,7 @@
                     <textarea autocomplete="off" class="notice-content" name="content" rows="30" placeholder="내용을 입력해주세요. (최대 1000자까지 작성 가능합니다.)"></textarea>
                 </div>
                 <div class="buttons">
-                    <button type="button" @click="$store.dispatch('noticeInsert'); closeNotice()" class="insert-btn">작성하기</button>
+                    <button type="button" @click="$store.dispatch('noticeInsert'); closeNotice(); $store.dispatch('getNoticeList', 1);" class="insert-btn">작성하기</button>
                     <button type="button" @click="closeNotice()" class="cancel-btn">취소</button>
                 </div>
             </form>
