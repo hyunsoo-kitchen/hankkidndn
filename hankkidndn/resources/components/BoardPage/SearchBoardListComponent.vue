@@ -24,7 +24,7 @@
                     <li :class="{ 'active': $route.params.id == 6}" @click="boardTypeMove(6)" class="line">공지게시판</li>
                     <li :class="{ 'active': $route.params.id == 7}" @click="boardTypeMove(7)" class="line">자유게시판</li>
                     <li :class="{ 'active': $route.params.id == 8}" @click="boardTypeMove(8)" class="line">질문게시판</li>
-                    <li :class="{ 'active': $route.params.id == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li>
+                    <!-- <li :class="{ 'active': $route.params.id == 9}" @click="boardTypeMove(9)" class="line">문의게시판</li> -->
                 </ul>
             </div>
         </div>
