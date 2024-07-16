@@ -23,7 +23,7 @@ const store = createStore({
             pagination: localStorage.getItem('pagination') ? JSON.parse(localStorage.getItem('pagination')) : {current_page: '1'},
 
             // 레시피 디테일 페이지
-            recipeData: {},
+            recipeData: [],
             recipeProgram: [],
             recipeStuff: [],
 
@@ -255,7 +255,10 @@ const store = createStore({
             state.noticeListData = data.data;
             state.noticePagination = data;
             localStorage.setItem('noticePagination', JSON.stringify(data));
-            // console.log(data)
+            console.log('setNoticeListData', data);
+        },
+        setNoticeData(state, data) {
+            state.noticeListData.unshift(data)
         },
         // 관리자 공지사항 상세 페이지
         setNoticeDetail(state, data) {
@@ -277,7 +280,9 @@ const store = createStore({
             state.finishEventPagination = data
             localStorage.setItem('finishEventPagination', JSON.stringify(data));
         },
-
+        setAddEventListData(state, data) {
+            state.progressEvent.unshift(data)
+        },
         setApproveUserInfo(state, data) {
             state.approveUserInfo = data
         },
@@ -950,9 +955,10 @@ const store = createStore({
             const url = '/api/admin/notice'
             const data = new FormData(document.querySelector('#noticeForm'))
 
-            axios.post(url, data)
+            return axios.post(url, data)
             .then(response => {
-                
+                context.commit('setNoticeData', response.data.data)
+                console.log(response.data.data)
             })
             .catch();
         },
@@ -962,7 +968,7 @@ const store = createStore({
             // console.log(page)
             const url = '/api/notice/list?page=' + page
 
-            axios.get(url)
+            return axios.get(url)
             .then(response => {
                 // console.log(response.data.data)
                 context.commit('setNoticeListData', response.data.data);
@@ -1064,7 +1070,7 @@ const store = createStore({
             .then(response => {
                 // context.commit('setAdData', response.data.data)
             })
-            .catch
+            .catch();
         },
 
         // 이벤트 획득 처리
@@ -1102,7 +1108,7 @@ const store = createStore({
 
             axios.post(url, data)
             .then(response => {
-
+                context.commit('setAddEventListData', response.data.data)
             })
             .catch();
         },

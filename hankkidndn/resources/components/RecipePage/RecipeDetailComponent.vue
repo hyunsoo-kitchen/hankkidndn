@@ -179,7 +179,7 @@
         </div>
 
         <div class="video">
-            <iframe class="youtube-video" v-if="$store.state.recipeData.embed_url !== null " width="80%" height="400" align :src="$store.state.recipeData.embed_url"></iframe>
+            <iframe class="youtube-video" v-if="$store.state.recipeData.embed_url" width="80%" height="400" align :src="$store.state.recipeData.embed_url"></iframe>
             <div v-else>이 게시글은 동영상이 없습니다.</div>
         </div>
 
@@ -382,7 +382,7 @@ function recipeLikeToggle(data, action) {
 
 onBeforeMount( async () => {
     // console.log('이동후')
-    if(!store.state.recipeData) {
+    if(store.state.recipeData.length < 1) {
         store.dispatch('getRecipeDetail', route.params.id);
     }
     // store.dispatch('getRecipeDetail', route.params.id);
@@ -404,6 +404,7 @@ const formatDate = (dateString) => {
 
 onUnmounted( () => {
     store.commit('setRecipeDetail', {});
+    // console.log(store.state.recipeData)
 });
 
 // 신고 모달

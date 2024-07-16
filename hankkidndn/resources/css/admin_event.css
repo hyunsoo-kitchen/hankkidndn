@@ -106,12 +106,6 @@ button{
     justify-content: space-between;
 }
 
-.event-body-header {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 20px;
-}
-
 .event-container {
     display: grid;
 }
@@ -129,6 +123,7 @@ button{
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    margin-right: 15px;
 }
 
 .pointer {

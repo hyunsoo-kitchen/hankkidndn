@@ -170,7 +170,6 @@ const modules = [Autoplay, Pagination, Navigation];
   });
   
   onBeforeUnmount(() => {
-    store.dispatch('getAdData');
     window.removeEventListener('resize', handleResize);
   });
   
@@ -184,7 +183,9 @@ const modules = [Autoplay, Pagination, Navigation];
 
 onBeforeMount(() => {
     store.dispatch('getSeasonRecommendInfo');
-    store.dispatch('getFrigeRecommendInfo');
+    if(store.state.frigeRecommendInfo.length < 1) {
+        store.dispatch('getFrigeRecommendInfo');
+    }
     store.dispatch('weeklybestRecommendInfo');
     store.dispatch('getAdData');
 });
