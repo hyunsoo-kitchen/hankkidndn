@@ -29,9 +29,9 @@ button{
 
 .body_container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
-    width: 96%;
+    grid-template-columns: .7fr 5fr;
     margin: 15px auto;
+    width: 98.3%;
 }
 .category {
     grid-column: 1/2;

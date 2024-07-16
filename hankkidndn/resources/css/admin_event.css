@@ -34,9 +34,9 @@ button{
 
 .body_container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
-    width: 96%;
+    grid-template-columns: .7fr 5fr;
     margin: 15px auto;
+    width: 98.3%;
 }
 .category {
     grid-column: 1/2;
@@ -131,14 +131,19 @@ button{
     margin-bottom: 20px;
 }
 
-.event-body-header .pointer {
+.pointer {
     cursor: pointer;
     margin: 0 10px;
     padding: 10px 20px;
-    border: 1px solid #000;
     border-radius: 5px;
+    background-color: #8be03c; 
+    color: white;
 }
 
+.active {
+    color: rgb(201, 92, 20); 
+    font-weight: 900;
+}
 .grid-tem {
     display: grid;
     grid-template-columns: 1fr 1fr;

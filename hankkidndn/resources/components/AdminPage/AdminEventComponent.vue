@@ -46,8 +46,8 @@
             </div>
 
             <div class="event-body-header">
-                <div class="pointer" @click="progressEventOn()">진행중인 이벤트</div>
-                <div class="pointer" @click="finishEventOn()">종료된 이벤트</div>
+                <div class="pointer" :class="{ 'active' : progressFlg }" @click="progressEventOn()">진행중인 이벤트</div>
+                <div class="pointer" :class="{ 'active' : finishFlg }" @click="finishEventOn()">종료된 이벤트</div>
             </div>
 
             <div v-show="progressFlg" class="event-container">
