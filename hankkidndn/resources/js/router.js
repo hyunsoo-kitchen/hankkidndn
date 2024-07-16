@@ -251,7 +251,7 @@ function chkAdminOn(to, from, next) {
     if(!store.state.adminFlg) {
         next();
     } else {
-        next('/admincontentcontroll');
+        next('/admindashboard');
     }
 }
 

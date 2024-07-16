@@ -38,5 +38,6 @@ footer{
     }
     .address {
         flex-direction: column;
+        min-width: 300px;
     }
 }

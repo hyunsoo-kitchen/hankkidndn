@@ -119,8 +119,10 @@ const store = createStore({
             newMemberListData: [],
             // 대시보드 일자별 요약
             dailyStatsData: [],
-            weekStatsData:[],
-            monthStatsData:[],
+            // weekStatsData:{},
+            // monthStatsData:{},
+            weekStatsData:{weekly_summary:{}},
+            monthStatsData:{monthly_summary:{}},
             // 대시보드 미처리 신고갯수 가져오기
             approvechkCountData:[],
             // 오늘의 간략 통계
@@ -1639,7 +1641,7 @@ const store = createStore({
         },
         getDailyStatsList(context) {
             const url = '/api/admin/dailystats'
-
+            
             axios.get(url)
             .then(response => {
                 context.commit('setDailyStatsData', response.data.data)
@@ -1651,11 +1653,12 @@ const store = createStore({
 
             axios.get(url)
             .then(response => {
+                console.log('getWeeklyStatsList',response.data);
                 context.commit('setWeekStatsData', response.data.data)
             })
             .catch();
         },
-        async getMonthlyStatsList(context) {
+        getMonthlyStatsList(context) {
             const url = '/api/admin/monthstats'
 
             axios.get(url)
