@@ -55,106 +55,114 @@ class RecipeBoardController extends Controller
 
         $requestData = $request->all();
 
-        $validator = Validator::make(
-            $requestData
-            ,[
-                'user_id' => ['required', 'regex:/^[0-9]+$/']
-                ,'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
-                ,'content' => ['required', 'max:1000']
-                ,'title' => ['required', 'max:50']
-                ,'thumbnail' => ['required', 'mimes:jpeg,png,gif', 'max:2048']
-            ]
-        );
-
-        // 유효성 검사 실패 체크
-        if($validator->fails()) {
-            Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+        try {
+            DB::beginTransaction();
+            $validator = Validator::make(
+                $requestData
+                ,[
+                    'user_id' => ['required', 'regex:/^[0-9]+$/']
+                    ,'boards_type_id' => ['required', 'regex:/^[0-9]+$/']
+                    ,'content' => ['required', 'max:1000']
+                    ,'title' => ['required', 'max:50']
+                    ,'thumbnail' => ['required', 'mimes:jpeg,png,gif', 'max:2048']
+                ]
+            );
+    
+            // 유효성 검사 실패 체크
+            if($validator->fails()) {
+                Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                throw new MyValidateException('E01');
+            }
+    
+            $thumbnail = '/'.$request->file('thumbnail')->store('img');
+    
+            $insertData = [
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'boards_type_id' => $request->input('boards_type_id'),
+                'video_link' => $request->input('video'),
+                'thumbnail' => $thumbnail,
+                'user_id' => $user->id
+            ];
+    
+            $recipeData = RecipeBoards::create($insertData);
+    
+            $recipeId = $recipeData->id;
+    
+            // 레시피 재료 처리
+    
+            $stuff_gram = $request->input('stuff_gram');
+    
+            if($request->input('stuff')) {
+                // 배열형태의 이미지를 foreach로 돌려서 따로 저장
+                foreach ($request->input('stuff') as $index => $stuff) {
+    
+                    //유효성 검사
+                    $validator = Validator::make([
+                        'stuff' . $index => $stuff,
+                        'stuff_gram' . $index => $stuff_gram[$index]
+                    ],
+                    [
+                        'stuff' . $index => 'required|max:50',
+                        'stuff_gram' . $index => 'required|max:50'
+                    ]
+                    );
+                    
+                    // 유효성 검사 실패 체크
+                    if($validator->fails()) {
+                        Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                        throw new MyValidateException('E01');
+                    }
+    
+                    RecipeStuffs::create([
+                        'recipe_board_id' => $recipeId,
+                        'stuff_gram' => $stuff_gram[$index],
+                        'stuff' => $stuff
+                    ]);
+                }
+            }
+            // Log::debug('재료 완료');
+            // 레시피 과정 내용과 이미지 함께 처리
+            $texts = $request->input('list');
+    
+            $files = $request->file('file');
+        
+    
+                foreach ($files as $index => $file) {
+    
+                    //유효성 검사
+                    $validator = Validator::make([
+                        'file_' . $index => $file,
+                        'texts_' . $index => $texts[$index]
+                    ],
+                    [
+                        'file_' . $index => 'required|mimes:jpeg,png,gif|max:102400',
+                        'texts_' . $index => 'required|max:1000'
+                    ]
+                    );
+    
+                    // 유효성 검사 실패 체크
+                    if($validator->fails()) {
+                        Log::debug('유효성 검사 실패', $validator->errors()->toArray());
+                        throw new MyValidateException('E01');
+                    }
+    
+                    $path = '/'.$file->store('img');
+                
+                    RecipePrograms::create([
+                        'recipe_board_id' => $recipeId,
+                        'img_path' => $path,
+                        'program_content' => $texts[$index],
+                        'order' => $index + 1
+                    ]);
+                }
+                DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
             throw new MyValidateException('E01');
         }
 
-        $thumbnail = '/'.$request->file('thumbnail')->store('img');
 
-        $insertData = [
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'boards_type_id' => $request->input('boards_type_id'),
-            'video_link' => $request->input('video'),
-            'thumbnail' => $thumbnail,
-            'user_id' => $user->id
-        ];
-
-        $recipeData = RecipeBoards::create($insertData);
-
-        $recipeId = $recipeData->id;
-
-        // 레시피 재료 처리
-
-        $stuff_gram = $request->input('stuff_gram');
-
-        if($request->input('stuff')) {
-            // 배열형태의 이미지를 foreach로 돌려서 따로 저장
-            foreach ($request->input('stuff') as $index => $stuff) {
-
-                //유효성 검사
-                $validator = Validator::make([
-                    'stuff' . $index => $stuff,
-                    'stuff_gram' . $index => $stuff_gram[$index]
-                ],
-                [
-                    'stuff' . $index => 'required|max:50',
-                    'stuff_gram' . $index => 'required|max:50'
-                ]
-                );
-                
-                // 유효성 검사 실패 체크
-                if($validator->fails()) {
-                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
-                    throw new MyValidateException('E01');
-                }
-
-                RecipeStuffs::create([
-                    'recipe_board_id' => $recipeId,
-                    'stuff_gram' => $stuff_gram[$index],
-                    'stuff' => $stuff
-                ]);
-            }
-        }
-        // Log::debug('재료 완료');
-        // 레시피 과정 내용과 이미지 함께 처리
-        $texts = $request->input('list');
-
-        $files = $request->file('file');
-    
-        if ($request->file('file')) {
-            foreach ($files as $index => $file) {
-
-                //유효성 검사
-                $validator = Validator::make([
-                    'file_' . $index => $file,
-                    'texts_' . $index => $texts[$index]
-                ],
-                [
-                    'file_' . $index => 'required|mimes:jpeg,png,gif|max:102400',
-                    'texts_' . $index => 'required|max:1000'
-                ]
-                );
-
-                // 유효성 검사 실패 체크
-                if($validator->fails()) {
-                    Log::debug('유효성 검사 실패', $validator->errors()->toArray());
-                    throw new MyValidateException('E01');
-                }
-
-                $path = '/'.$file->store('img');
-            
-                RecipePrograms::create([
-                    'recipe_board_id' => $recipeId,
-                    'img_path' => $path,
-                    'program_content' => $texts[$index],
-                    'order' => $index + 1
-                ]);
-            }
-        } 
 
 
         $responseData = [
@@ -301,7 +309,7 @@ class RecipeBoardController extends Controller
             'thumbnail' => $thumbnail,
         ];
 
-        $recipeData->update($insertData);
+         $recipeData->update($insertData);
 
 
         RecipeStuffs::where('recipe_board_id', $id)->delete();
@@ -418,11 +426,41 @@ class RecipeBoardController extends Controller
         //     }
         // } 
 
+                $recipeProgramData = RecipePrograms::where('recipe_board_id', '=', $id)
+                                            ->select('img_path', 'program_content', 'order')
+                                            ->orderBy('order', 'ASC')
+                                            ->get();
 
+        $recipeStuffData = RecipeStuffs::where('recipe_board_id', '=', $id)
+                                        ->select('stuff', 'stuff_gram')
+                                        ->orderBy('id', 'ASC')
+                                        ->get();
+
+        $commentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->where('comments.recipe_board_id', '=', $id)
+                                ->whereNull('comments.cocomment')
+                                ->withTrashed()
+                                ->get();
+        
+        $cocommentData = Comment::select('comments.*', 'comments_likes.like_chk', 'users.u_nickname')
+                                ->leftJoin('comments_likes', 'comments_likes.comment_id', '=', 'comments.id')
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->whereNotNull('comments.cocomment')
+                                ->withTrashed()
+                                ->get();
+
+        $recipeData = RecipeBoards::find($id);
+        
         $responseData = [
             'code' => '0'
-            ,'msg' => '글 작성 완료'
+            ,'msg' => '게시글 획득 완료'
             ,'data' => $recipeData
+            ,'program' => $recipeProgramData
+            ,'stuff' => $recipeStuffData
+            ,'comment' => $commentData
+            ,'cocomment' => $cocommentData
         ];
 
         return response()->json($responseData, 200);

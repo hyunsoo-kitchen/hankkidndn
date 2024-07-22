@@ -90,6 +90,30 @@ button{
     width: 30px;
 }
 
+.write-btn {
+    background-color: #7fccde;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    grid-column: auto;
+    height: 40px;
+    margin-top: 20px;
+    width: 80px;
+}
+
+.close-btn {
+    background-color: red;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    grid-column: auto;
+    height: 40px;
+    margin-top: 20px;
+    width: 80px;
+}
+
 /* 상세보기 모달 부분 */
 .detail_modal_container {
     position: fixed;

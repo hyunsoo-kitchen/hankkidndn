@@ -303,8 +303,8 @@ class AdminController extends Controller
         $responseData = [
             'code' => '0'
             ,'msg' => '광고 삽입 완료'
-            ,'progressData' => $progressEvent
-            ,'finishData' => $finishEvent
+            ,'progressData' => $progressEvent->toArray()
+            ,'finishData' => $finishEvent->toArray()
         ];
 
         return response()->json($responseData, 200);

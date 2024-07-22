@@ -34,7 +34,7 @@
                     <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
                     <img class="item-image" :src="item.thumbnail">
                     <div class="hi">
-                        <div class="card-title">{{ item.title }}</div>
+                        <div class="card-title">{{ substringTitle(item.title, 15) }}</div>
                         <div class="under-title">
                         <div class="card-name">{{ item.u_nickname }}</div>
                         <div class="star-view">
@@ -89,7 +89,7 @@
                  <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
                  <img class="item-image" :src="item.thumbnail">
                 <!-- <div class="data-box"> -->
-                    <div class="card-title2">{{ item.title }}</div>
+                    <div class="card-title2">{{ substringTitle(item.title, 15) }}</div>
                     <div class="under-title">
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
@@ -110,7 +110,7 @@
                  <!-- <div class="image-container"><img class="item-image" :src="item.thumbnail"></div> -->
                 <img class="item-image" :src="item.thumbnail">
                 <!-- <div class="data-box"> -->
-                    <div class="card-title3">{{ item.title }}</div>
+                    <div class="card-title3">{{ substringTitle(item.title, 15) }}</div>
                     <div class="card-name">{{ item.u_nickname }}</div>
                     <div class="star-view">
                         <div class="card-star">{{ formatDate(item.created_at) }}</div>
@@ -286,6 +286,14 @@ const formatDate = (dateString) => {
 // window.addEventListener('resize', () => {
 //     updateSlidePosition();
 // });
+
+// 글자 많을 때 자르기용
+function substringTitle(text, max){
+    if (text.length > max) {
+        return text.substring(0, max) + '...';
+    }
+    return text;
+}
 
 </script>
 <style scoped src="../../css/recommend.css"></style>

@@ -35,7 +35,7 @@
             <button class="category_btn" @click="$router.push('/admindashboard')">대시보드</button>
             <button class="category_btn" @click="$router.push('/adminnotice?page=1')">공지사항</button>
             <button class="category_btn" @click="$router.push('/adminuserfind')">사용자 관리</button>
-            <button class="category_btn" @click="$router.push('/admincontentcontroll')">컨텐츠 관리</button>
+            <button class="category_btn" @click="$router.push('/admincontentcontroll')">신고 관리</button>
             <button class="category_btn" @click="$router.push('/adminad')">광고 관리</button>
             <button class="category_btn" @click="$router.push('/adminevent?page=1')">이벤트 관리</button>
         </div>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div>
-                        <button v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff(); " type="button">저장</button>
+                        <button class="btn" v-if="errorFlg.start_at && errorFlg.end_at" @click="$store.dispatch('eventInsert'); createFlgOff(); " type="button">저장</button>
                         <button class="btn" v-else @click="openModal()">저장</button>
                         <button class="btn" @click="createFlgOff()" type="button" id="cancel">취소</button>
                     </div>

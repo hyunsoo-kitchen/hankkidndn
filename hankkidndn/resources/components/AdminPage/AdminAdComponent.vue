@@ -18,14 +18,14 @@
             <button class="category_btn" @click="$router.push('/admindashboard')">대시보드</button>
             <button class="category_btn" @click="$router.push('/adminnotice?page=1')">공지사항</button>
             <button class="category_btn" @click="$router.push('/adminuserfind')">사용자 관리</button>
-            <button class="category_btn" @click="$router.push('/admincontentcontroll')">컨텐츠 관리</button>
+            <button class="category_btn" @click="$router.push('/admincontentcontroll')">신고 관리</button>
             <button class="category_btn" @click="$router.push('/adminad')">광고 관리</button>
             <button class="category_btn" @click="$router.push('/adminevent?page=1')">이벤트 관리</button>
         </div>
         <div v-if="!adFlg">
             <div>
                 <h2>광고 페이지</h2>
-                <button @click="adInsertOn()" type="button">광고 수정</button>
+                <button @click="adInsertOn()" class="write-btn" type="button">광고 수정</button>
             </div>
             <div>
                 <Swiper
@@ -70,8 +70,8 @@
                     <button @click="addAdImgs()" class="ad-add-btn" type="button">순서 추가</button>
                 </div>
                 <div>
-                    <button @click="$store.dispatch('adInsert'); adInsertOff()" type="button">저장</button>
-                    <button @click="adInsertOff()" type="button" id="cancel">취소</button>
+                    <button class="write-btn" @click="$store.dispatch('adInsert'); adInsertOff()" type="button">저장</button>
+                    <button class="close-btn" @click="adInsertOff()" type="button" id="cancel">취소</button>
                 </div>
             </form>
         </div>

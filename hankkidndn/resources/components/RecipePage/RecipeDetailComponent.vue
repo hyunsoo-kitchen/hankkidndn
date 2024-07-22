@@ -141,7 +141,7 @@
                 <div class="header-actions">
                     <div :class="{ 'like-btn': $store.state.authFlg }" class="like">
                         <!-- $store.dispatch('recipeLike', $route.params.id); likeToggle($store.state.recipeData) -->
-                    <button v-if="$store.state.authFlg" @click="recipeLikeToggle($store.state.recipeData, 'recipeLike')" class="header-like" type="button">
+                    <button v-if="$store.state.authFlg" @click="likeToggle($store.state.recipeData, 'recipeLike')" class="header-like" type="button">
                         <img src="../../../public/img/like.png" alt="">
                     </button>
                     <div class="like_text">좋아요 수 : {{ $store.state.recipeData.likes_num }}</div>
@@ -351,7 +351,7 @@ function likeToggle(data, action) {
     if(likeFlg.value) {
         likeFlg.value = false;
 
-        store.dispatch(action, data.id)
+        // store.dispatch(action, data.id)
     
         if(data.like_chk == 1) {
             data.like_chk = 0;
@@ -381,8 +381,9 @@ function recipeLikeToggle(data, action) {
 }
 
 onBeforeMount( async () => {
-    // console.log('이동후')
+    console.log(store.state.recipeData)
     if(Object.keys(store.state.recipeData).length < 1) {
+        // console.log('if문')
         store.dispatch('getRecipeDetail', route.params.id);
     }
     // store.dispatch('getRecipeDetail', route.params.id);
